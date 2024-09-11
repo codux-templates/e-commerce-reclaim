@@ -1,18 +1,16 @@
-import { collections } from '@wix/stores';
 import { Header } from '~/components/header/header';
 import { Footer } from '~/components/footer/footer';
 
 interface AppWrapperProps {
-    categories: collections.Collection[];
     children: React.ReactNode;
 }
 
-export const AppWrapper = ({ categories, children }: AppWrapperProps) => {
+export const AppWrapper = ({ children }: AppWrapperProps) => {
     return (
         <div>
-            <Header categories={categories} />
+            <Header />
             {children}
-            <Footer categories={categories} />
+            <Footer />
         </div>
     );
 };

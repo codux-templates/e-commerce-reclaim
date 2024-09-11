@@ -2,6 +2,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '
 import { json } from '@remix-run/node';
 import { getEcomApi } from '~/api/ecom-api';
 import { AppWrapper } from '~/components/app-wrapper/app-wrapper';
+import { ProductCategoriesContext } from '~/components/context';
 
 export const Layout = ({ children }: React.PropsWithChildren) => {
     return (
@@ -30,8 +31,10 @@ export default function App() {
     const { categories } = useLoaderData<typeof loader>();
 
     return (
-        <AppWrapper categories={categories}>
-            <Outlet />
-        </AppWrapper>
+        <ProductCategoriesContext.Provider value={categories}>
+            <AppWrapper>
+                <Outlet />
+            </AppWrapper>
+        </ProductCategoriesContext.Provider>
     );
 }

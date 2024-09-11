@@ -1,20 +1,19 @@
 import { NavLink } from '@remix-run/react';
-import { collections } from '@wix/stores';
+import { ProductCategoriesContext } from '~/components/context';
+import { useContext } from 'react';
 import { ROUTES } from '~/router/config';
 
-interface HeaderProps {
-    categories: collections.Collection[];
-}
+export const Header = () => {
+    const categories = useContext(ProductCategoriesContext);
 
-export const Header = ({ categories }: HeaderProps) => {
     return (
         <header>
             <nav>
                 <ul>
-                    {categories.map((c) => (
-                        <li key={c._id}>
-                            <NavLink key={c._id} to={ROUTES.products.to(c.slug!)}>
-                                {c.name}
+                    {categories.map((category) => (
+                        <li key={category._id}>
+                            <NavLink key={category._id} to={ROUTES.products.to(category.slug!)}>
+                                {category.name}
                             </NavLink>
                         </li>
                     ))}
