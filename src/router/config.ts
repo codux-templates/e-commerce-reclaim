@@ -2,7 +2,7 @@ import { generatePath } from '@remix-run/react';
 
 const HOME = '/';
 const PRODUCTS = '/products/:categorySlug';
-const PRODUCT_DETAILS = `/products-details/:productSlug`;
+const PRODUCT_DETAILS = `/product-details/:productSlug`;
 const ABOUT_US = '/about-us';
 const TERMS_AND_CONDITIONS = '/terms-and-conditions';
 const PRIVACY_POLICY = '/privacy-policy';
