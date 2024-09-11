@@ -1,6 +1,10 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import React from 'react';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react';
+import { json } from '@remix-run/node';
+import { getEcomApi } from '~/api/ecom-api';
+import { AppWrapper } from '~/components/app-wrapper/app-wrapper';
 
-export default function App() {
+export const Layout = ({ children }: React.PropsWithChildren) => {
     return (
         <html lang="en">
             <head>
@@ -10,10 +14,25 @@ export default function App() {
                 <Links />
             </head>
             <body>
-                <Outlet />
+                {children}
                 <ScrollRestoration />
                 <Scripts />
             </body>
         </html>
+    );
+};
+
+export const loader = async () => {
+    const categories = await getEcomApi().getAllCategories();
+    return json({ categories });
+};
+
+export default function App() {
+    const { categories } = useLoaderData<typeof loader>();
+
+    return (
+        <AppWrapper categories={categories}>
+            <Outlet />
+        </AppWrapper>
     );
 }
