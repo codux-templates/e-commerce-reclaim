@@ -1,4 +1,3 @@
-import React from 'react';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import { getEcomApi } from '~/api/ecom-api';
