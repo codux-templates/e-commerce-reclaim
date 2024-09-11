@@ -1,11 +1,7 @@
 import { Header } from '~/components/header/header';
 import { Footer } from '~/components/footer/footer';
 
-interface AppWrapperProps {
-    children: React.ReactNode;
-}
-
-export const AppWrapper = ({ children }: AppWrapperProps) => {
+export const AppWrapper = ({ children }: React.PropsWithChildren) => {
     return (
         <div>
             <Header />
