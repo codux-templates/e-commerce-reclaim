@@ -1,3 +1,3 @@
 export default function TermsAndConditionsPage() {
-    return <h1>Terms & Conditions</h1>;
+    return <h1>Terms and Conditions</h1>;
 }
