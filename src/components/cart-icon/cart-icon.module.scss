@@ -1,36 +1,13 @@
 .root {
     width: 21px;
     height: 25px;
-    position: relative;
 }
 
 .root:hover {
     cursor: pointer;
 }
 
-.bag {
-    width: 21px;
-    height: 17px;
-    position: absolute;
-    top: 8px;
-    background-color: var(--nude0);
-    border: 1px solid black;
-}
-
-.handles {
-    position: absolute;
-    top: -8px;
-    left: 5px;
-    width: 8.5px;
-    height: 11px;
-    border-radius: 20px 20px 0 0;
-    border: 1px solid black;
-    z-index: -1;
-}
-
-.text {
-    font-size: 12px;
-    line-height: 15px;
-    color: var(--action2);
-    text-align: center;
+.count {
+    font-size: 17px;
+    fill: var(--action1);
 }

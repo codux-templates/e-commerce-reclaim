@@ -1,7 +1,6 @@
 import { Link, NavLink, useNavigate } from '@remix-run/react';
 import classNames from 'classnames';
 import { ROUTES } from '~/router/config';
-import commonStyles from '~/styles/common-styles.module.scss';
 import styles from './header.module.scss';
 import { CartIcon } from '../cart-icon/cart-icon';
 import loginIcon from '~/assets/svg/user.svg';
@@ -28,7 +27,7 @@ export const Header = ({ className }: HeaderProps) => {
                     Free shipping on all intl. orders over $35
                 </div>
                 <button
-                    className={classNames(styles.shopNowButton, commonStyles.introButton)}
+                    className={styles.shopNowButton}
                     onClick={() => navigate(ROUTES.products.to('all-products'))}
                 >
                     Shop Now
