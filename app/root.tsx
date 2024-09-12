@@ -1,6 +1,6 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-import '../src/styles/index.scss';
-import { Header } from '../src/components/header/header';
+import '~/styles/index.scss';
+import { Header } from '~/components/header/header';
 
 export default function App() {
     return (
