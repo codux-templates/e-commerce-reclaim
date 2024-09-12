@@ -9,14 +9,15 @@
     height: 50px;
 }
 
-.topBar .logo {
+.logo {
     margin-right: auto;
     font: var(--logoText);
 }
 
 .advertisingText {
-    margin-right: 16px;
+    margin: 0 16px;
     font: var(--paragraph3);
+    white-space: nowrap;
 }
 
 .navigation {
@@ -39,6 +40,7 @@
 }
 
 .navigation .actions {
+    flex-shrink: 0;
     width: 160px;
     display: flex;
     justify-content: flex-end;
@@ -50,9 +52,11 @@
     padding: 10px;
     margin: 4px 8px;
     font: var(--paragraph3);
+    white-space: nowrap;
 }
 
-.menuItem:hover {
+.menuItem:hover,
+.menuItem.active {
     text-decoration: underline;
 }
 
@@ -61,6 +65,7 @@
     align-items: center;
     padding: 6px 7px;
     font: var(--paragraph3);
+    white-space: nowrap;
 }
 
 .logInLink span {

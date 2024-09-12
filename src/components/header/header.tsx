@@ -1,4 +1,4 @@
-import { Link, useNavigate } from '@remix-run/react';
+import { Link, NavLink, useNavigate } from '@remix-run/react';
 import classNames from 'classnames';
 import { ROUTES } from '~/router/config';
 import commonStyles from '~/styles/common-styles.module.scss';
@@ -12,6 +12,11 @@ export interface HeaderProps {
 
 export const Header = ({ className }: HeaderProps) => {
     const navigate = useNavigate();
+
+    const menuItemStyle = ({ isActive }: { isActive: boolean }) =>
+        classNames(styles.menuItem, {
+            [styles.active]: isActive,
+        });
 
     return (
         <header className={classNames(styles.root, className)}>
@@ -32,21 +37,24 @@ export const Header = ({ className }: HeaderProps) => {
             <section className={styles.navigation}>
                 <div className={styles.empty} />
                 <nav className={styles.menu}>
-                    <Link to={ROUTES.products.to('all-products')} className={styles.menuItem}>
+                    <NavLink to={ROUTES.products.to('all-products')} className={menuItemStyle}>
                         Shop All
-                    </Link>
-                    <Link to={ROUTES.products.to('kitchen-essentials')} className={styles.menuItem}>
+                    </NavLink>
+                    <NavLink
+                        to={ROUTES.products.to('kitchen-essentials')}
+                        className={menuItemStyle}
+                    >
                         Kitchen
-                    </Link>
-                    <Link to={ROUTES.products.to('bath')} className={styles.menuItem}>
+                    </NavLink>
+                    <NavLink to={ROUTES.products.to('bath')} className={menuItemStyle}>
                         Bath
-                    </Link>
-                    <Link to={ROUTES.products.to('on-the-go')} className={styles.menuItem}>
+                    </NavLink>
+                    <NavLink to={ROUTES.products.to('on-the-go')} className={menuItemStyle}>
                         On the Go
-                    </Link>
-                    <Link to={ROUTES.aboutUs.to()} className={styles.menuItem}>
+                    </NavLink>
+                    <NavLink to={ROUTES.aboutUs.to()} className={menuItemStyle}>
                         About Us
-                    </Link>
+                    </NavLink>
                 </nav>
                 <div className={styles.actions}>
                     <Link to={'ROUTES.login.to()'} className={styles.logInLink}>

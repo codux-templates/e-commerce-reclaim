@@ -7,6 +7,8 @@
     border-radius: 50px;
     border: 1px solid var(--black);
     cursor: pointer;
+    white-space: nowrap;
+    
     &:hover {
         background-color: var(--nude1);
         color: var(--black);
