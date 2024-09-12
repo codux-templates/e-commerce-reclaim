@@ -1,13 +1,23 @@
 .root {
     width: 21px;
-    height: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.handle {
+    width: 9px;
+    height: 7px;
+    border: 1px solid #000;
+    border-radius: 10px 10px 0 0;
+    border-bottom: none;
 }
 
-.root:hover {
-    cursor: pointer;
-}
-
-.count {
-    font-size: 17px;
-    fill: var(--action1);
+.bag {
+    border: 1px solid #000;
+    width: 21px;
+    line-height: 15px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--action2);
 }
