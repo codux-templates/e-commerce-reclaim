@@ -26,12 +26,9 @@ export const Header = ({ className }: HeaderProps) => {
                 <div className={styles.advertisingText}>
                     Free shipping on all intl. orders over $35
                 </div>
-                <button
-                    className={styles.shopNowButton}
-                    onClick={() => navigate(ROUTES.products.to('all-products'))}
-                >
+                <Link className={styles.shopNow} to={ROUTES.products.to('all-products')}>
                     Shop Now
-                </button>
+                </Link>
             </section>
             <section className={styles.navigation}>
                 <div className={styles.empty} />
@@ -56,8 +53,8 @@ export const Header = ({ className }: HeaderProps) => {
                     </NavLink>
                 </nav>
                 <div className={styles.actions}>
-                    <Link to={'ROUTES.login.to()'} className={styles.logInLink}>
-                        <img className={styles.loginIcon} src={loginIcon} alt="loginIcon" />
+                    <Link to="/login" className={styles.logInLink}>
+                        <img className={styles.loginIcon} src={loginIcon} alt="Login icon" />
                         <span>Log In</span>
                     </Link>
                     <CartIcon className={styles.cart} count={0} />
