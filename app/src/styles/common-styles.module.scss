@@ -1,0 +1,14 @@
+.introButton {
+    text-align: center;
+    font: var(--paragraph3);
+    line-height: 1;
+    color: var(--black);
+    padding: 3px 11px 4px;
+    border-radius: 50px;
+    border: 1px solid var(--black);
+    cursor: pointer;
+    &:hover {
+        background-color: var(--nude1);
+        color: var(--black);
+    }
+}
