@@ -1,7 +1,7 @@
 import { Link, useNavigate } from '@remix-run/react';
 import classNames from 'classnames';
-import { ROUTES } from 'app/src/router/config';
-import commonStyles from 'app/src/styles/common-styles.module.scss';
+import { ROUTES } from '~/router/config';
+import commonStyles from '~/styles/common-styles.module.scss';
 import styles from './header.module.scss';
 import { CartIcon } from '../cart-icon/cart-icon';
 
