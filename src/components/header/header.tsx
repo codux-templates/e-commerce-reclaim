@@ -60,7 +60,7 @@ export const Header = ({ className }: HeaderProps) => {
                         <img className={styles.loginIcon} src={loginIcon} alt="loginIcon" />
                         <span>Log In</span>
                     </Link>
-                    <CartIcon className={styles.cart}>0</CartIcon>
+                    <CartIcon className={styles.cart} count={0} />
                 </div>
             </section>
         </header>
