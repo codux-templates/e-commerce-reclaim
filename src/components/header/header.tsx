@@ -33,24 +33,39 @@ export const Header = ({ className }: HeaderProps) => {
             <section className={styles.navigation}>
                 <div className={styles.empty} />
                 <nav className={styles.menu}>
-                    <NavLink to={ROUTES.products.to('all-products')} className={menuItemStyle}>
-                        Shop All
-                    </NavLink>
-                    <NavLink
-                        to={ROUTES.products.to('kitchen-essentials')}
-                        className={menuItemStyle}
-                    >
-                        Kitchen
-                    </NavLink>
-                    <NavLink to={ROUTES.products.to('bath')} className={menuItemStyle}>
-                        Bath
-                    </NavLink>
-                    <NavLink to={ROUTES.products.to('on-the-go')} className={menuItemStyle}>
-                        On the Go
-                    </NavLink>
-                    <NavLink to={ROUTES.aboutUs.to()} className={menuItemStyle}>
-                        About Us
-                    </NavLink>
+                    <ul>
+                        <li>
+                            <NavLink
+                                to={ROUTES.products.to('all-products')}
+                                className={menuItemStyle}
+                            >
+                                Shop All
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to={ROUTES.products.to('kitchen-essentials')}
+                                className={menuItemStyle}
+                            >
+                                Kitchen
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={ROUTES.products.to('bath')} className={menuItemStyle}>
+                                Bath
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={ROUTES.products.to('on-the-go')} className={menuItemStyle}>
+                                On the Go
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={ROUTES.aboutUs.to()} className={menuItemStyle}>
+                                About Us
+                            </NavLink>
+                        </li>
+                    </ul>
                 </nav>
                 <div className={styles.actions}>
                     <Link to="/login" className={styles.logInLink}>

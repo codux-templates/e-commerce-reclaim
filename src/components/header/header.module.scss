@@ -35,6 +35,9 @@
 
 .navigation .menu {
     flex-grow: 1;
+}
+
+.navigation .menu ul {
     display: flex;
     justify-content: center;
 }
