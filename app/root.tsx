@@ -15,8 +15,8 @@ export default function App() {
             <body>
                 <Header />
                 <Outlet />
-                <ScrollRestoration />
                 <Footer />
+                <ScrollRestoration />
                 <Scripts />
             </body>
         </html>

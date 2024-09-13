@@ -16,7 +16,7 @@ export const Footer = ({ className }: FooterProps) => {
     return (
         <footer className={classNames(styles.root, className)}>
             <section className={styles.navigation}>
-                <nav className={styles.column}>
+                <nav>
                     <ul>
                         <li>
                             <NavLink
@@ -95,7 +95,7 @@ export const Footer = ({ className }: FooterProps) => {
                     <Link to={ROUTES.home.to()}>ReClaim</Link>
                 </div>
                 <div className={styles.copyright}>
-                    © 2035 by ReClaim. Made with{' '}
+                    <span>© 2035 by ReClaim. Made with </span>
                     <Link to="https://www.codux.com/" className={styles.coduxLink}>
                         Codux™
                     </Link>
