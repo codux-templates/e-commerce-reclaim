@@ -64,30 +64,48 @@ export const Footer = ({ className }: FooterProps) => {
                         </li>
                     </ul>
                 </nav>
-                <div className={styles.column}>
-                    <NavLink to={ROUTES.termsAndConditions.to()} className={navItemStyle}>
-                        Terms & Conditions
-                    </NavLink>
-                    <NavLink to={ROUTES.privacyPolicy.to()} className={navItemStyle}>
-                        Privacy Policy
-                    </NavLink>
-                    <NavLink to={ROUTES.shippingPolicy.to()} className={navItemStyle}>
-                        Shipping Policy
-                    </NavLink>
-                    <NavLink to={ROUTES.refundPolicy.to()} className={navItemStyle}>
-                        Refund Policy
-                    </NavLink>
+                <div>
+                    <ul>
+                        <li>
+                            <NavLink to={ROUTES.termsAndConditions.to()} className={navItemStyle}>
+                                Terms & Conditions
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={ROUTES.privacyPolicy.to()} className={navItemStyle}>
+                                Privacy Policy
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={ROUTES.shippingPolicy.to()} className={navItemStyle}>
+                                Shipping Policy
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={ROUTES.refundPolicy.to()} className={navItemStyle}>
+                                Refund Policy
+                            </NavLink>
+                        </li>
+                    </ul>
                 </div>
-                <div className={styles.column}>
-                    <Link to={ROUTES.home.to()} className={styles.navItem}>
-                        Facebook
-                    </Link>
-                    <Link to={ROUTES.home.to()} className={styles.navItem}>
-                        Instagram
-                    </Link>
-                    <Link to={ROUTES.home.to()} className={styles.navItem}>
-                        Pinterest
-                    </Link>
+                <div>
+                    <ul>
+                        <li>
+                            <Link to={ROUTES.home.to()} className={styles.navItem}>
+                                Facebook
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to={ROUTES.home.to()} className={styles.navItem}>
+                                Instagram
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to={ROUTES.home.to()} className={styles.navItem}>
+                                Pinterest
+                            </Link>
+                        </li>
+                    </ul>
                 </div>
             </section>
             <section className={styles.bottomBar}>
