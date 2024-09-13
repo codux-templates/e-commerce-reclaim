@@ -1,4 +1,4 @@
-import { Link } from '@remix-run/react';
+import { Link, NavLink } from '@remix-run/react';
 import classNames from 'classnames';
 import { ROUTES } from '~/router/config';
 import styles from './header.module.scss';
@@ -62,11 +62,13 @@ export const Header = ({ className }: HeaderProps) => {
                             />
                         </li>
                         <li>
-                            <CategoryLink
+                            <NavLink
                                 title="About Us"
-                                categorySlug="about-us"
+                                to={ROUTES.aboutUs.to()}
                                 className={menuItemStyle}
-                            />
+                            >
+                                About Us
+                            </NavLink>
                         </li>
                     </ul>
                 </nav>
