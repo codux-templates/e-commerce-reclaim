@@ -23,7 +23,6 @@ export const loader = async ({ params: { categorySlug } }: LoaderFunctionArgs) =
     } catch (error) {
         // Redirect to "All products" if the requested category doesn't exist.
         // In case of another error throw it again and let the global error boundary handle it.
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if ((error as any)?.details?.applicationError?.code === 404) {
             return redirectToAllProducts();
         } else {
