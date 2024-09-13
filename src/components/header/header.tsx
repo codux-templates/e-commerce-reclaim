@@ -1,4 +1,4 @@
-import { Link, NavLink } from '@remix-run/react';
+import { Link } from '@remix-run/react';
 import classNames from 'classnames';
 import { ROUTES } from '~/router/config';
 import styles from './header.module.scss';
