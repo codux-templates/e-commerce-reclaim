@@ -1,17 +1,16 @@
-import { Link, NavLink, useNavigate } from '@remix-run/react';
+import { Link, NavLink } from '@remix-run/react';
 import classNames from 'classnames';
 import { ROUTES } from '~/router/config';
 import styles from './header.module.scss';
 import { CartIcon } from '../cart-icon/cart-icon';
 import loginIcon from '~/assets/svg/user.svg';
+import { CategoryLink } from '../category-link/category-link';
 
 export interface HeaderProps {
     className?: string;
 }
 
 export const Header = ({ className }: HeaderProps) => {
-    const navigate = useNavigate();
-
     const menuItemStyle = ({ isActive }: { isActive: boolean }) =>
         classNames(styles.menuItem, {
             [styles.active]: isActive,
@@ -35,35 +34,39 @@ export const Header = ({ className }: HeaderProps) => {
                 <nav className={styles.menu}>
                     <ul>
                         <li>
-                            <NavLink
-                                to={ROUTES.products.to('all-products')}
+                            <CategoryLink
+                                title="Shop All"
+                                categorySlug="all-products"
                                 className={menuItemStyle}
-                            >
-                                Shop All
-                            </NavLink>
+                            />
                         </li>
                         <li>
-                            <NavLink
-                                to={ROUTES.products.to('kitchen-essentials')}
+                            <CategoryLink
+                                title="Kitchen"
+                                categorySlug="kitchen-essentials"
                                 className={menuItemStyle}
-                            >
-                                Kitchen
-                            </NavLink>
+                            />
                         </li>
                         <li>
-                            <NavLink to={ROUTES.products.to('bath')} className={menuItemStyle}>
-                                Bath
-                            </NavLink>
+                            <CategoryLink
+                                title="Bath"
+                                categorySlug="bath"
+                                className={menuItemStyle}
+                            />
                         </li>
                         <li>
-                            <NavLink to={ROUTES.products.to('on-the-go')} className={menuItemStyle}>
-                                On the Go
-                            </NavLink>
+                            <CategoryLink
+                                title="On the Go"
+                                categorySlug="on-the-go"
+                                className={menuItemStyle}
+                            />
                         </li>
                         <li>
-                            <NavLink to={ROUTES.aboutUs.to()} className={menuItemStyle}>
-                                About Us
-                            </NavLink>
+                            <CategoryLink
+                                title="About Us"
+                                categorySlug="about-us"
+                                className={menuItemStyle}
+                            />
                         </li>
                     </ul>
                 </nav>
