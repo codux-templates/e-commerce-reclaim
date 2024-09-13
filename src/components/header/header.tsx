@@ -62,11 +62,7 @@ export const Header = ({ className }: HeaderProps) => {
                             />
                         </li>
                         <li>
-                            <NavLink
-                                title="About Us"
-                                to={ROUTES.aboutUs.to()}
-                                className={menuItemStyle}
-                            >
+                            <NavLink to={ROUTES.aboutUs.to()} className={menuItemStyle}>
                                 About Us
                             </NavLink>
                         </li>
