@@ -1,4 +1,6 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { Footer } from '~/components/footer/footer';
+import '~/styles/index.scss';
 
 export default function App() {
     return (
@@ -12,6 +14,7 @@ export default function App() {
             <body>
                 <Outlet />
                 <ScrollRestoration />
+                <Footer />
                 <Scripts />
             </body>
         </html>
