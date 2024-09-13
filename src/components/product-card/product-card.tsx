@@ -17,7 +17,7 @@ export const ProductCard = ({ name, imageUrl, priceData, ribbon }: ProductCardPr
                 {imageUrl ? (
                     <img src={imageUrl} alt={name} className={styles.image} />
                 ) : (
-                    <ImagePlaceholderIcon className={styles.imagePlaceholder} />
+                    <ImagePlaceholderIcon className={styles.imagePlaceholderIcon} />
                 )}
 
                 {ribbon && <span className={styles.ribbon}>{ribbon}</span>}

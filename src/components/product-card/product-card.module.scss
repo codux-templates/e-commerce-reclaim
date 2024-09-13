@@ -13,20 +13,11 @@
     object-fit: cover;
 }
 
-.imagePlaceholder {
+.imagePlaceholderIcon {
     width: 60%;
     max-width: 100px;
     min-width: 50px;
     color: rgb(118, 113, 101);
-}
-
-.name {
-    margin-top: 16px;
-    font: 16px / 20px 'Marcellus', serif;
-}
-
-.price {
-    margin-top: 4px;
 }
 
 .ribbon {
@@ -37,5 +28,14 @@
     border-radius: 40px;
     background-color: rgba(245, 254, 210);
     font-size: 14px;
-    line-height: 1.6em;
+    line-height: 1.6;
+}
+
+.name {
+    margin-top: 16px;
+    font: 16px / 20px 'Marcellus', serif;
+}
+
+.price {
+    margin-top: 4px;
 }

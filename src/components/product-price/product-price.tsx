@@ -8,7 +8,7 @@ interface ProductPriceProps {
 }
 
 export const ProductPrice = ({ priceData, className }: ProductPriceProps) => {
-    if (!priceData.formatted || !priceData.formatted.price) return null;
+    if (!priceData.formatted) return null;
     const hasDiscount = priceData.price !== priceData.discountedPrice;
     return (
         <div className={classNames(styles.root, className)}>

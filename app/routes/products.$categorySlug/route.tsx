@@ -17,6 +17,7 @@ export const loader = async ({ params: { categorySlug } }: LoaderFunctionArgs) =
 
     try {
         const categoryDetails = await api.getCategoryBySlug(categorySlug);
+        // It throws if category doesn't exist, so this is just to please TS.
         if (!categoryDetails) return redirectToAllProducts();
         category = categoryDetails;
     } catch (error) {
@@ -32,6 +33,7 @@ export const loader = async ({ params: { categorySlug } }: LoaderFunctionArgs) =
 
     const categoryProducts = await api.getProductsByCategory(categorySlug);
     const allCategories = await api.getAllCategories();
+
     return json({ category, categoryProducts, allCategories });
 };
 
@@ -60,7 +62,7 @@ export default function ProductsPage() {
                 </ul>
             </nav>
 
-            <div className={styles.categoryContent}>
+            <div>
                 <h1 className={styles.categoryName}>{category.name}</h1>
                 {category.description && (
                     <p className={styles.categoryDescription}>{category.description}</p>
