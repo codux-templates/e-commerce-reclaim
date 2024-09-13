@@ -1,12 +1,10 @@
-import { NavLink } from '@remix-run/react';
+import { NavLink, NavLinkProps } from '@remix-run/react';
 import { ROUTES } from '~/router/config';
-
-type ClassNameFunction = (states: { isActive: boolean; isPending: boolean }) => string;
 
 export interface CategoryLinkProps {
     categorySlug: string;
     title: string;
-    className?: string | ClassNameFunction;
+    className?: string | NavLinkProps['className'];
 }
 
 export const CategoryLink = ({ categorySlug, title, className }: CategoryLinkProps) => {
