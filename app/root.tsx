@@ -1,4 +1,5 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import '~/styles/index.scss';
 
 export default function App() {
     return (

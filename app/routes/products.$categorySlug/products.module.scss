@@ -1,0 +1,56 @@
+.page {
+    display: flex;
+}
+
+.navigation {
+    flex: 0 0 240px;
+    padding: 20px;
+}
+
+.navigationTitle {
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(23, 17, 13, 0.2);
+    font: 20px / 1.3em 'Marcellus', serif;
+}
+
+.categoryListItem {
+    margin-bottom: 12px;
+}
+
+.categoryLink {
+    font-size: 14px;
+    line-height: 1.6em;
+}
+
+.categoryLinkActive {
+    color: rgb(112, 115, 101);
+}
+
+.categoryContent {
+    padding: 20px;
+}
+
+.categoryName {
+    font: 42px / 1.2em 'Marcellus', serif;
+}
+
+.categoryDescription {
+    max-width: 672px;
+    margin-top: 4px;
+    font-size: 16px;
+    line-height: 1.5em;
+}
+
+.productsCount {
+    margin-top: 46px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 1.6em;
+}
+
+.productsList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(404px, 100%), 1fr));
+    gap: 20px 4px;
+}
