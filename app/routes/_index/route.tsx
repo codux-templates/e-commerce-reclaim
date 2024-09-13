@@ -1,3 +1,12 @@
+import { HeroImage } from '~/components/hero-image/hero-image';
+
 export default function HomePage() {
-    return <h1>Home</h1>;
+    return (
+        <HeroImage
+            subTitle="ReClaim"
+            title="Reuse. Repurpose. Relove."
+            linkLabel="Shop Collections"
+            linkCategorySlug="all-products"
+        />
+    );
 }

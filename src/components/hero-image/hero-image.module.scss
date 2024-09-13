@@ -1,78 +1,42 @@
-@import '@styles/theme.module.scss';
-
 .root {
     position: relative;
-    color: $white;
+    color: var(--nude0);
+    background-color: var(--black);
+    margin-bottom: 2vw;
 }
 
 .overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; 
     position: absolute;
     background-color: transparent;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding-left: 5vw;
+    inset: 0;
+    padding: 6vw;
 }
 
 .image {
+    opacity: 0.8;
     object-fit: cover;
-    object-position: 50% 0%;
-    height: 640px;
+    object-position: 50% 50%;
+    height: calc(100vh - 124px);
     width: 100%;
 }
 
-.smallTitle {
-    font: $medium-paragraph-bold;
-    margin-top: 80px;
-    font-size: 38px;
+.subTitle {
+    font: var(--paragraph1);
+    letter-spacing: 0.2em;
+    white-space: nowrap;
 }
 
-.bigTitle {
-    max-width: 80%;
-    font: $extra-large-thin-title;
-    line-height: 1.2;
-    font-size: 85px;
-    letter-spacing: 2px;
-    margin-top: 25px;
+.title {
+    font: var(--heading1);
+    font-size: clamp(60px, 6vw, 110px);
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
-.overlayButton {
-    margin-top: 68px;
-}
-
-// --- MEDIA QUERIES ---
-
-@media (width >= $large-desktop) {
-    .smallTitle {
-        font-size: 42px;
-    }
-
-    .bigTitle {
-        max-width: 70%;
-    }
-
-    .overlayButton {
-        height: 47px;
-    }
-}
-
-@media (width <= $mobile-width) {
-    .overlay {
-        padding-left: 8vw;
-    }
-
-    .smallTitle {
-        font-size: 20px;
-        margin-top: 40px;
-    }
-
-    .bigTitle {
-        font-size: 50px;
-        margin-top: 11px;
-    }
-
-    .overlayButton {
-        margin-top: 40px;
-    }
+.overlayLink {
+    margin-top: 0;
 }

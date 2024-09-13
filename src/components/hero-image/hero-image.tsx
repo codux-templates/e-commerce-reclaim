@@ -21,16 +21,18 @@ export const HeroImage = ({
     return (
         <div className={classNames(styles.root, className)}>
             <picture>
-                <source media="(1400px <= width)" srcSet={heroImage} />
-                {/* <img src={heroImage} className={styles.image} alt="Hero background" /> */}
+                {/* <source media="(768px <= width)" srcSet={heroImage} /> */}
+                <img src={heroImage} className={styles.image} alt="Hero banner" />
             </picture>
             <div className={styles.overlay}>
                 <p className={styles.subTitle}>{subTitle}</p>
-                <h1 className={styles.title}>{title} </h1>
+                <h1 className={styles.title}>{title}</h1>
                 {linkLabel && linkCategorySlug && (
-                    <StretchableLink className={styles.overlayButton}>
-                        <CategoryLink title={linkLabel} categorySlug={linkCategorySlug} />
-                    </StretchableLink>
+                    <StretchableLink
+                        title={linkLabel}
+                        className={styles.overlayLink}
+                        categorySlug={linkCategorySlug}
+                    />
                 )}
             </div>
         </div>
