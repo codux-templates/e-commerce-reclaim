@@ -64,54 +64,50 @@ export const Footer = ({ className }: FooterProps) => {
                         </li>
                     </ul>
                 </nav>
-                <div>
-                    <ul>
-                        <li>
-                            <NavLink to={ROUTES.termsAndConditions.to()} className={navItemStyle}>
-                                Terms & Conditions
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={ROUTES.privacyPolicy.to()} className={navItemStyle}>
-                                Privacy Policy
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={ROUTES.shippingPolicy.to()} className={navItemStyle}>
-                                Shipping Policy
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={ROUTES.refundPolicy.to()} className={navItemStyle}>
-                                Refund Policy
-                            </NavLink>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <ul>
-                        <li>
-                            <Link to={ROUTES.home.to()} className={styles.navItem}>
-                                Facebook
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to={ROUTES.home.to()} className={styles.navItem}>
-                                Instagram
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to={ROUTES.home.to()} className={styles.navItem}>
-                                Pinterest
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
+                <ul>
+                    <li>
+                        <NavLink to={ROUTES.termsAndConditions.to()} className={navItemStyle}>
+                            Terms & Conditions
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to={ROUTES.privacyPolicy.to()} className={navItemStyle}>
+                            Privacy Policy
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to={ROUTES.shippingPolicy.to()} className={navItemStyle}>
+                            Shipping Policy
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to={ROUTES.refundPolicy.to()} className={navItemStyle}>
+                            Refund Policy
+                        </NavLink>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <Link to={ROUTES.home.to()} className={styles.navItem}>
+                            Facebook
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to={ROUTES.home.to()} className={styles.navItem}>
+                            Instagram
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to={ROUTES.home.to()} className={styles.navItem}>
+                            Pinterest
+                        </Link>
+                    </li>
+                </ul>
             </section>
             <section className={styles.bottomBar}>
-                <div className={styles.logo}>
-                    <Link to={ROUTES.home.to()}>ReClaim</Link>
-                </div>
+                <Link to={ROUTES.home.to()} className={styles.logo}>
+                    ReClaim
+                </Link>
                 <div className={styles.copyright}>
                     <span>© 2035 by ReClaim. Made with </span>
                     <Link to="https://www.codux.com/" className={styles.coduxLink}>
