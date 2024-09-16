@@ -86,7 +86,7 @@ export const Footer = ({ className }: FooterProps) => {
                         <Link
                             to="https://www.facebook.com/WixStudio"
                             className={styles.navItem}
-                            target="blank"
+                            target="_blank"
                             rel="noreferrer"
                         >
                             Facebook
@@ -96,7 +96,7 @@ export const Footer = ({ className }: FooterProps) => {
                         <Link
                             to="https://www.instagram.com/wixstudio"
                             className={styles.navItem}
-                            target="blank"
+                            target="_blank"
                             rel="noreferrer"
                         >
                             Instagram
@@ -106,7 +106,7 @@ export const Footer = ({ className }: FooterProps) => {
                         <Link
                             to="https://www.pinterest.com/wixcom"
                             className={styles.navItem}
-                            target="blank"
+                            target="_blank"
                             rel="noreferrer"
                         >
                             Pinterest
