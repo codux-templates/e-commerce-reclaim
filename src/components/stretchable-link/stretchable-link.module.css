@@ -11,6 +11,11 @@
     color: var(--nude0);
 }
 
+.root:hover {
+    transition: all 0.2s ease;
+    letter-spacing: 0.15em;
+}
+
 .icon {
     width: 50px;
     height: 50px;

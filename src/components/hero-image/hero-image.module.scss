@@ -1,8 +1,9 @@
 .root {
+    --marginBottom: 2vw;
     position: relative;
     color: var(--nude0);
     background-color: var(--black);
-    margin-bottom: 2vw;
+    margin-bottom: var(--marginBottom);
 }
 
 .overlay {
@@ -10,17 +11,18 @@
     align-items: center;
     justify-content: center;
     flex-direction: column; 
+    overflow: hidden;
     position: absolute;
     background-color: transparent;
     inset: 0;
-    padding: 6vw;
 }
 
 .image {
+    --heroImageHeight: calc(100vh - var(--headerTopBarHeight) - var(--headerNavigationHeight) - var(--marginBottom));
     opacity: 0.8;
     object-fit: cover;
     object-position: 50% 50%;
-    height: calc(100vh - 124px);
+    height: var(--heroImageHeight);
     width: 100%;
 }
 
