@@ -21,7 +21,6 @@ export const HeroImage = ({
     return (
         <div className={classNames(styles.root, className)}>
             <picture>
-                {/* <source media="(768px <= width)" srcSet={heroImage} /> */}
                 <img src={heroImage} className={styles.image} alt="Hero banner" />
             </picture>
             <div className={styles.overlay}>
