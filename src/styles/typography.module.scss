@@ -1,9 +1,7 @@
 :root {
-    //fonts
     --heading-font: 'Marcellus', serif;
     --text-font: 'Figtree', sans-serif;
 
-    //Headings
     --heading1: 400 80px/1 var(--heading-font);
     --heading2: 400 55px/1.1 var(--heading-font);
     --heading3: 400 42px/1.2 var(--heading-font);
@@ -11,8 +9,6 @@
     --heading5: 400 20px/1.3 var(--heading-font);
     --heading6: 400 20px/1.4 var(--heading-font);
 
-
-    //paragrph
     --paragraph1: 400 16px/1.5 var(--text-font);
     --paragraph2: 400 15px/1.6 var(--text-font);
     --paragraph3: 400 14px/1.6 var(--text-font);
