@@ -83,17 +83,29 @@ export const Footer = ({ className }: FooterProps) => {
                 </ul>
                 <ul>
                     <li>
-                        <Link to="https://www.facebook.com/WixStudio" className={styles.navItem}>
+                        <Link
+                            to="https://www.facebook.com/WixStudio"
+                            className={styles.navItem}
+                            target="blank"
+                        >
                             Facebook
                         </Link>
                     </li>
                     <li>
-                        <Link to="https://www.instagram.com/wixstudio" className={styles.navItem}>
+                        <Link
+                            to="https://www.instagram.com/wixstudio"
+                            className={styles.navItem}
+                            target="blank"
+                        >
                             Instagram
                         </Link>
                     </li>
                     <li>
-                        <Link to="https://www.pinterest.com/wixcom" className={styles.navItem}>
+                        <Link
+                            to="https://www.pinterest.com/wixcom"
+                            className={styles.navItem}
+                            target="blank"
+                        >
                             Pinterest
                         </Link>
                     </li>
