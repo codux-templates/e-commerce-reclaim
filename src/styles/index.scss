@@ -3,6 +3,8 @@
 
 @import './reset.scss';
 @import './theme.module.scss';
+@import './typography.module.scss';
+@import './colors.modules.scss';
 
 :root {
     font-family: var(--ff-default);
