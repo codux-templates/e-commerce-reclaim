@@ -1,13 +1,13 @@
 import classNames from 'classnames';
 import { FacebookIcon, PinterestIcon, WhatsappIcon } from '../icons';
-import styles from './product-social-links.module.scss';
+import styles from './share-product-links.module.scss';
 
-interface ProductSocialLinksProps {
+interface ShareProductLinksProps {
     productCanonicalUrl: string;
     className?: string;
 }
 
-export const ProductSocialLinks = ({ productCanonicalUrl, className }: ProductSocialLinksProps) => {
+export const ShareProductLinks = ({ productCanonicalUrl, className }: ShareProductLinksProps) => {
     const productEncodedUrl = encodeURIComponent(productCanonicalUrl);
     return (
         <div className={classNames(styles.links, className)}>

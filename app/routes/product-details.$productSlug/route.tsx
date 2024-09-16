@@ -9,7 +9,7 @@ import { Accordion } from '~/components/accordion/accordion';
 import { ProductImages } from '~/components/product-images/product-images';
 import { Button } from '~/components/button/button';
 import { getUrlOriginWithPath } from '~/utils';
-import { ProductSocialLinks } from '~/components/product-social-links/product-social-links';
+import { ShareProductLinks } from '~/components/share-product-links/share-product-links';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     const productSlug = params.productSlug;
@@ -29,7 +29,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
 export default function ProductDetailsPage() {
     const { product, canonicalUrl } = useLoaderData<typeof loader>();
-    const [quantity, setQuantity] = useState<number | null>(1);
+    const [quantity, setQuantity] = useState(1);
 
     return (
         <div className={styles.page}>
@@ -71,7 +71,7 @@ export default function ProductDetailsPage() {
                     />
                 )}
 
-                <ProductSocialLinks
+                <ShareProductLinks
                     className={styles.socialLinks}
                     productCanonicalUrl={canonicalUrl}
                 />
