@@ -1,4 +1,7 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { Footer } from '~/components/footer/footer';
+import '~/styles/index.scss';
+import { SiteWrapper } from '~/components/site-wrapper/site-wrapper';
 
 export default function App() {
     return (
@@ -10,7 +13,9 @@ export default function App() {
                 <Links />
             </head>
             <body>
-                <Outlet />
+                <SiteWrapper>
+                    <Outlet />
+                </SiteWrapper>
                 <ScrollRestoration />
                 <Scripts />
             </body>
