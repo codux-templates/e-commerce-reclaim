@@ -21,6 +21,9 @@
       "trigger": ["checkout", "pull", "setup"]
     }
   },
+  "styleFilesConfig": {
+    "commonStyleFilePattern": "**/commons.module.scss"
+  },
   "styling": {
     "solution": "scss modules"
   },
