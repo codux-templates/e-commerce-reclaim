@@ -1,16 +1,13 @@
-import styles from './index.module.scss';
 import { CategoryLink } from '~/components/category-link/category-link';
+import styles from './index.module.scss';
+import heroImageJpg from '~/assets/img/heroImage.jpg';
 import { LabelWithArrow } from '~/components/label-with-arrow/label-with-arrow';
 
 export default function HomePage() {
     return (
         <>
-            <div className={styles.heroBanner}>
-                <img
-                    src="src/assets/img/heroImage.jpg"
-                    className={styles.image}
-                    alt="Hero banner"
-                />
+            <div className={styles.heroImage}>
+                <img src={heroImageJpg} className={styles.image} alt="Hero banner" />
                 <div className={styles.overlay}>
                     <div className={styles.subtitle}>ReClaim</div>
                     <h1 className={styles.title}>Reuse. Repurpose. Relove.</h1>

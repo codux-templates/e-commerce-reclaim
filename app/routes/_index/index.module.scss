@@ -1,4 +1,4 @@
-.heroBanner {
+.heroImage {
     --marginBottom: 2vw;
     position: relative;
     color: var(--nude0);
@@ -6,7 +6,7 @@
     margin-bottom: var(--marginBottom);
 }
 
-.heroBanner .overlay {
+.heroImage .overlay {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,7 +17,7 @@
     inset: 0;
 }
 
-.heroBanner .image {
+.heroImage .image {
     --heroImageHeight: calc(100vh - var(--headerTopBarHeight) - var(--headerNavigationHeight) - var(--marginBottom));
     opacity: 0.8;
     object-fit: cover;
@@ -26,19 +26,19 @@
     width: 100%;
 }
 
-.heroBanner .subtitle {
+.heroImage .subtitle {
     font: var(--paragraph1);
     letter-spacing: 0.2em;
     white-space: nowrap;
 }
 
-.heroBanner .title {
+.heroImage .title {
     font: var(--heading1);
     font-size: clamp(60px, 6vw, 110px);
     text-transform: uppercase;
     white-space: nowrap;
 }
 
-.heroBanner .overlayLink {
+.heroImage .overlayLink {
     margin-top: 0;
 }
