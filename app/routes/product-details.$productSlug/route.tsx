@@ -1,7 +1,7 @@
 import { getEcomApi } from '~/api/ecom-api';
 import styles from './product-details.module.scss';
 import { json, LoaderFunctionArgs } from '@remix-run/node';
-import { Link, useLoaderData } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import { ProductPrice } from '~/components/product-price/product-price';
 import { QuantityInput } from '~/components/quantity-input/quantity-input';
 import { useState } from 'react';
@@ -11,9 +11,9 @@ import { Button } from '~/components/button/button';
 import { removeQueryStringFromUrl } from '~/utils';
 import { ShareProductLinks } from '~/components/share-product-links/share-product-links';
 import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
-import { ROUTES } from '~/router/config';
 import { RouteHandle } from '~/router/types';
 import { CategoryLink } from '~/components/category-link/category-link';
+import { ProductLink } from '~/components/product-link/product-link';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     const productSlug = params.productSlug;
@@ -43,9 +43,9 @@ export const handle: RouteHandle<typeof loader, ProductDetailsLocationState> = {
         const fromCategory = location.state?.fromCategory;
 
         const productLink = (
-            <Link to={ROUTES.productDetails.to(match.data.product.slug!)} state={{ fromCategory }}>
+            <ProductLink productSlug={match.data.product.slug!} state={{ fromCategory }}>
                 {match.data.product.name!}
-            </Link>
+            </ProductLink>
         );
 
         if (fromCategory) {

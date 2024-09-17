@@ -1,5 +1,5 @@
 import { type LoaderFunctionArgs, redirect, json } from '@remix-run/node';
-import { Link, useLoaderData } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import { getEcomApi } from '~/api/ecom-api';
 import { ROUTES } from '~/router/config';
 import styles from './products.module.scss';
@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import { CategoryLink } from '~/components/category-link/category-link';
 import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
 import { RouteHandle } from '~/router/types';
+import { ProductLink } from '~/components/product-link/product-link';
 
 export const loader = async ({ params: { categorySlug } }: LoaderFunctionArgs) => {
     const api = getEcomApi();
@@ -88,9 +89,9 @@ export default function ProductsPage() {
 
                     <div className={styles.productsList}>
                         {categoryProducts.map((product) => (
-                            <Link
+                            <ProductLink
                                 key={product._id}
-                                to={ROUTES.productDetails.to(product.slug!)}
+                                productSlug={product.slug!}
                                 state={{
                                     fromCategory: {
                                         name: category.name,
@@ -104,7 +105,7 @@ export default function ProductsPage() {
                                     priceData={product.priceData}
                                     ribbon={product.ribbon ?? undefined}
                                 />
-                            </Link>
+                            </ProductLink>
                         ))}
                     </div>
                 </div>

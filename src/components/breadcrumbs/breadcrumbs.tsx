@@ -1,3 +1,4 @@
+import React from 'react';
 import { useLocation, useMatches } from '@remix-run/react';
 import { RouteMatch } from '~/router/types';
 import styles from './breadcrumbs.module.scss';
@@ -11,10 +12,14 @@ export const Breadcrumbs = () => {
         <div className={styles.breadcrumbs}>
             {matches
                 .flatMap((match) => match.handle?.breadcrumb?.(match, location) ?? [])
-                .map((breadcrumb, index, arr) => [
-                    breadcrumb,
-                    index !== arr.length - 1 && <ArrowRightIcon className={styles.separatorIcon} />,
-                ])}
+                .map((breadcrumb, index, arr) => (
+                    <React.Fragment key={index}>
+                        {breadcrumb}
+                        {index !== arr.length - 1 && (
+                            <ArrowRightIcon className={styles.separatorIcon} />
+                        )}
+                    </React.Fragment>
+                ))}
         </div>
     );
 };
