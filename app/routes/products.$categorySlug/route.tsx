@@ -41,7 +41,9 @@ export const loader = async ({ params: { categorySlug } }: LoaderFunctionArgs) =
 
 export const handle: RouteHandle<typeof loader> = {
     breadcrumb: (match) => (
-        <Link to={ROUTES.products.to(match.data.category.slug!)}>{match.data.category.name!}</Link>
+        <CategoryLink categorySlug={match.data.category.slug!}>
+            {match.data.category.name!}
+        </CategoryLink>
     ),
 };
 
@@ -65,7 +67,9 @@ export default function ProductsPage() {
                                             [styles.categoryLinkActive]: isActive,
                                         })
                                     }
-                                />
+                                >
+                                    {category.name}
+                                </CategoryLink>
                             </li>
                         ))}
                     </ul>

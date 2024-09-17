@@ -13,6 +13,7 @@ import { ShareProductLinks } from '~/components/share-product-links/share-produc
 import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
 import { ROUTES } from '~/router/config';
 import { RouteHandle } from '~/router/types';
+import { CategoryLink } from '~/components/category-link/category-link';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     const productSlug = params.productSlug;
@@ -49,7 +50,7 @@ export const handle: RouteHandle<typeof loader, ProductDetailsLocationState> = {
 
         if (fromCategory) {
             const categoryLink = (
-                <Link to={ROUTES.products.to(fromCategory.slug)}>{fromCategory.name}</Link>
+                <CategoryLink categorySlug={fromCategory.slug}>{fromCategory.name}</CategoryLink>
             );
             return [categoryLink, productLink];
         }
