@@ -1,40 +1,39 @@
-.heroImage {
+.heroBanner {
     --marginBottom: 2vw;
     position: relative;
     color: var(--colorA1);
     background-color: var(--black);
     margin-bottom: var(--marginBottom);
+    height: calc(100vh - var(--headerTopBarHeight) - var(--headerNavigationHeight) - var(--marginBottom));
 }
 
-.heroImage .overlay {
+.heroBanner .overlay {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column; 
+    text-align: center;
     overflow: hidden;
     position: absolute;
-    background-color: transparent;
     inset: 0;
 }
 
-.heroImage img {
-    --heroImageHeight: calc(100vh - var(--headerTopBarHeight) - var(--headerNavigationHeight) - var(--marginBottom));
+.heroBanner img {
     opacity: 0.8;
     object-fit: cover;
     object-position: 50% 50%;
-    height: var(--heroImageHeight);
+    height: 100%;
     width: 100%;
 }
 
-.heroImage .subtitle {
+.heroBanner .subtitle {
+    width: 54%;
     font: var(--paragraph1);
     letter-spacing: 0.2em;
-    white-space: nowrap;
 }
 
-.heroImage .title {
+.heroBanner .title {
     font: var(--heading1);
     font-size: clamp(60px, 6vw, 110px);
     text-transform: uppercase;
-    white-space: nowrap;
 }
