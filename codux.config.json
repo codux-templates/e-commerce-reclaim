@@ -24,6 +24,9 @@
   "styling": {
     "solution": "scss modules"
   },
+  "styleFilesConfig": {
+    "commonStyleFilePattern": "**/common.scss"
+  },
   "resolve": {
     "alias": {
       "@styles": "./src/styles",

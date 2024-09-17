@@ -1,4 +1,4 @@
-import './typography.board.scss';
+import '~/styles/common.scss';
 import { createBoard } from '@wixc3/react-board';
 
 export default createBoard({
@@ -17,9 +17,8 @@ export default createBoard({
             <p className="paragraph3">Paragraph 3</p>
         </div>
     ),
-    isSnippet: true,
     environmentProps: {
-        windowWidth: 449,
-        windowHeight: 463,
+        windowWidth: 450,
+        windowHeight: 460,
     },
 });
