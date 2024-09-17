@@ -7,7 +7,7 @@ export default function HomePage() {
     return (
         <>
             <div className={styles.heroImage}>
-                <img src={heroImageJpg} className={styles.image} alt="Hero banner" />
+                <img src={heroImageJpg} alt="Hero banner" />
                 <div className={styles.overlay}>
                     <div className={styles.subtitle}>ReClaim</div>
                     <h1 className={styles.title}>Reuse. Repurpose. Relove.</h1>

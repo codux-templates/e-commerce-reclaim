@@ -17,7 +17,7 @@
     inset: 0;
 }
 
-.heroImage .image {
+.heroImage img {
     --heroImageHeight: calc(100vh - var(--headerTopBarHeight) - var(--headerNavigationHeight) - var(--marginBottom));
     opacity: 0.8;
     object-fit: cover;
