@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import classNames from 'classnames';
 import { MinusIcon, PlusIcon } from '../icons';
 import styles from './quantity-input.module.scss';
-import { useRef } from 'react';
 
 type QuantityInputProps = {
     value: number;
@@ -11,53 +11,34 @@ type QuantityInputProps = {
 };
 
 export const QuantityInput = ({ value, onChange, id, className }: QuantityInputProps) => {
-    const lastValidQuantity = useRef(value);
+    const [internalValue, setInternalValue] = useState<string | undefined>();
 
-    const handleChange = (newValue: number) => {
-        onChange(newValue);
-        if (newValue !== 0) {
-            lastValidQuantity.current = newValue;
-        }
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+        const strValue = event.target.value.replace(/\D/g, '');
+        const numValue = Number(strValue);
+        setInternalValue(strValue);
+        if (numValue) onChange(numValue);
     };
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
-        if (!value) handleChange(0);
-        const number = Number.parseInt(value, 10);
-        if (!Number.isNaN(number) && number > 0) {
-            handleChange(number);
-        }
-    };
-
-    const decrease = () => {
-        if (value > 1) {
-            handleChange(value - 1);
-        }
-    };
-
-    const increase = () => {
-        handleChange(value + 1);
-    };
-
-    const handleInputBlur = () => {
-        if (value === 0 && lastValidQuantity.current) {
-            handleChange(lastValidQuantity.current);
-        }
-    };
+    const handleBlur = () => setInternalValue(undefined);
+    const increment = () => onChange(Math.max(1, Math.floor(value + 1)));
+    const decrement = () => onChange(Math.max(1, Math.ceil(value - 1)));
 
     return (
         <div className={styles.root}>
-            <button className={styles.button} onClick={decrease} disabled={value <= 1}>
+            <button className={styles.button} onClick={decrement} disabled={value <= 1}>
                 <MinusIcon className={styles.icon} />
             </button>
             <input
                 id={id}
+                type="text"
+                inputMode="numeric"
                 className={classNames(styles.input, className)}
-                value={value || ''}
-                onChange={handleInputChange}
-                onBlur={handleInputBlur}
+                value={internalValue ?? value}
+                onChange={handleChange}
+                onBlur={handleBlur}
             />
-            <button className={styles.button} onClick={increase}>
+            <button className={styles.button} onClick={increment}>
                 <PlusIcon className={styles.icon} />
             </button>
         </div>

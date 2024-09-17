@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { Accordion } from '~/components/accordion/accordion';
 import { ProductImages } from '~/components/product-images/product-images';
 import { Button } from '~/components/button/button';
-import { getUrlOriginWithPath } from '~/utils';
+import { removeQueryStringFromUrl } from '~/utils';
 import { ShareProductLinks } from '~/components/share-product-links/share-product-links';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
@@ -22,7 +22,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
         throw new Response('Product Not Found', { status: 404 });
     }
 
-    const canonicalUrl = getUrlOriginWithPath(request.url);
+    const canonicalUrl = removeQueryStringFromUrl(request.url);
 
     return json({ product, canonicalUrl });
 };
