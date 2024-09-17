@@ -7,6 +7,8 @@ import { ProductCard } from '~/components/product-card/product-card';
 import { collections } from '@wix/stores';
 import classNames from 'classnames';
 import { CategoryLink } from '~/components/category-link/category-link';
+import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
+import { RouteHandle } from '~/router/types';
 
 export const loader = async ({ params: { categorySlug } }: LoaderFunctionArgs) => {
     const api = getEcomApi();
@@ -37,11 +39,18 @@ export const loader = async ({ params: { categorySlug } }: LoaderFunctionArgs) =
     return json({ category, categoryProducts, allCategories });
 };
 
+export const handle: RouteHandle<typeof loader> = {
+    breadcrumb: (match) => (
+        <Link to={ROUTES.products.to(match.data.category.slug!)}>{match.data.category.name!}</Link>
+    ),
+};
+
 export default function ProductsPage() {
     const { category, categoryProducts, allCategories } = useLoaderData<typeof loader>();
 
     return (
         <div className={styles.page}>
+<<<<<<< Updated upstream
             <nav className={styles.navigation}>
                 <h2 className={styles.navigationTitle}>Browse by</h2>
                 <ul>
@@ -61,29 +70,62 @@ export default function ProductsPage() {
                     ))}
                 </ul>
             </nav>
+=======
+            <Breadcrumbs />
+>>>>>>> Stashed changes
 
-            <div>
-                <h1 className={styles.categoryName}>{category.name}</h1>
-                {category.description && (
-                    <p className={styles.categoryDescription}>{category.description}</p>
-                )}
+            <div className={styles.content}>
+                <nav className={styles.navigation}>
+                    <h2 className={styles.navigationTitle}>Browse by</h2>
+                    <ul>
+                        {allCategories.map((category) => (
+                            <li key={category._id} className={styles.categoryListItem}>
+                                <CategoryLink
+                                    title={category.name}
+                                    categorySlug={category.slug!}
+                                    className={({ isActive }) =>
+                                        classNames(styles.categoryLink, {
+                                            [styles.categoryLinkActive]: isActive,
+                                        })
+                                    }
+                                />
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
 
-                <p className={styles.productsCount}>
-                    {category.numberOfProducts}{' '}
-                    {category.numberOfProducts === 1 ? 'product' : 'products'}
-                </p>
+                <div>
+                    <h1 className={styles.categoryName}>{category.name}</h1>
+                    {category.description && (
+                        <p className={styles.categoryDescription}>{category.description}</p>
+                    )}
 
-                <div className={styles.productsList}>
-                    {categoryProducts.map((product) => (
-                        <Link key={product._id} to={ROUTES.productDetails.to(product.slug!)}>
-                            <ProductCard
-                                name={product.name!}
-                                imageUrl={product.media?.mainMedia?.image?.url}
-                                priceData={product.priceData}
-                                ribbon={product.ribbon ?? undefined}
-                            />
-                        </Link>
-                    ))}
+                    <p className={styles.productsCount}>
+                        {category.numberOfProducts}{' '}
+                        {category.numberOfProducts === 1 ? 'product' : 'products'}
+                    </p>
+
+                    <div className={styles.productsList}>
+                        {categoryProducts.map((product) => (
+                            <Link
+                                key={product._id}
+                                to={ROUTES.productDetails.to(product.slug!)}
+                                state={{
+                                    fromCategory: {
+                                        name: category.name,
+                                        slug: category.slug,
+                                    },
+                                }}
+                            >
+                                <ProductCard
+                                    name={product.name!}
+                                    imageUrl={product.media?.mainMedia?.image?.url}
+                                    priceData={product.priceData}
+                                    ribbon={product.ribbon ?? undefined}
+                                />
+                            </Link>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

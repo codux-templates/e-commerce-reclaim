@@ -1,6 +1,16 @@
+<<<<<<< Updated upstream
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+=======
+import { Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+>>>>>>> Stashed changes
 import '~/styles/index.scss';
 import { SiteWrapper } from '~/components/site-wrapper/site-wrapper';
+import { ROUTES } from '~/router/config';
+import { RouteHandle } from '@remix-run/react/dist/routeModules';
+
+export const handle: RouteHandle = {
+    breadcrumb: () => <Link to={ROUTES.home.path}>Home</Link>,
+};
 
 export default function App() {
     return (
