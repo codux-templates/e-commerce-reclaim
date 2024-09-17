@@ -3,13 +3,13 @@
   "boardGlobalSetup": "./_codux/boards-global-setup.ts",
   "componentsDiscovery": {
     "include": ["src/**"],
-    "exclude": ["_codux/**"]
+    "exclude": ["_codux/component-templates/**"]
   },
+  "boardsPath": "_codux/boards",
   "newComponent": {
     "componentsPath": "src/components",
     "templatesPath": "_codux/component-templates"
   },
-  "boardsPath": "_codux/boards/components",
   "safeRender": {
     "maxInstancesPerComponent": 1000
   },
@@ -21,11 +21,11 @@
       "trigger": ["checkout", "pull", "setup"]
     }
   },
-  "styleFilesConfig": {
-    "commonStyleFilePattern": "**/commons.module.scss"
-  },
   "styling": {
     "solution": "scss modules"
+  },
+  "styleFilesConfig": {
+    "commonStyleFilePattern": "**/commons.scss"
   },
   "resolve": {
     "alias": {

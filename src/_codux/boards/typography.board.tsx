@@ -1,8 +1,8 @@
-import './new-board.board.scss';
+import './typography.board.scss';
 import { createBoard } from '@wixc3/react-board';
 
 export default createBoard({
-    name: 'New Board',
+    name: 'Typography',
     Board: () => (
         <div>
             <h1 className="heading1">Heading 1</h1>
