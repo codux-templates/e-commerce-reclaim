@@ -50,29 +50,7 @@ export default function ProductsPage() {
 
     return (
         <div className={styles.page}>
-<<<<<<< Updated upstream
-            <nav className={styles.navigation}>
-                <h2 className={styles.navigationTitle}>Browse by</h2>
-                <ul>
-                    {allCategories.map((category) => (
-                        <li key={category._id} className={styles.categoryListItem}>
-                            <CategoryLink
-                                categorySlug={category.slug!}
-                                className={({ isActive }) =>
-                                    classNames(styles.categoryLink, {
-                                        [styles.categoryLinkActive]: isActive,
-                                    })
-                                }
-                            >
-                                {category.name}
-                            </CategoryLink>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
-=======
             <Breadcrumbs />
->>>>>>> Stashed changes
 
             <div className={styles.content}>
                 <nav className={styles.navigation}>
@@ -81,7 +59,6 @@ export default function ProductsPage() {
                         {allCategories.map((category) => (
                             <li key={category._id} className={styles.categoryListItem}>
                                 <CategoryLink
-                                    title={category.name}
                                     categorySlug={category.slug!}
                                     className={({ isActive }) =>
                                         classNames(styles.categoryLink, {

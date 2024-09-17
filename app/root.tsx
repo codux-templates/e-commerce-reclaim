@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-=======
-import { Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
->>>>>>> Stashed changes
+import { Links, Link, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 import '~/styles/index.scss';
 import { SiteWrapper } from '~/components/site-wrapper/site-wrapper';
 import { ROUTES } from '~/router/config';
