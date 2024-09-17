@@ -11,7 +11,7 @@ export default function HomePage() {
                 <div className={styles.overlay}>
                     <div className={styles.subtitle}>ReClaim</div>
                     <h1 className={styles.title}>Reuse. Repurpose. Relove.</h1>
-                    <CategoryLink categorySlug="all-products" className={styles.overlayLink}>
+                    <CategoryLink categorySlug="all-products">
                         <LabelWithArrow>Shop Collections</LabelWithArrow>
                     </CategoryLink>
                 </div>
