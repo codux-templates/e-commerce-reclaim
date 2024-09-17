@@ -9,10 +9,11 @@ export default function HomePage() {
             <TextBanner
                 subtitle="Products of the highest standards"
                 title="Essential home collections for sustainable living"
-                className={styles.textBanner}
             >
                 <CategoryLink categorySlug="all-products">
-                    <LabelWithArrow className={styles.textBannerLink}>Shop Collections</LabelWithArrow>
+                    <LabelWithArrow className={styles.textBannerLink}>
+                        Shop Collections
+                    </LabelWithArrow>
                 </CategoryLink>
             </TextBanner>
         </>

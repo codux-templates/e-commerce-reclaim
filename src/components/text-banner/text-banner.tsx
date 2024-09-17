@@ -18,5 +18,3 @@ export const TextBanner = ({ title, subtitle, className, children }: TextBannerP
         </div>
     );
 };
-
-export default TextBanner;
