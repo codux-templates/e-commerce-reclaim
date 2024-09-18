@@ -7,6 +7,7 @@ import styles from './cart.module.scss';
 import { CloseIcon, LockIcon } from '../icons';
 import { Button } from '../button/button';
 import { cart } from '@wix/ecom';
+import { calculateCartItemsCount } from '~/api/cart-helpers';
 
 export const Cart = () => {
     const ecomAPI = useEcomAPI();
@@ -29,7 +30,7 @@ export const Cart = () => {
         )?.pricesBreakdown;
     };
 
-    const itemsCount = cart.data?.lineItems.reduce((total, item) => total + item.quantity!, 0) ?? 0;
+    const itemsCount = cart.data ? calculateCartItemsCount(cart.data) : 0;
 
     return (
         <Drawer open={cartOpener.isOpen} onClose={() => cartOpener.setIsOpen(false)}>
