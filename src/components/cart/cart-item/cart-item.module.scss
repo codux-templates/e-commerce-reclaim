@@ -20,11 +20,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #000;
+    background: var(--black);
 }
 
 .imagePlaceholderIcon {
-    fill: #fff;
+    color: var(--white);
     width: 37px;
     height: 37px;
 }

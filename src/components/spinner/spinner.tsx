@@ -13,7 +13,7 @@ export const Spinner = ({ size }: SpinnerProps) => {
                 r="20"
                 fill="none"
                 strokeWidth="1"
-                className={styles.dash}
+                className={styles.circle}
             ></circle>
         </svg>
     );

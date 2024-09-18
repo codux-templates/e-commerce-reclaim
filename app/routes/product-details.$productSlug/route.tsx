@@ -63,9 +63,11 @@ export const handle: RouteHandle<typeof loader, ProductDetailsLocationState> = {
 
 export default function ProductDetailsPage() {
     const { product, canonicalUrl } = useLoaderData<typeof loader>();
-    const [quantity, setQuantity] = useState(1);
+
     const cartOpener = useCartOpen();
     const addToCartMutation = useAddToCart();
+
+    const [quantity, setQuantity] = useState(1);
 
     const handleAddToCart = async () => {
         await addToCartMutation.trigger({ id: product._id!, quantity });

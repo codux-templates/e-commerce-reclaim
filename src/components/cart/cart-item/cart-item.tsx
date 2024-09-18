@@ -50,7 +50,7 @@ export const CartItem = ({ item, priceBreakdown }: CartItemProps) => {
 
             <div>
                 <div className={styles.header}>
-                    <span className="paragraph1">{productName}</span>
+                    <span>{productName}</span>
                     <button className={styles.removeButton} onClick={handleRemove}>
                         <TrashIcon />
                     </button>

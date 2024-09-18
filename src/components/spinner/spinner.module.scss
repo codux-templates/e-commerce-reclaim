@@ -2,8 +2,8 @@
     animation: rotation 2s linear infinite;
 }
 
-.dash {
-    animation: dash 1.5s ease-in-out infinite;
+.circle {
+    animation: circleAnimation 1.5s ease-in-out infinite;
     stroke: var(--colorA5);
 }
 
@@ -13,7 +13,7 @@
     }
 }
 
-@keyframes dash {
+@keyframes circleAnimation {
     0% {
         stroke-dasharray: 1, 150;
         stroke-dashoffset: 0;
