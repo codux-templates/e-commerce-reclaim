@@ -1,6 +1,5 @@
 import { CategoryLink } from '~/components/category-link/category-link';
 import { LabelWithArrow } from '~/components/label-with-arrow/label-with-arrow';
-import { TextBanner } from '~/components/text-banner/text-banner';
 import styles from './index.module.scss';
 
 export default function HomePage() {
@@ -20,14 +19,15 @@ export default function HomePage() {
                 </div>
             </div>
 
-            <TextBanner
-                subtitle="Products of the highest standards"
-                title="Essential home collections for sustainable living"
-            >
+            <div className={styles.textBanner}>
+                <div className={styles.textBannerSubtitle}>Products of the highest standards</div>
+                <div className={styles.textBannerTitle}>
+                    Essential home collections for sustainable living
+                </div>
                 <CategoryLink categorySlug="all-products">
                     <LabelWithArrow>Shop Collections</LabelWithArrow>
                 </CategoryLink>
-            </TextBanner>
+            </div>
         </>
     );
 }
