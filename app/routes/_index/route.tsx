@@ -1,6 +1,6 @@
 import { CategoryLink } from '~/components/category-link/category-link';
-import { LabelWithArrow } from '~/components/label-with-arrow/label-with-arrow';
 import styles from './index.module.scss';
+import { LabelWithArrow } from '~/components/label-with-arrow/label-with-arrow';
 
 export default function HomePage() {
     return (
