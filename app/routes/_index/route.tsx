@@ -19,9 +19,9 @@ export default function HomePage() {
                 </div>
             </div>
 
-            <div className={styles.textBanner}>
-                <div className={styles.textBannerSubtitle}>Products of the highest standards</div>
-                <div className={styles.textBannerTitle}>
+            <div className="textBanner">
+                <div className="textBannerSubtitle">Products of the highest standards</div>
+                <div className="textBannerTitle">
                     Essential home collections for sustainable living
                 </div>
                 <CategoryLink categorySlug="all-products">
