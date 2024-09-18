@@ -14,6 +14,8 @@ import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
 import { RouteHandle } from '~/router/types';
 import { CategoryLink } from '~/components/category-link/category-link';
 import { ProductLink } from '~/components/product-link/product-link';
+import { useCartOpen } from '~/components/cart/cart-open-context';
+import { useAddToCart } from '~/api/api-hooks';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     const productSlug = params.productSlug;
@@ -62,6 +64,13 @@ export const handle: RouteHandle<typeof loader, ProductDetailsLocationState> = {
 export default function ProductDetailsPage() {
     const { product, canonicalUrl } = useLoaderData<typeof loader>();
     const [quantity, setQuantity] = useState(1);
+    const cartOpener = useCartOpen();
+    const addToCartMutation = useAddToCart();
+
+    const handleAddToCart = async () => {
+        await addToCartMutation.trigger({ id: product._id!, quantity });
+        cartOpener.setIsOpen(true);
+    };
 
     return (
         <div className={styles.page}>
@@ -92,7 +101,13 @@ export default function ProductDetailsPage() {
                         <QuantityInput id="quantity" value={quantity} onChange={setQuantity} />
                     </div>
 
-                    <Button className={styles.addToCartButton}>Add to Cart</Button>
+                    <Button
+                        className={styles.addToCartButton}
+                        onClick={handleAddToCart}
+                        disabled={addToCartMutation.isMutating}
+                    >
+                        Add to Cart
+                    </Button>
 
                     {product.additionalInfoSections &&
                         product.additionalInfoSections.length > 0 && (
