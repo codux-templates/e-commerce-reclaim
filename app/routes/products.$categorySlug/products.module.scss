@@ -24,8 +24,7 @@
 }
 
 .categoryLink {
-    font-size: 14px;
-    line-height: 1.6;
+    font: var(--paragraph3);
 }
 
 .categoryLinkActive {
@@ -39,15 +38,13 @@
 .categoryDescription {
     max-width: 672px;
     margin-top: 4px;
-    font-size: 16px;
-    line-height: 1.5;
+    font: var(--paragraph1);
 }
 
 .productsCount {
     margin-top: 46px;
     margin-bottom: 8px;
-    font-size: 14px;
-    line-height: 1.6;
+    font: var(--paragraph3);
 }
 
 .productsList {

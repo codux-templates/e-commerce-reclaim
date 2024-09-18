@@ -16,7 +16,7 @@
 
 .sku {
     margin-top: 8px;
-    font-size: 14px;
+    font: var(--paragraph3);
     line-height: 1;
     color: var(--colorA4);
 }
@@ -29,7 +29,7 @@
 
 .description {
     margin-top: 14px;
-    font-size: 15px;
+    font: var(--paragraph2);
     line-height: 1.5;
 }
 
