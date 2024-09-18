@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import classNames from 'classnames';
 import styles from './drawer.module.scss';
 
@@ -8,6 +9,16 @@ interface DrawerProps {
 }
 
 export const Drawer = ({ open, onClose, children }: DrawerProps) => {
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                onClose();
+            }
+        };
+        if (open) document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [open, onClose]);
+
     return (
         <div className={classNames(styles.root, { [styles.open]: open })}>
             <div className={styles.overlay} onClick={onClose}></div>
