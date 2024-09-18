@@ -1,10 +1,11 @@
 .heroBanner {
     --marginBottom: 2vw;
+    --bannerHeight: calc(100vh - var(--headerHeight) - var(--marginBottom));
+    margin-bottom: var(--marginBottom);
+    height: var(--bannerHeight);
     position: relative;
     color: var(--colorA1);
     background-color: var(--black);
-    margin-bottom: var(--marginBottom);
-    height: calc(100vh - var(--headerTopBarHeight) - var(--headerNavigationHeight) - var(--marginBottom));
 }
 
 .heroBanner .overlay {

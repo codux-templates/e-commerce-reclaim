@@ -6,7 +6,10 @@ export default function HomePage() {
     return (
         <>
             <div className={styles.heroBanner}>
-                <img src="https://static.wixstatic.com/media/32aab9_2c3c65e142434906992aedb17db53566~mv2.jpg" />
+                <img
+                    src="https://static.wixstatic.com/media/32aab9_2c3c65e142434906992aedb17db53566~mv2.jpg"
+                    alt=""
+                />
                 <div className={styles.overlay}>
                     <div className={styles.subtitle}>ReClaim</div>
                     <h1 className={styles.title}>Reuse. Repurpose. Relove.</h1>
