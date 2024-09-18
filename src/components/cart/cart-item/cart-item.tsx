@@ -6,7 +6,9 @@ import { TrashIcon } from '~/components/icons/trash';
 import { ImagePlaceholderIcon } from '~/components/icons';
 import { Spinner } from '~/components/spinner/spinner';
 import classNames from 'classnames';
+import debounce from 'lodash.debounce';
 import styles from './cart-item.module.scss';
+import { useMemo, useState } from 'react';
 
 export interface CartItemProps {
     item: cart.LineItem;
@@ -19,6 +21,13 @@ export const CartItem = ({ item, priceBreakdown }: CartItemProps) => {
     const removeItemMutation = useRemoveItemFromCart();
     const updateItemQuantityMutation = useUpdateCartItemQuantity();
 
+    const [quantity, setQuantity] = useState(item.quantity!);
+
+    const updateItemQuantity = useMemo(
+        () => debounce(updateItemQuantityMutation.trigger, 300),
+        [updateItemQuantityMutation.trigger]
+    );
+
     const isUpdatingItem = removeItemMutation.isMutating || updateItemQuantityMutation.isMutating;
 
     const handleRemove = () => {
@@ -26,11 +35,9 @@ export const CartItem = ({ item, priceBreakdown }: CartItemProps) => {
     };
 
     const handleQuantityChange = (value: number) => {
+        setQuantity(value);
         if (value > 0) {
-            updateItemQuantityMutation.trigger({
-                id: item._id!,
-                quantity: value,
-            });
+            updateItemQuantity({ id: item._id!, quantity: value });
         }
     };
 
@@ -62,7 +69,7 @@ export const CartItem = ({ item, priceBreakdown }: CartItemProps) => {
 
                 <div className={styles.quantityAndPrice}>
                     <QuantityInput
-                        value={item.quantity!}
+                        value={quantity}
                         onChange={handleQuantityChange}
                         className={styles.quantityInput}
                     />
