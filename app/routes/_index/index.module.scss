@@ -38,21 +38,3 @@
     font-size: clamp(60px, 6vw, 110px);
     text-transform: uppercase;
 }
-
-.rowOfCards {
-    display: grid;
-    grid-auto-columns: minmax(0, 1fr);
-    grid-auto-flow: column;
-    gap: 4px;
-    width: 100%;
-    margin-bottom: 5%;
-    aspect-ratio: 2.26;
-
-    :global(.cardTitle) {
-        padding: 30px;
-        text-transform: uppercase;
-        color: var(--colorA1);
-        font: var(--heading4);
-        text-align: center;
-    }
-}
