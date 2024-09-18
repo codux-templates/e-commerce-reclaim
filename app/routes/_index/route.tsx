@@ -15,7 +15,7 @@ export default function HomePage() {
                     <div className={styles.subtitle}>ReClaim</div>
                     <h1 className={styles.title}>Reuse. Repurpose. Relove.</h1>
                     <CategoryLink categorySlug="all-products">
-                        <LabelWithArrow>Shop Collections</LabelWithArrow>
+                        <LabelWithArrow className={styles.link}>Shop Collections</LabelWithArrow>
                     </CategoryLink>
                 </div>
             </div>
@@ -25,9 +25,7 @@ export default function HomePage() {
                 title="Essential home collections for sustainable living"
             >
                 <CategoryLink categorySlug="all-products">
-                    <LabelWithArrow className={styles.textBannerLink}>
-                        Shop Collections
-                    </LabelWithArrow>
+                    <LabelWithArrow>Shop Collections</LabelWithArrow>
                 </CategoryLink>
             </TextBanner>
         </>
