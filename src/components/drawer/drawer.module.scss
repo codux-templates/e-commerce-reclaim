@@ -2,18 +2,11 @@
     display: none;
     position: fixed;
     inset: 0;
-    z-index: 999;
+    background-color: rgba(27, 17, 13, 0.3);
 }
 
 .open {
     display: block;
-}
-
-.overlay {
-    position: absolute;
-    inset: 0;
-    background-color: var(--colorA5);
-    opacity: 0.3;
 }
 
 .drawer {

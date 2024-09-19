@@ -18,30 +18,30 @@ export interface CartItemProps {
 export const CartItem = ({ item, priceBreakdown }: CartItemProps) => {
     const productName = item.productName?.translated ?? '';
 
-    const removeItemMutation = useRemoveItemFromCart();
-    const updateItemQuantityMutation = useUpdateCartItemQuantity();
+    const { trigger: removeItem, isMutating: isRemovingItem } = useRemoveItemFromCart();
+    const { trigger: updateItemQuantity, isMutating: isUpdatingItemQuantity } =
+        useUpdateCartItemQuantity();
 
     const [quantity, setQuantity] = useState(item.quantity!);
 
-    const updateItemQuantity = useMemo(
-        () => debounce(updateItemQuantityMutation.trigger, 300),
-        [updateItemQuantityMutation.trigger]
+    const updateItemQuantityDebounced = useMemo(
+        () => debounce(updateItemQuantity, 300),
+        [updateItemQuantity]
     );
 
-    const isUpdatingItem = removeItemMutation.isMutating || updateItemQuantityMutation.isMutating;
-
     const handleRemove = () => {
-        removeItemMutation.trigger(item._id!);
+        removeItem(item._id!);
     };
 
     const handleQuantityChange = (value: number) => {
         setQuantity(value);
         if (value > 0) {
-            updateItemQuantity({ id: item._id!, quantity: value });
+            updateItemQuantityDebounced({ id: item._id!, quantity: value });
         }
     };
 
     const image = item.image ? media.getImageUrl(item.image) : undefined;
+    const isUpdatingItem = isRemovingItem || isUpdatingItemQuantity;
 
     return (
         <div className={classNames(styles.root, { [styles.loading]: isUpdatingItem })}>

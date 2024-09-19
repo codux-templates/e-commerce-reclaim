@@ -65,13 +65,20 @@ export default function ProductDetailsPage() {
     const { product, canonicalUrl } = useLoaderData<typeof loader>();
 
     const cartOpener = useCartOpen();
-    const addToCartMutation = useAddToCart();
+    const { trigger: addToCart, isMutating: isAddingToCart } = useAddToCart();
 
     const [quantity, setQuantity] = useState(1);
 
-    const handleAddToCart = async () => {
-        await addToCartMutation.trigger({ id: product._id!, quantity });
-        cartOpener.setIsOpen(true);
+    const handleAddToCartClick = () => {
+        addToCart(
+            {
+                id: product._id!,
+                quantity,
+            },
+            {
+                onSuccess: () => cartOpener.setIsOpen(true),
+            }
+        );
     };
 
     return (
@@ -105,8 +112,8 @@ export default function ProductDetailsPage() {
 
                     <Button
                         className={styles.addToCartButton}
-                        onClick={handleAddToCart}
-                        disabled={addToCartMutation.isMutating}
+                        onClick={handleAddToCartClick}
+                        disabled={isAddingToCart}
                     >
                         Add to Cart
                     </Button>

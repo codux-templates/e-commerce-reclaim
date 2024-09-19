@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import classNames from 'classnames';
+import { RemoveScroll } from 'react-remove-scroll';
 import styles from './drawer.module.scss';
 
 interface DrawerProps {
@@ -20,9 +21,13 @@ export const Drawer = ({ open, onClose, children }: DrawerProps) => {
     }, [open, onClose]);
 
     return (
-        <div className={classNames(styles.root, { [styles.open]: open })}>
-            <div className={styles.overlay} onClick={onClose}></div>
-            <div className={styles.drawer}>{children}</div>
+        <div className={classNames(styles.root, { [styles.open]: open })} onClick={onClose}>
+            {/* RemoveScroll disables scroll outside the drawer. */}
+            <RemoveScroll>
+                <div className={styles.drawer} onClick={(event) => event.stopPropagation()}>
+                    {children}
+                </div>
+            </RemoveScroll>
         </div>
     );
 };
