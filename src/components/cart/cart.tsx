@@ -22,7 +22,7 @@ export const Cart = () => {
         if (checkoutResponse.status === 'success') {
             window.location.href = checkoutResponse.body.checkoutUrl;
         } else {
-            alert('checkout failed.');
+            alert('Checkout failed.');
         }
     };
 
