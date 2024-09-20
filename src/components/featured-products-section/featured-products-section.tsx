@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
 import { ProductCard } from '../product-card/product-card';
 import { ProductLink } from '../product-link/product-link';
 import styles from './featured-products-section.module.scss';
 import { collections } from '@wix/stores';
-import { getEcomApi } from '~/api/ecom-api';
+import { getEcomApi, isEcomSDKError } from '~/api/ecom-api';
 import { Product } from '@wix/stores_products';
 import classNames from 'classnames';
+import useSWR from 'swr';
 
 interface FeaturedProductsData {
     category: collections.Collection;
@@ -18,50 +18,45 @@ const getFeaturedProducts = async (
 ): Promise<FeaturedProductsData | null> => {
     const api = getEcomApi();
 
-    let category: collections.Collection;
+    let category: collections.Collection | undefined;
     try {
-        category = await api.getCategoryBySlug(categorySlug);
+        category =
+            (await api.getCategoryBySlug(categorySlug)) ||
+            (await api.getCategoryBySlug('all-products'));
     } catch (error) {
-        try {
+        if (isEcomSDKError(error) && error.details.applicationError.code === 404) {
             category = await api.getCategoryBySlug('all-products');
-        } catch (error) {
-            return null;
+        } else {
+            throw error;
         }
     }
+    if (!category) throw new Error("Category 'all-products' not found");
 
-    try {
-        const products = await api.getProductsByCategory(category.slug, limit);
-        return { category, products };
-    } catch (error) {
-        return null;
-    }
+    const products = await api.getProductsByCategory(category.slug!, limit);
+    return { category, products };
 };
 
 interface FeaturedProductsSectionProps {
     categorySlug: string;
     title?: string;
     description?: JSX.Element | string;
-    limit?: number;
+    productCount?: number;
     className?: string;
 }
 
 export const FeaturedProductsSection = (props: FeaturedProductsSectionProps) => {
-    const { title, description, limit = 4, categorySlug, className } = props;
+    const { title, description, productCount = 4, categorySlug, className } = props;
 
-    const [data, setData] = useState<FeaturedProductsData | null>(null);
-
-    useEffect(() => {
-        getFeaturedProducts(categorySlug, limit).then((fetchedData) => {
-            setData(fetchedData);
-        });
-    }, [categorySlug, limit]);
+    const { data } = useSWR(`/category/${categorySlug}/featured/limit/${productCount}`, () =>
+        getFeaturedProducts(categorySlug, productCount)
+    );
 
     return (
         <div className={classNames(styles.root, className)}>
             <div className={styles.header}>
-                <h1 className={styles.headerTitle}>{title ?? data?.category.name ?? ''}</h1>
+                <h1 className={styles.headerTitle}>{title ?? data?.category.name}</h1>
                 <div className={styles.headerDescription}>
-                    {description ?? data?.category.description ?? ''}
+                    {description ?? data?.category.description}
                 </div>
             </div>
             {data && (
