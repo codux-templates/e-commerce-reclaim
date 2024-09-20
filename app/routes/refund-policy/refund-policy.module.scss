@@ -1,5 +1,5 @@
 .root {
-    margin: 40px 0px;
+    margin: 60px 0px;
 }
 
 .title {
@@ -24,12 +24,20 @@
 }
 
 @media screen and (max-width: 1024px) {
+    .root {
+        margin: 40px 0px;
+    }
+
     .section {
         width: 80%;
     }
 }
 
 @media screen and (max-width: 768px) {
+    .root {
+        margin: 20 0px;
+    }
+
     .title {
         font: var(--heading3);
         text-align: left;
