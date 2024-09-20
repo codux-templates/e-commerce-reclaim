@@ -1,0 +1,8 @@
+.root {
+    background-attachment: 'fixed',
+    // With `background-attachment: fixed`, the `cover` value for
+    // background size is calculated relative to the viewport.
+    background-size: 'cover',
+    background-repeat: 'no-repeat',
+    background-positionX: 'center'
+}
