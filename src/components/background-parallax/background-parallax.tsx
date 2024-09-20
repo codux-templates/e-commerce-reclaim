@@ -59,7 +59,6 @@ export const BackgroundParallax: FC<BackgroundParallaxProps> = ({
         };
     }, [parallaxStrength]);
 
-    console.log('imageUrl', imageUrl);
     return (
         <div
             ref={ref}
