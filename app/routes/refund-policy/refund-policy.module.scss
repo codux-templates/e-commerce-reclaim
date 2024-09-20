@@ -1,0 +1,50 @@
+.root {
+    margin: 40px 0px;
+}
+
+.title {
+    font: var(--heading2);
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.section {
+    width: 65%;
+    margin: 0 auto 40px;
+}
+
+.subtitle {
+    font-size: 22px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.text {
+    text-align: center;
+}
+
+@media screen and (max-width: 1024px) {
+    .section {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .title {
+        font: var(--heading3);
+        text-align: left;
+    }
+
+    .section {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .subtitle {
+        text-align: left;
+    }
+
+    .text {
+        text-align: left;
+    }
+}
