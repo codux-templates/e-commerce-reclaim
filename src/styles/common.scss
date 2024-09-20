@@ -108,19 +108,9 @@ $desktop-width: 1024px;
     text-align: center;
 }
 
-.backgroundParallax {
-    margin: 0 -2%;
-    width: 104%; // This is awful
-    aspect-ratio: 2;
-}
-
-.backgroundParallaxContent {
-    padding: 7% 11%;
-}
-
-.textOverlayCard {
+.floatingCard {
     width: 32%;
-    aspect-ratio: 0.75;
+    aspect-ratio: 0.8;
     padding: 22px;
     background-color: var(--colorA2);
     display: flex;
@@ -128,22 +118,23 @@ $desktop-width: 1024px;
     justify-content: flex-end;
 }
 
-.textOverlayCardHeader {
+.floatingCardHeader {
     text-transform: uppercase;
     padding-bottom: 3px;
     border-bottom: 1px solid var(--black);
 }
 
-.textOverlayCardContent {
+.floatingCardContent {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-content: end;
 }
 
-.textOverlayCardTitle {
-    font: var(--heading2);
-    font-size: 3.2vw;
+.floatingCardTitle {
+    font-family: var(--heading-font);
+    line-height: 1.2;
+    font-size: 3.1vw;
     text-transform: uppercase;
     align-self: flex-end;
     flex-grow: 1;
@@ -152,7 +143,7 @@ $desktop-width: 1024px;
     margin: 2% 0;
 }
 
-.textOverlayCardDescription {
+.floatingCardDescription {
     margin-bottom: 10%;
     text-wrap: balance;
 }

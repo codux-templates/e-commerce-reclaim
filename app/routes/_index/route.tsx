@@ -1,7 +1,7 @@
 import { CategoryLink } from '~/components/category-link/category-link';
 import { LabelWithArrow } from '~/components/label-with-arrow/label-with-arrow';
-import { BackgroundParallax } from '~/components/background-parallax/background-parallax';
 import styles from './index.module.scss';
+import { BackgroundParallax } from '~/components/visual-effects';
 
 export default function HomePage() {
     return (
@@ -60,24 +60,22 @@ export default function HomePage() {
 
             <BackgroundParallax
                 parallaxStrength={0.75}
-                className="backgroundParallax"
+                className={styles.floatingCardBackground}
                 imageUrl="https://static.wixstatic.com/media/c837a6_cae4dbe5a7ee4637b7d55d9bd5bd755d~mv2.png/v1/fill/w_1178,h_974,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/c837a6_cae4dbe5a7ee4637b7d55d9bd5bd755d~mv2.png"
             >
-                <div className="backgroundParallaxContent">
-                    <div className="textOverlayCard">
-                        <div className="textOverlayCardHeader">Happy Holidays</div>
-                        <div className="textOverlayCardContent">
-                            <h2 className="textOverlayCardTitle">The holidays best sellers</h2>
-                            <div className="textOverlayCardDescription">
-                                Home essentials for sustainable living
-                            </div>
+                <div className="floatingCard">
+                    <div className="floatingCardHeader">Happy Holidays</div>
+                    <div className="floatingCardContent">
+                        <h2 className="floatingCardTitle">The holidays best sellers</h2>
+                        <div className="floatingCardDescription">
+                            Home essentials for sustainable living
                         </div>
-                        <CategoryLink categorySlug="all-products">
-                            <LabelWithArrow className={styles.textOverlayCardLinkLabel}>
-                                Buy a Gift
-                            </LabelWithArrow>
-                        </CategoryLink>
                     </div>
+                    <CategoryLink categorySlug="all-products">
+                        <LabelWithArrow className={styles.floatingCardLinkLabel}>
+                            Buy a gift
+                        </LabelWithArrow>
+                    </CategoryLink>
                 </div>
             </BackgroundParallax>
         </>
