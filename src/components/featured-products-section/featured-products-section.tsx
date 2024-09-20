@@ -12,7 +12,7 @@ interface FeaturedProductsData {
     products: Product[];
 }
 
-const getCategoryProducts = async (
+const getFeaturedProducts = async (
     categorySlug: string,
     limit: number
 ): Promise<FeaturedProductsData | null> => {
@@ -30,7 +30,7 @@ const getCategoryProducts = async (
     }
 
     try {
-        const products = await api.getFeaturedProducts(category.slug, limit);
+        const products = await api.getProductsByCategory(category.slug, limit);
         return { category, products };
     } catch (error) {
         return null;
@@ -51,7 +51,7 @@ export const FeaturedProductsSection = (props: FeaturedProductsSectionProps) => 
     const [data, setData] = useState<FeaturedProductsData | null>(null);
 
     useEffect(() => {
-        getCategoryProducts(categorySlug, limit).then((fetchedData) => {
+        getFeaturedProducts(categorySlug, limit).then((fetchedData) => {
             setData(fetchedData);
         });
     }, [categorySlug, limit]);

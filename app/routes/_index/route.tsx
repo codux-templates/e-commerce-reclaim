@@ -59,8 +59,8 @@ export default function HomePage() {
             </div>
 
             <FeaturedProductsSection
-                categorySlug="new-in"
                 className={styles.featuredProducts}
+                categorySlug="new-in"
                 title="New In"
                 description="Embrace a sustainable lifestyle with our newest drop-ins."
             />

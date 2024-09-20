@@ -51,26 +51,18 @@ function createApi() {
     const wixClient = getWixClient();
 
     return {
-        getProductsByCategory: async (categorySlug: string) => {
+        getProductsByCategory: async (categorySlug: string, limit?: number) => {
             const getCategoryResult = await wixClient.collections.getCollectionBySlug(categorySlug);
 
-            return (
-                await wixClient.products
-                    .queryProducts()
-                    .hasSome('collectionIds', [getCategoryResult.collection?._id])
-                    .find()
-            ).items;
-        },
-        getFeaturedProducts: async (categorySlug: string, limit: number) => {
-            const getCategoryResult = await wixClient.collections.getCollectionBySlug(categorySlug);
+            let query = wixClient.products
+                .queryProducts()
+                .hasSome('collectionIds', [getCategoryResult.collection?._id]);
 
-            return (
-                await wixClient.products
-                    .queryProducts()
-                    .hasSome('collectionIds', [getCategoryResult.collection?._id])
-                    .limit(limit)
-                    .find()
-            ).items;
+            if (limit) {
+                query = query.limit(limit);
+            }
+
+            return (await query.find()).items;
         },
         getProduct: async (slug: string | undefined) => {
             return slug
