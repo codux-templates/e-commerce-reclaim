@@ -68,7 +68,8 @@ export default function HomePage() {
                     <div className="floatingCardContent">
                         <h2 className="floatingCardTitle">The holidays best sellers</h2>
                         <div className="floatingCardDescription">
-                            Home essentials for sustainable living
+                            Home essentials for
+                            <br /> sustainable living
                         </div>
                     </div>
                     <CategoryLink categorySlug="all-products">
