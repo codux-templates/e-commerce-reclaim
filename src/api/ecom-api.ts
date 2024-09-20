@@ -16,9 +16,11 @@ function getWixClientId() {
      * or from window.ENV on client side. for client, the root loader is populating window.ENV
      */
     const env =
-        typeof window !== 'undefined' && typeof window.ENV !== 'undefined'
+        typeof window !== 'undefined' && window.ENV
             ? window.ENV
-            : process.env;
+            : typeof process !== 'undefined'
+            ? process.env
+            : {};
 
     /* fallback to the Wix demo store id (it's not a secret). */
     return env.WIX_CLIENT_ID ?? '0c9d1ef9-f496-4149-b246-75a2514b8c99';
@@ -59,8 +61,16 @@ function createApi() {
                     .find()
             ).items;
         },
-        getPromotedProducts: async () => {
-            return (await wixClient.products.queryProducts().limit(4).find()).items;
+        getFeaturedProducts: async (categorySlug: string, limit: number) => {
+            const getCategoryResult = await wixClient.collections.getCollectionBySlug(categorySlug);
+
+            return (
+                await wixClient.products
+                    .queryProducts()
+                    .hasSome('collectionIds', [getCategoryResult.collection?._id])
+                    .limit(limit)
+                    .find()
+            ).items;
         },
         getProduct: async (slug: string | undefined) => {
             return slug
