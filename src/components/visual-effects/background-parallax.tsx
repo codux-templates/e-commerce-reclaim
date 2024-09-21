@@ -66,9 +66,7 @@ export const BackgroundParallax: FC<BackgroundParallaxProps> = ({
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
                 backgroundPositionX: 'center',
-                ...(backgroundImageUrl
-                    ? { backgroundImage: `url("${backgroundImageUrl}")` }
-                    : undefined),
+                backgroundImage: backgroundImageUrl ? `url("${backgroundImageUrl}")` : undefined,
                 ...style,
             }}
             {...props}
