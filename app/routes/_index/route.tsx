@@ -59,9 +59,8 @@ export default function HomePage() {
             </div>
 
             <BackgroundParallax
-                parallaxStrength={0.75}
                 className={styles.floatingCardBackground}
-                imageUrl="https://static.wixstatic.com/media/c837a6_cae4dbe5a7ee4637b7d55d9bd5bd755d~mv2.png/v1/fill/w_1178,h_974,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/c837a6_cae4dbe5a7ee4637b7d55d9bd5bd755d~mv2.png"
+                backgroundImageUrl="https://static.wixstatic.com/media/c837a6_cae4dbe5a7ee4637b7d55d9bd5bd755d~mv2.png/v1/fill/w_1178,h_974,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/c837a6_cae4dbe5a7ee4637b7d55d9bd5bd755d~mv2.png"
             >
                 <div className="floatingCard">
                     <div className="floatingCardHeader">Happy Holidays</div>

@@ -11,7 +11,7 @@ export interface BackgroundParallaxProps extends HTMLAttributes<HTMLDivElement> 
      *   the viewport, similar to `background-attachment: fixed`.
      */
     parallaxStrength?: number;
-    imageUrl?: string;
+    backgroundImageUrl?: string;
     className?: string;
 }
 
@@ -24,7 +24,7 @@ export interface BackgroundParallaxProps extends HTMLAttributes<HTMLDivElement> 
  */
 export const BackgroundParallax: FC<BackgroundParallaxProps> = ({
     parallaxStrength = 0.75,
-    imageUrl,
+    backgroundImageUrl,
     className,
     style,
     ...props
@@ -69,7 +69,7 @@ export const BackgroundParallax: FC<BackgroundParallaxProps> = ({
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
                 backgroundPositionX: 'center',
-                backgroundImage: `url("${imageUrl}")`,
+                ...(backgroundImageUrl ? { backgroundImage: `url("${backgroundImageUrl}")` } : {}),
                 ...style,
             }}
             {...props}
