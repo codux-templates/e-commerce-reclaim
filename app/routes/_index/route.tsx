@@ -1,5 +1,6 @@
 import { CategoryLink } from '~/components/category-link/category-link';
 import { LabelWithArrow } from '~/components/label-with-arrow/label-with-arrow';
+import { FeaturedProductsSection } from '~/components/featured-products-section/featured-products-section';
 import { BackgroundParallax } from '~/components/visual-effects';
 import styles from './index.module.scss';
 
@@ -58,6 +59,13 @@ export default function HomePage() {
                 </CategoryLink>
             </div>
 
+            <FeaturedProductsSection
+                className={styles.featuredProducts}
+                categorySlug="new-in"
+                title="New In"
+                description="Embrace a sustainable lifestyle with our newest drop-ins."
+            />
+
             <BackgroundParallax
                 className={styles.floatingCardBackground}
                 backgroundImageUrl="https://static.wixstatic.com/media/c837a6_cae4dbe5a7ee4637b7d55d9bd5bd755d~mv2.png/v1/fill/w_1178,h_974,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/c837a6_cae4dbe5a7ee4637b7d55d9bd5bd755d~mv2.png"
@@ -78,6 +86,12 @@ export default function HomePage() {
                     </CategoryLink>
                 </div>
             </BackgroundParallax>
+
+            <FeaturedProductsSection
+                categorySlug="best-sellers"
+                title="Best Sellers"
+                description="When quality is eco-friendly. Explore our top picks."
+            />
         </>
     );
 }
