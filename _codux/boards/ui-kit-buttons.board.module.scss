@@ -1,10 +1,7 @@
-//@import '@styles/typography.scss';
-
-.root {
-}
+@import '@styles/typography.scss';
 
 .container {
-    width: 420px;
+    width: 284px;
     padding: 16px;
 }
 
@@ -62,7 +59,6 @@
 
 .headlinesSpacing {
     margin-top: 10px;
-    margin-bottom: 20px;
 }
 
 .paragraphSpacing {
@@ -70,20 +66,30 @@
     margin-bottom: 30px;
 }
 
-.heading1 {
-    font: var(--heading1);
-    width: 110%;
+.addToCartContainer {
+    width: 270px;
 }
 
-.heading2 {
-    font: var(--heading2);
+.fullWidth {
+    width: 100%;
 }
 
-.paragraph1 {
-    font: var(--paragraph1);
+.buttonsContainer {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
 
-.paragraph2 {
-    font: var(--paragraph2);
-    font-stretch: expanded;
+.buttonLabel {
+    font-size: 9px;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+}
+
+.iconsContainer {
+    display: flex;
+    justify-content: space-between;
 }
