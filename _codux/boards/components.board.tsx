@@ -18,8 +18,6 @@ export default createBoard({
                 <h3 className={styles.sectionTitle}>Components &amp; Elements</h3>
                 <h4 className={styles.sectionHeader}>INPUT</h4>
             </div>
-            <QuantityInput className={styles0.quantityInput} />
-            <span className={styles.fontDetails}>Text Input</span>
             <QuantityInput value={6} className={styles0.quantityInput1} />
             <span className={styles0.fontDetails}>Number Input</span>
             <Variant name="Heading1">
@@ -43,6 +41,7 @@ export default createBoard({
             </Variant>
             <p className={classNames(styles.variantName, styles.headlinesSpacing)}></p>
             <h4 className={styles.sectionHeader}>LABELS</h4>
+            <h4>//Labels missing</h4>
             <hr className={styles.hrLight} />
             <h4 className={styles.sectionHeader}>CARDS</h4>
             <ProductCard
@@ -55,9 +54,8 @@ export default createBoard({
                 }}
             />
             <span className={styles0.fontDetails}>Product Card</span>
-            <Variant name="Heading2">
-                <h2 className="heading2"></h2>
-            </Variant>
+            <h4>//Product gallery missing</h4>
+            <span className={styles0.fontDetails}>Product Card</span>
         </div>
     ),
     environmentProps: {
