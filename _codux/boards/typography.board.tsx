@@ -20,6 +20,7 @@ export default createBoard({
             <p className={classNames(styles.variantName, styles.headlinesSpacing)}>
                 --heading1:<span className={styles.fontDetails}>Marcellus / 80px / 1</span>
             </p>
+            <hr className={styles.hrLight} />
             <Variant name="Heading2">
                 <h2 className="heading2">Heading 2</h2>
             </Variant>
