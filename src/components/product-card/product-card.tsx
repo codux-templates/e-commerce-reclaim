@@ -12,7 +12,7 @@ interface ProductCardProps {
 
 export const ProductCard = ({ name, imageUrl, priceData, ribbon }: ProductCardProps) => {
     return (
-        <div>
+        <div className={styles.div1}>
             <div className={styles.imageWrapper}>
                 {imageUrl ? (
                     <img src={imageUrl} alt={name} className={styles.image} />
@@ -24,7 +24,7 @@ export const ProductCard = ({ name, imageUrl, priceData, ribbon }: ProductCardPr
             </div>
 
             <p className={styles.name}>{name}</p>
-            {priceData && <ProductPrice priceData={priceData} className={styles.price} />}
+            {priceData && <ProductPrice className={styles.price} priceData={priceData} />}
         </div>
     );
 };
