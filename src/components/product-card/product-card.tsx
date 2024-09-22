@@ -24,7 +24,7 @@ export const ProductCard = ({ name, imageUrl, priceData, ribbon }: ProductCardPr
             </div>
 
             <p className={styles.name}>{name}</p>
-            {priceData && <ProductPrice className={styles.price} priceData={priceData} />}
+            {priceData && <ProductPrice priceData={priceData} className={styles.price} />}
         </div>
     );
 };
