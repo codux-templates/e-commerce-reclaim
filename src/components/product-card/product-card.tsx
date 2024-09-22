@@ -12,7 +12,7 @@ interface ProductCardProps {
 
 export const ProductCard = ({ name, imageUrl, priceData, ribbon }: ProductCardProps) => {
     return (
-        <div className={styles.div1}>
+        <div>
             <div className={styles.imageWrapper}>
                 {imageUrl ? (
                     <img src={imageUrl} alt={name} className={styles.image} />
