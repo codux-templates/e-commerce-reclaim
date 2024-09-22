@@ -21,7 +21,7 @@ export default createBoard({
             <QuantityInput className={styles0.quantityInput} />
             <span className={styles.fontDetails}>Text Input</span>
             <QuantityInput value={6} className={styles0.quantityInput1} />
-            <span className={styles.fontDetails}>Number Input</span>
+            <span className={styles0.fontDetails}>Number Input</span>
             <Variant name="Heading1">
                 <hr className={styles.hrLight} />
                 <h4 className={styles.sectionHeader}>ACCORDION</h4>
@@ -54,32 +54,15 @@ export default createBoard({
                     price: 5.5,
                 }}
             />
+            <span className={styles0.fontDetails}>Product Card</span>
             <Variant name="Heading2">
                 <h2 className="heading2"></h2>
             </Variant>
-            <p className={classNames(styles.variantName, styles.headlinesSpacing)}>
-                --heading1
-                <span className={styles.fontDetails}>Marcellus / 80px / 1</span>
-            </p>
-            <Variant name="Heading3">
-                <h3 className="heading3">Heading 3</h3>
-            </Variant>
-            <Variant name="Heading4">
-                <h4 className="heading4">Heading 4</h4>
-            </Variant>
-            <Variant name="Heading5">
-                <h5 className="heading5">Heading 5</h5>
-            </Variant>
-            <h6 className="heading6">Heading 6</h6>
-
-            <p className="paragraph1">Paragraph 1</p>
-            <p className="paragraph2">Paragraph 2</p>
-            <p className="paragraph3">Paragraph 3</p>
         </div>
     ),
     environmentProps: {
-        windowWidth: 587,
-        windowHeight: 460,
+        windowWidth: 423,
+        windowHeight: 756,
     },
     isSnippet: true,
 });
