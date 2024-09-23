@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { ClientOnly } from 'remix-utils/client-only';
 import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 import { RemoveScroll } from 'react-remove-scroll';
 import styles from './drawer.module.scss';
-import { createPortal } from 'react-dom';
-import { ClientOnly } from 'remix-utils/client-only';
 
 interface DrawerProps {
     open: boolean;

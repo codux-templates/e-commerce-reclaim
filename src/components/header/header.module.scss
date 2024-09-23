@@ -80,17 +80,13 @@
     }
 }
 
-.menuButton {
+.openMenuButton {
     display: none;
     margin-left: 30px;
     cursor: pointer;
 }
 
 @media (max-width: $desktop-width) {
-    .navigation {
-        justify-content: end;
-    }
-
     .menu {
         display: none;
     }
@@ -99,7 +95,11 @@
         display: none;
     }
 
-    .menuButton {
+    .navigation {
+        justify-content: end;
+    }
+
+    .openMenuButton {
         display: flex;
     }
 }

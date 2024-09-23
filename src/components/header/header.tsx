@@ -45,7 +45,10 @@ export const Header = ({ className }: HeaderProps) => {
                         <CartIcon className={styles.cart} count={cartItemsCount} />
                     </button>
 
-                    <button className={styles.menuButton} onClick={() => setIsSidebarOpen(true)}>
+                    <button
+                        className={styles.openMenuButton}
+                        onClick={() => setIsSidebarOpen(true)}
+                    >
                         <MenuIcon width={24} height={24} />
                     </button>
                 </div>
