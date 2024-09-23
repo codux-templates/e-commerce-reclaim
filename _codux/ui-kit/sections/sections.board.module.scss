@@ -1,7 +1,5 @@
-@import '/app/routes/_index/index.module.scss';
-
 .container {
-    width: 284px;
+    width: 100%;
     padding: 16px;
 }
 
@@ -28,68 +26,8 @@
     margin-top: 10px;
 }
 
-.hrLight {
-    height: 1px;
-    background-color: #000;
-    opacity: 0.2;
-    margin-top: 20px;
-}
-
-.sectionHeader {
-    font-size: 11px;
-    font-weight: 800;
-    line-height: 12px;
-    letter-spacing: 0.12em;
-    color: #625d5d;
-    margin: 20px 0px 16px;
-}
-
 .variantName {
     font-size: 9px;
     font-weight: 800;
     line-height: 7px;
-}
-
-.fontDetails {
-    font-size: 9px;
-    font-weight: 400;
-    line-height: 8px;
-    max-width: 244px;
-}
-
-.headlinesSpacing {
-    margin-top: 10px;
-}
-
-.paragraphSpacing {
-    margin-top: 14px;
-    margin-bottom: 30px;
-}
-
-.addToCartContainer {
-    width: 270px;
-}
-
-.fullWidth {
-    width: 100%;
-}
-
-.buttonsContainer {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-}
-
-.buttonLabel {
-    font-size: 9px;
-}
-
-.menu {
-    display: flex;
-    justify-content: space-around;
-}
-
-.iconsContainer {
-    display: flex;
-    justify-content: space-between;
 }
