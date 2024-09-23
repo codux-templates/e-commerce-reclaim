@@ -3,6 +3,9 @@ import classNames from 'classnames';
 import { LabelWithArrow } from '~/components/label-with-arrow/label-with-arrow';
 
 import styles from './ui-kit-buttons.board.module.scss';
+import { WhatsappIcon } from '../../../src/components/icons/whatsapp-icon';
+import { PinterestIcon } from '../../../src/components/icons/pinterest-icon';
+import { FacebookIcon } from '../../../src/components/icons/facebook-icon';
 
 export default createBoard({
     name: 'UI Kit Buttons',
@@ -40,12 +43,17 @@ export default createBoard({
             <h4 className={styles.sectionHeader}>MENU</h4>
             <Variant name="Menu">Menu component goes here</Variant>
             <hr className={styles.hrLight} />
-            <h4 className={styles.sectionHeader}>ICONS</h4>
-            <Variant name="Icons">Icons component goes here</Variant>
-            <hr className={styles.hrLight} />
             <h4 className={styles.sectionHeader}>SOCIAL</h4>
-            <Variant name="Social">Social media buttons go here</Variant>
-            <hr className={styles.hrLight} />
+            <Variant name="Whatsapp">
+                <WhatsappIcon className="smallIcon" />
+            </Variant>
+            <Variant name="Facebook">
+                <FacebookIcon className="smallIcon" />
+            </Variant>
+            <Variant name="Pinterest">
+                <PinterestIcon className="smallIcon" />
+            </Variant>
+            <Variant name="Social"></Variant>
         </div>
     ),
     environmentProps: {
