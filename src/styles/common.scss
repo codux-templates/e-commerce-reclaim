@@ -91,6 +91,13 @@
     color: var(--colorA1);
 }
 
+/* Icons **********************************************************************/
+
+.smallIcon {
+    width: 20px;
+    height: 20px;
+}
+
 /* Text Page ******************************************************************/
 
 .textPage {
@@ -257,8 +264,4 @@
     width: 100%;
     margin-bottom: 5%;
     aspect-ratio: 2.26;
-}
-.smallIcon {
-    width: 20px;
-    height: 20px;
 }

@@ -1,11 +1,9 @@
 import { createBoard, Variant } from '@wixc3/react-board';
 import classNames from 'classnames';
+import { FacebookIcon, PinterestIcon, WhatsAppIcon } from '~/components/icons';
 import { LabelWithArrow } from '~/components/label-with-arrow/label-with-arrow';
 
 import styles from './ui-kit-buttons.board.module.scss';
-import { WhatsappIcon } from '../../../src/components/icons/whatsapp-icon';
-import { PinterestIcon } from '../../../src/components/icons/pinterest-icon';
-import { FacebookIcon } from '../../../src/components/icons/facebook-icon';
 
 export default createBoard({
     name: 'UI Kit Buttons',
@@ -44,8 +42,8 @@ export default createBoard({
             <Variant name="Menu">Menu component goes here</Variant>
             <hr className={styles.hrLight} />
             <h4 className={styles.sectionHeader}>SOCIAL</h4>
-            <Variant name="Whatsapp">
-                <WhatsappIcon className="smallIcon" />
+            <Variant name="WhatsApp">
+                <WhatsAppIcon className="smallIcon" />
             </Variant>
             <Variant name="Facebook">
                 <FacebookIcon className="smallIcon" />
@@ -53,7 +51,6 @@ export default createBoard({
             <Variant name="Pinterest">
                 <PinterestIcon className="smallIcon" />
             </Variant>
-            <Variant name="Social"></Variant>
         </div>
     ),
     environmentProps: {
