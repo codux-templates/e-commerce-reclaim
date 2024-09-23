@@ -11,7 +11,6 @@ import { ROUTES } from '~/router/config';
 export default createBoard({
     name: 'Sections',
     Board: () => (
-        <NavLink to={ROUTES.products.to(categorySlug)} className={className}>
         <div className={styles.container}>
             <div>
                 <span className={styles.uikit}>UI Kit</span>
@@ -37,7 +36,6 @@ export default createBoard({
                 </div>
             </Variant>
         </div>
-     </NavLink>
 
     ),
     isSnippet: true,
