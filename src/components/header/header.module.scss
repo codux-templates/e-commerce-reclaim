@@ -1,17 +1,18 @@
 @import '@styles/variables.scss';
 
 :root {
+    --headerTopBarHeight: 50px;
     --headerNavigationHeight: 54px;
-    --headerHeight: 104px;
+    --headerHeight: calc(var(--headerTopBarHeight) + var(--headerNavigationHeight));
 }
 
 .root {
     padding: 0 2%;
+    height: var(--headerHeight);
 }
 
 .topBar {
-    min-height: 50px;
-    padding: 8px 0;
+    height: var(--headerTopBarHeight);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -105,8 +106,13 @@
 }
 
 @media (max-width: $tablet-width) {
+    :root {
+        --headerTopBarHeight: 80px;
+    }
+
     .topBar {
         flex-direction: column-reverse;
         align-items: start;
+        justify-content: center;
     }
 }

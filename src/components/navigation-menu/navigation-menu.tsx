@@ -7,14 +7,9 @@ import styles from './navigation-menu.module.scss';
 interface NavigationMenuProps {
     className?: string;
     vertical?: boolean;
-    onLinkClick?: () => void;
 }
 
-export const NavigationMenu = ({
-    className,
-    vertical = false,
-    onLinkClick,
-}: NavigationMenuProps) => {
+export const NavigationMenu = ({ className, vertical = false }: NavigationMenuProps) => {
     const menuItemStyle = ({ isActive }: { isActive: boolean }) =>
         classNames(styles.menuItem, {
             [styles.active]: isActive,
@@ -24,47 +19,27 @@ export const NavigationMenu = ({
         <nav className={className}>
             <ul className={classNames(styles.menuList, { [styles.vertical]: vertical })}>
                 <li>
-                    <CategoryLink
-                        categorySlug="all-products"
-                        className={menuItemStyle}
-                        onClick={onLinkClick}
-                    >
+                    <CategoryLink categorySlug="all-products" className={menuItemStyle}>
                         Shop All
                     </CategoryLink>
                 </li>
                 <li>
-                    <CategoryLink
-                        categorySlug="kitchen-essentials"
-                        className={menuItemStyle}
-                        onClick={onLinkClick}
-                    >
+                    <CategoryLink categorySlug="kitchen-essentials" className={menuItemStyle}>
                         Kitchen
                     </CategoryLink>
                 </li>
                 <li>
-                    <CategoryLink
-                        categorySlug="bath"
-                        className={menuItemStyle}
-                        onClick={onLinkClick}
-                    >
+                    <CategoryLink categorySlug="bath" className={menuItemStyle}>
                         Bath
                     </CategoryLink>
                 </li>
                 <li>
-                    <CategoryLink
-                        categorySlug="on-the-go"
-                        className={menuItemStyle}
-                        onClick={onLinkClick}
-                    >
+                    <CategoryLink categorySlug="on-the-go" className={menuItemStyle}>
                         On the Go
                     </CategoryLink>
                 </li>
                 <li>
-                    <NavLink
-                        to={ROUTES.aboutUs.to()}
-                        className={menuItemStyle}
-                        onClick={onLinkClick}
-                    >
+                    <NavLink to={ROUTES.aboutUs.to()} className={menuItemStyle}>
                         About Us
                     </NavLink>
                 </li>
