@@ -1,3 +1,5 @@
+@import '@styles/common.scss';
+
 .page {
     padding-bottom: 3%;
 }
@@ -9,7 +11,10 @@
 }
 
 .navigation {
-    flex: 0 0 200px;
+    flex: none;
+    width: 20%;
+    max-width: 200px;
+    min-width: 140px;
 }
 
 .navigationTitle {
@@ -51,4 +56,16 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(404px, 100%), 1fr));
     gap: 20px 4px;
+}
+
+@media (max-width: $desktop-width) {
+    .productsList {
+        grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
+    }
+}
+
+@media (max-width: $mobile-width) {
+    .navigation {
+        display: none;
+    }
 }
