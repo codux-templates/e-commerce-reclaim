@@ -4,7 +4,7 @@ import { getEcomApi } from '~/api/ecom-api';
 import { CategoryLink } from '~/components/category-link/category-link';
 import { OrderSummary } from '~/components/order-summary/order-summary';
 import styles from './thank-you.module.scss';
-import { ErrorComponent } from '~/components/error-component/error-component';
+import { ErrorPage } from '~/components/error-page/error-page';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const orderId = new URL(request.url).searchParams.get('orderId');
@@ -36,5 +36,5 @@ export default function ThankYouPage() {
 export function ErrorBoundary() {
     const error = useRouteError();
     if (!isRouteErrorResponse(error)) throw error;
-    return <ErrorComponent title="Failed to load order details" message={error.data.message} />;
+    return <ErrorPage title="Failed to load order details" message={error.data.message} />;
 }
