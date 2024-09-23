@@ -164,9 +164,9 @@ export function ErrorBoundary() {
         let message: string | undefined;
         if (error.data.code === EcomApiErrorCodes.ProductNotFound) {
             title = 'Product Not Found';
-            message = "Unfortunately a product you trying to open doesn't exist";
+            message = "Unfortunately a product page you trying to open doesn't exist";
         } else {
-            title = 'Failed to load product details';
+            title = 'Error';
             message = error.data.message;
         }
 

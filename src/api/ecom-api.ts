@@ -74,8 +74,6 @@ function createApi(): EcomAPI {
 
                 const allProducts = productsResponse.items;
 
-                // load all available products. if you have a lot of projects in your site
-                // please implement proper implementation of pagination
                 while (!limit && productsResponse.hasNext()) {
                     productsResponse = await productsResponse.next();
                     allProducts.push(...productsResponse.items);

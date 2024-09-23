@@ -26,16 +26,18 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     }
 
     const api = getEcomApi();
-    const currentCategoryResponse = await api.getCategoryBySlug(categorySlug);
+    const [currentCategoryResponse, categoryProductsResponse, allCategoriesResponse] =
+        await Promise.all([
+            api.getCategoryBySlug(categorySlug),
+            api.getProductsByCategory(categorySlug),
+            api.getAllCategories(),
+        ]);
     if (currentCategoryResponse.status === 'failure') {
         throw json(currentCategoryResponse.error);
     }
-    const allCategoriesResponse = await api.getAllCategories();
     if (allCategoriesResponse.status === 'failure') {
         throw json(allCategoriesResponse.error);
     }
-
-    const categoryProductsResponse = await api.getProductsByCategory(categorySlug);
     if (categoryProductsResponse.status === 'failure') {
         throw json(categoryProductsResponse.error);
     }
@@ -131,9 +133,9 @@ export function ErrorBoundary() {
         let message: string | undefined;
         if (error.data.code === EcomApiErrorCodes.CategoryNotFound) {
             title = 'Category Not Found';
-            message = "Unfortunately a category you trying to open doesn't exist";
+            message = "Unfortunately, the category page you're trying to open does not exist";
         } else {
-            title = 'Failed to load category products';
+            title = 'Error';
             message = error.data.message;
         }
 

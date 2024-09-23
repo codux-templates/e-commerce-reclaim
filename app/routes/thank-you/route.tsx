@@ -36,5 +36,5 @@ export default function ThankYouPage() {
 export function ErrorBoundary() {
     const error = useRouteError();
     if (!isRouteErrorResponse(error)) throw error;
-    return <ErrorComponent title="Failed to load product details" message={error.data.message} />;
+    return <ErrorComponent title="Failed to load order details" message={error.data.message} />;
 }
