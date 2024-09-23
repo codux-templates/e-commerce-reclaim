@@ -53,14 +53,15 @@
 }
 
 .productsList {
+    --minCardSize: 404px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(404px, 100%), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--minCardSize), 100%), 1fr));
     gap: 20px 4px;
 }
 
 @media (max-width: $desktop-width) {
     .productsList {
-        grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
+        --minCardSize: 250px;
     }
 }
 
