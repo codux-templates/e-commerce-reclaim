@@ -272,7 +272,6 @@
     .rowOfCards {
         grid-auto-rows: minmax(0, 1fr);
         grid-auto-flow: row;
-        aspect-ratio: auto;
         padding: 0 2vw;
     }
 }
