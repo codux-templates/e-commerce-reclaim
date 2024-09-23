@@ -63,28 +63,19 @@ function createApi(): EcomAPI {
             try {
                 const category = (await wixClient.collections.getCollectionBySlug(categorySlug))
                     .collection;
-                if (!category) {
-                    throw new Error('Category not found');
-                }
-                let productsResponse = await wixClient.products
+                if (!category) throw new Error('Category not found');
+
+                const { items } = await wixClient.products
                     .queryProducts()
-                    .hasSome('collectionIds', [category!._id])
+                    .hasSome('collectionIds', [category._id])
                     .limit(limit ?? 100)
                     .find();
 
-                const allProducts = productsResponse.items;
-
-                while (!limit && productsResponse.hasNext()) {
-                    productsResponse = await productsResponse.next();
-                    allProducts.push(...productsResponse.items);
-                }
-
-                return successResponse(allProducts);
+                return successResponse(items);
             } catch (e) {
                 return failureResponse(EcomApiErrorCodes.GetProductsFailure, getErrorMessage(e));
             }
         },
-
         async getPromotedProducts() {
             try {
                 const products = (await wixClient.products.queryProducts().limit(4).find()).items;
