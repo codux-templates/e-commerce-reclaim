@@ -178,6 +178,7 @@
 
 .linkCard {
     position: relative;
+    aspect-ratio: 0.75;
     isolation: isolate;
     display: grid;
     place-content: center;
@@ -265,5 +266,13 @@
     gap: 4px;
     width: 100%;
     margin-bottom: 5%;
-    aspect-ratio: 2.26;
+}
+
+@media (max-width: $tablet-width) {
+    .rowOfCards {
+        grid-auto-rows: minmax(0, 1fr);
+        grid-auto-flow: row;
+        aspect-ratio: auto;
+        padding: 0 2vw;
+    }
 }
