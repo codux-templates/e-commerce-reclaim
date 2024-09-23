@@ -18,15 +18,21 @@ export default createBoard({
             <h4 className={styles.sectionHeader}>THEMED</h4>
             <div className={classNames(styles.buttonsContainer, styles.itemSpacing)}>
                 <div className={styles.buttonsContainer}>
-                    <button className="button primaryButton">Add to Cart</button>
+                    <Variant name="Primary Button">
+                        <button className="button primaryButton">Add to Cart</button>
+                    </Variant>
                     <span className={styles.buttonLabel}>Primary</span>
                 </div>
                 <div className={styles.buttonsContainer}>
-                    <button className="button mutedPrimaryButton">Add to Cart</button>
+                    <Variant name="Primary Muted Button">
+                        <button className="button mutedPrimaryButton">Add to Cart</button>
+                    </Variant>
                     <span className={styles.buttonLabel}>Primary Muted</span>
                 </div>
                 <div className={styles.buttonsContainer}>
-                    <button className="button">Add to Cart</button>
+                    <Variant name="Secondary Button">
+                        <button className="button">Add to Cart</button>
+                    </Variant>
                     <span className={styles.buttonLabel}>Secondary</span>
                 </div>
             </div>
@@ -43,7 +49,7 @@ export default createBoard({
         </div>
     ),
     environmentProps: {
-        windowWidth: 284,
+        windowWidth: 282,
     },
     isSnippet: true,
 });
