@@ -1,36 +1,46 @@
-import { getEcomApi } from '~/api/ecom-api';
-import styles from './product-details.module.scss';
 import type { LoaderFunctionArgs } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import {
+    isRouteErrorResponse,
+    json,
+    useLoaderData,
+    useNavigate,
+    useRouteError,
+} from '@remix-run/react';
+import classNames from 'classnames';
+import { useState } from 'react';
+import { useAddToCart } from '~/api/api-hooks';
+import { getEcomApi } from '~/api/ecom-api';
+import { EcomApiErrorCodes } from '~/api/types';
+import { Accordion } from '~/components/accordion/accordion';
+import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
+import { useCartOpen } from '~/components/cart/cart-open-context';
+import { CategoryLink } from '~/components/category-link/category-link';
+import { ErrorPage } from '~/components/error-page/error-page';
+import { ProductImages } from '~/components/product-images/product-images';
+import { ProductLink } from '~/components/product-link/product-link';
 import { ProductPrice } from '~/components/product-price/product-price';
 import { QuantityInput } from '~/components/quantity-input/quantity-input';
-import { useState } from 'react';
-import { Accordion } from '~/components/accordion/accordion';
-import { ProductImages } from '~/components/product-images/product-images';
-import { Button } from '~/components/button/button';
-import { removeQueryStringFromUrl } from '~/utils';
 import { ShareProductLinks } from '~/components/share-product-links/share-product-links';
-import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
+import { ROUTES } from '~/router/config';
 import { RouteHandle } from '~/router/types';
-import { CategoryLink } from '~/components/category-link/category-link';
-import { ProductLink } from '~/components/product-link/product-link';
-import { useCartOpen } from '~/components/cart/cart-open-context';
-import { useAddToCart } from '~/api/api-hooks';
+import { removeQueryStringFromUrl } from '~/utils';
+
+import styles from './product-details.module.scss';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     const productSlug = params.productSlug;
     if (!productSlug) {
         throw new Error('Missing product slug');
     }
-
-    const product = await getEcomApi().getProduct(productSlug);
-    if (!product) {
-        throw new Response('Product Not Found', { status: 404 });
+    const productResponse = await getEcomApi().getProductBySlug(productSlug);
+    if (productResponse.status === 'failure') {
+        throw json(productResponse.error);
     }
 
-    const canonicalUrl = removeQueryStringFromUrl(request.url);
-
-    return { product, canonicalUrl };
+    return json({
+        product: productResponse.body,
+        canonicalUrl: removeQueryStringFromUrl(request.url),
+    });
 };
 
 interface ProductDetailsLocationState {
@@ -110,13 +120,13 @@ export default function ProductDetailsPage() {
                         <QuantityInput id="quantity" value={quantity} onChange={setQuantity} />
                     </div>
 
-                    <Button
-                        className={styles.addToCartButton}
+                    <button
+                        className={classNames('button', 'primaryButton', styles.addToCartButton)}
                         onClick={handleAddToCartClick}
                         disabled={isAddingToCart}
                     >
                         Add to Cart
-                    </Button>
+                    </button>
 
                     {product.additionalInfoSections &&
                         product.additionalInfoSections.length > 0 && (
@@ -143,4 +153,32 @@ export default function ProductDetailsPage() {
             </div>
         </div>
     );
+}
+
+export function ErrorBoundary() {
+    const error = useRouteError();
+    const navigate = useNavigate();
+
+    if (isRouteErrorResponse(error)) {
+        let title: string;
+        let message: string | undefined;
+        if (error.data.code === EcomApiErrorCodes.ProductNotFound) {
+            title = 'Product Not Found';
+            message = "Unfortunately a product page you trying to open doesn't exist";
+        } else {
+            title = 'Error';
+            message = error.data.message;
+        }
+
+        return (
+            <ErrorPage
+                title={title}
+                message={message}
+                actionButtonText="Back to shopping"
+                onActionButtonClick={() => navigate(ROUTES.products.to('all-producs'))}
+            />
+        );
+    }
+
+    throw error;
 }
