@@ -39,7 +39,7 @@ export function getErrorMessage(value: unknown): string {
     }
 
     if (isRouteErrorResponse(value)) {
-        return value.data;
+        return value.data.message;
     }
 
     if (isEcomSDKError(value)) {
