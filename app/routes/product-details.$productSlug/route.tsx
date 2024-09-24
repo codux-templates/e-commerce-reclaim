@@ -21,9 +21,9 @@ import { QuantityInput } from '~/components/quantity-input/quantity-input';
 import { ShareProductLinks } from '~/components/share-product-links/share-product-links';
 import { ROUTES } from '~/router/config';
 import { BreadcrumbData, RouteHandle } from '~/router/types';
-import { removeQueryStringFromUrl } from '~/utils';
-import styles from './product-details.module.scss';
+import { getErrorMessage, removeQueryStringFromUrl } from '~/utils';
 import { useBreadcrumbs } from '~/router/use-breadcrumbs';
+import styles from './route.module.scss';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     const productSlug = params.productSlug;
@@ -35,10 +35,10 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
         throw json(productResponse.error);
     }
 
-    return json({
+    return {
         product: productResponse.body,
         canonicalUrl: removeQueryStringFromUrl(request.url),
-    });
+    };
 };
 
 interface ProductDetailsLocationState {
@@ -160,26 +160,20 @@ export function ErrorBoundary() {
     const error = useRouteError();
     const navigate = useNavigate();
 
-    if (isRouteErrorResponse(error)) {
-        let title: string;
-        let message: string | undefined;
-        if (error.data.code === EcomApiErrorCodes.ProductNotFound) {
-            title = 'Product Not Found';
-            message = "Unfortunately a product page you trying to open doesn't exist";
-        } else {
-            title = 'Error';
-            message = error.data.message;
-        }
+    let title = 'Error';
+    let message = getErrorMessage(error);
 
-        return (
-            <ErrorPage
-                title={title}
-                message={message}
-                actionButtonText="Back to shopping"
-                onActionButtonClick={() => navigate(ROUTES.products.to('all-producs'))}
-            />
-        );
+    if (isRouteErrorResponse(error) && error.data.code === EcomApiErrorCodes.ProductNotFound) {
+        title = 'Product Not Found';
+        message = "Unfortunately a product page you trying to open doesn't exist";
     }
 
-    throw error;
+    return (
+        <ErrorPage
+            title={title}
+            message={message}
+            actionButtonText="Back to shopping"
+            onActionButtonClick={() => navigate(ROUTES.products.to('all-products'))}
+        />
+    );
 }
