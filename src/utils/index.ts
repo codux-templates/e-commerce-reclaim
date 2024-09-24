@@ -38,10 +38,17 @@ export function getErrorMessage(value: unknown): string {
         return value.message;
     }
 
+    // If the thrown error is an instance of Error, React Router will convert it to a string.
+    // If it's a JSON response like throw json({ message: "error" }) it will parse that JSON into ErrorResponse.data.
     if (isRouteErrorResponse(value)) {
-        if (typeof value.data === 'string') return value.data;
-        else if (typeof value.data.message === 'string') return value.data.message;
-        else return String(value.data);
+        const data: unknown = value.data;
+        if (typeof data === 'string') return data;
+        if (data === null) return '';
+
+        if (typeof data === 'object' && 'message' in data && typeof data.message === 'string')
+            return data.message;
+
+        return String(data);
     }
 
     if (isEcomSDKError(value)) {
