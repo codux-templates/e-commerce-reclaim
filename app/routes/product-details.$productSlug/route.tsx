@@ -173,7 +173,7 @@ export function ErrorBoundary() {
             title={title}
             message={message}
             actionButtonText="Back to shopping"
-            onActionButtonClick={() => navigate(ROUTES.products.to('all-producs'))}
+            onActionButtonClick={() => navigate(ROUTES.products.to('all-products'))}
         />
     );
 }
