@@ -40,3 +40,13 @@ export const ProductCard = ({
         </div>
     );
 };
+
+export const ProductCardSkeleton = () => (
+    <div>
+        <div className={styles.imageWrapper}>
+            <ImagePlaceholderIcon className={styles.imagePlaceholderIcon} />
+        </div>
+        <div className={styles.name}>&nbsp;</div>
+        <div className={styles.price}>&nbsp;</div>
+    </div>
+);
