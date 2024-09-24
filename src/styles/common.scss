@@ -250,6 +250,8 @@
 @media (max-width: $tablet-width) {
     .textBanner {
         padding: 70px 0;
+        margin-left: 2vw;
+        margin-right: 2vw;
     }
 
     .textBannerSubtitle {
@@ -261,7 +263,7 @@
     }
 }
 
-@media (max-width: $tablet-width) {
+@media (max-width: $mobile-width) {
     .textBannerTitle {
         font-size: 30px;
     }
