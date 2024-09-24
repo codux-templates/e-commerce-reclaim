@@ -67,7 +67,7 @@
     }
 
     .productsRow {
-        grid-template-columns: repeat(auto-fit, minmax(min(135px, 100%), 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
         grid-auto-flow: row;
         gap: 26px 10px;
     }
