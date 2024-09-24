@@ -248,6 +248,7 @@
 /* Link Card ******************************************************************/
 
 .linkCard {
+    container-type: inline-size;
     position: relative;
     isolation: isolate;
     display: grid;
@@ -280,17 +281,9 @@
     text-align: center;
 }
 
-@media (max-width: $desktop-width) {
+@container (max-width: 300px) {
     .linkCardTitle {
         font-size: 30px;
-    }
-}
-
-@media (max-width: $tablet-width) {
-    .linkCardTitle {
-        font-family: var(--text-font);
-        font-size: 22px;
-        font-weight: 600;
     }
 }
 
@@ -337,16 +330,11 @@
     text-wrap: balance;
 }
 
-/* Miscellaneous **************************************************************/
-
-.alternateBackground {
-    background-color: var(--colorA3);
-}
+/* Card Group *****************************************************************/
 
 .cardGroup {
     display: flex;
     gap: 4px;
-    width: 100%;
     margin-bottom: 5%;
 }
 
@@ -364,4 +352,11 @@
     .cardGroup > * {
         flex: 0;
     }
+}
+
+
+/* Miscellaneous **************************************************************/
+
+.alternateBackground {
+    background-color: var(--colorA3);
 }
