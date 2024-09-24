@@ -6,6 +6,7 @@ import {
     useNavigate,
     useRouteError,
 } from '@remix-run/react';
+import { products } from '@wix/stores';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { useAddToCart } from '~/api/api-hooks';
@@ -14,18 +15,16 @@ import { EcomApiErrorCodes } from '~/api/types';
 import { Accordion } from '~/components/accordion/accordion';
 import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
 import { useCartOpen } from '~/components/cart/cart-open-context';
-import { CategoryLink } from '~/components/category-link/category-link';
 import { ErrorPage } from '~/components/error-page/error-page';
 import { ProductImages } from '~/components/product-images/product-images';
-import { ProductLink } from '~/components/product-link/product-link';
 import { ProductPrice } from '~/components/product-price/product-price';
 import { QuantityInput } from '~/components/quantity-input/quantity-input';
 import { ShareProductLinks } from '~/components/share-product-links/share-product-links';
 import { ROUTES } from '~/router/config';
-import { RouteHandle } from '~/router/types';
-import { removeQueryStringFromUrl } from '~/utils';
-
-import styles from './product-details.module.scss';
+import { BreadcrumbData, RouteHandle } from '~/router/types';
+import { getErrorMessage, removeQueryStringFromUrl } from '~/utils';
+import { useBreadcrumbs } from '~/router/use-breadcrumbs';
+import styles from './route.module.scss';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     const productSlug = params.productSlug;
@@ -37,10 +36,10 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
         throw json(productResponse.error);
     }
 
-    return json({
+    return {
         product: productResponse.body,
         canonicalUrl: removeQueryStringFromUrl(request.url),
-    });
+    };
 };
 
 interface ProductDetailsLocationState {
@@ -51,28 +50,31 @@ interface ProductDetailsLocationState {
 }
 
 export const handle: RouteHandle<typeof loader, ProductDetailsLocationState> = {
-    breadcrumb: (match, location) => {
+    breadcrumbs: (match, location) => {
         const fromCategory = location.state?.fromCategory;
 
-        const productLink = (
-            <ProductLink productSlug={match.data.product.slug!} state={{ fromCategory }}>
-                {match.data.product.name!}
-            </ProductLink>
-        );
+        const breadcrumbs: BreadcrumbData[] = [
+            {
+                title: match.data.product.slug!,
+                to: ROUTES.productDetails.to(match.data.product.slug!),
+            },
+        ];
 
         if (fromCategory) {
-            const categoryLink = (
-                <CategoryLink categorySlug={fromCategory.slug}>{fromCategory.name}</CategoryLink>
-            );
-            return [categoryLink, productLink];
+            breadcrumbs.unshift({
+                title: fromCategory.name,
+                to: ROUTES.products.to(fromCategory.slug),
+                clientOnly: true,
+            });
         }
 
-        return productLink;
+        return breadcrumbs;
     },
 };
 
 export default function ProductDetailsPage() {
     const { product, canonicalUrl } = useLoaderData<typeof loader>();
+    const breadcrumbs = useBreadcrumbs();
 
     const cartOpener = useCartOpen();
     const { trigger: addToCart, isMutating: isAddingToCart } = useAddToCart();
@@ -87,13 +89,15 @@ export default function ProductDetailsPage() {
             },
             {
                 onSuccess: () => cartOpener.setIsOpen(true),
-            }
+            },
         );
     };
 
+    const isOutOfStock = product.stock?.inventoryStatus === products.InventoryStatus.OUT_OF_STOCK;
+
     return (
         <div className={styles.page}>
-            <Breadcrumbs />
+            <Breadcrumbs breadcrumbs={breadcrumbs} />
 
             <div className={styles.content}>
                 <ProductImages media={product.media} />
@@ -123,9 +127,9 @@ export default function ProductDetailsPage() {
                     <button
                         className={classNames('button', 'primaryButton', styles.addToCartButton)}
                         onClick={handleAddToCartClick}
-                        disabled={isAddingToCart}
+                        disabled={isOutOfStock || isAddingToCart}
                     >
-                        Add to Cart
+                        {isOutOfStock ? 'Out of stock' : 'Add to Cart'}
                     </button>
 
                     {product.additionalInfoSections &&
@@ -159,26 +163,20 @@ export function ErrorBoundary() {
     const error = useRouteError();
     const navigate = useNavigate();
 
-    if (isRouteErrorResponse(error)) {
-        let title: string;
-        let message: string | undefined;
-        if (error.data.code === EcomApiErrorCodes.ProductNotFound) {
-            title = 'Product Not Found';
-            message = "Unfortunately a product page you trying to open doesn't exist";
-        } else {
-            title = 'Error';
-            message = error.data.message;
-        }
+    let title = 'Error';
+    let message = getErrorMessage(error);
 
-        return (
-            <ErrorPage
-                title={title}
-                message={message}
-                actionButtonText="Back to shopping"
-                onActionButtonClick={() => navigate(ROUTES.products.to('all-producs'))}
-            />
-        );
+    if (isRouteErrorResponse(error) && error.data.code === EcomApiErrorCodes.ProductNotFound) {
+        title = 'Product Not Found';
+        message = "Unfortunately a product page you trying to open doesn't exist";
     }
 
-    throw error;
+    return (
+        <ErrorPage
+            title={title}
+            message={message}
+            actionButtonText="Back to shopping"
+            onActionButtonClick={() => navigate(ROUTES.products.to('all-products'))}
+        />
+    );
 }

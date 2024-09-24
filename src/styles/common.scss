@@ -58,13 +58,10 @@
 }
 
 .button:disabled {
+    border-color: transparent;
     background-color: var(--colorA3);
     color: var(--colorA1);
     cursor: default;
-}
-
-.button:focus {
-    box-shadow: 0 0 0 1px #ffffff, 0 0 0 3px #116dff;
 }
 
 .button:not(:disabled):hover {
@@ -142,6 +139,49 @@
     }
 }
 
+/* Hero Banner ****************************************************************/
+
+.heroBanner {
+    --bannerHeight: calc(100vh - var(--headerHeight) - var(--pagePaddingHoriz));
+    margin-bottom: var(--pagePaddingHoriz);
+    height: var(--bannerHeight);
+    position: relative;
+    color: var(--colorA1);
+    background-color: var(--black);
+}
+
+.heroBannerOverlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    overflow: hidden;
+    position: absolute;
+    inset: 0;
+    padding: 40px;
+}
+
+.heroBannerImage {
+    opacity: 0.8;
+    object-fit: cover;
+    object-position: 50% 50%;
+    height: 100%;
+    width: 100%;
+}
+
+.heroBannerSubtitle {
+    width: 54%;
+    letter-spacing: 0.2em;
+    padding-bottom: 12px;
+}
+
+.heroBannerTitle {
+    font: var(--heading1);
+    font-size: 6vw;
+    text-transform: uppercase;
+}
+
 /* Text Banner ****************************************************************/
 
 .textBannerSection {
@@ -161,7 +201,7 @@
 .textBannerSubtitle {
     font-family: var(--text-font);
     line-height: 1.4;
-    font-size: 1.3vw;
+    font-size: max(1.3vw, 16px);
     text-transform: uppercase;
     white-space: nowrap;
     margin-bottom: 1%;
@@ -172,6 +212,37 @@
     font-size: 4.3vw;
     line-height: 1.1em;
     margin-bottom: 1%;
+}
+
+@media (max-width: $desktop-width) {
+    .textBanner {
+        padding: 70px 14%;
+    }
+
+    .textBannerSubtitle {
+        font-size: 1.8vw;
+        margin-bottom: 2%;
+    }
+}
+
+@media (max-width: $tablet-width) {
+    .textBanner {
+        padding: 70px 0;
+    }
+
+    .textBannerSubtitle {
+        font-size: 14px;
+    }
+
+    .textBannerTitle {
+        font-size: 6.3vw;
+    }
+}
+
+@media (max-width: $mobile-width) {
+    .textBannerTitle {
+        font-size: 30px;
+    }
 }
 
 /* Link Card ******************************************************************/

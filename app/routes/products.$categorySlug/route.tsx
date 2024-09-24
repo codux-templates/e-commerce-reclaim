@@ -17,7 +17,9 @@ import { ProductLink } from '~/components/product-link/product-link';
 import { FadeIn } from '~/components/visual-effects';
 import { ROUTES } from '~/router/config';
 import { RouteHandle } from '~/router/types';
-import styles from './products.module.scss';
+import { useBreadcrumbs } from '~/router/use-breadcrumbs';
+import { getErrorMessage } from '~/utils';
+import styles from './route.module.scss';
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
     const categorySlug = params.categorySlug;
@@ -50,19 +52,21 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 };
 
 export const handle: RouteHandle<typeof loader> = {
-    breadcrumb: (match) => (
-        <CategoryLink categorySlug={match.data.category.slug!}>
-            {match.data.category.name!}
-        </CategoryLink>
-    ),
+    breadcrumbs: (match) => [
+        {
+            title: match.data.category.name!,
+            to: ROUTES.products.to(match.data.category.slug!),
+        },
+    ],
 };
 
 export default function ProductsPage() {
     const { category, categoryProducts, allCategories } = useLoaderData<typeof loader>();
+    const breadcrumbs = useBreadcrumbs();
 
     return (
         <div className={styles.page}>
-            <Breadcrumbs />
+            <Breadcrumbs breadcrumbs={breadcrumbs} />
 
             <div className={styles.content}>
                 <nav className={styles.navigation}>
@@ -113,6 +117,7 @@ export default function ProductsPage() {
                                         imageUrl={product.media?.mainMedia?.image?.url}
                                         priceData={product.priceData}
                                         ribbon={product.ribbon ?? undefined}
+                                        inventoryStatus={product.stock?.inventoryStatus}
                                     />
                                 </ProductLink>
                             </FadeIn>
@@ -128,26 +133,20 @@ export function ErrorBoundary() {
     const error = useRouteError();
     const navigate = useNavigate();
 
-    if (isRouteErrorResponse(error)) {
-        let title: string;
-        let message: string | undefined;
-        if (error.data.code === EcomApiErrorCodes.CategoryNotFound) {
-            title = 'Category Not Found';
-            message = "Unfortunately, the category page you're trying to open does not exist";
-        } else {
-            title = 'Error';
-            message = error.data.message;
-        }
+    let title = 'Error';
+    let message = getErrorMessage(error);
 
-        return (
-            <ErrorPage
-                title={title}
-                message={message}
-                actionButtonText="Back to shopping"
-                onActionButtonClick={() => navigate(ROUTES.products.to('all-products'))}
-            />
-        );
+    if (isRouteErrorResponse(error) && error.data.code === EcomApiErrorCodes.CategoryNotFound) {
+        title = 'Category Not Found';
+        message = "Unfortunately, the category page you're trying to open does not exist";
     }
 
-    throw error;
+    return (
+        <ErrorPage
+            title={title}
+            message={message}
+            actionButtonText="Back to shopping"
+            onActionButtonClick={() => navigate(ROUTES.products.to('all-products'))}
+        />
+    );
 }

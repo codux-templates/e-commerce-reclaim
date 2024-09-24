@@ -3,20 +3,20 @@ import { FeaturedProductsSection } from '~/components/featured-products-section/
 import { LabelWithArrow } from '~/components/label-with-arrow/label-with-arrow';
 import { BackgroundParallax, FadeIn, FloatIn } from '~/components/visual-effects';
 
-import styles from './index.module.scss';
+import styles from './route.module.scss';
 
 export default function HomePage() {
     return (
         <>
-            <div className={styles.heroBanner}>
+            <div className="heroBanner">
                 <img
                     src="https://static.wixstatic.com/media/32aab9_2c3c65e142434906992aedb17db53566~mv2.jpg"
-                    className={styles.heroBannerImage}
+                    className="heroBannerImage"
                     alt=""
                 />
-                <div className={styles.heroBannerOverlay}>
-                    <div className={styles.heroBannerSubtitle}>ReClaim</div>
-                    <h1 className={styles.heroBannerTitle}>Reuse. Repurpose. Relove.</h1>
+                <div className="heroBannerOverlay">
+                    <div className="heroBannerSubtitle">ReClaim</div>
+                    <h1 className="heroBannerTitle">Reuse. Repurpose. Relove.</h1>
                     <CategoryLink categorySlug="all-products">
                         <LabelWithArrow>Shop Collections</LabelWithArrow>
                     </CategoryLink>
@@ -36,7 +36,7 @@ export default function HomePage() {
             </div>
 
             <div className="rowOfCards">
-                <CategoryLink categorySlug="kitchen" className="linkCard">
+                <CategoryLink categorySlug="kitchen-essentials" className="linkCard">
                     <img
                         className="linkCardBackground"
                         src="https://static.wixstatic.com/media/c837a6_c05a03f48fbd49e7b5046d1b18c930eb~mv2.jpg/v1/fill/w_547,h_730,q_90/c837a6_c05a03f48fbd49e7b5046d1b18c930eb~mv2.jpg"
