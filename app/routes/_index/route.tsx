@@ -36,7 +36,6 @@ export default function HomePage() {
             </div>
 
             <div className="cardGroup">
-
                 <CategoryLink categorySlug="kitchen-essentials" className="linkCard">
                     <img
                         className="linkCardBackground"
