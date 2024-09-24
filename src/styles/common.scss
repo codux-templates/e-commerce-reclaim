@@ -241,11 +241,6 @@
         padding: 70px 14%;
     }
 
-    .textBannerSection {
-        margin-left: 2vw;
-        margin-right: 2vw;
-    }
-
     .textBannerSubtitle {
         font-size: 1.8vw;
         margin-bottom: 2%;
@@ -263,6 +258,12 @@
 
     .textBannerTitle {
         font-size: 6.3vw;
+    }
+}
+
+@media (max-width: $tablet-width) {
+    .textBannerTitle {
+        font-size: 30px;
     }
 }
 
