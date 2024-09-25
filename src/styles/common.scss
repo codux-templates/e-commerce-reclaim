@@ -300,9 +300,7 @@
 }
 
 .floatingCardBackground {
-    /* negate padding from <main> element */
     margin-inline: calc(-1 * var(--pagePaddingHoriz));
-
     padding: 8% 12%;
     aspect-ratio: 2;
 }
