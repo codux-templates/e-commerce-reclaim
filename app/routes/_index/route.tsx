@@ -3,8 +3,6 @@ import { FeaturedProductsSection } from '~/components/featured-products-section/
 import { LabelWithArrow } from '~/components/label-with-arrow/label-with-arrow';
 import { BackgroundParallax, FadeIn, FloatIn } from '~/components/visual-effects';
 
-import styles from './route.module.scss';
-
 export default function HomePage() {
     return (
         <>
@@ -35,7 +33,7 @@ export default function HomePage() {
                 </FadeIn>
             </div>
 
-            <div className="rowOfCards">
+            <div className="cardGroup">
                 <CategoryLink categorySlug="kitchen-essentials" className="linkCard">
                     <img
                         className="linkCardBackground"
