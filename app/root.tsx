@@ -1,6 +1,5 @@
 import {
     isRouteErrorResponse,
-    Link,
     Links,
     Meta,
     type MetaFunction,
@@ -39,7 +38,7 @@ export async function loader() {
 }
 
 export const handle: RouteHandle = {
-    breadcrumb: () => <Link to={ROUTES.home.path}>Home</Link>,
+    breadcrumbs: () => [{ title: 'Home', to: ROUTES.home.path }],
 };
 
 export function Layout({ children }: React.PropsWithChildren) {
@@ -86,7 +85,7 @@ export default function App() {
 
 export function ErrorBoundary() {
     const locationRef = useRef<string | undefined>(
-        typeof window !== 'undefined' ? window.location.href : undefined
+        typeof window !== 'undefined' ? window.location.href : undefined,
     );
 
     const error = useRouteError();
