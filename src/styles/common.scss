@@ -299,10 +299,23 @@
     text-wrap: balance;
 }
 
+.floatingCardBackground {
+    /* negate padding from <main> element */
+    margin-inline: calc(-1 * var(--pagePaddingHoriz));
+
+    padding: 8% 12%;
+    aspect-ratio: 2;
+}
+
 @media (max-width: $desktop-width) {
     .floatingCard {
         width: 42%;
         aspect-ratio: 0.9;
+    }
+
+    .floatingCardBackground {
+        padding: 10% 7%;
+        aspect-ratio: 1.6;
     }
 }
 
@@ -310,6 +323,11 @@
     .floatingCard {
         width: 80%;
         margin: 0 auto;
+    }
+
+    .floatingCardBackground {
+        padding-top: 20%;
+        aspect-ratio: 0.9;
     }
 }
 
@@ -319,6 +337,7 @@
         font: var(--paragraph3);
     }
 }
+
 /* Card Group *****************************************************************/
 
 .cardGroup {
@@ -347,26 +366,4 @@
 
 .alternateBackground {
     background-color: var(--colorA3);
-}
-
-.floatingCardBackground {
-    /* negate padding from <main> element */
-    margin-inline: calc(-1 * var(--pagePaddingHoriz));
-
-    padding: 8% 12%;
-    aspect-ratio: 2;
-}
-
-@media (max-width: $desktop-width) {
-    .floatingCardBackground {
-        padding: 10% 7%;
-        aspect-ratio: 1.6;
-    }
-}
-
-@media (max-width: $tablet-width) {
-    .floatingCardBackground {
-        padding-top: 20%;
-        aspect-ratio: 0.9;
-    }
 }
