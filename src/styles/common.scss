@@ -308,9 +308,8 @@
 .floatingCardTitle {
     font-family: var(--heading-font);
     line-height: 1.2;
-    font-size: 3.1vw;
+    font-size: max(26px, 3.1vw);
     text-transform: uppercase;
-    align-self: flex-end;
     flex-grow: 1;
     display: flex;
     align-items: flex-end;
@@ -319,8 +318,29 @@
 }
 
 .floatingCardDescription {
-    margin-bottom: 10%;
+    margin-bottom: 8%;
     text-wrap: balance;
+}
+
+@media (max-width: $desktop-width) {
+    .floatingCard {
+        width: 42%;
+        aspect-ratio: 0.9;
+    }
+}
+
+@media (max-width: $tablet-width) {
+    .floatingCard {
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: $mobile-width) {
+    .floatingCardHeader,
+    .floatingCardDescription {
+        font: var(--paragraph3);
+    }
 }
 
 /* Miscellaneous **************************************************************/
@@ -337,4 +357,26 @@
     width: 100%;
     margin-bottom: 5%;
     aspect-ratio: 2.26;
+}
+
+.floatingCardBackground {
+    /* negate padding from <main> element */
+    margin-inline: -2vw;
+
+    padding: 8% 12%;
+    aspect-ratio: 2;
+}
+
+@media (max-width: $desktop-width) {
+    .floatingCardBackground {
+        padding: 10% 7%;
+        aspect-ratio: 1.6;
+    }
+}
+
+@media (max-width: $tablet-width) {
+    .floatingCardBackground {
+        padding-top: 20%;
+        aspect-ratio: 0.9;
+    }
 }
