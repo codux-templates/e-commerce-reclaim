@@ -21,30 +21,36 @@ export default createBoard({
                     <h3 className={styles.sectionTitle}>Components &amp; Elements</h3>
                     <h4 className={styles.sectionHeader}>INPUT</h4>
                 </div>
-                <QuantityInput value={6} className={styles.quantityInput1} onChange={() => {}} />
-                <span className={styles.fontDetails}>Number Input</span>
-                <Variant name="Heading1">
-                    <hr className={styles.hrLight} />
-                    <h4 className={styles.sectionHeader}>ACCORDION</h4>
-                    <Accordion
-                        items={[
-                            {
-                                title: 'Product Info',
-                                content: 'Content',
-                            },
-                            {
-                                title: 'Return & Refund Policy',
-                                content: 'Content',
-                            },
-                            {
-                                title: 'Shipping Info ',
-                                content: 'Content',
-                            },
-                        ]}
-                        className={styles.accordion}
+                <Variant name="Number Input">
+                    <QuantityInput
+                        value={6}
+                        className={styles.quantityInput1}
+                        onChange={() => {}}
                     />
-                    <hr className={styles.hrLight} />
                 </Variant>
+                <span className={styles.fontDetails}>Number Input</span>
+                <hr className={styles.hrLight} />
+                <h4 className={styles.sectionHeader}>ACCORDION</h4>
+                    <Variant name="Accordion">
+                        <Accordion
+                            items={[
+                                {
+                                    title: 'Product Info',
+                                    content: 'Content',
+                                },
+                                {
+                                    title: 'Return & Refund Policy',
+                                    content: 'Content',
+                                },
+                                {
+                                    title: 'Shipping Info ',
+                                    content: 'Content',
+                                },
+                            ]}
+                            className={styles.accordion}
+                        />
+                    </Variant>
+                    <hr className={styles.hrLight} />
                 <p className={classNames(styles.variantName, styles.headlinesSpacing)}></p>
                 <h4 className={styles.sectionHeader}>LABELS</h4>
                 <div className="relativeContainer">
