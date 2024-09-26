@@ -4,9 +4,10 @@ import { LabelWithArrow } from '~/components/label-with-arrow/label-with-arrow';
 import ComponentWrapper from '_codux/board-wrappers/component-wrapper';
 import { BackgroundParallax, FloatIn } from '~/components/visual-effects';
 import classNames from 'classnames';
+import { FeaturedProductsSection } from '~/components/featured-products-section/featured-products-section';
+
 import '../board-common.scss';
 import styles from './sections.board.module.scss';
-import { FeaturedProductsSection } from '~/components/featured-products-section/featured-products-section';
 
 export default createBoard({
     name: 'Sections',

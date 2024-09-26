@@ -2,12 +2,12 @@ import { createBoard, Variant } from '@wixc3/react-board';
 import { Accordion } from '~/components/accordion/accordion';
 import { ProductCard } from '~/components/product-card/product-card';
 import { QuantityInput } from '~/components/quantity-input/quantity-input';
-
-import '../board-common.scss';
-import styles from './components.board.module.scss';
 import classNames from 'classnames';
 import { CategoryLink } from '~/components/category-link/category-link';
 import ComponentWrapper from '_codux/board-wrappers/component-wrapper';
+
+import '../board-common.scss';
+import styles from './components.board.module.scss';
 
 export default createBoard({
     name: 'Components',

@@ -1,9 +1,6 @@
 import { createBoard, Variant } from '@wixc3/react-board';
 import { CartIcon, FacebookIcon, PinterestIcon, WhatsAppIcon } from '~/components/icons';
 import { LabelWithArrow } from '~/components/label-with-arrow/label-with-arrow';
-
-import '../board-common.scss';
-import styles from './buttons.board.module.scss';
 import classNames from 'classnames';
 import { TrashIcon } from '../../../src/components/icons/trash-icon';
 import { LockIcon } from '../../../src/components/icons/lock-icon';
@@ -11,6 +8,9 @@ import { ErrorIcon } from '../../../src/components/icons/error-icon';
 import { MenuIcon } from '../../../src/components/icons/menu-icon';
 import { ChevronRightIcon } from '../../../src/components/icons/chevron-right-icon';
 import { ArrowRightIcon } from '../../../src/components/icons/arrow-right-icon';
+
+import '../board-common.scss';
+import styles from './buttons.board.module.scss';
 
 export default createBoard({
     name: 'UI Kit Buttons',
