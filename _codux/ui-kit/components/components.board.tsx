@@ -1,4 +1,4 @@
-import { createBoard, Variant } from '@wixc3/react-board';
+import { createBoard } from '@wixc3/react-board';
 import { Accordion } from '~/components/accordion/accordion';
 import { ProductCard } from '~/components/product-card/product-card';
 import { QuantityInput } from '~/components/quantity-input/quantity-input';
@@ -57,10 +57,6 @@ export default createBoard({
                     </div>
                 </div>
 
-                {/* <div className="uiKitSection">
-                    <div className="uiKitSectionTitle">Labels</div>
-                </div> */}
-
                 <div className="uiKitSection">
                     <div className="uiKitSectionTitle">Cards</div>
                     <div className={classNames('uiKitItem', styles.demoWidth)}>
@@ -72,7 +68,6 @@ export default createBoard({
                                 currency: '$',
                                 price: 5.5,
                             }}
-                            inventoryStatus={products.InventoryStatus.OUT_OF_STOCK}
                         />
                         <span className="uiKitItemDescription">ProductCard</span>
                     </div>
