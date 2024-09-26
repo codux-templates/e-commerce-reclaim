@@ -98,7 +98,7 @@ export default createBoard({
             <div className="uiKitSection">
                 <div className="uiKitSectionTitle">Social</div>
                 <div className="uiKitItem">
-                    <div className={styles.row}>
+                    <div className={styles.itemsGroup}>
                         <WhatsAppIcon className="smallIcon" />
                         <FacebookIcon className="smallIcon" />
                         <PinterestIcon className="smallIcon" />
@@ -111,7 +111,7 @@ export default createBoard({
         </div>
     ),
     environmentProps: {
-        windowWidth: 365,
+        windowWidth: 425,
     },
     isSnippet: true,
 });
