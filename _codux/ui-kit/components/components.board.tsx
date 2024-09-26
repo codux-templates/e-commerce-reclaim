@@ -8,9 +8,7 @@ import styles from './components.board.module.scss';
 import classNames from 'classnames';
 import { CategoryLink } from '~/components/category-link/category-link';
 import ComponentWrapper from '_codux/board-wrappers/component-wrapper';
-import { products } from '@wix/stores';
 
-console.log(products.InventoryStatus.IN_STOCK);
 export default createBoard({
     name: 'Components',
     Board: () => (
