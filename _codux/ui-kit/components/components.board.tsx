@@ -22,11 +22,7 @@ export default createBoard({
                 <div className="uiKitSection">
                     <div className="uiKitSectionTitle">Input</div>
                     <div className="uiKitItem">
-                        <QuantityInput
-                            value={6}
-                            className={styles.quantityInput1}
-                            onChange={() => {}}
-                        />
+                        <QuantityInput value={6} onChange={() => {}} />
                         <span className="uiKitItemDescription">Number Input</span>
                     </div>
                 </div>
