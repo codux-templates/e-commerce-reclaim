@@ -31,26 +31,26 @@ export default createBoard({
                 <span className={styles.fontDetails}>Number Input</span>
                 <hr className={styles.hrLight} />
                 <h4 className={styles.sectionHeader}>ACCORDION</h4>
-                    <Variant name="Accordion">
-                        <Accordion
-                            items={[
-                                {
-                                    title: 'Product Info',
-                                    content: 'Content',
-                                },
-                                {
-                                    title: 'Return & Refund Policy',
-                                    content: 'Content',
-                                },
-                                {
-                                    title: 'Shipping Info ',
-                                    content: 'Content',
-                                },
-                            ]}
-                            className={styles.accordion}
-                        />
-                    </Variant>
-                    <hr className={styles.hrLight} />
+                <Variant name="Accordion">
+                    <Accordion
+                        items={[
+                            {
+                                title: 'Product Info',
+                                content: 'Content',
+                            },
+                            {
+                                title: 'Return & Refund Policy',
+                                content: 'Content',
+                            },
+                            {
+                                title: 'Shipping Info ',
+                                content: 'Content',
+                            },
+                        ]}
+                        className={styles.accordion}
+                    />
+                </Variant>
+                <hr className={styles.hrLight} />
                 <p className={classNames(styles.variantName, styles.headlinesSpacing)}></p>
                 <h4 className={styles.sectionHeader}>LABELS</h4>
                 <div className="relativeContainer">
