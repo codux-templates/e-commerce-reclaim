@@ -18,12 +18,9 @@ export default createBoard({
                 </div>
                 <h3 className={classNames('uiKitTitle', styles.fontLarge)}>Sections</h3>
                 <div className="uiKitSection">
-                    <div className={classNames('uiKitSectionTitle', styles.fontLarge)}>
-                        Sections
-                    </div>
                     <div className="uiKitItem">
-                        <Variant name="HeroBanner">
-                            <div className={'heroBanner'}>
+                        <Variant name="Hero Banner">
+                            <div className="heroBanner">
                                 <img
                                     src="https://static.wixstatic.com/media/32aab9_2c3c65e142434906992aedb17db53566~mv2.jpg"
                                     className={'heroBannerImage'}
@@ -39,12 +36,12 @@ export default createBoard({
                             </div>
                         </Variant>
                         <span className={classNames('uiKitItemDescription', styles.fontLarge)}>
-                            HeroBanner
+                            Hero Banner
                         </span>
                     </div>
 
                     <div className="uiKitItem">
-                        <Variant name="FloatingCardBackground">
+                        <Variant name="Promotional">
                             <BackgroundParallax
                                 className="floatingCardBackground"
                                 backgroundImageUrl="https://static.wixstatic.com/media/c837a6_cae4dbe5a7ee4637b7d55d9bd5bd755d~mv2.png/v1/fill/w_1178,h_974,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/c837a6_cae4dbe5a7ee4637b7d55d9bd5bd755d~mv2.png"
@@ -67,18 +64,20 @@ export default createBoard({
                             </BackgroundParallax>
                         </Variant>
                         <span className={classNames('uiKitItemDescription', styles.fontLarge)}>
-                            FloatingCardBackground
+                            Promotional
                         </span>
                     </div>
 
                     <div className="uiKitItem">
-                        <FeaturedProductsSection
-                            categorySlug="new-in"
-                            title="New In"
-                            description="Embrace a sustainable lifestyle with our newest drop-ins."
-                        />
+                        <Variant name="Featured Products">
+                            <FeaturedProductsSection
+                                categorySlug="new-in"
+                                title="New In"
+                                description="Embrace a sustainable lifestyle with our newest drop-ins."
+                            />
+                        </Variant>
                         <span className={classNames('uiKitItemDescription', styles.fontLarge)}>
-                            FeaturedProductsSection
+                            Featured Products
                         </span>
                     </div>
                 </div>

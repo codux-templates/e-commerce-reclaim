@@ -51,6 +51,7 @@ export default createBoard({
                                 className={styles.demoWidth}
                             />
                         </Variant>
+                        <span className="uiKitItemDescription">Accordion</span>
                     </div>
                 </div>
 
@@ -76,22 +77,28 @@ export default createBoard({
                                 discountedPrice="$5.5"
                             />
                         </Variant>
-                        <span className="uiKitItemDescription">ProductCard</span>
+                        <span className="uiKitItemDescription">Product Card</span>
                     </div>
 
                     <div className="uiKitItem">
-                        <CategoryLink
-                            categorySlug="all-products"
-                            className={classNames('linkCard', styles.demoWidth, styles.linkCard)}
-                        >
-                            <img
-                                className="linkCardBackground"
-                                src="https://static.wixstatic.com/media/c837a6_c05a03f48fbd49e7b5046d1b18c930eb~mv2.jpg/v1/fill/w_547,h_730,q_90/c837a6_c05a03f48fbd49e7b5046d1b18c930eb~mv2.jpg"
-                                alt=""
-                            />
-                            <div className="linkCardTitle">All Products</div>
-                        </CategoryLink>
-                        <span className="uiKitItemDescription">LinkCard</span>
+                        <Variant name="Link Card">
+                            <CategoryLink
+                                categorySlug="all-products"
+                                className={classNames(
+                                    'linkCard',
+                                    styles.demoWidth,
+                                    styles.linkCard,
+                                )}
+                            >
+                                <img
+                                    className="linkCardBackground"
+                                    src="https://static.wixstatic.com/media/c837a6_c05a03f48fbd49e7b5046d1b18c930eb~mv2.jpg/v1/fill/w_547,h_730,q_90/c837a6_c05a03f48fbd49e7b5046d1b18c930eb~mv2.jpg"
+                                    alt=""
+                                />
+                                <div className="linkCardTitle">All Products</div>
+                            </CategoryLink>
+                        </Variant>
+                        <span className="uiKitItemDescription">Link Card</span>
                     </div>
                 </div>
             </div>

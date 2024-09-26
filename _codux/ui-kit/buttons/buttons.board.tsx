@@ -24,26 +24,28 @@ export default createBoard({
             <div className={classNames('uiKitSection', styles.demoWidth)}>
                 <div className="uiKitSectionTitle">Themed</div>
                 <div className="uiKitItem">
-                    <Variant name="PrimaryButton">
+                    <Variant name="Primary Button">
                         <button className="button primaryButton">Add to Cart</button>
                     </Variant>
-                    <div className="uiKitItemDescription">PrimaryButton</div>
+                    <div className="uiKitItemDescription">Primary Button</div>
                 </div>
                 <div className="uiKitItem">
-                    <Variant name="PrimaryMutedButton">
+                    <Variant name="Primary Muted Button">
                         <button className="button mutedPrimaryButton">Add to Cart</button>
                     </Variant>
-                    <div className="uiKitItemDescription">PrimaryMutedButton</div>
+                    <div className="uiKitItemDescription">Primary Muted Button</div>
                 </div>
                 <div className="uiKitItem">
-                    <Variant name="SecondaryButton">
+                    <Variant name="Secondary Button">
                         <button className="button secondary">Add to Cart</button>
                     </Variant>
-                    <div className="uiKitItemDescription">SecondaryButton</div>
+                    <div className="uiKitItemDescription">Secondary Button</div>
                 </div>
                 <div className="uiKitItem">
-                    <LabelWithArrow>Shop Now</LabelWithArrow>
-                    <div className="uiKitItemDescription">LabelWithArrow</div>
+                    <Variant name="Label With Arrow">
+                        <LabelWithArrow>Shop Now</LabelWithArrow>
+                    </Variant>
+                    <div className="uiKitItemDescription">Label With Arrow</div>
                 </div>
             </div>
 
@@ -52,45 +54,59 @@ export default createBoard({
                 <div className={styles.itemsGroup}>
                     <div className="uiKitItem">
                         <div className={styles.icon}>
-                            <CartIcon count={3} />
+                            <Variant name="Cart Icon">
+                                <CartIcon count={3} />
+                            </Variant>
                         </div>
-                        <div className="uiKitItemDescription">CartIcon</div>
+                        <div className="uiKitItemDescription">Cart</div>
                     </div>
                     <div className="uiKitItem">
                         <div className={styles.icon}>
-                            <TrashIcon className={styles.trashIcon} />
+                            <Variant name="Trash Icon">
+                                <TrashIcon className={styles.trashIcon} />
+                            </Variant>
                         </div>
-                        <div className="uiKitItemDescription">TrashIcon</div>
+                        <div className="uiKitItemDescription">Trash</div>
                     </div>
                     <div className="uiKitItem">
                         <div className={styles.icon}>
-                            <LockIcon className={styles.lockIcon} />
+                            <Variant name="Lock Icon">
+                                <LockIcon className={styles.lockIcon} />
+                            </Variant>
                         </div>
-                        <div className="uiKitItemDescription">LockIcon</div>
+                        <div className="uiKitItemDescription">Lock</div>
                     </div>
                     <div className="uiKitItem">
                         <div className={styles.icon}>
-                            <ErrorIcon className={styles.errorIcon} />
+                            <Variant name="Error Icon">
+                                <ErrorIcon className={styles.errorIcon} />
+                            </Variant>
                         </div>
-                        <div className="uiKitItemDescription">ErrorIcon</div>
+                        <div className="uiKitItemDescription">Error</div>
                     </div>
                     <div className="uiKitItem">
                         <div className={styles.icon}>
-                            <MenuIcon className={styles.menuIcon} />
+                            <Variant name="Menu Icon">
+                                <MenuIcon className={styles.menuIcon} />
+                            </Variant>
                         </div>
-                        <div className="uiKitItemDescription">MenuIcon</div>
+                        <div className="uiKitItemDescription">Menu</div>
                     </div>
                     <div className="uiKitItem">
                         <div className={styles.icon}>
-                            <ChevronRightIcon className={styles.chevronRightIcon} />
+                            <Variant name="Chevron Icon">
+                                <ChevronRightIcon className={styles.chevronRightIcon} />
+                            </Variant>
                         </div>
-                        <div className="uiKitItemDescription">ChevronIcon</div>
+                        <div className="uiKitItemDescription">Chevron</div>
                     </div>
                     <div className="uiKitItem">
                         <div className={styles.icon}>
-                            <ArrowRightIcon className={styles.arrowRightIcon} />
+                            <Variant name="Label With Arrow">
+                                <ArrowRightIcon className={styles.arrowRightIcon} />
+                            </Variant>
                         </div>
-                        <div className="uiKitItemDescription">ArrowRightIcon</div>
+                        <div className="uiKitItemDescription">Label With Arrow</div>
                     </div>
                 </div>
             </div>
@@ -99,13 +115,17 @@ export default createBoard({
                 <div className="uiKitSectionTitle">Social</div>
                 <div className="uiKitItem">
                     <div className={styles.itemsGroup}>
-                        <WhatsAppIcon className="smallIcon" />
-                        <FacebookIcon className="smallIcon" />
-                        <PinterestIcon className="smallIcon" />
+                        <Variant name="WhatsApp">
+                            <WhatsAppIcon className="smallIcon" />
+                        </Variant>
+                        <Variant name="Facebook">
+                            <FacebookIcon className="smallIcon" />
+                        </Variant>
+                        <Variant name="Pinterest">
+                            <PinterestIcon className="smallIcon" />
+                        </Variant>
                     </div>
-                    <div className="uiKitItemDescription">
-                        WhatsAppIcon | FacebookIcon | PinterestIcon
-                    </div>
+                    <div className="uiKitItemDescription">WhatsApp | Facebook | Pinterest</div>
                 </div>
             </div>
         </div>
