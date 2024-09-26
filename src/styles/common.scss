@@ -365,3 +365,8 @@
 .alternateBackground {
     background-color: var(--colorA3);
 }
+.relativeContainer {
+    position: relative;
+    width: 100%;
+    height: 50px;
+}
