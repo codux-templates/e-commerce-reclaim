@@ -1,33 +1,12 @@
 .container {
     width: 100%;
-    padding: 16px;
+    padding: 16px var(--pagePaddingHoriz);
 }
 
-.uikit {
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 12.6px;
-    letter-spacing: 0.1em;
+.fontLarge {
+    font-size: 1.3em;
 }
 
-.foundation {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-}
-
-.hrSolid {
-    height: 1px;
-    background-color: #000;
-}
-
-.sectionTitle {
-    font-size: 12px;
-    font-weight: 800;
-    margin-top: 10px;
-}
-
-.variantName {
-    font-size: 9px;
-    font-weight: 800;
-    line-height: 7px;
+.container :global(.heroBanner) {
+    height: 600px;
 }

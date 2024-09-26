@@ -1,0 +1,13 @@
+.row {
+    display: flex;
+}
+
+.demoWidth :global(.button) {
+    width: 250px;
+}
+
+@media (max-width: 480px) {
+    .demoWidth :global(.button) {
+        width: 100%;
+    }
+}
