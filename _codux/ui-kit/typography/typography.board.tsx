@@ -6,9 +6,9 @@ export default createBoard({
     Board: () => (
         <div className="uiKitContainer">
             <div className="uiKitHeader">
-                <b>UI Kit</b> | Core Components
+                <b>UI Kit</b> | Foundation
             </div>
-            <h3 className="uiKitTitle">Sections</h3>
+            <h3 className="uiKitTitle">Typography</h3>
 
             <div className="uiKitSection">
                 <div className="uiKitSectionTitle">Heading</div>
