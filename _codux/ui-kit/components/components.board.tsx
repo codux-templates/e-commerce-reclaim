@@ -22,11 +22,7 @@ export default createBoard({
                     <h4 className={styles.sectionHeader}>INPUT</h4>
                 </div>
                 <Variant name="Number Input">
-                    <QuantityInput
-                        value={6}
-                        className={styles.quantityInput1}
-                        onChange={() => {}}
-                    />
+                    <QuantityInput value={6} onChange={() => {}} className={styles.quantityInput} />
                 </Variant>
                 <span className={styles.fontDetails}>Number Input</span>
                 <hr className={styles.hrLight} />
@@ -53,11 +49,9 @@ export default createBoard({
                 <hr className={styles.hrLight} />
                 <p className={classNames(styles.variantName, styles.headlinesSpacing)}></p>
                 <h4 className={styles.sectionHeader}>LABELS</h4>
-                <div className="relativeContainer">
-                    <Variant name="Label">
-                        <span className={productCardStyles.ribbon}>I&apos;M A LABEL</span>
-                    </Variant>
-                </div>
+                <Variant name="Label">
+                    <span className="ribbon">I&apos;M A LABEL</span>
+                </Variant>
                 <hr className={styles.hrLight} />
                 <h4 className={styles.sectionHeader}>CARDS</h4>
                 <Variant name="Product Card">
