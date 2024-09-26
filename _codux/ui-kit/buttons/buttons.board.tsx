@@ -1,5 +1,5 @@
 import { createBoard, Variant } from '@wixc3/react-board';
-import { FacebookIcon, PinterestIcon, WhatsAppIcon } from '~/components/icons';
+import { CartIcon, FacebookIcon, PinterestIcon, WhatsAppIcon } from '~/components/icons';
 import { LabelWithArrow } from '~/components/label-with-arrow/label-with-arrow';
 
 import '../board-common.scss';
@@ -38,6 +38,14 @@ export default createBoard({
                 <div className="uiKitItem">
                     <LabelWithArrow>Shop Now</LabelWithArrow>
                     <div className="uiKitItemDescription">LabelWithArrow</div>
+                </div>
+            </div>
+
+            <div className="uiKitSection">
+                <div className="uiKitSectionTitle">Icons</div>
+                <div className="uiKitItem">
+                    <CartIcon count={3} />
+                    <div className="uiKitItemDescription">CartIcon</div>
                 </div>
             </div>
 
