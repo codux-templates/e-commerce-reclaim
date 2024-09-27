@@ -12,7 +12,7 @@ import { Kit } from '../ui-kit-utils/kit';
 import styles from './buttons.board.module.scss';
 
 export default createBoard({
-    name: 'UI Kit Buttons',
+    name: 'Buttons',
     Board: () => (
         <Kit category="Core Components" title="Buttons">
             <Kit.Section title="Buttons" className={styles.demoWidth}>

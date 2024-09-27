@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { ReactNode } from 'react';
-import styles from './kit.module.scss'; // Ensure this file exists
+import styles from './kit.module.scss';
 
 interface KitProps {
     category: string;
