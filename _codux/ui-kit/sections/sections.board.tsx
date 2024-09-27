@@ -3,45 +3,38 @@ import { CategoryLink } from '~/components/category-link/category-link';
 import { LabelWithArrow } from '~/components/label-with-arrow/label-with-arrow';
 import ComponentWrapper from '_codux/board-wrappers/component-wrapper';
 import { BackgroundParallax, FloatIn } from '~/components/visual-effects';
-import classNames from 'classnames';
 import { FeaturedProductsSection } from '~/components/featured-products-section/featured-products-section';
+import { Kit } from '../ui-kit-utils/kit';
 
-import '../board-common.scss';
 import styles from './sections.board.module.scss';
 
 export default createBoard({
     name: 'Sections',
     Board: () => (
         <ComponentWrapper>
-            <div className={styles.container}>
-                <div className={classNames('uiKitHeader', styles.fontLarge)}>
-                    <b>UI Kit</b> | Core Components
-                </div>
-                <h3 className={classNames('uiKitTitle', styles.fontLarge)}>Sections</h3>
-                <div className="uiKitSection">
-                    <div className="uiKitItem">
+            <Kit category="Core Components" title="Sections" className={styles.container}>
+                <Kit.Section>
+                    <Kit.Item>
                         <Variant name="Hero Banner">
                             <div className="heroBanner">
                                 <img
                                     src="https://static.wixstatic.com/media/32aab9_2c3c65e142434906992aedb17db53566~mv2.jpg"
-                                    className={'heroBannerImage'}
+                                    className="heroBannerImage"
                                     alt=""
                                 />
-                                <div className={'heroBannerOverlay'}>
-                                    <div className={'heroBannerSubtitle'}>ReClaim</div>
-                                    <h1 className={'heroBannerTitle'}>Reuse. Repurpose. Relove.</h1>
+                                <div className="heroBannerOverlay">
+                                    <div className="heroBannerSubtitle">ReClaim</div>
+                                    <h1 className="heroBannerTitle">Reuse. Repurpose. Relove.</h1>
                                     <CategoryLink categorySlug="all-products">
                                         <LabelWithArrow>Shop Collections</LabelWithArrow>
                                     </CategoryLink>
                                 </div>
                             </div>
                         </Variant>
-                        <span className={classNames('uiKitItemDescription', styles.fontLarge)}>
-                            Hero Banner
-                        </span>
-                    </div>
+                        <Kit.Description>Hero Banner</Kit.Description>
+                    </Kit.Item>
 
-                    <div className="uiKitItem">
+                    <Kit.Item>
                         <Variant name="Promotional">
                             <BackgroundParallax
                                 className="floatingCardBackground"
@@ -64,12 +57,10 @@ export default createBoard({
                                 </FloatIn>
                             </BackgroundParallax>
                         </Variant>
-                        <span className={classNames('uiKitItemDescription', styles.fontLarge)}>
-                            Promotional
-                        </span>
-                    </div>
+                        <Kit.Description>Promotional</Kit.Description>
+                    </Kit.Item>
 
-                    <div className="uiKitItem">
+                    <Kit.Item>
                         <Variant name="Featured Products">
                             <FeaturedProductsSection
                                 categorySlug="new-in"
@@ -77,17 +68,15 @@ export default createBoard({
                                 description="Embrace a sustainable lifestyle with our newest drop-ins."
                             />
                         </Variant>
-                        <span className={classNames('uiKitItemDescription', styles.fontLarge)}>
-                            Featured Products
-                        </span>
-                    </div>
-                </div>
-            </div>
+                        <Kit.Description>Featured Products</Kit.Description>
+                    </Kit.Item>
+                </Kit.Section>
+            </Kit>
         </ComponentWrapper>
     ),
     isSnippet: true,
     environmentProps: {
-        windowWidth: 1660,
+        windowWidth: 1071,
         windowHeight: 1800,
     },
 });

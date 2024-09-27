@@ -1,18 +1,19 @@
 .itemsGroup {
     display: flex;
     flex-wrap: wrap;
-    gap: 0 10px;
+    gap: 0 max(10px, 1.2vw);
 }
 
 .itemsGroup > * {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    width: max(45px, 5vw);
 }
 
 .itemsGroup .icon {
     height: 30px;
+    overflow: hidden;
 }
 
 .demoWidth :global(.button) {

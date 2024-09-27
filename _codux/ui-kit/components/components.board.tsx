@@ -5,33 +5,26 @@ import { QuantityInput } from '~/components/quantity-input/quantity-input';
 import classNames from 'classnames';
 import { CategoryLink } from '~/components/category-link/category-link';
 import ComponentWrapper from '_codux/board-wrappers/component-wrapper';
+import { Kit } from '../ui-kit-utils/kit';
 
-import '../board-common.scss';
 import styles from './components.board.module.scss';
 
 export default createBoard({
     name: 'Components',
     Board: () => (
         <ComponentWrapper>
-            <div className="uiKitContainer">
-                <div className="uiKitHeader">
-                    <b>UI Kit</b> | Core Components
-                </div>
-                <h3 className="uiKitTitle">Components & Elements</h3>
-
-                <div className="uiKitSection">
-                    <div className="uiKitSectionTitle">Input</div>
-                    <div className="uiKitItem">
+            <Kit category="Core Components" title="Components & Elements">
+                <Kit.Section title="Input">
+                    <Kit.Item>
                         <Variant name="Number Input">
                             <QuantityInput value={6} onChange={() => {}} />
                         </Variant>
-                        <span className="uiKitItemDescription">Number Input</span>
-                    </div>
-                </div>
+                        <Kit.Description>Number Input</Kit.Description>
+                    </Kit.Item>
+                </Kit.Section>
 
-                <div className="uiKitSection">
-                    <div className="uiKitSectionTitle">Accordion</div>
-                    <div className="uiKitItem">
+                <Kit.Section title="Accordion">
+                    <Kit.Item>
                         <Variant name="Accordion">
                             <Accordion
                                 items={[
@@ -51,23 +44,21 @@ export default createBoard({
                                 className={styles.demoWidth}
                             />
                         </Variant>
-                        <span className="uiKitItemDescription">Accordion</span>
-                    </div>
-                </div>
+                        <Kit.Description>Accordion</Kit.Description>
+                    </Kit.Item>
+                </Kit.Section>
 
-                <div className="uiKitSection">
-                    <div className="uiKitSectionTitle">Labels</div>
-                    <div className="uiKitItem">
+                <Kit.Section title="Labels">
+                    <Kit.Item>
                         <Variant name="Ribbon">
                             <span className="ribbon">Sale</span>
                         </Variant>
-                        <span className="uiKitItemDescription">Ribbon</span>
-                    </div>
-                </div>
+                        <Kit.Description>Ribbon</Kit.Description>
+                    </Kit.Item>
+                </Kit.Section>
 
-                <div className="uiKitSection">
-                    <div className="uiKitSectionTitle">Cards</div>
-                    <div className={classNames('uiKitItem', styles.demoWidth)}>
+                <Kit.Section title="Cards">
+                    <Kit.Item className={styles.demoWidth}>
                         <Variant name="Product Card">
                             <ProductCard
                                 name="Bamboo Toothbrush"
@@ -77,18 +68,13 @@ export default createBoard({
                                 discountedPrice="$5.5"
                             />
                         </Variant>
-                        <span className="uiKitItemDescription">Product Card</span>
-                    </div>
-
-                    <div className="uiKitItem">
+                        <Kit.Description>Product Card</Kit.Description>
+                    </Kit.Item>
+                    <Kit.Item className={styles.demoWidth}>
                         <Variant name="Link Card">
                             <CategoryLink
                                 categorySlug="all-products"
-                                className={classNames(
-                                    'linkCard',
-                                    styles.demoWidth,
-                                    styles.linkCard,
-                                )}
+                                className={classNames('linkCard', styles.linkCard)}
                             >
                                 <img
                                     className="linkCardBackground"
@@ -98,14 +84,14 @@ export default createBoard({
                                 <div className="linkCardTitle">All Products</div>
                             </CategoryLink>
                         </Variant>
-                        <span className="uiKitItemDescription">Link Card</span>
-                    </div>
-                </div>
-            </div>
+                        <Kit.Description>Link Card</Kit.Description>
+                    </Kit.Item>
+                </Kit.Section>
+            </Kit>
         </ComponentWrapper>
     ),
     environmentProps: {
-        windowWidth: 364,
+        windowWidth: 408,
         windowHeight: 756,
     },
     isSnippet: true,
