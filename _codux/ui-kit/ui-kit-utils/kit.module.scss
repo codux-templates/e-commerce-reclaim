@@ -30,7 +30,7 @@
 }
 
 .item {
-    margin-bottom: 22px;
+    margin-bottom: max(22px, 2em);
 }
 
 .itemDescription {
