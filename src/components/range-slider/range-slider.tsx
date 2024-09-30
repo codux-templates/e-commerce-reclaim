@@ -28,8 +28,7 @@ interface RangeSlider {
 }
 
 /**
- * A slider that allows selecting a numeric range.
- * It is built from 3 native <input type="range"> elements layered on top of each other.
+ * A slider component for selecting a numeric range.
  */
 export const RangeSlider = ({
     startValue,
@@ -74,6 +73,9 @@ export const RangeSlider = ({
 
     return (
         <div>
+            {/* The slider is implemented using three native <input type="range" />
+                elements stacked on top of each other.
+            */}
             <div className={styles.slidersContainer}>
                 {/* Displays the track with the highlighted selected range. The thumb is hidden.
                     Handles a change when a user clicks somewhere on the track.
@@ -94,7 +96,7 @@ export const RangeSlider = ({
                     onChange={handleChangeByClickingOnTrack}
                 />
 
-                {/* Displays the slider thumb to control the start value. The track is hidden */}
+                {/* Displays the slider thumb that controls the start value. The track is hidden */}
                 <input
                     type="range"
                     name={startInputName}
@@ -106,7 +108,7 @@ export const RangeSlider = ({
                     onChange={handleStartValueChange}
                 />
 
-                {/* Displays the slider thumb to control the end value. The track is hidden */}
+                {/* Displays the slider thumb that controls the end value. The track is hidden */}
                 <input
                     type="range"
                     name={endInputName}
