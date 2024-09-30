@@ -10,7 +10,7 @@ import { Kit } from '../ui-kit-utils/kit';
 import styles from './components.board.module.scss';
 
 export default createBoard({
-    name: 'Components',
+    name: 'Components & Elements',
     Board: () => (
         <ComponentWrapper>
             <Kit category="Core Components" title="Components & Elements">
@@ -91,8 +91,7 @@ export default createBoard({
         </ComponentWrapper>
     ),
     environmentProps: {
-        windowWidth: 408,
-        windowHeight: 756,
+        windowWidth: 400,
+        windowHeight: 800,
     },
-    isSnippet: true,
 });

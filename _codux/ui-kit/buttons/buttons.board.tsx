@@ -12,9 +12,9 @@ import { Kit } from '../ui-kit-utils/kit';
 import styles from './buttons.board.module.scss';
 
 export default createBoard({
-    name: 'Buttons',
+    name: 'Buttons & Icons',
     Board: () => (
-        <Kit category="Core Components" title="Buttons">
+        <Kit category="Core Components" title="Buttons & Icons">
             <Kit.Section title="Buttons" className={styles.demoWidth}>
                 <Kit.Item>
                     <Variant name="Primary Button">
@@ -134,8 +134,7 @@ export default createBoard({
         </Kit>
     ),
     environmentProps: {
-        windowWidth: 427,
-        windowHeight: 704,
+        windowWidth: 430,
+        windowHeight: 700,
     },
-    isSnippet: true,
 });
