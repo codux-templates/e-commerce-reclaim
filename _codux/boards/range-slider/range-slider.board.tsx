@@ -8,7 +8,7 @@ export default createBoard({
     name: 'Range Slider',
     Board: () => {
         const [startValue, setStartValue] = useState(25);
-        const [endValue, setEndValue] = useState(50);
+        const [endValue, setEndValue] = useState(75);
 
         return (
             <div className={styles.container}>

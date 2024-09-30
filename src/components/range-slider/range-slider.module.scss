@@ -18,10 +18,10 @@
     height: 2px;
     background: linear-gradient(
         to right,
-        var(--colorB2) var(--start),
-        var(--colorA5) var(--start),
-        var(--colorA5) var(--end),
-        var(--colorB2) var(--end)
+        var(--secondary2) var(--start),
+        var(--primary5) var(--start),
+        var(--primary5) var(--end),
+        var(--secondary2) var(--end)
     );
 }
 
@@ -30,10 +30,10 @@
     height: 2px;
     background: linear-gradient(
         to right,
-        var(--colorB2) var(--start),
-        var(--colorA5) var(--start),
-        var(--colorA5) var(--end),
-        var(--colorB2) var(--end)
+        var(--secondary2) var(--start),
+        var(--primary5) var(--start),
+        var(--primary5) var(--end),
+        var(--secondary2) var(--end)
     );
 }
 
@@ -60,7 +60,7 @@
     height: 12px;
     border-radius: 50%;
     border: none;
-    background: var(--colorA5);
+    background: var(--primary5);
     cursor: pointer;
 }
 
@@ -71,7 +71,7 @@
     height: 12px;
     border-radius: 50%;
     border: none;
-    background: var(--colorA5);
+    background: var(--primary5);
     cursor: pointer;
 }
 
