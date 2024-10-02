@@ -72,7 +72,7 @@ export const RangeSlider = ({
     };
 
     return (
-        <div className={classNames('rangeSlider', className)}>
+        <div className={classNames(styles.root, className)}>
             {/* The slider is implemented using three native <input type="range" />
                 elements stacked on top of each other.
             */}

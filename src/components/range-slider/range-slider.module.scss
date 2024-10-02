@@ -1,3 +1,11 @@
+:where(.root) {
+    /* Default slider styles. Customize them by passing a className to the component. */
+    --track-color: #b2b2b2;
+    --selected-range-color: #0175ff;
+    --thumb-color: #0175ff;
+    --thumb-focus-ring-color: #0175ff;
+}
+
 .slidersContainer {
     position: relative;
     height: 12px;
