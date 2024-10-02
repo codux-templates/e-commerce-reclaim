@@ -41,3 +41,16 @@
 .contentInner {
     overflow-y: auto;
 }
+
+.small .title {
+    font: var(--paragraph3);
+}
+
+.small .toggleIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.small .contentVisible {
+    padding-bottom: 16px;
+}

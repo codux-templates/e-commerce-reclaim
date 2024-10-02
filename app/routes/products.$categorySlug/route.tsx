@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import {
     isRouteErrorResponse,
@@ -5,36 +6,54 @@ import {
     useLoaderData,
     useNavigate,
     useRouteError,
+    useSearchParams,
 } from '@remix-run/react';
 import classNames from 'classnames';
 import { getEcomApi } from '~/api/ecom-api';
-import { EcomApiErrorCodes } from '~/api/types';
+import { EcomApiErrorCodes, ProductFilter, IProductFilters } from '~/api/types';
 import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
 import { CategoryLink } from '~/components/category-link/category-link';
 import { ErrorPage } from '~/components/error-page/error-page';
 import { ProductCard } from '~/components/product-card/product-card';
+import { ProductFilters } from '~/components/product-filters/product-filters';
 import { ProductLink } from '~/components/product-link/product-link';
 import { FadeIn } from '~/components/visual-effects';
+import { AppliedProductFilters } from '~/components/applied-product-filters/applied-product-filters';
+import { EmptyProductsCategory } from '~/components/empty-products-category/empty-products-category';
 import { ROUTES } from '~/router/config';
 import { RouteHandle } from '~/router/types';
 import { useBreadcrumbs } from '~/router/use-breadcrumbs';
-import { getErrorMessage } from '~/utils';
+import {
+    getErrorMessage,
+    parseProductFiltersFromUrlSearchParams,
+    stringifyProductFiltersToUrlSearchParams,
+} from '~/utils';
 
 import styles from './route.module.scss';
 
-export const loader = async ({ params }: LoaderFunctionArgs) => {
+export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     const categorySlug = params.categorySlug;
     if (!categorySlug) {
         throw new Error('Missing category slug');
     }
 
     const api = getEcomApi();
-    const [currentCategoryResponse, categoryProductsResponse, allCategoriesResponse] =
-        await Promise.all([
-            api.getCategoryBySlug(categorySlug),
-            api.getProductsByCategory(categorySlug),
-            api.getAllCategories(),
-        ]);
+    const url = new URL(request.url);
+
+    const [
+        currentCategoryResponse,
+        categoryProductsResponse,
+        allCategoriesResponse,
+        productPriceBoundsResponse,
+    ] = await Promise.all([
+        api.getCategoryBySlug(categorySlug),
+        api.getProductsByCategory(categorySlug, {
+            filters: parseProductFiltersFromUrlSearchParams(url.searchParams),
+        }),
+        api.getAllCategories(),
+        api.getProductPriceBounds(categorySlug),
+    ]);
+
     if (currentCategoryResponse.status === 'failure') {
         throw json(currentCategoryResponse.error);
     }
@@ -44,11 +63,15 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     if (categoryProductsResponse.status === 'failure') {
         throw json(categoryProductsResponse.error);
     }
+    if (productPriceBoundsResponse.status === 'failure') {
+        throw json(productPriceBoundsResponse.error);
+    }
 
     return {
         category: currentCategoryResponse.body,
         categoryProducts: categoryProductsResponse.body,
         allCategories: allCategoriesResponse.body,
+        productPriceBounds: productPriceBoundsResponse.body,
     };
 };
 
@@ -62,72 +85,168 @@ export const handle: RouteHandle<typeof loader> = {
 };
 
 export default function ProductsPage() {
-    const { category, categoryProducts, allCategories } = useLoaderData<typeof loader>();
+    const { category, categoryProducts, allCategories, productPriceBounds } =
+        useLoaderData<typeof loader>();
+
     const breadcrumbs = useBreadcrumbs();
+
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const appliedFilters = useMemo(
+        () => parseProductFiltersFromUrlSearchParams(searchParams),
+        [searchParams],
+    );
+
+    const applyFilters = (filters: IProductFilters) => {
+        setSearchParams(stringifyProductFiltersToUrlSearchParams(filters), {
+            preventScrollReset: true,
+        });
+    };
+
+    const clearFilters = (filters: ProductFilter[]) => {
+        setSearchParams(
+            (params) => {
+                filters.forEach((filter) => params.delete(filter));
+                return params;
+            },
+            { preventScrollReset: true },
+        );
+    };
+
+    const clearAllFilters = () => {
+        clearFilters(Object.keys(appliedFilters) as ProductFilter[]);
+    };
+
+    const currency = categoryProducts.items[0]?.priceData?.currency;
+
+    const priceFormatter = useMemo(
+        () =>
+            Intl.NumberFormat('en-US', {
+                currency: currency ?? 'USD',
+                style: 'currency',
+                currencyDisplay: 'narrowSymbol',
+                minimumFractionDigits: 2,
+            }),
+        [currency],
+    );
+
+    const someFiltersApplied =
+        Object.values(appliedFilters).length > 0 &&
+        Object.values(appliedFilters).some((value) => value !== undefined);
+
+    const renderProducts = () => {
+        if (categoryProducts.items.length === 0) {
+            return someFiltersApplied ? (
+                <EmptyProductsCategory
+                    title="We couldn't find any matches"
+                    subtitle="Try different filters or another category."
+                    actionButton={
+                        <button className={styles.clearFiltersButton} onClick={clearAllFilters}>
+                            Clear Filters
+                        </button>
+                    }
+                />
+            ) : (
+                <EmptyProductsCategory
+                    title="No products here yet..."
+                    subtitle="In the meantime, you can choose a different category to continue shopping."
+                />
+            );
+        }
+
+        return (
+            <div className={styles.productsList}>
+                {categoryProducts.items.map((product) => (
+                    <FadeIn key={product._id} duration={0.9}>
+                        <ProductLink
+                            className={styles.productLink}
+                            productSlug={product.slug!}
+                            state={{
+                                fromCategory: {
+                                    name: category.name,
+                                    slug: category.slug,
+                                },
+                            }}
+                        >
+                            <ProductCard
+                                name={product.name!}
+                                imageUrl={product.media?.mainMedia?.image?.url}
+                                price={product.priceData?.formatted?.price}
+                                discountedPrice={product.priceData?.formatted?.discountedPrice}
+                                ribbon={product.ribbon ?? undefined}
+                                inventoryStatus={product.stock?.inventoryStatus}
+                            />
+                        </ProductLink>
+                    </FadeIn>
+                ))}
+            </div>
+        );
+    };
 
     return (
         <div className={styles.page}>
             <Breadcrumbs breadcrumbs={breadcrumbs} />
 
             <div className={styles.content}>
-                <nav className={styles.navigation}>
-                    <h2 className={styles.navigationTitle}>Browse by</h2>
-                    <ul>
-                        {allCategories.map((category) => (
-                            <li key={category._id} className={styles.categoryListItem}>
-                                <CategoryLink
-                                    categorySlug={category.slug!}
-                                    className={({ isActive }) =>
-                                        classNames(styles.categoryLink, {
-                                            [styles.categoryLinkActive]: isActive,
-                                        })
-                                    }
-                                >
-                                    {category.name}
-                                </CategoryLink>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
+                <div className={styles.sidebar}>
+                    <nav>
+                        <h2 className={styles.sidebarTitle}>Browse by</h2>
+                        <ul>
+                            {allCategories.map((category) => (
+                                <li key={category._id} className={styles.categoryListItem}>
+                                    <CategoryLink
+                                        categorySlug={category.slug!}
+                                        className={({ isActive }) =>
+                                            classNames(styles.categoryLink, {
+                                                [styles.categoryLinkActive]: isActive,
+                                            })
+                                        }
+                                    >
+                                        {category.name}
+                                    </CategoryLink>
+                                </li>
+                            ))}
+                        </ul>
 
-                <div>
-                    <h1 className={styles.categoryName}>{category.name}</h1>
-                    {category.description && (
-                        <p className={styles.categoryDescription}>{category.description}</p>
+                        <div className={styles.filters}>
+                            <h2 className={classNames(styles.sidebarTitle, styles.filtersTitle)}>
+                                Filters
+                            </h2>
+                            <ProductFilters
+                                appliedFilters={appliedFilters}
+                                onFiltersChange={applyFilters}
+                                lowestPrice={productPriceBounds.lowest}
+                                highestPrice={productPriceBounds.highest}
+                                formatPrice={priceFormatter.format}
+                            />
+                        </div>
+                    </nav>
+                </div>
+
+                <div className={styles.main}>
+                    <div className={styles.categoryHeader}>
+                        <h1 className={styles.categoryName}>{category.name}</h1>
+                        {category.description && (
+                            <p className={styles.categoryDescription}>{category.description}</p>
+                        )}
+                    </div>
+
+                    {someFiltersApplied && (
+                        <AppliedProductFilters
+                            className={styles.appliedFilters}
+                            appliedFilters={appliedFilters}
+                            onClearFilters={clearFilters}
+                            onClearAllFilters={clearAllFilters}
+                            formatPrice={priceFormatter.format}
+                        />
                     )}
 
                     <p className={styles.productsCount}>
-                        {category.numberOfProducts}{' '}
-                        {category.numberOfProducts === 1 ? 'product' : 'products'}
+                        {categoryProducts.totalCount}{' '}
+                        {categoryProducts.totalCount === 1 ? 'product' : 'products'}
                     </p>
 
-                    <div className={styles.productsList}>
-                        {categoryProducts.map((product) => (
-                            <FadeIn key={product._id} duration={0.9}>
-                                <ProductLink
-                                    className={styles.productLink}
-                                    productSlug={product.slug!}
-                                    state={{
-                                        fromCategory: {
-                                            name: category.name,
-                                            slug: category.slug,
-                                        },
-                                    }}
-                                >
-                                    <ProductCard
-                                        name={product.name!}
-                                        imageUrl={product.media?.mainMedia?.image?.url}
-                                        price={product.priceData?.formatted?.price}
-                                        discountedPrice={
-                                            product.priceData?.formatted?.discountedPrice
-                                        }
-                                        ribbon={product.ribbon ?? undefined}
-                                        inventoryStatus={product.stock?.inventoryStatus}
-                                    />
-                                </ProductLink>
-                            </FadeIn>
-                        ))}
-                    </div>
+                    {renderProducts()}
                 </div>
             </div>
         </div>
