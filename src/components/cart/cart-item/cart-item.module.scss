@@ -1,3 +1,5 @@
+@import '@styles/variables.scss';
+
 .root {
     position: relative;
     padding: 20px 0;
@@ -113,7 +115,7 @@
     height: 20px;
 }
 
-/* Cart item styles used in floating right panel */
+/* Cart item styles used in right panel */
 .smallCartItem .productInfo {
     grid-template-columns: 3fr 3fr 1fr;
     grid-template-areas:
@@ -127,4 +129,21 @@
 
 .smallCartItem .priceBreakdown {
     justify-self: end;
+}
+
+@media (max-width: $tablet-width) {
+    .productInfo {
+        grid-template-columns: 3fr 3fr 1fr;
+        grid-template-areas:
+            'productNameAndPrice productNameAndPrice removeButton'
+            'quantity             priceBreakdown   priceBreakdown';
+    }
+
+    .quantity {
+        justify-self: start;
+    }
+
+    .priceBreakdown {
+        justify-self: end;
+    }
 }
