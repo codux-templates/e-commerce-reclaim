@@ -31,26 +31,17 @@
     grid-template-rows: 1fr;
 }
 
-.contentInner {
+.contentExpander {
     overflow: auto;
     transition: overflow 0s allow-discrete;
 }
 
-.expanded .contentInner {
+.expanded .contentExpander {
     // Prevent clipping outline and box-shadow after transition.
     overflow: visible;
     transition-delay: var(--transitionDuration);
 }
 
-.small .title {
-    font: var(--paragraph3);
-}
-
-.small .toggleIcon {
-    width: 20px;
-    height: 20px;
-}
-
-.small .contentVisible {
-    padding-bottom: 16px;
+.contentInner {
+    padding-bottom: 25px;
 }
