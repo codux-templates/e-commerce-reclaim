@@ -3,6 +3,7 @@
 .root {
     position: relative;
     padding: 20px 0;
+    container-type: inline-size;
 }
 
 .itemContent {
@@ -115,23 +116,7 @@
     height: 20px;
 }
 
-/* Cart item styles used in right panel */
-.smallCartItem .productInfo {
-    grid-template-columns: 3fr 3fr 1fr;
-    grid-template-areas:
-        'productNameAndPrice productNameAndPrice removeButton'
-        'quantity             priceBreakdown   priceBreakdown';
-}
-
-.smallCartItem .quantity {
-    justify-self: start;
-}
-
-.smallCartItem .priceBreakdown {
-    justify-self: end;
-}
-
-@media (max-width: $tablet-width) {
+@container (max-width: #{$tablet-width}) {
     .productInfo {
         grid-template-columns: 3fr 3fr 1fr;
         grid-template-areas:

@@ -12,10 +12,9 @@ import { useMemo, useState } from 'react';
 export interface CartItemProps {
     item: cart.LineItem;
     priceBreakdown?: cart.LineItemPricesData;
-    className?: string;
 }
 
-export const CartItem = ({ item, priceBreakdown, className }: CartItemProps) => {
+export const CartItem = ({ item, priceBreakdown }: CartItemProps) => {
     const productName = item.productName?.translated ?? '';
 
     const { trigger: removeItem, isMutating: isRemovingItem } = useRemoveItemFromCart();
@@ -46,7 +45,7 @@ export const CartItem = ({ item, priceBreakdown, className }: CartItemProps) => 
     const isUnavailable = item.availability?.status === cart.ItemAvailabilityStatus.NOT_AVAILABLE;
 
     return (
-        <div className={classNames(styles.root, { [styles.loading]: isUpdatingItem }, className)}>
+        <div className={classNames(styles.root, { [styles.loading]: isUpdatingItem })}>
             <div className={styles.itemContent}>
                 {image ? (
                     <div className={styles.imageWrapper}>
