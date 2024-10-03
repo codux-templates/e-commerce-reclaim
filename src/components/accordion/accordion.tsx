@@ -45,7 +45,7 @@ export const Accordion = ({ items, className }: AccordionProps) => {
                             })}
                         >
                             <div className={styles.contentExpander}>
-                                <div className={styles.contentWrapper}>{item.content}</div>
+                                <div className={styles.contentInner}>{item.content}</div>
                             </div>
                         </div>
                     </div>
