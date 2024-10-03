@@ -6,11 +6,10 @@ import {
     useLoaderData,
     useNavigate,
     useRouteError,
-    useSearchParams,
 } from '@remix-run/react';
 import classNames from 'classnames';
 import { getEcomApi } from '~/api/ecom-api';
-import { EcomApiErrorCodes, ProductFilter, IProductFilters } from '~/api/types';
+import { EcomApiErrorCodes } from '~/api/types';
 import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
 import { CategoryLink } from '~/components/category-link/category-link';
 import { ErrorPage } from '~/components/error-page/error-page';
@@ -23,13 +22,10 @@ import { EmptyProductsCategory } from '~/components/empty-products-category/empt
 import { ROUTES } from '~/router/config';
 import { RouteHandle } from '~/router/types';
 import { useBreadcrumbs } from '~/router/use-breadcrumbs';
-import {
-    getErrorMessage,
-    parseProductFiltersFromUrlSearchParams,
-    stringifyProductFiltersToUrlSearchParams,
-} from '~/utils';
+import { getErrorMessage } from '~/utils';
 
 import styles from './route.module.scss';
+import { parseProductFiltersFromUrlSearchParams, useProductFilters } from './use-product-filters';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     const categorySlug = params.categorySlug;
@@ -90,32 +86,8 @@ export default function ProductsPage() {
 
     const breadcrumbs = useBreadcrumbs();
 
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    const appliedFilters = useMemo(
-        () => parseProductFiltersFromUrlSearchParams(searchParams),
-        [searchParams],
-    );
-
-    const applyFilters = (filters: IProductFilters) => {
-        setSearchParams(stringifyProductFiltersToUrlSearchParams(filters), {
-            preventScrollReset: true,
-        });
-    };
-
-    const clearFilters = (filters: ProductFilter[]) => {
-        setSearchParams(
-            (params) => {
-                filters.forEach((filter) => params.delete(filter));
-                return params;
-            },
-            { preventScrollReset: true },
-        );
-    };
-
-    const clearAllFilters = () => {
-        clearFilters(Object.keys(appliedFilters) as ProductFilter[]);
-    };
+    const { appliedFilters, someFiltersApplied, applyFilters, clearFilters, clearAllFilters } =
+        useProductFilters();
 
     const currency = categoryProducts.items[0]?.priceData?.currency;
 
@@ -129,10 +101,6 @@ export default function ProductsPage() {
             }),
         [currency],
     );
-
-    const someFiltersApplied =
-        Object.values(appliedFilters).length > 0 &&
-        Object.values(appliedFilters).some((value) => value !== undefined);
 
     const renderProducts = () => {
         if (category.numberOfProducts === 0) {

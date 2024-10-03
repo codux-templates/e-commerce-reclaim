@@ -1,5 +1,5 @@
 import { isRouteErrorResponse } from '@remix-run/react';
-import { isEcomSDKError, ProductFilter, IProductFilters } from '~/api/types';
+import { isEcomSDKError } from '~/api/types';
 
 /**
  * It's important to add an appropriate role and a keyboard support
@@ -64,27 +64,4 @@ export function getErrorMessage(error: unknown): string {
     }
 
     return String(error);
-}
-
-export function parseProductFiltersFromUrlSearchParams(
-    searchParams: URLSearchParams,
-): IProductFilters {
-    const minPrice = searchParams.get(ProductFilter.minPrice);
-    const maxPrice = searchParams.get(ProductFilter.maxPrice);
-    const minPriceNumber = Number(minPrice);
-    const maxPriceNumber = Number(maxPrice);
-    return {
-        minPrice: minPrice && !Number.isNaN(minPriceNumber) ? minPriceNumber : undefined,
-        maxPrice: maxPrice && !Number.isNaN(maxPriceNumber) ? maxPriceNumber : undefined,
-    };
-}
-
-export function stringifyProductFiltersToUrlSearchParams({
-    minPrice,
-    maxPrice,
-}: IProductFilters): URLSearchParams {
-    const searchParams = new URLSearchParams();
-    if (minPrice !== undefined) searchParams.set(ProductFilter.minPrice, minPrice.toString());
-    if (maxPrice !== undefined) searchParams.set(ProductFilter.maxPrice, maxPrice.toString());
-    return searchParams;
 }
