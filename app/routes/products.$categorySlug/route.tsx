@@ -86,7 +86,7 @@ export default function ProductsPage() {
 
     const breadcrumbs = useBreadcrumbs();
 
-    const { appliedFilters, someFiltersApplied, applyFilters, clearFilters, clearAllFilters } =
+    const { filters, someFiltersApplied, applyFilters, clearFilters, clearAllFilters } =
         useProductFilters();
 
     const currency = categoryProducts.items[0]?.priceData?.currency;
@@ -188,7 +188,7 @@ export default function ProductsPage() {
                                     Filters
                                 </h2>
                                 <ProductFilters
-                                    appliedFilters={appliedFilters}
+                                    appliedFilters={filters}
                                     onFiltersChange={applyFilters}
                                     lowestPrice={productPriceBounds.lowest}
                                     highestPrice={productPriceBounds.highest}
@@ -210,7 +210,7 @@ export default function ProductsPage() {
                     {someFiltersApplied && (
                         <AppliedProductFilters
                             className={styles.appliedFilters}
-                            appliedFilters={appliedFilters}
+                            appliedFilters={filters}
                             onClearFilters={clearFilters}
                             onClearAllFilters={clearAllFilters}
                             formatPrice={priceFormatter.format}

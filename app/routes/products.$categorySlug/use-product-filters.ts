@@ -5,14 +5,14 @@ import { IProductFilters, ProductFilter } from '~/api/types';
 export function useProductFilters() {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const appliedFilters = useMemo(
+    const filters = useMemo(
         () => parseProductFiltersFromUrlSearchParams(searchParams),
         [searchParams],
     );
 
     const someFiltersApplied =
-        Object.values(appliedFilters).length > 0 &&
-        Object.values(appliedFilters).some((value) => value !== undefined);
+        Object.values(filters).length > 0 &&
+        Object.values(filters).some((value) => value !== undefined);
 
     const applyFilters = useCallback(
         (filters: IProductFilters) => {
@@ -41,7 +41,7 @@ export function useProductFilters() {
     }, [clearFilters]);
 
     return {
-        appliedFilters,
+        filters,
         someFiltersApplied,
         applyFilters,
         clearFilters,
