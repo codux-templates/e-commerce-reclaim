@@ -9,6 +9,7 @@ import { CartItem } from './cart-item/cart-item';
 import { useCartOpen } from './cart-open-context';
 
 import styles from './cart.module.scss';
+import cartItemVariants from './cart-item/cart-item.module.scss';
 
 export const Cart = () => {
     const ecomAPI = useEcomAPI();
@@ -58,6 +59,7 @@ export const Cart = () => {
                                     key={item._id}
                                     item={item}
                                     priceBreakdown={findLineItemPriceBreakdown(item)}
+                                    className={cartItemVariants.smallCartItem}
                                 />
                             ))}
                         </div>

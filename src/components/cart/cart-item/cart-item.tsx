@@ -12,9 +12,10 @@ import { useMemo, useState } from 'react';
 export interface CartItemProps {
     item: cart.LineItem;
     priceBreakdown?: cart.LineItemPricesData;
+    className?: string;
 }
 
-export const CartItem = ({ item, priceBreakdown }: CartItemProps) => {
+export const CartItem = ({ item, priceBreakdown, className }: CartItemProps) => {
     const productName = item.productName?.translated ?? '';
 
     const { trigger: removeItem, isMutating: isRemovingItem } = useRemoveItemFromCart();
@@ -45,7 +46,7 @@ export const CartItem = ({ item, priceBreakdown }: CartItemProps) => {
     const isUnavailable = item.availability?.status === cart.ItemAvailabilityStatus.NOT_AVAILABLE;
 
     return (
-        <div className={classNames(styles.root, { [styles.loading]: isUpdatingItem })}>
+        <div className={classNames(styles.root, { [styles.loading]: isUpdatingItem }, className)}>
             <div className={styles.itemContent}>
                 {image ? (
                     <div className={styles.imageWrapper}>
@@ -57,19 +58,15 @@ export const CartItem = ({ item, priceBreakdown }: CartItemProps) => {
                     </div>
                 )}
 
-                <div>
-                    <div className={styles.header}>
-                        <span>{productName}</span>
-                        <button className={styles.removeButton} onClick={handleRemove}>
-                            <TrashIcon />
-                        </button>
+                <div className={styles.productInfo}>
+                    <div className={styles.productNameAndPrice}>
+                        <div className={styles.productName}>{productName}</div>
+                        {item.price && (
+                            <div className="paragraph3">{item.price.formattedConvertedAmount}</div>
+                        )}
                     </div>
 
-                    {item.price && (
-                        <span className="paragraph3">{item.price.formattedConvertedAmount}</span>
-                    )}
-
-                    <div className={styles.quantityAndPrice}>
+                    <div className={styles.quantity}>
                         <QuantityInput
                             value={quantity}
                             onChange={handleQuantityChange}
@@ -78,11 +75,13 @@ export const CartItem = ({ item, priceBreakdown }: CartItemProps) => {
                             })}
                             disabled={isUnavailable}
                         />
-
-                        {priceBreakdown?.lineItemPrice && (
-                            <span>{priceBreakdown.lineItemPrice.formattedConvertedAmount}</span>
-                        )}
                     </div>
+                    <div className={styles.priceBreakdown}>
+                        {priceBreakdown?.lineItemPrice?.formattedConvertedAmount}
+                    </div>
+                    <button className={styles.removeButton} onClick={handleRemove}>
+                        <TrashIcon />
+                    </button>
                 </div>
             </div>
 
