@@ -135,8 +135,17 @@ export default function ProductsPage() {
         Object.values(appliedFilters).some((value) => value !== undefined);
 
     const renderProducts = () => {
-        if (categoryProducts.items.length === 0) {
-            return someFiltersApplied ? (
+        if (category.numberOfProducts === 0) {
+            return (
+                <EmptyProductsCategory
+                    title="No products here yet..."
+                    subtitle="In the meantime, you can choose a different category to continue shopping."
+                />
+            );
+        }
+
+        if (someFiltersApplied && categoryProducts.items.length === 0) {
+            return (
                 <EmptyProductsCategory
                     title="We couldn't find any matches"
                     subtitle="Try different filters or another category."
@@ -145,11 +154,6 @@ export default function ProductsPage() {
                             Clear Filters
                         </button>
                     }
-                />
-            ) : (
-                <EmptyProductsCategory
-                    title="No products here yet..."
-                    subtitle="In the meantime, you can choose a different category to continue shopping."
                 />
             );
         }
@@ -208,18 +212,22 @@ export default function ProductsPage() {
                             ))}
                         </ul>
 
-                        <div className={styles.filters}>
-                            <h2 className={classNames(styles.sidebarTitle, styles.filtersTitle)}>
-                                Filters
-                            </h2>
-                            <ProductFilters
-                                appliedFilters={appliedFilters}
-                                onFiltersChange={applyFilters}
-                                lowestPrice={productPriceBounds.lowest}
-                                highestPrice={productPriceBounds.highest}
-                                formatPrice={priceFormatter.format}
-                            />
-                        </div>
+                        {category.numberOfProducts !== 0 && (
+                            <div className={styles.filters}>
+                                <h2
+                                    className={classNames(styles.sidebarTitle, styles.filtersTitle)}
+                                >
+                                    Filters
+                                </h2>
+                                <ProductFilters
+                                    appliedFilters={appliedFilters}
+                                    onFiltersChange={applyFilters}
+                                    lowestPrice={productPriceBounds.lowest}
+                                    highestPrice={productPriceBounds.highest}
+                                    formatPrice={priceFormatter.format}
+                                />
+                            </div>
+                        )}
                     </nav>
                 </div>
 

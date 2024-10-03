@@ -44,6 +44,7 @@ export const ProductFilters = ({
                     title: 'Price',
                     content: (
                         <RangeSlider
+                            className="rangeSlider"
                             startValue={filters.minPrice ?? lowestPrice}
                             endValue={filters.maxPrice ?? highestPrice}
                             onStartValueChange={(value) => {
