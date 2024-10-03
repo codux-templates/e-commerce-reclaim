@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import styles from './accordion.module.scss';
-import { MinusIcon, PlusIcon } from '../icons';
 import classNames from 'classnames';
 import { getClickableElementAttributes } from '~/utils';
+import { MinusIcon, PlusIcon } from '../icons';
+
+import styles from './accordion.module.scss';
 
 interface AccordionItem {
     title: string;
@@ -41,7 +42,7 @@ export const Accordion = ({ items, className, small = false }: AccordionProps) =
 
                         <div
                             className={classNames(styles.content, {
-                                [styles.contentVisible]: isOpen,
+                                [styles.expanded]: isOpen,
                             })}
                         >
                             <div className={styles.contentInner}>{item.content}</div>
