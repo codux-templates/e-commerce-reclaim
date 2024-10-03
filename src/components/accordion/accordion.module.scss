@@ -21,5 +21,23 @@
 }
 
 .content {
-    padding-bottom: 25px;
+    --transitionDuration: 0.4s;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--transitionDuration) ease-in-out;
+}
+
+.expanded {
+    grid-template-rows: 1fr;
+}
+
+.contentInner {
+    overflow: auto;
+    transition: overflow 0s allow-discrete;
+}
+
+.expanded .contentInner {
+    // Prevent clipping outline and box-shadow after transition.
+    overflow: visible;
+    transition-delay: var(--transitionDuration);
 }
