@@ -93,9 +93,6 @@
 .mutedSecondaryButton {
     background-color: transparent;
     color: var(--primary5);
-    border-radius: 5px;
-    font-size: 15px;
-    padding: 13px 16px;
 }
 
 .mutedSecondaryButton:not(:disabled):hover {
