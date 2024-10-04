@@ -35,15 +35,15 @@ export default function CartPage() {
             <div className={styles.summary}>
                 <h1 className={styles.summaryHeader}>Order summary</h1>
                 <div className={styles.summarySection}>
-                    <div className={classNames(styles.summaryRow, styles.summaryItem)}>
+                    <div className={styles.summaryRow}>
                         <span>Subtotal</span>
                         <span>$5.50</span>
                     </div>
-                    <div className={classNames(styles.summaryRow, styles.summaryItem)}>
+                    <div className={styles.summaryRow}>
                         <span>Delivery</span>
                         <span>FREE</span>
                     </div>
-                    <div className={styles.summaryItem}>
+                    <div className={styles.summaryRow}>
                         <span className={styles.location}>Poland</span>
                     </div>
                 </div>

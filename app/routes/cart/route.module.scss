@@ -35,11 +35,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.summaryItem {
-    line-height: 28px;
-    padding: 6px 0;
+    height: 40px;
 }
 
 .location {
@@ -53,13 +49,11 @@
 
 .summaryTotal {
     font-size: 20px;
-    line-height: 36px;
-    padding: 4px 0;
-    margin-bottom: 14px;
 }
 
 .checkoutButton {
     width: 100%;
+    margin: 14px 0;
 }
 
 .secureCheckout {
@@ -68,7 +62,6 @@
     justify-content: center;
     gap: 8px;
     font: var(--paragraph3);
-    margin-top: 14px;
 }
 
 @media (max-width: $desktop-width) {
