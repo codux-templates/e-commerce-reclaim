@@ -35,7 +35,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 40px;
+    padding: 6px 0;
 }
 
 .location {
@@ -49,6 +49,7 @@
 
 .summaryTotal {
     font-size: 20px;
+    padding: 2px 0;
 }
 
 .checkoutButton {
