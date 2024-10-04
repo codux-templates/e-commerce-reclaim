@@ -30,9 +30,15 @@ export default createBoard({
                 </Kit.Item>
                 <Kit.Item>
                     <Variant name="Secondary Button">
-                        <button className="button secondary">Add to Cart</button>
+                        <button className="button">Add to Cart</button>
                     </Variant>
                     <Kit.Description>Secondary Button</Kit.Description>
+                </Kit.Item>
+                <Kit.Item>
+                    <Variant name="Secondary Muted Button">
+                        <button className="button mutedSecondaryButton">Checkout</button>
+                    </Variant>
+                    <Kit.Description>Secondary Muted Button</Kit.Description>
                 </Kit.Item>
                 <Kit.Item>
                     <Variant name="Label With Arrow">
