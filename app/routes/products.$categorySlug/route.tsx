@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import {
     isRouteErrorResponse,
@@ -10,6 +9,10 @@ import {
 import classNames from 'classnames';
 import { getEcomApi } from '~/api/ecom-api';
 import { EcomApiErrorCodes } from '~/api/types';
+import {
+    parseProductFiltersFromUrlSearchParams,
+    useProductFilters,
+} from '~/api/use-product-filters';
 import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
 import { CategoryLink } from '~/components/category-link/category-link';
 import { ErrorPage } from '~/components/error-page/error-page';
@@ -25,7 +28,6 @@ import { useBreadcrumbs } from '~/router/use-breadcrumbs';
 import { getErrorMessage } from '~/utils';
 
 import styles from './route.module.scss';
-import { parseProductFiltersFromUrlSearchParams, useProductFilters } from './use-product-filters';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     const categorySlug = params.categorySlug;
@@ -89,18 +91,7 @@ export default function ProductsPage() {
     const { filters, someFiltersApplied, applyFilters, clearFilters, clearAllFilters } =
         useProductFilters();
 
-    const currency = categoryProducts.items[0]?.priceData?.currency;
-
-    const priceFormatter = useMemo(
-        () =>
-            Intl.NumberFormat('en-US', {
-                currency: currency ?? 'USD',
-                style: 'currency',
-                currencyDisplay: 'narrowSymbol',
-                minimumFractionDigits: 2,
-            }),
-        [currency],
-    );
+    const currency = categoryProducts.items[0]?.priceData?.currency ?? 'USD';
 
     const renderProducts = () => {
         if (category.numberOfProducts === 0) {
@@ -192,7 +183,7 @@ export default function ProductsPage() {
                                     onFiltersChange={applyFilters}
                                     lowestPrice={productPriceBounds.lowest}
                                     highestPrice={productPriceBounds.highest}
-                                    formatPrice={priceFormatter.format}
+                                    currency={currency}
                                 />
                             </div>
                         )}
@@ -213,7 +204,7 @@ export default function ProductsPage() {
                             appliedFilters={filters}
                             onClearFilters={clearFilters}
                             onClearAllFilters={clearAllFilters}
-                            formatPrice={priceFormatter.format}
+                            currency={currency}
                         />
                     )}
 

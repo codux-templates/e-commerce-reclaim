@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import classNames from 'classnames';
 import { ProductFilter, IProductFilters } from '~/api/types';
+import { formatPrice } from '~/utils';
 import { AppliedFilter } from '../applied-filter/applied-filter';
 
 import styles from './applied-product-filters.module.scss';
@@ -9,7 +10,7 @@ interface AppliedProductFiltersProps {
     appliedFilters: IProductFilters;
     onClearFilters: (filters: ProductFilter[]) => void;
     onClearAllFilters: () => void;
-    formatPrice?: (value: number) => string;
+    currency: string;
     className?: string;
 }
 
@@ -17,7 +18,7 @@ export const AppliedProductFilters = ({
     appliedFilters,
     onClearFilters,
     onClearAllFilters,
-    formatPrice = (value) => value.toString(),
+    currency,
     className,
 }: AppliedProductFiltersProps) => {
     const { minPrice, maxPrice } = appliedFilters;
@@ -28,17 +29,19 @@ export const AppliedProductFilters = ({
         } else if (minPrice !== undefined && maxPrice !== undefined) {
             return (
                 <span>
-                    {formatPrice(minPrice)}&ndash;{formatPrice(maxPrice)}
+                    {formatPrice(minPrice, currency)}&ndash;{formatPrice(maxPrice, currency)}
                 </span>
             );
         } else {
             return (
                 <span>
-                    {minPrice !== undefined ? formatPrice(minPrice) : formatPrice(maxPrice!)}
+                    {minPrice !== undefined
+                        ? formatPrice(minPrice, currency)
+                        : formatPrice(maxPrice!, currency)}
                 </span>
             );
         }
-    }, [minPrice, maxPrice, formatPrice]);
+    }, [minPrice, maxPrice, currency]);
 
     return (
         <div className={classNames(styles.root, className)}>

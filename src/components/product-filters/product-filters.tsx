@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigation } from '@remix-run/react';
 import { IProductFilters } from '~/api/types';
+import { formatPrice } from '~/utils';
 import { Accordion } from '../accordion/accordion';
 import { RangeSlider } from '../range-slider/range-slider';
 
@@ -9,7 +10,7 @@ interface ProductFiltersProps {
     onFiltersChange: (filters: IProductFilters) => void;
     lowestPrice: number;
     highestPrice: number;
-    formatPrice?: (value: number) => string;
+    currency: string;
 }
 
 export const ProductFilters = ({
@@ -17,7 +18,7 @@ export const ProductFilters = ({
     onFiltersChange,
     lowestPrice,
     highestPrice,
-    formatPrice,
+    currency,
 }: ProductFiltersProps) => {
     const navigation = useNavigation();
 
@@ -28,6 +29,11 @@ export const ProductFilters = ({
         setFilters(newFilters);
         onFiltersChange(newFilters);
     };
+
+    const formatPriceValue = useCallback(
+        (price: number) => formatPrice(price, currency),
+        [currency],
+    );
 
     // Synchronize filters on back/forward browser button clicks.
     useEffect(() => {
@@ -55,7 +61,7 @@ export const ProductFilters = ({
                             }}
                             minValue={lowestPrice}
                             maxValue={highestPrice}
-                            formatValue={formatPrice}
+                            formatValue={formatPriceValue}
                         />
                     ),
                 },
