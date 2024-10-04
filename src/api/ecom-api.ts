@@ -278,8 +278,8 @@ function createApi(): EcomAPI {
                     .hasSome('collectionIds', [category._id]);
 
                 const [ascendingPrice, descendingPrice] = await Promise.all([
-                    await query.ascending('price').limit(1).find(),
-                    await query.descending('price').limit(1).find(),
+                    query.ascending('price').limit(1).find(),
+                    query.descending('price').limit(1).find(),
                 ]);
 
                 const lowest = ascendingPrice.items[0]?.priceData?.price ?? 0;
