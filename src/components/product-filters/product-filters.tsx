@@ -22,6 +22,8 @@ export const ProductFilters = ({
 }: ProductFiltersProps) => {
     const navigation = useNavigation();
 
+    // Allows updating the UI optimistically while Remix navigates to the URL
+    // with updated parameters.
     const [filters, setFilters] = useState(appliedFilters);
 
     const handleFiltersChange = (changed: Partial<IProductFilters>) => {
