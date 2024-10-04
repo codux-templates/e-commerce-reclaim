@@ -17,10 +17,16 @@ export type FakeDataSettings = {
 };
 
 export function createProducts(settings?: FakeDataSettings): Product[] {
-    return Array.from(new Array(settings?.numberOfProducts ?? 10)).map((id) => createProduct({ id, settings }));
+    return Array.from(new Array(settings?.numberOfProducts ?? 10)).map((id) =>
+        createProduct({ id, settings }),
+    );
 }
 
-export function createProduct(args: { id?: string; slug?: string; settings?: FakeDataSettings }): Product {
+export function createProduct(args: {
+    id?: string;
+    slug?: string;
+    settings?: FakeDataSettings;
+}): Product {
     const { id, slug, settings } = args;
     const numOfImages = faker.number.int({ min: 2, max: 4 });
     const images = Array.from(new Array(numOfImages)).map(() => createImage());
