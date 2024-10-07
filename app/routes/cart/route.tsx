@@ -1,8 +1,9 @@
 import { CartItem } from '~/components/cart/cart-item/cart-item';
-import styles from './route.module.scss';
 import { cart } from '@wix/ecom';
 import classNames from 'classnames';
 import { LockIcon } from '~/components/icons';
+
+import styles from './route.module.scss';
 
 const mockCartItem: cart.LineItem = {
     _id: '1',
