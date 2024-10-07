@@ -53,13 +53,7 @@ export default function CartPage() {
                         <span>$5.50</span>
                     </div>
 
-                    <button
-                        className={classNames(
-                            'button',
-                            'mutedSecondaryButton',
-                            styles.checkoutButton,
-                        )}
-                    >
+                    <button className={classNames('button', styles.checkoutButton)}>
                         Checkout
                     </button>
 
