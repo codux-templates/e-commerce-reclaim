@@ -6,8 +6,10 @@ import { TrashIcon, ImagePlaceholderIcon, ErrorIcon } from '~/components/icons';
 import { Spinner } from '~/components/spinner/spinner';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
-import styles from './cart-item.module.scss';
 import { useMemo, useState } from 'react';
+import { Price } from '~/components/price/price';
+
+import styles from './cart-item.module.scss';
 
 export interface CartItemProps {
     item: cart.LineItem;
@@ -60,8 +62,11 @@ export const CartItem = ({ item, priceBreakdown }: CartItemProps) => {
                 <div className={styles.productInfo}>
                     <div className={styles.productNameAndPrice}>
                         <div className={styles.productName}>{productName}</div>
-                        {item.price && (
-                            <div className="paragraph3">{item.price.formattedConvertedAmount}</div>
+                        {item.fullPrice?.formattedConvertedAmount && (
+                            <Price
+                                fullPrice={item.fullPrice?.formattedConvertedAmount}
+                                discountedPrice={item.price?.formattedConvertedAmount}
+                            />
                         )}
                     </div>
 
