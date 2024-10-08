@@ -6,10 +6,10 @@ import { Drawer } from '~/components/drawer/drawer';
 import { CloseIcon, LockIcon } from '~/components/icons';
 import { CartItem } from './cart-item/cart-item';
 import { useCartOpen } from './cart-open-context';
-
-import styles from './cart.module.scss';
 import { ROUTES } from '~/router/config';
 import { useNavigate } from '@remix-run/react';
+
+import styles from './cart.module.scss';
 
 export const Cart = () => {
     const ecomAPI = useEcomAPI();
