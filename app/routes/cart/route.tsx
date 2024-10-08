@@ -62,11 +62,7 @@ export default function CartPage() {
                                 <span>{priceSummary?.total?.formattedConvertedAmount}</span>
                             </div>
                             <button
-                                className={classNames(
-                                    'button',
-                                    'mutedSecondaryButton',
-                                    styles.checkoutButton,
-                                )}
+                                className={classNames('button', styles.checkoutButton)}
                                 onClick={handleCheckout}
                             >
                                 Checkout
