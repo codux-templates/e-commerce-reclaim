@@ -1,4 +1,3 @@
-import { cart } from '@wix/ecom';
 import classNames from 'classnames';
 import { useCart, useCartTotals } from '~/api/api-hooks';
 import { calculateCartItemsCount } from '~/api/cart-helpers';
@@ -9,12 +8,15 @@ import { CartItem } from './cart-item/cart-item';
 import { useCartOpen } from './cart-open-context';
 
 import styles from './cart.module.scss';
+import { ROUTES } from '~/router/config';
+import { useNavigate } from '@remix-run/react';
 
 export const Cart = () => {
     const ecomAPI = useEcomAPI();
     const cartOpener = useCartOpen();
+    const navigate = useNavigate();
     const cart = useCart();
-    const cartTotals = useCartTotals();
+    const { findLineItemPriceBreakdown } = useCartTotals();
 
     const handleCheckout = async () => {
         const checkoutResponse = await ecomAPI.checkout();
@@ -26,10 +28,9 @@ export const Cart = () => {
         }
     };
 
-    const findLineItemPriceBreakdown = (item: cart.LineItem) => {
-        return cartTotals.data?.calculatedLineItems.find(
-            (calculatedItem) => calculatedItem.lineItemId === item._id,
-        )?.pricesBreakdown;
+    const handleViewCart = () => {
+        cartOpener.setIsOpen(false);
+        navigate(ROUTES.cart.to());
     };
 
     const itemsCount = cart.data ? calculateCartItemsCount(cart.data) : 0;
@@ -84,6 +85,12 @@ export const Cart = () => {
                                 onClick={handleCheckout}
                             >
                                 Checkout
+                            </button>
+                            <button
+                                className={classNames('button', styles.viewCartButton)}
+                                onClick={handleViewCart}
+                            >
+                                View Cart
                             </button>
 
                             <div className={styles.secureCheckout}>
