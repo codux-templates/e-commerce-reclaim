@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import useSwr, { Key } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { findItemIdInCart } from './cart-helpers';
@@ -16,25 +16,46 @@ export const useCart = () => {
     });
 };
 
-export const useCartTotals = () => {
+export const useCartAndTotals = () => {
     const ecomApi = useEcomAPI();
-    const { data } = useCart();
+    const [isMutating, setIsMutating] = useState(false);
 
-    const cartTotals = useSwr('cart-totals', async () => {
-        const response = await ecomApi.getCartTotals();
-        if (response.status === 'failure') {
-            throw response.error;
+    const fetchCartAndTotals = async () => {
+        const [cartResponse, totalsResponse] = await Promise.all([
+            ecomApi.getCart(),
+            ecomApi.getCartTotals(),
+        ]);
+
+        if (cartResponse.status === 'failure') {
+            setIsMutating(false);
+            throw cartResponse.error;
+        }
+        if (totalsResponse.status === 'failure') {
+            setIsMutating(false);
+            throw totalsResponse.error;
+        }
+        if (cartResponse.status === 'success' && totalsResponse.status === 'success') {
+            setIsMutating(false);
         }
 
-        return response.body;
-    });
+        return {
+            cart: cartResponse.body,
+            totals: totalsResponse.body,
+        };
+    };
 
-    useEffect(() => {
-        cartTotals.mutate();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
+    const { data, mutate } = useSwr(['cart', 'cart-totals'], fetchCartAndTotals);
 
-    return cartTotals;
+    const trigger = () => {
+        setIsMutating(true);
+        mutate();
+    };
+
+    return {
+        trigger,
+        isMutating,
+        data,
+    };
 };
 
 type Args = { id: string; quantity: number };

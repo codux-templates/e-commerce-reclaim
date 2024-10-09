@@ -9,7 +9,6 @@ import {
 import { products } from '@wix/stores';
 import classNames from 'classnames';
 import { useState } from 'react';
-import { useAddToCart } from '~/api/api-hooks';
 import { getEcomApi } from '~/api/ecom-api';
 import { EcomApiErrorCodes } from '~/api/types';
 import { Accordion } from '~/components/accordion/accordion';
@@ -24,6 +23,8 @@ import { ROUTES } from '~/router/config';
 import { BreadcrumbData, RouteHandle } from '~/router/types';
 import { getErrorMessage, removeQueryStringFromUrl } from '~/utils';
 import { useBreadcrumbs } from '~/router/use-breadcrumbs';
+import { useCart } from '~/api/use-cart';
+
 import styles from './route.module.scss';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
@@ -75,23 +76,25 @@ export const handle: RouteHandle<typeof loader, ProductDetailsLocationState> = {
 export default function ProductDetailsPage() {
     const { product, canonicalUrl } = useLoaderData<typeof loader>();
     const breadcrumbs = useBreadcrumbs();
-
-    const cartOpener = useCartOpen();
-    const { trigger: addToCart, isMutating: isAddingToCart } = useAddToCart();
-
-    const [quantity, setQuantity] = useState(1);
+    const { triggerAddToCart, isAddingToCart } = useCart();
 
     const handleAddToCartClick = () => {
-        addToCart(
+        triggerAddToCart(
             {
                 id: product._id!,
                 quantity,
             },
             {
-                onSuccess: () => cartOpener.setIsOpen(true),
+                onSuccess: () => {
+                    cartOpener.setIsOpen(true);
+                },
             },
         );
     };
+
+    const cartOpener = useCartOpen();
+
+    const [quantity, setQuantity] = useState(1);
 
     const isOutOfStock = product.stock?.inventoryStatus === products.InventoryStatus.OUT_OF_STOCK;
 

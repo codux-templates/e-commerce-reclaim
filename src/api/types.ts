@@ -110,3 +110,25 @@ export type EcomAPI = {
         categorySlug: string,
     ) => Promise<EcomAPIResponse<{ lowest: number; highest: number }>>;
 };
+
+export type Image = {
+    id: string;
+    url: string;
+    height: number;
+    width: number;
+    altText?: string;
+    filename?: string;
+};
+
+export interface CartItem {
+    id: string;
+    quantity?: number;
+    price?: cart.MultiCurrencyPrice;
+    subtotal?: cart.MultiCurrencyPrice;
+    productName: string;
+    image?: Image;
+    isUpdating: boolean;
+    isUnavailable: boolean;
+    onRemove: () => void;
+    onQuantityChange: (quantity: number) => void;
+}

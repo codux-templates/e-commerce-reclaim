@@ -1,55 +1,25 @@
-import { cart } from '@wix/ecom';
-import { useRemoveItemFromCart, useUpdateCartItemQuantity } from '~/api/api-hooks';
-import { media } from '@wix/sdk';
 import { QuantityInput } from '~/components/quantity-input/quantity-input';
 import { TrashIcon, ImagePlaceholderIcon, ErrorIcon } from '~/components/icons';
 import { Spinner } from '~/components/spinner/spinner';
 import classNames from 'classnames';
-import debounce from 'lodash.debounce';
+import { CartItem as CartItemType } from '~/api/types';
+
 import styles from './cart-item.module.scss';
-import { useMemo, useState } from 'react';
+import { useCartItem } from '~/api/use-cart-item';
 
 export interface CartItemProps {
-    item: cart.LineItem;
-    priceBreakdown?: cart.LineItemPricesData;
+    item: CartItemType;
 }
 
-export const CartItem = ({ item, priceBreakdown }: CartItemProps) => {
-    const productName = item.productName?.translated ?? '';
-
-    const { trigger: removeItem, isMutating: isRemovingItem } = useRemoveItemFromCart();
-    const { trigger: updateItemQuantity, isMutating: isUpdatingItemQuantity } =
-        useUpdateCartItemQuantity();
-
-    const [quantity, setQuantity] = useState(item.quantity!);
-
-    const updateItemQuantityDebounced = useMemo(
-        () => debounce(updateItemQuantity, 300),
-        [updateItemQuantity],
-    );
-
-    const handleRemove = () => {
-        removeItem(item._id!);
-    };
-
-    const handleQuantityChange = (value: number) => {
-        setQuantity(value);
-        if (value > 0) {
-            updateItemQuantityDebounced({ id: item._id!, quantity: value });
-        }
-    };
-
-    const image = item.image ? media.getImageUrl(item.image) : undefined;
-    const isUpdatingItem = isRemovingItem || isUpdatingItemQuantity;
-
-    const isUnavailable = item.availability?.status === cart.ItemAvailabilityStatus.NOT_AVAILABLE;
+export const CartItem = ({ item }: CartItemProps) => {
+    const { quantity, onQuantityChange } = useCartItem(item);
 
     return (
-        <div className={classNames(styles.root, { [styles.loading]: isUpdatingItem })}>
+        <div className={classNames(styles.root, { [styles.loading]: item.isUpdating })}>
             <div className={styles.itemContent}>
-                {image ? (
+                {item.image ? (
                     <div className={styles.imageWrapper}>
-                        <img src={image.url} alt={image.altText ?? productName} />
+                        <img src={item.image.url} alt={item.image.altText} />
                     </div>
                 ) : (
                     <div className={styles.imagePlaceholder}>
@@ -59,7 +29,7 @@ export const CartItem = ({ item, priceBreakdown }: CartItemProps) => {
 
                 <div className={styles.productInfo}>
                     <div className={styles.productNameAndPrice}>
-                        <div className={styles.productName}>{productName}</div>
+                        <div className={styles.productName}>{item.productName}</div>
                         {item.price && (
                             <div className="paragraph3">{item.price.formattedConvertedAmount}</div>
                         )}
@@ -68,30 +38,30 @@ export const CartItem = ({ item, priceBreakdown }: CartItemProps) => {
                     <div className={styles.quantity}>
                         <QuantityInput
                             value={quantity}
-                            onChange={handleQuantityChange}
+                            onChange={onQuantityChange}
                             className={classNames(styles.quantityInput, {
-                                [styles.quantityInputDisabled]: isUnavailable,
+                                [styles.quantityInputDisabled]: item.isUnavailable,
                             })}
-                            disabled={isUnavailable}
+                            disabled={item.isUnavailable}
                         />
                     </div>
                     <div className={styles.priceBreakdown}>
-                        {priceBreakdown?.lineItemPrice?.formattedConvertedAmount}
+                        {item.subtotal?.formattedConvertedAmount}
                     </div>
-                    <button className={styles.removeButton} onClick={handleRemove}>
+                    <button className={styles.removeButton} onClick={item.onRemove}>
                         <TrashIcon />
                     </button>
                 </div>
             </div>
 
-            {isUnavailable && (
+            {item.isUnavailable && (
                 <div className={styles.unavailableIndication}>
                     <ErrorIcon className={styles.unavailableIcon} />
                     <span>Sorry, this item is no longer available.</span>
                 </div>
             )}
 
-            {isUpdatingItem && (
+            {item.isUpdating && (
                 <div className={styles.spinner}>
                     <Spinner size={50} />
                 </div>
