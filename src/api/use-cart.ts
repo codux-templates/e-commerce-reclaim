@@ -37,28 +37,28 @@ export const useCart = (): UseCartResult => {
 
     const {
         trigger: triggerAddToCart,
-        data: cartItemAdded,
+        data: cartAfterItemAdded,
         isMutating: isAddingToCart,
     } = useAddToCart();
 
     const {
         trigger: removeItem,
-        data: cartItemRemoved,
+        data: cartAfterItemRemoved,
         isMutating: isRemovingItem,
     } = useRemoveItemFromCart();
 
     const {
         trigger: updateItemQuantity,
-        data: quantityUpdated,
+        data: cartAfterQuantityUpdated,
         isMutating: isUpdatingItemQuantity,
     } = useUpdateCartItemQuantity();
 
     useEffect(() => {
-        if (cartItemRemoved || quantityUpdated || cartItemAdded) {
+        if (cartAfterItemRemoved || cartAfterQuantityUpdated || cartAfterItemAdded) {
             triggerCartUpdate();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [quantityUpdated, cartItemRemoved, cartItemAdded]);
+    }, [cartAfterQuantityUpdated, cartAfterItemRemoved, cartAfterItemAdded]);
 
     useEffect(() => {
         if (cartData) {
