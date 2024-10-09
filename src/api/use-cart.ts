@@ -77,7 +77,7 @@ export const useCart = (): UseCartResult => {
                     price: item.price,
                     subtotal: cartTotals ? getCartItemSubtotal(item, cartTotals) : undefined,
                     image: item.image ? media.getImageUrl(item.image) : undefined,
-                    isUpdating: isRemovingItem || isUpdatingItemQuantity,
+                    isUpdating: false, // here remember item who is waiting for the cart update
                     isUnavailable:
                         item.availability?.status === cartType.ItemAvailabilityStatus.NOT_AVAILABLE,
                     onRemove: () => removeItem(item._id!),

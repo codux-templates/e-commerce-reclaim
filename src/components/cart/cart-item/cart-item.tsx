@@ -13,7 +13,7 @@ export interface CartItemProps {
 
 export const CartItem = ({ item }: CartItemProps) => {
     const { quantity, onQuantityChange } = useCartItem(item);
-
+    
     return (
         <div className={classNames(styles.root, { [styles.loading]: item.isUpdating })}>
             <div className={styles.itemContent}>

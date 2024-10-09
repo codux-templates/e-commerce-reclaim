@@ -83,7 +83,7 @@ export const useAddToCart = () => {
             if (addToCartResponse.status === 'failure') {
                 throw addToCartResponse.error;
             }
-            return addToCartResponse.body;
+            return arg.id;
         },
         {
             revalidate: false,
@@ -101,7 +101,7 @@ export const useUpdateCartItemQuantity = () => {
             if (response.status === 'failure') {
                 throw response.error;
             }
-            return response.body;
+            return arg.id;
         },
         {
             revalidate: false,
@@ -119,7 +119,7 @@ export const useRemoveItemFromCart = () => {
             if (response.status === 'failure') {
                 throw response.error;
             }
-            return response.body;
+            return arg;
         },
         {
             revalidate: false,
