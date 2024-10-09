@@ -9,10 +9,8 @@ import {
 import classNames from 'classnames';
 import { getEcomApi } from '~/api/ecom-api';
 import { EcomApiErrorCodes } from '~/api/types';
-import {
-    parseProductFiltersFromUrlSearchParams,
-    useProductFilters,
-} from '~/api/use-product-filters';
+import { getProductSortByFromUrlSearchParams } from '~/api/product-sorting';
+import { parseProductFiltersFromUrlSearchParams, useProductFilters } from '~/api/product-filters';
 import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
 import { CategoryLink } from '~/components/category-link/category-link';
 import { ErrorPage } from '~/components/error-page/error-page';
@@ -22,6 +20,7 @@ import { ProductLink } from '~/components/product-link/product-link';
 import { FadeIn } from '~/components/visual-effects';
 import { AppliedProductFilters } from '~/components/applied-product-filters/applied-product-filters';
 import { EmptyProductsCategory } from '~/components/empty-products-category/empty-products-category';
+import { ProductSorting } from '~/components/product-sorting/product-sorting';
 import { ROUTES } from '~/router/config';
 import { RouteHandle } from '~/router/types';
 import { useBreadcrumbs } from '~/router/use-breadcrumbs';
@@ -47,6 +46,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
         api.getCategoryBySlug(categorySlug),
         api.getProductsByCategory(categorySlug, {
             filters: parseProductFiltersFromUrlSearchParams(url.searchParams),
+            sortBy: getProductSortByFromUrlSearchParams(url.searchParams),
         }),
         api.getAllCategories(),
         api.getProductPriceBounds(categorySlug),
@@ -208,10 +208,14 @@ export default function ProductsPage() {
                         />
                     )}
 
-                    <p className={styles.productsCount}>
-                        {categoryProducts.totalCount}{' '}
-                        {categoryProducts.totalCount === 1 ? 'product' : 'products'}
-                    </p>
+                    <div className={styles.countAndSorting}>
+                        <p className="paragraph3">
+                            {categoryProducts.totalCount}{' '}
+                            {categoryProducts.totalCount === 1 ? 'product' : 'products'}
+                        </p>
+
+                        <ProductSorting />
+                    </div>
 
                     {renderProducts()}
                 </div>

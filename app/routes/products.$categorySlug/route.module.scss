@@ -67,9 +67,11 @@
     margin-bottom: 16px;
 }
 
-.productsCount {
+.countAndSorting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 8px;
-    font: var(--paragraph3);
 }
 
 .productsList {
