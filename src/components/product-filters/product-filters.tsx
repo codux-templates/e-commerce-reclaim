@@ -58,12 +58,12 @@ export const ProductFilters = ({
                             endValue={filters.maxPrice ?? highestPrice}
                             onStartValueChange={(value) => {
                                 handleFiltersChange({
-                                    minPrice: value === lowestPrice ? value : Math.round(value),
+                                    minPrice: Math.max(Math.floor(value), lowestPrice),
                                 });
                             }}
                             onEndValueChange={(value) => {
                                 handleFiltersChange({
-                                    maxPrice: value === highestPrice ? value : Math.round(value),
+                                    maxPrice: Math.min(Math.ceil(value), highestPrice),
                                 });
                             }}
                             minValue={lowestPrice}
