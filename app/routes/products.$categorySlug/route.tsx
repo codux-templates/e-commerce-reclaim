@@ -205,6 +205,7 @@ export default function ProductsPage() {
                             onClearFilters={clearFilters}
                             onClearAllFilters={clearAllFilters}
                             currency={currency}
+                            priceBounds={productPriceBounds}
                         />
                     )}
 

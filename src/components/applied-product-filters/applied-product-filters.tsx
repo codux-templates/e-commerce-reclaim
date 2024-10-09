@@ -11,6 +11,7 @@ interface AppliedProductFiltersProps {
     onClearFilters: (filters: ProductFilter[]) => void;
     onClearAllFilters: () => void;
     currency: string;
+    priceBounds: { lowest: number; highest: number };
     className?: string;
 }
 
@@ -19,6 +20,7 @@ export const AppliedProductFilters = ({
     onClearFilters,
     onClearAllFilters,
     currency,
+    priceBounds,
     className,
 }: AppliedProductFiltersProps) => {
     const { minPrice, maxPrice } = appliedFilters;
@@ -26,22 +28,15 @@ export const AppliedProductFilters = ({
     const priceFilter = useMemo<JSX.Element | null>(() => {
         if (minPrice === undefined && maxPrice === undefined) {
             return null;
-        } else if (minPrice !== undefined && maxPrice !== undefined) {
-            return (
-                <span>
-                    {formatPrice(minPrice, currency)}&ndash;{formatPrice(maxPrice, currency)}
-                </span>
-            );
         } else {
             return (
                 <span>
-                    {minPrice !== undefined
-                        ? formatPrice(minPrice, currency)
-                        : formatPrice(maxPrice!, currency)}
+                    {formatPrice(minPrice ?? priceBounds.lowest, currency)}&ndash;
+                    {formatPrice(maxPrice ?? priceBounds.highest, currency)}
                 </span>
             );
         }
-    }, [minPrice, maxPrice, currency]);
+    }, [minPrice, maxPrice, currency, priceBounds]);
 
     return (
         <div className={classNames(styles.root, className)}>
