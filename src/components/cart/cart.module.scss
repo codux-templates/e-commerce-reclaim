@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: space-between;
     padding-bottom: 20px;
-    border-bottom: 1px solid var(--colorA5);
+    border-bottom: 1px solid var(--primary5);
 }
 
 .closeButton {
@@ -32,7 +32,7 @@
 .footer {
     margin-top: auto;
     padding-top: 20px;
-    border-top: 1px solid rgba(23, 17, 13, 0.3);
+    border-top: 1px solid rgba(23, 17, 13, 0.2);
 }
 
 .subtotal {
@@ -45,7 +45,7 @@
 .subtotalNote {
     margin: 12px 0;
     font: var(--paragraph3);
-    color: var(--colorA4);
+    color: var(--primary4);
 }
 
 .checkoutButton {

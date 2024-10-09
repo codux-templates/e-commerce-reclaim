@@ -1,71 +1,98 @@
 import { createBoard, Variant } from '@wixc3/react-board';
-import classNames from 'classnames';
 import { Accordion } from '~/components/accordion/accordion';
 import { ProductCard } from '~/components/product-card/product-card';
 import { QuantityInput } from '~/components/quantity-input/quantity-input';
+import classNames from 'classnames';
+import { CategoryLink } from '~/components/category-link/category-link';
 import ComponentWrapper from '_codux/board-wrappers/component-wrapper';
+import { Kit } from '../ui-kit-utils/kit';
 
 import styles from './components.board.module.scss';
 
 export default createBoard({
-    name: 'Components',
+    name: 'Components & Elements',
     Board: () => (
         <ComponentWrapper>
-            <div className={styles.container}>
-                <div>
-                    <span className={styles.uikit}>UI Kit</span>
-                    <span className={styles.foundation}> | Core components</span>
-                    <hr className={styles.hrSolid} />
-                    <h3 className={styles.sectionTitle}>Components &amp; Elements</h3>
-                    <h4 className={styles.sectionHeader}>INPUT</h4>
-                </div>
-                <QuantityInput value={6} className={styles.quantityInput1} onChange={() => {}} />
-                <span className={styles.fontDetails}>Number Input</span>
-                <Variant name="Heading1">
-                    <hr className={styles.hrLight} />
-                    <h4 className={styles.sectionHeader}>ACCORDION</h4>
-                    <Accordion
-                        items={[
-                            {
-                                title: 'Product Info',
-                                content: 'Content',
-                            },
-                            {
-                                title: 'Return & Refund Policy',
-                                content: 'Content',
-                            },
-                            {
-                                title: 'Shipping Info ',
-                                content: 'Content',
-                            },
-                        ]}
-                        className={styles.accordion}
-                    />
-                    <hr className={styles.hrLight} />
-                </Variant>
-                <p className={classNames(styles.variantName, styles.headlinesSpacing)}></p>
-                <h4 className={styles.sectionHeader}>LABELS</h4>
-                <h4>Labels missing</h4>
-                <hr className={styles.hrLight} />
-                <h4 className={styles.sectionHeader}>CARDS</h4>
-                <ProductCard
-                    name="Bamboo Toothbrush"
-                    imageUrl="https://static.wixstatic.com/media/c837a6_18152edaef9940ca88f446ae94b48a47~mv2.jpg/v1/fill/w_824,h_1098,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/c837a6_18152edaef9940ca88f446ae94b48a47~mv2.jpg"
-                    ribbon="NEW"
-                    priceData={{
-                        currency: '$',
-                        price: 5.5,
-                    }}
-                />
-                <span className={styles.fontDetails}>Product Card</span>
-                <h4>Product gallery missing</h4>
-                <span className={styles.fontDetails}>Product Card</span>
-            </div>
+            <Kit category="Core Components" title="Components & Elements">
+                <Kit.Section title="Input">
+                    <Kit.Item>
+                        <Variant name="Number Input">
+                            <QuantityInput value={6} onChange={() => {}} />
+                        </Variant>
+                        <Kit.Description>Number Input</Kit.Description>
+                    </Kit.Item>
+                </Kit.Section>
+
+                <Kit.Section title="Accordion">
+                    <Kit.Item>
+                        <Variant name="Accordion">
+                            <Accordion
+                                items={[
+                                    {
+                                        title: 'Product Info',
+                                        content: 'Content',
+                                    },
+                                    {
+                                        title: 'Return & Refund Policy',
+                                        content: 'Content',
+                                    },
+                                    {
+                                        title: 'Shipping Info ',
+                                        content: 'Content',
+                                    },
+                                ]}
+                                className={styles.demoWidth}
+                            />
+                        </Variant>
+                        <Kit.Description>Accordion</Kit.Description>
+                    </Kit.Item>
+                </Kit.Section>
+
+                <Kit.Section title="Labels">
+                    <Kit.Item>
+                        <Variant name="Ribbon">
+                            <span className="ribbon">Sale</span>
+                        </Variant>
+                        <Kit.Description>Ribbon</Kit.Description>
+                    </Kit.Item>
+                </Kit.Section>
+
+                <Kit.Section title="Cards">
+                    <Kit.Item className={styles.demoWidth}>
+                        <Variant name="Product Card">
+                            <ProductCard
+                                name="Bamboo Toothbrush"
+                                imageUrl="https://static.wixstatic.com/media/c837a6_18152edaef9940ca88f446ae94b48a47~mv2.jpg/v1/fill/w_824,h_1098,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/c837a6_18152edaef9940ca88f446ae94b48a47~mv2.jpg"
+                                ribbon="NEW"
+                                price="$6"
+                                discountedPrice="$5.5"
+                            />
+                        </Variant>
+                        <Kit.Description>Product Card</Kit.Description>
+                    </Kit.Item>
+                    <Kit.Item className={styles.demoWidth}>
+                        <Variant name="Link Card">
+                            <CategoryLink
+                                categorySlug="all-products"
+                                className={classNames('linkCard', styles.linkCard)}
+                            >
+                                <img
+                                    className="linkCardBackground"
+                                    src="https://static.wixstatic.com/media/c837a6_c05a03f48fbd49e7b5046d1b18c930eb~mv2.jpg/v1/fill/w_547,h_730,q_90/c837a6_c05a03f48fbd49e7b5046d1b18c930eb~mv2.jpg"
+                                    alt=""
+                                />
+                                <div className="linkCardTitle">All Products</div>
+                            </CategoryLink>
+                        </Variant>
+                        <Kit.Description>Link Card</Kit.Description>
+                    </Kit.Item>
+                </Kit.Section>
+            </Kit>
         </ComponentWrapper>
     ),
     environmentProps: {
-        windowWidth: 423,
-        windowHeight: 756,
+        windowWidth: 400,
+        windowHeight: 800,
     },
     isSnippet: true,
 });

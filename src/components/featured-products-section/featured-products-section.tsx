@@ -39,9 +39,9 @@ const getFeaturedProducts = async (
         }
     }
 
-    const productsResponse = await api.getProductsByCategory(category.slug!, limit);
+    const productsResponse = await api.getProductsByCategory(category.slug!, { limit });
     if (productsResponse.status === 'failure') throw productsResponse.error;
-    return { category, products: productsResponse.body };
+    return { category, products: productsResponse.body.items };
 };
 
 interface FeaturedProductsSectionProps {
@@ -61,20 +61,21 @@ export const FeaturedProductsSection = (props: FeaturedProductsSectionProps) => 
 
     return (
         <div className={classNames(styles.root, className)}>
-            <FadeIn className={styles.header}>
-                <h1 className={styles.headerTitle}>{title ?? data?.category.name}</h1>
+            <FadeIn className={styles.header} duration={1.8}>
+                <h3 className={styles.headerTitle}>{title ?? data?.category.name}</h3>
                 <div className={styles.headerDescription}>
                     {description ?? data?.category.description}
                 </div>
             </FadeIn>
-            <Reveal direction="down" className={styles.productsRow}>
+            <Reveal className={styles.productsRow} direction="down" duration={1.4}>
                 {data
                     ? data.products.map((product) => (
                           <ProductLink key={product._id} productSlug={product.slug!}>
                               <ProductCard
                                   name={product.name!}
                                   imageUrl={product.media?.mainMedia?.image?.url}
-                                  priceData={product.priceData}
+                                  price={product.priceData?.formatted?.price}
+                                  discountedPrice={product.priceData?.formatted?.discountedPrice}
                                   ribbon={product.ribbon ?? undefined}
                               />
                           </ProductLink>

@@ -66,6 +66,17 @@ export function getErrorMessage(error: unknown): string {
     return String(error);
 }
 
+export function formatPrice(price: number, currency: string): string {
+    const formatter = Intl.NumberFormat('en-US', {
+        currency,
+        style: 'currency',
+        currencyDisplay: 'narrowSymbol',
+        minimumFractionDigits: 2,
+    });
+
+    return formatter.format(price);
+}
+
 /**
  * Converts Remix Location object into a standard URL object.
  */
