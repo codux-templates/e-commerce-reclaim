@@ -4,7 +4,7 @@ import { DropdownIcon } from '../icons';
 
 import styles from './select.module.scss';
 
-interface SelectProps {
+export interface SelectProps {
     value: string;
     onValueChange: (value: string) => void;
     placeholder?: string;
@@ -28,7 +28,7 @@ export const Select = ({ value, onValueChange, placeholder, children }: SelectPr
     </RadixSelect.Root>
 );
 
-interface SelectItemProps {
+export interface SelectItemProps {
     value: string;
     children: React.ReactNode;
     className?: string;
