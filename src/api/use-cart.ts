@@ -25,13 +25,21 @@ export interface UseCartResult {
 
 export const useCart = (): UseCartResult => {
     const ecomAPI = useEcomAPI();
-    const { data, isMutating: isCartMutating, trigger: triggerCartUpdate } = useCartAndTotals();
-    const cart = data?.cart;
-    const cartTotals = data?.totals;
+    const {
+        data: cartData,
+        isMutating: isCartMutating,
+        trigger: triggerCartUpdate,
+    } = useCartAndTotals();
+    const cart = cartData?.cart;
+    const cartTotals = cartData?.totals;
 
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-    const { trigger: triggerAddToCart, data: cartItemAdded, isMutating: isAddingToCart } = useAddToCart();
+    const {
+        trigger: triggerAddToCart,
+        data: cartItemAdded,
+        isMutating: isAddingToCart,
+    } = useAddToCart();
 
     const {
         trigger: removeItem,
@@ -53,11 +61,11 @@ export const useCart = (): UseCartResult => {
     }, [quantityUpdated, cartItemRemoved, cartItemAdded]);
 
     useEffect(() => {
-        if (data) {
+        if (cartData) {
             setCartItems(computeCartItems());
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
+    }, [cartData]);
 
     const computeCartItems = () => {
         return (
