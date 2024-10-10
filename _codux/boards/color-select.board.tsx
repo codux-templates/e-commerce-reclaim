@@ -12,8 +12,8 @@ const options: ColorSelectOption[] = [
 export default createBoard({
     name: 'Color Select',
     Board: () => {
-        const [color, setColor] = useState('');
-        return <ColorSelect options={options} selectedId={color} onChange={setColor} />;
+        const [colorId, setColorId] = useState('');
+        return <ColorSelect options={options} selectedId={colorId} onChange={setColorId} />;
     },
     environmentProps: {
         windowWidth: 400,
