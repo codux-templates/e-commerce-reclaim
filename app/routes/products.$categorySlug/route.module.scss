@@ -71,7 +71,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
     margin-bottom: 8px;
+}
+
+.productsCount {
+    font: var(--paragraph3);
 }
 
 .productsList {
@@ -100,8 +105,19 @@
     }
 }
 
+@media (max-width: $tablet-width) {
+    .countAndSorting {
+        flex-direction: column;
+        align-items: end;
+    }
+
+    .productsCount {
+        align-self: start;
+    }
+}
+
 @media (max-width: $mobile-width) {
-    .navigation {
+    .sidebar {
         display: none;
     }
 }

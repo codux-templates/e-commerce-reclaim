@@ -209,7 +209,7 @@ export default function ProductsPage() {
                     )}
 
                     <div className={styles.countAndSorting}>
-                        <p className="paragraph3">
+                        <p className={styles.productsCount}>
                             {categoryProducts.totalCount}{' '}
                             {categoryProducts.totalCount === 1 ? 'product' : 'products'}
                         </p>
