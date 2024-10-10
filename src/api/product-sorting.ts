@@ -1,38 +1,15 @@
-import { useCallback, useMemo } from 'react';
-import { useSearchParams } from '@remix-run/react';
 import { products } from '@wix/stores';
 import { ProductSortBy } from './types';
 
-const SORT_BY_SEARCH_PARAM = 'sortBy';
+export const SORT_BY_SEARCH_PARAM = 'sortBy';
 
-export function useProductSorting() {
-    const [searchParams, setSearchParams] = useSearchParams();
+export const DEFAULT_SORT_BY = ProductSortBy.newest;
 
-    const appliedSortBy = useMemo(
-        () => getProductSortByFromUrlSearchParams(searchParams),
-        [searchParams],
-    );
-
-    const applySortBy = useCallback(
-        (sortBy: ProductSortBy) => {
-            setSearchParams((params) => {
-                params.set(SORT_BY_SEARCH_PARAM, sortBy);
-                return params;
-            });
-        },
-        [setSearchParams],
-    );
-
-    return { appliedSortBy, applySortBy };
-}
-
-export function getProductSortByFromUrlSearchParams(
-    searchParams: URLSearchParams,
-): ProductSortBy | undefined {
+export function getProductSortByFromUrlSearchParams(searchParams: URLSearchParams): ProductSortBy {
     const value = searchParams.get(SORT_BY_SEARCH_PARAM);
     return value && Object.values(ProductSortBy).includes(value as ProductSortBy)
         ? (value as ProductSortBy)
-        : undefined;
+        : DEFAULT_SORT_BY;
 }
 
 export function getSortedProductsQuery(

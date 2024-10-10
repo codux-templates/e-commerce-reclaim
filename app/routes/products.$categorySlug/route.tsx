@@ -20,7 +20,7 @@ import { ProductLink } from '~/components/product-link/product-link';
 import { FadeIn } from '~/components/visual-effects';
 import { AppliedProductFilters } from '~/components/applied-product-filters/applied-product-filters';
 import { EmptyProductsCategory } from '~/components/empty-products-category/empty-products-category';
-import { ProductSorting } from '~/components/product-sorting/product-sorting';
+import { ProductSortingSelect } from '~/components/product-sorting-select/product-sorting-select';
 import { ROUTES } from '~/router/config';
 import { RouteHandle } from '~/router/types';
 import { useBreadcrumbs } from '~/router/use-breadcrumbs';
@@ -214,7 +214,7 @@ export default function ProductsPage() {
                             {categoryProducts.totalCount === 1 ? 'product' : 'products'}
                         </p>
 
-                        <ProductSorting />
+                        <ProductSortingSelect />
                     </div>
 
                     {renderProducts()}
