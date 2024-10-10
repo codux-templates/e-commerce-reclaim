@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import {
     isRouteErrorResponse,
@@ -93,11 +92,6 @@ export default function ProductsPage() {
         useProductFilters();
 
     const currency = categoryProducts.items[0]?.priceData?.currency ?? 'USD';
-
-    const defaultPriceFilters = useMemo(
-        () => ({ minPrice: productPriceBounds.lowest, maxPrice: productPriceBounds.highest }),
-        [productPriceBounds],
-    );
 
     const renderProducts = () => {
         if (category.numberOfProducts === 0) {
@@ -211,7 +205,8 @@ export default function ProductsPage() {
                             onClearFilters={clearFilters}
                             onClearAllFilters={clearAllFilters}
                             currency={currency}
-                            defaultPriceFilters={defaultPriceFilters}
+                            minPriceInCategory={productPriceBounds.lowest}
+                            maxPriceInCategory={productPriceBounds.highest}
                         />
                     )}
 

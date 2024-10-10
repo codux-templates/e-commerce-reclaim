@@ -11,7 +11,10 @@ interface AppliedProductFiltersProps {
     onClearFilters: (filters: ProductFilter[]) => void;
     onClearAllFilters: () => void;
     currency: string;
-    defaultPriceFilters: { minPrice: number; maxPrice: number };
+    // Min and max prices in the current category.
+    // Used to replace missing bounds ("$5 - ?" or "? - $25") when only one filter bound is set.
+    minPriceInCategory: number;
+    maxPriceInCategory: number;
     className?: string;
 }
 
@@ -20,7 +23,8 @@ export const AppliedProductFilters = ({
     onClearFilters,
     onClearAllFilters,
     currency,
-    defaultPriceFilters,
+    minPriceInCategory,
+    maxPriceInCategory,
     className,
 }: AppliedProductFiltersProps) => {
     const { minPrice, maxPrice } = appliedFilters;
@@ -31,12 +35,12 @@ export const AppliedProductFilters = ({
         } else {
             return (
                 <span>
-                    {formatPrice(minPrice ?? defaultPriceFilters.minPrice, currency)}&ndash;
-                    {formatPrice(maxPrice ?? defaultPriceFilters.maxPrice, currency)}
+                    {formatPrice(minPrice ?? minPriceInCategory, currency)}&ndash;
+                    {formatPrice(maxPrice ?? maxPriceInCategory, currency)}
                 </span>
             );
         }
-    }, [minPrice, maxPrice, currency, defaultPriceFilters]);
+    }, [minPrice, maxPrice, currency, minPriceInCategory, maxPriceInCategory]);
 
     return (
         <div className={classNames(styles.root, className)}>
