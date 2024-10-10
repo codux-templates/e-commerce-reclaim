@@ -9,7 +9,7 @@ import styles from './cart.module.scss';
 
 export const Cart = () => {
     const cartOpener = useCartOpen();
-    const { cartItems, priceSummary, handleCheckout } = useCart();
+    const { cartTotals, cartItems, handleCheckout } = useCart();
 
     return (
         <Drawer open={cartOpener.isOpen} onClose={() => cartOpener.setIsOpen(false)}>
@@ -39,7 +39,12 @@ export const Cart = () => {
                             <>
                                 <div className={styles.subtotal}>
                                     <span>Subtotal</span>
-                                    <span>{priceSummary?.subtotal?.formattedConvertedAmount}</span>
+                                    <span>
+                                        {
+                                            cartTotals?.priceSummary?.subtotal
+                                                ?.formattedConvertedAmount
+                                        }
+                                    </span>
                                 </div>
                                 <div className={styles.subtotalNote}>
                                     Taxes and shipping are calculated at checkout.

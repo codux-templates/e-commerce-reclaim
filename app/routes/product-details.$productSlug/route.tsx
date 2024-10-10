@@ -76,10 +76,10 @@ export const handle: RouteHandle<typeof loader, ProductDetailsLocationState> = {
 export default function ProductDetailsPage() {
     const { product, canonicalUrl } = useLoaderData<typeof loader>();
     const breadcrumbs = useBreadcrumbs();
-    const { triggerAddToCart, isAddingToCart } = useCart();
+    const { addToCart, isAddingToCart } = useCart();
 
     const handleAddToCartClick = () => {
-        triggerAddToCart(
+        addToCart(
             {
                 id: product._id!,
                 quantity,

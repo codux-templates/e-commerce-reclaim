@@ -6,56 +6,40 @@ import { useEcomAPI } from './ecom-api-context-provider';
 
 export const useCart = () => {
     const ecomApi = useEcomAPI();
-    return useSwr('cart', async () => {
-        const response = await ecomApi.getCart();
-        if (response.status === 'failure') {
-            throw response.error;
-        }
+    return useSwr(
+        'cart',
+        async () => {
+            const response = await ecomApi.getCart();
+            if (response.status === 'failure') {
+                throw response.error;
+            }
 
-        return response.body;
-    });
+            return response.body;
+        },
+        {
+            revalidateOnFocus: true,
+        },
+    );
 };
 
-export const useCartAndTotals = () => {
+export const useCartTotals = () => {
     const ecomApi = useEcomAPI();
-    const [isMutating, setIsMutating] = useState(false);
+    const data = useSwr(
+        'cart-totals',
+        async () => {
+            const response = await ecomApi.getCartTotals();
+            if (response.status === 'failure') {
+                throw response.error;
+            }
 
-    const fetchCartAndTotals = async () => {
-        const [cartResponse, totalsResponse] = await Promise.all([
-            ecomApi.getCart(),
-            ecomApi.getCartTotals(),
-        ]);
+            return response.body;
+        },
+        {
+            revalidateOnFocus: true,
+        },
+    );
 
-        if (cartResponse.status === 'failure') {
-            setIsMutating(false);
-            throw cartResponse.error;
-        }
-        if (totalsResponse.status === 'failure') {
-            setIsMutating(false);
-            throw totalsResponse.error;
-        }
-        if (cartResponse.status === 'success' && totalsResponse.status === 'success') {
-            setIsMutating(false);
-        }
-
-        return {
-            cart: cartResponse.body,
-            totals: totalsResponse.body,
-        };
-    };
-
-    const { data, mutate } = useSwr(['cart', 'cart-totals'], fetchCartAndTotals);
-
-    const trigger = () => {
-        setIsMutating(true);
-        mutate();
-    };
-
-    return {
-        trigger,
-        isMutating,
-        data,
-    };
+    return { data };
 };
 
 type Args = { id: string; quantity: number };

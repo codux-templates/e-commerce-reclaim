@@ -1,88 +1,71 @@
-import type { CartItem } from './types';
+import type { CartItem, CartTotals } from './types';
 import { useEcomAPI } from './ecom-api-context-provider';
 import { cart as cartType } from '@wix/ecom';
 import { getCartItemSubtotal } from './cart-helpers';
 import {
     useAddToCart,
-    useCartAndTotals,
+    useCartTotals,
     useRemoveItemFromCart,
     useUpdateCartItemQuantity,
 } from './api-hooks';
-import { useEffect, useState } from 'react';
 import { media } from '@wix/sdk';
 
 export interface UseCartResult {
+    cartTotals?: CartTotals;
     cartItems: CartItem[];
-    priceSummary?: cartType.PriceSummary;
-
-    isCartMutating: boolean;
     isAddingToCart: boolean;
-
-    triggerCartUpdate: () => void;
-    triggerAddToCart: (args1: any, args2: any) => void; //  any temporarily
+    addToCart: (args1: any, args2: any) => void; //  any temporarily
     handleCheckout: () => void;
 }
 
 export const useCart = (): UseCartResult => {
     const ecomAPI = useEcomAPI();
-    const {
-        data: cartData,
-        isMutating: isCartMutating,
-        trigger: triggerCartUpdate,
-    } = useCartAndTotals();
-    const cart = cartData?.cart;
-    const cartTotals = cartData?.totals;
+    const { data: cartData } = useCartTotals();
 
-    const [cartItems, setCartItems] = useState<CartItem[]>([]);
-
-    const {
-        trigger: triggerAddToCart,
-        data: cartAfterItemAdded,
-        isMutating: isAddingToCart,
-    } = useAddToCart();
+    const { trigger: triggerAddToCart, isMutating: isAddingToCart } = useAddToCart();
+    const addToCart = (args1: any, args2: any) => {
+        triggerAddToCart(args1, {
+            onSuccess: () => {
+                cartData.mutate();
+                args2.onSuccess();
+            },
+        });
+    };
 
     const {
-        trigger: removeItem,
-        data: cartAfterItemRemoved,
-        isMutating: isRemovingItem,
+        trigger: triggerRemoveItem,
+        // isMutating: isRemovingItem,
     } = useRemoveItemFromCart();
 
     const {
-        trigger: updateItemQuantity,
-        data: cartAfterQuantityUpdated,
-        isMutating: isUpdatingItemQuantity,
+        trigger: triggerUpdateItemQuantity,
+        // isMutating: isUpdatingItemQuantity,
     } = useUpdateCartItemQuantity();
 
-    useEffect(() => {
-        if (cartAfterItemRemoved || cartAfterQuantityUpdated || cartAfterItemAdded) {
-            triggerCartUpdate();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [cartAfterQuantityUpdated, cartAfterItemRemoved, cartAfterItemAdded]);
-
-    useEffect(() => {
-        if (cartData) {
-            setCartItems(computeCartItems());
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [cartData]);
+    const onCartChangeSuccess = () => {
+        cartData.mutate();
+    };
 
     const computeCartItems = () => {
         return (
-            cart?.lineItems.map((item) => {
+            cartData?.data?.cart?.lineItems.map((item) => {
                 return {
                     id: item._id!,
                     productName: item.productName?.translated ?? '',
                     quantity: item.quantity,
                     price: item.price,
-                    subtotal: cartTotals ? getCartItemSubtotal(item, cartTotals) : undefined,
+                    subtotal: cartData?.data ? getCartItemSubtotal(item, cartData.data) : undefined,
                     image: item.image ? media.getImageUrl(item.image) : undefined,
                     isUpdating: false, // here remember item who is waiting for the cart update
                     isUnavailable:
                         item.availability?.status === cartType.ItemAvailabilityStatus.NOT_AVAILABLE,
-                    onRemove: () => removeItem(item._id!),
+                    onRemove: () =>
+                        triggerRemoveItem(item._id!, { onSuccess: onCartChangeSuccess }),
                     onQuantityChange: (quantity: number) =>
-                        updateItemQuantity({ id: item._id!, quantity }),
+                        triggerUpdateItemQuantity(
+                            { id: item._id!, quantity },
+                            { onSuccess: onCartChangeSuccess },
+                        ),
                 };
             }) ?? []
         );
@@ -99,12 +82,12 @@ export const useCart = (): UseCartResult => {
     };
 
     return {
-        cartItems,
-        priceSummary: cartTotals?.priceSummary,
-        isCartMutating,
+        cartTotals: cartData?.data,
+        cartItems: computeCartItems(),
+
         isAddingToCart,
-        triggerCartUpdate,
-        triggerAddToCart,
+
+        addToCart,
         handleCheckout,
     };
 };
