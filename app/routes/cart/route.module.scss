@@ -40,11 +40,6 @@
 
 .location {
     text-decoration: underline;
-    cursor: pointer;
-}
-
-.location:hover {
-    color: rgba(23, 17, 13, 0.6);
 }
 
 .summaryTotal {
@@ -63,6 +58,18 @@
     justify-content: center;
     gap: 8px;
     font: var(--paragraph3);
+}
+
+.emptyCartMessage {
+    font-size: 22px;
+    text-align: center;
+    padding: 175px 0;
+}
+
+.continueBrowsingLink {
+    font: var(--paragraph1);
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 @media (max-width: $desktop-width) {

@@ -3,6 +3,7 @@ import useSwr, { Key } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { findItemIdInCart } from './cart-helpers';
 import { useEcomAPI } from './ecom-api-context-provider';
+import { cart } from '@wix/ecom';
 
 export const useCart = () => {
     const ecomApi = useEcomAPI();
@@ -34,7 +35,16 @@ export const useCartTotals = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
-    return cartTotals;
+    const findLineItemPriceBreakdown = (item: cart.LineItem) => {
+        return cartTotals.data?.calculatedLineItems.find(
+            (calculatedItem) => calculatedItem.lineItemId === item._id,
+        )?.pricesBreakdown;
+    };
+
+    return {
+        cartTotals,
+        findLineItemPriceBreakdown,
+    };
 };
 
 type Args = { id: string; quantity: number };
