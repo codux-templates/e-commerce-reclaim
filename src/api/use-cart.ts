@@ -9,11 +9,13 @@ import {
     useUpdateCartItemQuantity,
 } from './api-hooks';
 import { media } from '@wix/sdk';
+import { useState } from 'react';
 
 export interface UseCartResult {
     cartTotals?: CartTotals;
     cartItems: CartItem[];
     isAddingToCart: boolean;
+    isCartTotalUpdating: boolean;
     addToCart: (args1: any, args2: any) => void; //  any temporarily
     handleCheckout: () => void;
 }
@@ -21,12 +23,13 @@ export interface UseCartResult {
 export const useCart = (): UseCartResult => {
     const ecomAPI = useEcomAPI();
     const { data: cartData } = useCartTotals();
+    const [updatingCartItemIds, setUpdatingCartItemIds] = useState<string[]>([]);
 
     const { trigger: triggerAddToCart, isMutating: isAddingToCart } = useAddToCart();
     const addToCart = (args1: any, args2: any) => {
         triggerAddToCart(args1, {
-            onSuccess: () => {
-                cartData.mutate();
+            onSuccess: async () => {
+                await onCartChangeSuccess();
                 args2.onSuccess();
             },
         });
@@ -34,16 +37,39 @@ export const useCart = (): UseCartResult => {
 
     const {
         trigger: triggerRemoveItem,
-        // isMutating: isRemovingItem,
     } = useRemoveItemFromCart();
+    const removeItem = (id: string) => {
+        setUpdatingCartItemIds((cartItemIds) => [...cartItemIds, id]);
+        triggerRemoveItem(id, {
+            onSuccess: async () => {
+                await onCartChangeSuccess();
+                setUpdatingCartItemIds((cartItemIds) =>
+                    cartItemIds.filter((itemId) => itemId !== id),
+                );
+            },
+        });
+    };
 
     const {
         trigger: triggerUpdateItemQuantity,
-        // isMutating: isUpdatingItemQuantity,
     } = useUpdateCartItemQuantity();
+    const updateItemQuantity = (id: string, quantity: number) => {
+        setUpdatingCartItemIds((cartItemIds) => [...cartItemIds, id]);
+        triggerUpdateItemQuantity(
+            { id, quantity },
+            {
+                onSuccess: async () => {
+                    await onCartChangeSuccess();
+                    setUpdatingCartItemIds((cartItemIds) =>
+                        cartItemIds.filter((itemId) => itemId !== id),
+                    );
+                },
+            },
+        );
+    };
 
-    const onCartChangeSuccess = () => {
-        cartData.mutate();
+    const onCartChangeSuccess = async () => {
+        await cartData.mutate();
     };
 
     const computeCartItems = () => {
@@ -56,16 +82,11 @@ export const useCart = (): UseCartResult => {
                     price: item.price,
                     subtotal: cartData?.data ? getCartItemSubtotal(item, cartData.data) : undefined,
                     image: item.image ? media.getImageUrl(item.image) : undefined,
-                    isUpdating: false, // here remember item who is waiting for the cart update
+                    isUpdating: updatingCartItemIds.includes(item._id!),
                     isUnavailable:
                         item.availability?.status === cartType.ItemAvailabilityStatus.NOT_AVAILABLE,
-                    onRemove: () =>
-                        triggerRemoveItem(item._id!, { onSuccess: onCartChangeSuccess }),
-                    onQuantityChange: (quantity: number) =>
-                        triggerUpdateItemQuantity(
-                            { id: item._id!, quantity },
-                            { onSuccess: onCartChangeSuccess },
-                        ),
+                    onRemove: () => removeItem(item._id!),
+                    onQuantityChange: (quantity: number) => updateItemQuantity(item._id!, quantity),
                 };
             }) ?? []
         );
@@ -86,6 +107,7 @@ export const useCart = (): UseCartResult => {
         cartItems: computeCartItems(),
 
         isAddingToCart,
+        isCartTotalUpdating: updatingCartItemIds.length > 0 || cartData.isValidating,
 
         addToCart,
         handleCheckout,
