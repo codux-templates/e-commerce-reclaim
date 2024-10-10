@@ -1,11 +1,11 @@
+import { CartItem as CartItemType } from '~/api/types';
+import { useCartItem } from '~/api/use-cart-item';
 import { QuantityInput } from '~/components/quantity-input/quantity-input';
 import { TrashIcon, ImagePlaceholderIcon, ErrorIcon } from '~/components/icons';
 import { Spinner } from '~/components/spinner/spinner';
 import classNames from 'classnames';
-import { CartItem as CartItemType } from '~/api/types';
 
 import styles from './cart-item.module.scss';
-import { useCartItem } from '~/api/use-cart-item';
 
 export interface CartItemProps {
     item: CartItemType;
@@ -13,7 +13,7 @@ export interface CartItemProps {
 
 export const CartItem = ({ item }: CartItemProps) => {
     const { quantity, onQuantityChange } = useCartItem(item);
-    
+
     return (
         <div className={classNames(styles.root, { [styles.loading]: item.isUpdating })}>
             <div className={styles.itemContent}>

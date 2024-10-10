@@ -9,6 +9,7 @@ import {
 import { products } from '@wix/stores';
 import classNames from 'classnames';
 import { useState } from 'react';
+import { useCart } from '~/api/use-cart';
 import { getEcomApi } from '~/api/ecom-api';
 import { EcomApiErrorCodes } from '~/api/types';
 import { Accordion } from '~/components/accordion/accordion';
@@ -23,7 +24,6 @@ import { ROUTES } from '~/router/config';
 import { BreadcrumbData, RouteHandle } from '~/router/types';
 import { getErrorMessage, removeQueryStringFromUrl } from '~/utils';
 import { useBreadcrumbs } from '~/router/use-breadcrumbs';
-import { useCart } from '~/api/use-cart';
 
 import styles from './route.module.scss';
 
