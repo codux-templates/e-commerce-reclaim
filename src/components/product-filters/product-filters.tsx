@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useNavigation } from '@remix-run/react';
+import { useCallback } from 'react';
 import { IProductFilters } from '~/api/types';
 import { formatPrice } from '~/utils';
+import { useOptimisticSearchParamsState } from '~/utils/use-optimistic-search-params-state';
 import { Accordion } from '../accordion/accordion';
 import { RangeSlider } from '../range-slider/range-slider';
 
@@ -20,29 +20,16 @@ export const ProductFilters = ({
     highestPrice,
     currency,
 }: ProductFiltersProps) => {
-    const navigation = useNavigation();
-
-    // Allows updating the UI optimistically while Remix navigates to the URL
-    // with updated parameters.
-    const [filters, setFilters] = useState(appliedFilters);
-
-    const handleFiltersChange = (changed: Partial<IProductFilters>) => {
-        const newFilters = { ...filters, ...changed };
-        setFilters(newFilters);
-        onFiltersChange(newFilters);
-    };
+    const [filters, setFilters] = useOptimisticSearchParamsState(appliedFilters, onFiltersChange);
 
     const formatPriceValue = useCallback(
         (price: number) => formatPrice(price, currency),
         [currency],
     );
 
-    // Synchronize filters on back/forward browser button clicks.
-    useEffect(() => {
-        if (navigation.state !== 'loading') {
-            setFilters(appliedFilters);
-        }
-    }, [navigation.state, appliedFilters]);
+    const handleFiltersChange = (changed: Partial<IProductFilters>) => {
+        setFilters({ ...filters, ...changed });
+    };
 
     return (
         <Accordion

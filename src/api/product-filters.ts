@@ -16,7 +16,7 @@ export function useProductFilters() {
 
     const applyFilters = useCallback(
         (filters: IProductFilters) => {
-            setSearchParams(stringifyProductFiltersToUrlSearchParams(filters), {
+            setSearchParams((params) => setProductFiltersToUrlSearchParams(filters, params), {
                 preventScrollReset: true,
             });
         },
@@ -62,11 +62,10 @@ export function parseProductFiltersFromUrlSearchParams(
     };
 }
 
-export function stringifyProductFiltersToUrlSearchParams({
-    minPrice,
-    maxPrice,
-}: IProductFilters): URLSearchParams {
-    const searchParams = new URLSearchParams();
+export function setProductFiltersToUrlSearchParams(
+    { minPrice, maxPrice }: IProductFilters,
+    searchParams: URLSearchParams,
+): URLSearchParams {
     if (minPrice !== undefined) searchParams.set(ProductFilter.minPrice, minPrice.toString());
     if (maxPrice !== undefined) searchParams.set(ProductFilter.maxPrice, maxPrice.toString());
     return searchParams;
