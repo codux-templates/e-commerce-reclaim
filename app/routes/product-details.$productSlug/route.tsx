@@ -76,7 +76,11 @@ export const handle: RouteHandle<typeof loader, ProductDetailsLocationState> = {
 export default function ProductDetailsPage() {
     const { product, canonicalUrl } = useLoaderData<typeof loader>();
     const breadcrumbs = useBreadcrumbs();
+
+    const cartOpener = useCartOpen();
     const { addToCart, isAddingToCart } = useCart();
+
+    const [quantity, setQuantity] = useState(1);
 
     const handleAddToCartClick = () => {
         addToCart(
@@ -85,16 +89,10 @@ export default function ProductDetailsPage() {
                 quantity,
             },
             {
-                onSuccess: () => {
-                    cartOpener.setIsOpen(true);
-                },
+                onSuccess: () => cartOpener.setIsOpen(true),
             },
         );
     };
-
-    const cartOpener = useCartOpen();
-
-    const [quantity, setQuantity] = useState(1);
 
     const isOutOfStock = product.stock?.inventoryStatus === products.InventoryStatus.OUT_OF_STOCK;
 

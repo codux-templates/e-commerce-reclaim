@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import useSwr, { Key } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { findItemIdInCart } from './cart-helpers';
