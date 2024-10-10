@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import useSwr, { Key } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { findItemIdInCart } from './cart-helpers';
@@ -6,35 +5,40 @@ import { useEcomAPI } from './ecom-api-context-provider';
 
 export const useCart = () => {
     const ecomApi = useEcomAPI();
-    return useSwr('cart', async () => {
-        const response = await ecomApi.getCart();
-        if (response.status === 'failure') {
-            throw response.error;
-        }
+    return useSwr(
+        'cart',
+        async () => {
+            const response = await ecomApi.getCart();
+            if (response.status === 'failure') {
+                throw response.error;
+            }
 
-        return response.body;
-    });
+            return response.body;
+        },
+        {
+            revalidateOnFocus: true,
+        },
+    );
 };
 
 export const useCartTotals = () => {
     const ecomApi = useEcomAPI();
-    const { data } = useCart();
+    const data = useSwr(
+        'cart-totals',
+        async () => {
+            const response = await ecomApi.getCartTotals();
+            if (response.status === 'failure') {
+                throw response.error;
+            }
 
-    const cartTotals = useSwr('cart-totals', async () => {
-        const response = await ecomApi.getCartTotals();
-        if (response.status === 'failure') {
-            throw response.error;
-        }
+            return response.body;
+        },
+        {
+            revalidateOnFocus: true,
+        },
+    );
 
-        return response.body;
-    });
-
-    useEffect(() => {
-        cartTotals.mutate();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
-
-    return cartTotals;
+    return { data };
 };
 
 type Args = { id: string; quantity: number };
