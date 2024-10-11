@@ -12,11 +12,18 @@ export interface ColorSelectProps {
     selectedId: string;
     onChange: (id: string) => void;
     hasError?: boolean;
+    className?: string;
 }
 
-export const ColorSelect = ({ options, selectedId, onChange, hasError }: ColorSelectProps) => {
+export const ColorSelect = ({
+    options,
+    selectedId,
+    onChange,
+    hasError,
+    className,
+}: ColorSelectProps) => {
     return (
-        <div className={classNames(styles.root, { [styles.hasError]: hasError })}>
+        <div className={classNames(styles.root, { [styles.hasError]: hasError }, className)}>
             {options.map((option) => (
                 <button
                     key={option.id}

@@ -1,12 +1,22 @@
+:where(.root) {
+    /* Default styles. Customize them by passing a className to the component. */
+    --option-size: 24px;
+    --border-color: #bdbdbd;
+    --border-color-hover: #212121;
+    --border-color-selected: #757575;
+    --border-color-error: #ff0000;
+}
+
 .root {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
 }
 
 .option {
-    height: 20px;
-    width: 20px;
-    border: 1px solid var(--primary3);
+    height: var(--option-size);
+    width: var(--option-size);
+    border: 1px solid var(--border-color);
     border-radius: 50%;
     transition: padding 100ms;
     cursor: pointer;
@@ -18,11 +28,11 @@
 }
 
 .option:hover {
-    border-color: var(--primary5);
+    border-color: var(--border-color-hover);
 }
 
 .option.selected {
-    border-color: var(--primary4);
+    border-color: var(--border-color-selected);
 }
 
 .colorBox {
@@ -33,9 +43,9 @@
 
 .option:hover .colorBox,
 .option.selected .colorBox {
-    border: 1px solid var(--primary3);
+    border: 1px solid var(--border-color);
 }
 
 .root.hasError .option {
-    border-color: #de3130;
+    border-color: var(--border-color-error);
 }

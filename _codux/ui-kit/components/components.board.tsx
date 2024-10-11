@@ -40,13 +40,15 @@ export default createBoard({
                     <Kit.Item>
                         <Variant name="Color Select">
                             <ColorSelect
+                                className="colorSelect"
                                 selectedId="color2"
                                 onChange={() => {}}
                                 options={[
-                                    { id: 'color1', color: '#00a400' },
-                                    { id: 'color2', color: 'rgb(214, 122, 127)' },
-                                    { id: 'color3', color: 'hsl(30deg 82% 43%)' },
-                                    { id: 'color4', color: 'rebeccapurple' },
+                                    { id: 'color1', color: 'white' },
+                                    { id: 'color2', color: 'black' },
+                                    { id: 'color3', color: '#00a400' },
+                                    { id: 'color4', color: 'rgb(214, 122, 127)' },
+                                    { id: 'color5', color: 'hsl(30deg 82% 43%)' },
                                 ]}
                             />
                         </Variant>
