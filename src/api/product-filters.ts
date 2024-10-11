@@ -1,12 +1,13 @@
 import { useCallback, useMemo } from 'react';
 import { useSearchParams } from '@remix-run/react';
 import { IProductFilters, ProductFilter } from '~/api/types';
+import { mergeUrlSearchParams } from '~/utils';
 
 export function useProductFilters() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const filters = useMemo(
-        () => parseProductFiltersFromUrlSearchParams(searchParams),
+        () => convertUrlSearchParamsToProductFilters(searchParams),
         [searchParams],
     );
 
@@ -16,9 +17,15 @@ export function useProductFilters() {
 
     const applyFilters = useCallback(
         (filters: IProductFilters) => {
-            setSearchParams((params) => setProductFiltersToUrlSearchParams(filters, params), {
-                preventScrollReset: true,
-            });
+            setSearchParams(
+                (params) => {
+                    return mergeUrlSearchParams(
+                        params,
+                        convertProductFiltersToUrlSearchParams(filters),
+                    );
+                },
+                { preventScrollReset: true },
+            );
         },
         [setSearchParams],
     );
@@ -49,7 +56,7 @@ export function useProductFilters() {
     };
 }
 
-export function parseProductFiltersFromUrlSearchParams(
+export function convertUrlSearchParamsToProductFilters(
     searchParams: URLSearchParams,
 ): IProductFilters {
     const minPrice = searchParams.get(ProductFilter.minPrice);
@@ -62,10 +69,11 @@ export function parseProductFiltersFromUrlSearchParams(
     };
 }
 
-export function setProductFiltersToUrlSearchParams(
-    { minPrice, maxPrice }: IProductFilters,
-    searchParams: URLSearchParams,
-): URLSearchParams {
+export function convertProductFiltersToUrlSearchParams({
+    minPrice,
+    maxPrice,
+}: IProductFilters): URLSearchParams {
+    const searchParams = new URLSearchParams();
     if (minPrice !== undefined) searchParams.set(ProductFilter.minPrice, minPrice.toString());
     if (maxPrice !== undefined) searchParams.set(ProductFilter.maxPrice, maxPrice.toString());
     return searchParams;

@@ -86,3 +86,18 @@ export function routeLocationToUrl(location: Location, origin: string): URL {
     url.hash = location.hash;
     return url;
 }
+
+/**
+ * Merges multiple URLSearchParams instances into one URLSearchParams.
+ *
+ * Entires with the same key are not overridden, but combined. For example:
+ * ```js
+ * const a = new URLSearchParams({ foo: '1' })
+ * const b = new URLSearchParams({ foo: '2' })
+ * const c = mergeUrlSearchParams(a, b);
+ * c.toString(); // 'foo=1&foo=2'
+ * ```
+ */
+export function mergeUrlSearchParams(...paramsArr: URLSearchParams[]): URLSearchParams {
+    return new URLSearchParams(paramsArr.flatMap((params) => [...params]));
+}
