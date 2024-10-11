@@ -11,9 +11,9 @@ import { findLineItemPriceBreakdown } from '~/api/cart-helpers';
 export default function CartPage() {
     const { cartData, cartTotals, checkout, removeItem, updateItemQuantity } = useCart();
 
-    if (!cartTotals?.cart) return null;
+    if (!cartData) return null;
 
-    if (!cartTotals?.cart.lineItems.length)
+    if (!cartData.lineItems.length)
         return (
             <div className={styles.cart}>
                 <h1 className={styles.cartHeader}>My cart</h1>
@@ -49,14 +49,14 @@ export default function CartPage() {
                 <div className={styles.summarySection}>
                     <div className={styles.summaryRow}>
                         <span>Subtotal</span>
-                        <span>{cartTotals.priceSummary?.subtotal?.formattedConvertedAmount}</span>
+                        <span>{cartTotals?.priceSummary?.subtotal?.formattedConvertedAmount}</span>
                     </div>
                     <div className={styles.summaryRow}>
                         <span>Delivery</span>
                         <span>
-                            {cartTotals.priceSummary?.shipping?.amount === '0.00'
+                            {cartTotals?.priceSummary?.shipping?.amount === '0.00'
                                 ? 'FREE'
-                                : cartTotals.priceSummary?.shipping?.formattedConvertedAmount}
+                                : cartTotals?.priceSummary?.shipping?.formattedConvertedAmount}
                         </span>
                     </div>
                     <div className={styles.summaryRow}>
@@ -66,7 +66,7 @@ export default function CartPage() {
                 <div className={styles.summarySection}>
                     <div className={classNames(styles.summaryRow, styles.summaryTotal)}>
                         <span>Total</span>
-                        <span>{cartTotals.priceSummary?.total?.formattedConvertedAmount}</span>
+                        <span>{cartTotals?.priceSummary?.total?.formattedConvertedAmount}</span>
                     </div>
 
                     <button
