@@ -1,6 +1,5 @@
 import { createBoard } from '@wixc3/react-board';
 import { CartItem } from '../../../src/components/cart/cart-item/cart-item';
-import { MockEcomAPIContextProvider } from '_codux/board-wrappers/mock-ecom-api-context-provider';
 import { cart } from '@wix/ecom';
 
 const mockCartItem: cart.LineItem = {
@@ -11,20 +10,22 @@ const mockCartItem: cart.LineItem = {
     price: { formattedConvertedAmount: '$5.50' },
 };
 
+const noop = () => {};
+
 export default createBoard({
     name: 'CartItem',
     Board: () => {
         return (
-            <MockEcomAPIContextProvider>
-                <div style={{ padding: '0 20px' }}>
-                    <CartItem
-                        item={mockCartItem}
-                        priceBreakdown={{
-                            lineItemPrice: { formattedConvertedAmount: '$5.50' },
-                        }}
-                    />
-                </div>
-            </MockEcomAPIContextProvider>
+            <div style={{ padding: '0 20px' }}>
+                <CartItem
+                    item={mockCartItem}
+                    priceBreakdown={{
+                        lineItemPrice: { formattedConvertedAmount: '$5.50' },
+                    }}
+                    onQuantityChange={noop}
+                    onRemove={noop}
+                />
+            </div>
         );
     },
     environmentProps: {
