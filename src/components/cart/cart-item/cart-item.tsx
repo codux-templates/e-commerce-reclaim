@@ -4,7 +4,7 @@ import { QuantityInput } from '~/components/quantity-input/quantity-input';
 import { TrashIcon, ImagePlaceholderIcon, ErrorIcon } from '~/components/icons';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Price } from '~/components/price/price';
 
 import styles from './cart-item.module.scss';
@@ -28,6 +28,10 @@ export const CartItem = ({
     const productName = item.productName?.translated ?? '';
 
     const [quantity, setQuantity] = useState(item.quantity!);
+
+    useEffect(() => {
+        setQuantity(item.quantity!);
+    }, [item.quantity]);
 
     const updateItemQuantityDebounced = useMemo(
         () => debounce(onQuantityChange, 300),

@@ -11,6 +11,7 @@ export interface CartViewProps {
     cartTotals?: CartTotals;
     close: () => void;
     onCheckout: () => void;
+    onViewCart: () => void;
     onItemQuantityChange: (args: { id: string; quantity: number }) => void;
     onItemRemove: (id: string) => void;
 }
@@ -20,6 +21,7 @@ export const CartView = ({
     cartTotals,
     close,
     onCheckout,
+    onViewCart,
     onItemQuantityChange,
     onItemRemove,
 }: CartViewProps) => {
@@ -75,6 +77,12 @@ export const CartView = ({
                         >
                             Checkout
                         </button>
+                        <button
+                                className={classNames('button', styles.viewCartButton)}
+                                onClick={onViewCart}
+                            >
+                                View Cart
+                            </button>
 
                         <div className={styles.secureCheckout}>
                             <LockIcon width={11} />
