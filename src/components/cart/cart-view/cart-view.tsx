@@ -79,13 +79,12 @@ export const CartView = ({
                         >
                             Checkout
                         </button>
-                        <Link
+                        <button
                             className={classNames('button', styles.viewCartButton)}
-                            to={ROUTES.cart.to()}
                             onClick={onViewCart}
                         >
                             View Cart
-                        </Link>
+                        </button>
 
                         <div className={styles.secureCheckout}>
                             <LockIcon width={11} />
