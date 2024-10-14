@@ -3,7 +3,7 @@ import { IProductFilters } from '~/api/types';
 import {
     productFiltersFromSearchParams,
     searchParamsFromProductFilters,
-} from '~/api/use-product-filters';
+} from '~/api/product-filters';
 import { formatPrice, mergeUrlSearchParams } from '~/utils';
 import { useSearchParamsOptimistic } from '~/utils/use-search-params-state';
 import { Accordion } from '../accordion/accordion';

@@ -9,10 +9,7 @@ import {
 import classNames from 'classnames';
 import { getEcomApi } from '~/api/ecom-api';
 import { EcomApiErrorCodes } from '~/api/types';
-import {
-    productFiltersFromSearchParams,
-    useAppliedProductFilters,
-} from '~/api/use-product-filters';
+import { productFiltersFromSearchParams, useAppliedProductFilters } from '~/api/product-filters';
 import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
 import { CategoryLink } from '~/components/category-link/category-link';
 import { ErrorPage } from '~/components/error-page/error-page';

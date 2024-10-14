@@ -39,7 +39,7 @@ export function useAppliedProductFilters() {
     };
 }
 
-export function productFiltersFromSearchParams(params: URLSearchParams) {
+export function productFiltersFromSearchParams(params: URLSearchParams): IProductFilters {
     const minPrice = params.get(ProductFilter.minPrice);
     const maxPrice = params.get(ProductFilter.maxPrice);
     const minPriceNumber = Number(minPrice);
@@ -50,7 +50,10 @@ export function productFiltersFromSearchParams(params: URLSearchParams) {
     };
 }
 
-export function searchParamsFromProductFilters({ minPrice, maxPrice }: IProductFilters) {
+export function searchParamsFromProductFilters({
+    minPrice,
+    maxPrice,
+}: IProductFilters): URLSearchParams {
     const params = new URLSearchParams();
     if (minPrice !== undefined) params.set(ProductFilter.minPrice, minPrice.toString());
     if (maxPrice !== undefined) params.set(ProductFilter.maxPrice, maxPrice.toString());
