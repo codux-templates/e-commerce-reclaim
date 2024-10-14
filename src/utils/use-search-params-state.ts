@@ -8,6 +8,16 @@ export interface SearchParamsStateConverter<S> {
     toSearchParams: (state: S) => URLSearchParams;
 }
 
+/**
+ * Helper to manage the state that lives in URL search params.
+ * Search params are not updated immediately
+ * because changing them causes a Remix navigation and loaders reloading.
+ * This hooks provides a local React state to apply changes to URL optimistically
+ * and ensures it's up to date with the values in URL.
+ *
+ * @param converter Converts specific state from search params and vice versa.
+ * @param navigateOptions Router navigation options when changing search params.
+ */
 export function useSearchParamsState<S>(
     converter: SearchParamsStateConverter<S>,
     navigateOptions: NavigateOptions = { preventScrollReset: true },
@@ -15,8 +25,6 @@ export function useSearchParamsState<S>(
     const navigation = useNavigation();
     const [searchParams, setSearchParams] = useSearchParams();
 
-    // Allows updating the UI optimistically
-    // while Remix navigates to the URL with updated parameters.
     const [state, setState] = useState(() => converter.fromSearchParams(searchParams));
 
     const handleChange = useCallback(
