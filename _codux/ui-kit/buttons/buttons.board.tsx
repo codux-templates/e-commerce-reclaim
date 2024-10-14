@@ -8,6 +8,7 @@ import { MenuIcon } from '../../../src/components/icons/menu-icon';
 import { ChevronRightIcon } from '../../../src/components/icons/chevron-right-icon';
 import { ArrowRightIcon } from '../../../src/components/icons/arrow-right-icon';
 import { Kit } from '../ui-kit-utils/kit';
+import classNames from 'classnames';
 
 import styles from './buttons.board.module.scss';
 
@@ -77,7 +78,7 @@ export default createBoard({
                         <Kit.Description>Error</Kit.Description>
                     </Kit.Item>
                     <Kit.Item>
-                        <div className={styles.icon}>
+                        <div className={classNames(styles.icon, styles.menuIcon)}>
                             <Variant name="Menu Icon">
                                 <MenuIcon width={24} />
                             </Variant>
