@@ -55,7 +55,7 @@ export default createBoard({
                     <Kit.Item>
                         <div className={styles.icon}>
                             <Variant name="Trash Icon">
-                                <TrashIcon className={styles.trashIcon} />
+                                <TrashIcon height={27} />
                             </Variant>
                         </div>
                         <Kit.Description>Trash</Kit.Description>
@@ -63,7 +63,7 @@ export default createBoard({
                     <Kit.Item>
                         <div className={styles.icon}>
                             <Variant name="Lock Icon">
-                                <LockIcon className={styles.lockIcon} />
+                                <LockIcon height={23} />
                             </Variant>
                         </div>
                         <Kit.Description>Lock</Kit.Description>
@@ -71,7 +71,7 @@ export default createBoard({
                     <Kit.Item>
                         <div className={styles.icon}>
                             <Variant name="Error Icon">
-                                <ErrorIcon className={styles.errorIcon} />
+                                <ErrorIcon height={30} />
                             </Variant>
                         </div>
                         <Kit.Description>Error</Kit.Description>
@@ -79,7 +79,7 @@ export default createBoard({
                     <Kit.Item>
                         <div className={styles.icon}>
                             <Variant name="Menu Icon">
-                                <MenuIcon className={styles.menuIcon} />
+                                <MenuIcon width={24} />
                             </Variant>
                         </div>
                         <Kit.Description>Menu</Kit.Description>
@@ -87,7 +87,7 @@ export default createBoard({
                     <Kit.Item>
                         <div className={styles.icon}>
                             <Variant name="Chevron Icon">
-                                <ChevronRightIcon className={styles.chevronRightIcon} />
+                                <ChevronRightIcon width={28} />
                             </Variant>
                         </div>
                         <Kit.Description>Chevron</Kit.Description>
@@ -95,7 +95,7 @@ export default createBoard({
                     <Kit.Item>
                         <div className={styles.icon}>
                             <Variant name="Arrow Icon">
-                                <ArrowRightIcon className={styles.arrowRightIcon} />
+                                <ArrowRightIcon height={35} />
                             </Variant>
                         </div>
                         <Kit.Description>Arrow</Kit.Description>
