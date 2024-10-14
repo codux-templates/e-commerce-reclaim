@@ -2,8 +2,8 @@ import { Drawer } from '~/components/drawer/drawer';
 import { useCartOpen } from './cart-open-context';
 import { CartView } from './cart-view/cart-view';
 import { useCart } from '~/hooks/use-cart';
-import { ROUTES } from '~/router/config';
 import { useNavigate } from '@remix-run/react';
+import { ROUTES } from '~/router/config';
 
 export const Cart = () => {
     const { isOpen, setIsOpen } = useCartOpen();
@@ -20,7 +20,7 @@ export const Cart = () => {
             <CartView
                 cart={cartData}
                 cartTotals={cartTotals}
-                close={() => setIsOpen(false)}
+                onClose={() => setIsOpen(false)}
                 onCheckout={checkout}
                 onViewCart={handleViewCart}
                 onItemRemove={removeItem}
