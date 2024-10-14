@@ -6,40 +6,28 @@ import { useEcomAPI } from './ecom-api-context-provider';
 
 export const useCartData = () => {
     const ecomApi = useEcomAPI();
-    return useSwr(
-        'cart',
-        async () => {
-            const response = await ecomApi.getCart();
-            if (response.status === 'failure') {
-                throw response.error;
-            }
+    return useSwr('cart', async () => {
+        const response = await ecomApi.getCart();
+        if (response.status === 'failure') {
+            throw response.error;
+        }
 
-            return response.body;
-        },
-        {
-            revalidateOnFocus: true,
-        },
-    );
+        return response.body;
+    });
 };
 
 export const useCartTotals = () => {
     const ecomApi = useEcomAPI();
     const { data } = useCartData();
 
-    const cartTotals = useSwr(
-        'cart-totals',
-        async () => {
-            const response = await ecomApi.getCartTotals();
-            if (response.status === 'failure') {
-                throw response.error;
-            }
+    const cartTotals = useSwr('cart-totals', async () => {
+        const response = await ecomApi.getCartTotals();
+        if (response.status === 'failure') {
+            throw response.error;
+        }
 
-            return response.body;
-        },
-        {
-            revalidateOnFocus: true,
-        },
-    );
+        return response.body;
+    });
 
     useEffect(() => {
         cartTotals.mutate();
