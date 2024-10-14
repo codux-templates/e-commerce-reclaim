@@ -2,11 +2,11 @@ import { CartItem } from '~/components/cart/cart-item/cart-item';
 import classNames from 'classnames';
 import { LockIcon } from '~/components/icons';
 import { ROUTES } from '~/router/config';
-import { NavLink } from '@remix-run/react';
-
-import styles from './route.module.scss';
+import { Link } from '@remix-run/react';
 import { useCart } from '~/hooks/use-cart';
 import { findLineItemPriceBreakdown } from '~/api/cart-helpers';
+
+import styles from './route.module.scss';
 
 export default function CartPage() {
     const { cartData, cartTotals, checkout, removeItem, updateItemQuantity } = useCart();
@@ -19,9 +19,9 @@ export default function CartPage() {
                 <h1 className={styles.cartHeader}>My cart</h1>
                 <div className={styles.emptyCartMessage}>
                     <div>Cart is empty</div>
-                    <NavLink to={ROUTES.home.to()} className={styles.continueBrowsingLink}>
+                    <Link to={ROUTES.home.to()} className={styles.continueBrowsingLink}>
                         Continue Browsing
-                    </NavLink>
+                    </Link>
                 </div>
             </div>
         );
@@ -54,7 +54,7 @@ export default function CartPage() {
                     <div className={styles.summaryRow}>
                         <span>Delivery</span>
                         <span>
-                            {cartTotals?.priceSummary?.shipping?.amount === '0.00'
+                            {Number(cartTotals?.priceSummary?.shipping?.amount) === 0
                                 ? 'FREE'
                                 : cartTotals?.priceSummary?.shipping?.formattedConvertedAmount}
                         </span>
