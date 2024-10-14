@@ -1,35 +1,36 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { IProductFilters } from '~/api/types';
-import { formatPrice } from '~/utils';
-import { useOptimisticSearchParamsState } from '~/utils/use-optimistic-search-params-state';
+import {
+    productFiltersFromSearchParams,
+    searchParamsFromProductFilters,
+} from '~/api/product-filters';
+import { formatPrice, mergeUrlSearchParams } from '~/utils';
+import { useSearchParamsOptimistic } from '~/utils/use-search-params-state';
 import { Accordion } from '../accordion/accordion';
 import { RangeSlider } from '../range-slider/range-slider';
 
 interface ProductFiltersProps {
-    appliedFilters: IProductFilters;
-    onFiltersChange: (filters: IProductFilters) => void;
     lowestPrice: number;
     highestPrice: number;
     currency: string;
 }
 
-export const ProductFilters = ({
-    appliedFilters,
-    onFiltersChange,
-    lowestPrice,
-    highestPrice,
-    currency,
-}: ProductFiltersProps) => {
-    const [filters, setFilters] = useOptimisticSearchParamsState(appliedFilters, onFiltersChange);
+export const ProductFilters = ({ lowestPrice, highestPrice, currency }: ProductFiltersProps) => {
+    const [searchParams, setSearchParams] = useSearchParamsOptimistic();
+
+    const filters = useMemo(() => productFiltersFromSearchParams(searchParams), [searchParams]);
+
+    const handleFiltersChange = (changed: Partial<IProductFilters>) => {
+        const newParams = searchParamsFromProductFilters({ ...filters, ...changed });
+        setSearchParams((params) => mergeUrlSearchParams(params, newParams), {
+            preventScrollReset: true,
+        });
+    };
 
     const formatPriceValue = useCallback(
         (price: number) => formatPrice(price, currency),
         [currency],
     );
-
-    const handleFiltersChange = (changed: Partial<IProductFilters>) => {
-        setFilters({ ...filters, ...changed });
-    };
 
     return (
         <Accordion
@@ -40,13 +41,18 @@ export const ProductFilters = ({
                     content: (
                         <RangeSlider
                             className="rangeSlider"
+                            step="any"
                             startValue={filters.minPrice ?? lowestPrice}
                             endValue={filters.maxPrice ?? highestPrice}
                             onStartValueChange={(value) => {
-                                handleFiltersChange({ minPrice: value });
+                                handleFiltersChange({
+                                    minPrice: Math.max(Math.floor(value), lowestPrice),
+                                });
                             }}
                             onEndValueChange={(value) => {
-                                handleFiltersChange({ maxPrice: value });
+                                handleFiltersChange({
+                                    maxPrice: Math.min(Math.ceil(value), highestPrice),
+                                });
                             }}
                             minValue={lowestPrice}
                             maxValue={highestPrice}
