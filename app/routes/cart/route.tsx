@@ -8,6 +8,8 @@ import styles from './route.module.scss';
 import { useCart } from '~/hooks/use-cart';
 import { findLineItemPriceBreakdown } from '~/api/cart-helpers';
 
+const noop = () => {};
+
 export default function CartPage() {
     const { cartData, cartTotals, checkout, removeItem, updateItemQuantity } = useCart();
 

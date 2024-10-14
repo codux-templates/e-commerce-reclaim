@@ -20,7 +20,7 @@ export const Cart = () => {
             <CartView
                 cart={cartData}
                 cartTotals={cartTotals}
-                close={() => setIsOpen(false)}
+                onClose={() => setIsOpen(false)}
                 onCheckout={checkout}
                 onViewCart={handleViewCart}
                 onItemRemove={removeItem}
