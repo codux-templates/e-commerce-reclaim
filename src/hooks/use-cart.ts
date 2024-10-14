@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
     useCartTotals,
     useCartData,
@@ -8,10 +9,25 @@ import { useEcomAPI } from '~/api/ecom-api-context-provider';
 
 export const useCart = () => {
     const ecomAPI = useEcomAPI();
+    const [updatingCartItems, setUpdatingCartItems] = useState<string[]>([]);
+
     const { data: cartData } = useCartData();
-    const { data: cartTotals } = useCartTotals();
-    const { trigger: updateItemQuantity } = useUpdateCartItemQuantity();
-    const { trigger: removeItem } = useRemoveItemFromCart();
+    const { data: cartTotals, isValidating: isCartTotalsUpdating } = useCartTotals();
+
+    const { trigger: triggerUpdateItemQuantity } = useUpdateCartItemQuantity();
+    const { trigger: triggerRemoveItem } = useRemoveItemFromCart();
+
+    const updateItemQuantity = async ({ id, quantity }: { id: string; quantity: number }) => {
+        setUpdatingCartItems((prev) => [...prev, id]);
+        await triggerUpdateItemQuantity({ id, quantity });
+        setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id));
+    };
+
+    const removeItem = async (id: string) => {
+        setUpdatingCartItems((prev) => [...prev, id]);
+        await triggerRemoveItem(id);
+        setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id));
+    };
 
     const checkout = async () => {
         const checkoutResponse = await ecomAPI.checkout();
@@ -26,6 +42,8 @@ export const useCart = () => {
     return {
         cartData,
         cartTotals,
+        isCartItemUpdating: (id: string) => updatingCartItems.includes(id),
+        isCartTotalsUpdating: updatingCartItems.length > 0 || isCartTotalsUpdating,
         updateItemQuantity,
         removeItem,
         checkout,

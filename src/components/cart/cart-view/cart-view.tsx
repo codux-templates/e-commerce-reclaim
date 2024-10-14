@@ -14,6 +14,8 @@ export interface CartViewProps {
     onViewCart: () => void;
     onItemQuantityChange: (args: { id: string; quantity: number }) => void;
     onItemRemove: (id: string) => void;
+    isCartItemUpdating?: (id: string) => boolean;
+    isCartUpdating?: boolean;
 }
 
 export const CartView = ({
@@ -24,6 +26,8 @@ export const CartView = ({
     onViewCart,
     onItemQuantityChange,
     onItemRemove,
+    isCartItemUpdating,
+    isCartUpdating = false,
 }: CartViewProps) => {
     const itemsCount = cart ? calculateCartItemsCount(cart) : 0;
 
@@ -45,6 +49,9 @@ export const CartView = ({
                             <CartItem
                                 key={item._id}
                                 item={item}
+                                isUpdating={
+                                    isCartItemUpdating ? isCartItemUpdating(item._id!) : false
+                                }
                                 priceBreakdown={findLineItemPriceBreakdown(item, cartTotals)}
                                 onQuantityChange={(quantity: number) =>
                                     onItemQuantityChange({ id: item._id!, quantity })
@@ -74,6 +81,7 @@ export const CartView = ({
                                 styles.checkoutButton,
                             )}
                             onClick={onCheckout}
+                            disabled={isCartUpdating}
                         >
                             Checkout
                         </button>
