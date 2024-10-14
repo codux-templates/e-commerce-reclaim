@@ -7,9 +7,8 @@ import { ErrorIcon } from '../../../src/components/icons/error-icon';
 import { MenuIcon } from '../../../src/components/icons/menu-icon';
 import { ChevronRightIcon } from '../../../src/components/icons/chevron-right-icon';
 import { ArrowRightIcon } from '../../../src/components/icons/arrow-right-icon';
+import styles from '../../../src/styles/buttons.module.scss';
 import { Kit } from '../ui-kit-utils/kit';
-
-import styles from './buttons.board.module.scss';
 
 export default createBoard({
     name: 'Buttons & Icons',
