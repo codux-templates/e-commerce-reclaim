@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import { getEcomApi } from '~/api/ecom-api';
 import { EcomApiErrorCodes } from '~/api/types';
 import {
-    productFiltersSearchParamsConverter,
+    productFiltersFromSearchParams,
     useAppliedProductFilters,
 } from '~/api/use-product-filters';
 import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
@@ -46,7 +46,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     ] = await Promise.all([
         api.getCategoryBySlug(categorySlug),
         api.getProductsByCategory(categorySlug, {
-            filters: productFiltersSearchParamsConverter.fromSearchParams(url.searchParams),
+            filters: productFiltersFromSearchParams(url.searchParams),
         }),
         api.getAllCategories(),
         api.getProductPriceBounds(categorySlug),

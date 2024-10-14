@@ -1,8 +1,11 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { IProductFilters } from '~/api/types';
-import { productFiltersSearchParamsConverter } from '~/api/use-product-filters';
-import { formatPrice } from '~/utils';
-import { useSearchParamsState } from '~/utils/use-search-params-state';
+import {
+    productFiltersFromSearchParams,
+    searchParamsFromProductFilters,
+} from '~/api/use-product-filters';
+import { formatPrice, mergeUrlSearchParams } from '~/utils';
+import { useSearchParamsOptimistic } from '~/utils/use-search-params-state';
 import { Accordion } from '../accordion/accordion';
 import { RangeSlider } from '../range-slider/range-slider';
 
@@ -13,10 +16,15 @@ interface ProductFiltersProps {
 }
 
 export const ProductFilters = ({ lowestPrice, highestPrice, currency }: ProductFiltersProps) => {
-    const [filters, setFilters] = useSearchParamsState(productFiltersSearchParamsConverter);
+    const [searchParams, setSearchParams] = useSearchParamsOptimistic();
+
+    const filters = useMemo(() => productFiltersFromSearchParams(searchParams), [searchParams]);
 
     const handleFiltersChange = (changed: Partial<IProductFilters>) => {
-        setFilters({ ...filters, ...changed });
+        const newParams = searchParamsFromProductFilters({ ...filters, ...changed });
+        setSearchParams((params) => mergeUrlSearchParams(params, newParams), {
+            preventScrollReset: true,
+        });
     };
 
     const formatPriceValue = useCallback(
