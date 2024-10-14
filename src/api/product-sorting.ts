@@ -5,7 +5,7 @@ export const SORT_BY_SEARCH_PARAM = 'sortBy';
 
 export const DEFAULT_SORT_BY = ProductSortBy.newest;
 
-export function getProductSortByFromUrlSearchParams(searchParams: URLSearchParams): ProductSortBy {
+export function productSortByFromSearchParams(searchParams: URLSearchParams): ProductSortBy {
     const value = searchParams.get(SORT_BY_SEARCH_PARAM);
     return value && Object.values(ProductSortBy).includes(value as ProductSortBy)
         ? (value as ProductSortBy)

@@ -1,8 +1,6 @@
-import { useCallback, useMemo } from 'react';
-import { useSearchParams } from '@remix-run/react';
-import { getProductSortByFromUrlSearchParams, SORT_BY_SEARCH_PARAM } from '~/api/product-sorting';
+import { productSortByFromSearchParams, SORT_BY_SEARCH_PARAM } from '~/api/product-sorting';
 import { ProductSortBy } from '~/api/types';
-import { useOptimisticSearchParamsState } from '~/utils/use-optimistic-search-params-state';
+import { useSearchParamsOptimistic } from '~/utils/use-search-params-optimistic';
 import { Select, SelectItem } from '../select/select';
 
 import styles from './product-sorting-select.module.scss';
@@ -16,34 +14,26 @@ const sortingOptions: { value: ProductSortBy; label: string }[] = [
 ];
 
 export const ProductSortingSelect = () => {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParamsOptimistic();
 
-    const appliedSortBy = useMemo(
-        () => getProductSortByFromUrlSearchParams(searchParams),
-        [searchParams],
-    );
+    const sortBy = productSortByFromSearchParams(searchParams);
 
-    const applySortBy = useCallback(
-        (sortBy: ProductSortBy) => {
-            setSearchParams(
-                (params) => {
-                    params.set(SORT_BY_SEARCH_PARAM, sortBy);
-                    return params;
-                },
-                { preventScrollReset: true },
-            );
-        },
-        [setSearchParams],
-    );
-
-    const [sortBy, setSortBy] = useOptimisticSearchParamsState(appliedSortBy, applySortBy);
+    const handleChange = (sortBy: ProductSortBy) => {
+        setSearchParams(
+            (params) => {
+                params.set(SORT_BY_SEARCH_PARAM, sortBy);
+                return params;
+            },
+            { preventScrollReset: true },
+        );
+    };
 
     const selectedOption = sortingOptions.find((option) => option.value === sortBy)!;
 
     return (
         <Select
             value={sortBy}
-            onValueChange={setSortBy}
+            onValueChange={handleChange}
             className={styles.select}
             dropdownClassName={styles.selectDropdown}
             customSelectedValue={`Sort by: ${selectedOption.label}`}

@@ -26,6 +26,7 @@ import { useBreadcrumbs } from '~/router/use-breadcrumbs';
 import { getErrorMessage } from '~/utils';
 
 import styles from './route.module.scss';
+import { productSortByFromSearchParams } from '~/api/product-sorting';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     const categorySlug = params.categorySlug;
@@ -45,6 +46,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
         api.getCategoryBySlug(categorySlug),
         api.getProductsByCategory(categorySlug, {
             filters: productFiltersFromSearchParams(url.searchParams),
+            sortBy: productSortByFromSearchParams(url.searchParams),
         }),
         api.getAllCategories(),
         api.getProductPriceBounds(categorySlug),
