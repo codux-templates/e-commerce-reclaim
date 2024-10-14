@@ -9,7 +9,7 @@ import styles from './cart-view.module.scss';
 export interface CartViewProps {
     cart?: Cart;
     cartTotals?: CartTotals;
-    close: () => void;
+    onClose: () => void;
     onCheckout: () => void;
     onItemQuantityChange: (args: { id: string; quantity: number }) => void;
     onItemRemove: (id: string) => void;
@@ -18,7 +18,7 @@ export interface CartViewProps {
 export const CartView = ({
     cart,
     cartTotals,
-    close,
+    onClose,
     onCheckout,
     onItemQuantityChange,
     onItemRemove,
@@ -31,7 +31,7 @@ export const CartView = ({
                 <span className="heading6">
                     Cart ({itemsCount} {itemsCount === 1 ? 'item' : 'items'})
                 </span>
-                <button className={styles.closeButton} onClick={close}>
+                <button className={styles.closeButton} onClick={onClose}>
                     <CloseIcon />
                 </button>
             </div>

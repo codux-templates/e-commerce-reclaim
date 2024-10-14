@@ -12,7 +12,7 @@ export const Cart = () => {
             <CartView
                 cart={cartData}
                 cartTotals={cartTotals}
-                close={() => setIsOpen(false)}
+                onClose={() => setIsOpen(false)}
                 onCheckout={checkout}
                 onItemRemove={removeItem}
                 onItemQuantityChange={updateItemQuantity}
