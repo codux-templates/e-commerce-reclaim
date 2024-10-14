@@ -10,8 +10,8 @@ import classNames from 'classnames';
 import { getEcomApi } from '~/api/ecom-api';
 import { EcomApiErrorCodes } from '~/api/types';
 import {
-    parseProductFiltersFromUrlSearchParams,
-    useProductFilters,
+    productFiltersSearchParamsConverter,
+    useAppliedProductFilters,
 } from '~/api/use-product-filters';
 import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
 import { CategoryLink } from '~/components/category-link/category-link';
@@ -46,7 +46,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     ] = await Promise.all([
         api.getCategoryBySlug(categorySlug),
         api.getProductsByCategory(categorySlug, {
-            filters: parseProductFiltersFromUrlSearchParams(url.searchParams),
+            filters: productFiltersSearchParamsConverter.fromSearchParams(url.searchParams),
         }),
         api.getAllCategories(),
         api.getProductPriceBounds(categorySlug),
@@ -88,8 +88,8 @@ export default function ProductsPage() {
 
     const breadcrumbs = useBreadcrumbs();
 
-    const { filters, someFiltersApplied, applyFilters, clearFilters, clearAllFilters } =
-        useProductFilters();
+    const { appliedFilters, someFiltersApplied, clearFilters, clearAllFilters } =
+        useAppliedProductFilters();
 
     const currency = categoryProducts.items[0]?.priceData?.currency ?? 'USD';
 
@@ -179,8 +179,6 @@ export default function ProductsPage() {
                                     Filters
                                 </h2>
                                 <ProductFilters
-                                    appliedFilters={filters}
-                                    onFiltersChange={applyFilters}
                                     lowestPrice={productPriceBounds.lowest}
                                     highestPrice={productPriceBounds.highest}
                                     currency={currency}
@@ -201,7 +199,7 @@ export default function ProductsPage() {
                     {someFiltersApplied && (
                         <AppliedProductFilters
                             className={styles.appliedFilters}
-                            appliedFilters={filters}
+                            appliedFilters={appliedFilters}
                             onClearFilters={clearFilters}
                             onClearAllFilters={clearAllFilters}
                             currency={currency}

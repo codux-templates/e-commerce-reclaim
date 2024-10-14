@@ -1,27 +1,19 @@
 import { useCallback, useMemo } from 'react';
 import { useSearchParams } from '@remix-run/react';
 import { IProductFilters, ProductFilter } from '~/api/types';
+import type { SearchParamsStateConverter } from '../utils/use-search-params-state';
 
-export function useProductFilters() {
+export function useAppliedProductFilters() {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const filters = useMemo(
-        () => parseProductFiltersFromUrlSearchParams(searchParams),
+    const appliedFilters = useMemo(
+        () => productFiltersSearchParamsConverter.fromSearchParams(searchParams),
         [searchParams],
     );
 
     const someFiltersApplied =
-        Object.values(filters).length > 0 &&
-        Object.values(filters).some((value) => value !== undefined);
-
-    const applyFilters = useCallback(
-        (filters: IProductFilters) => {
-            setSearchParams(stringifyProductFiltersToUrlSearchParams(filters), {
-                preventScrollReset: true,
-            });
-        },
-        [setSearchParams],
-    );
+        Object.values(appliedFilters).length > 0 &&
+        Object.values(appliedFilters).some((value) => value !== undefined);
 
     const clearFilters = useCallback(
         (filters: ProductFilter[]) => {
@@ -41,33 +33,28 @@ export function useProductFilters() {
     }, [clearFilters]);
 
     return {
-        filters,
+        appliedFilters,
         someFiltersApplied,
-        applyFilters,
         clearFilters,
         clearAllFilters,
     };
 }
 
-export function parseProductFiltersFromUrlSearchParams(
-    searchParams: URLSearchParams,
-): IProductFilters {
-    const minPrice = searchParams.get(ProductFilter.minPrice);
-    const maxPrice = searchParams.get(ProductFilter.maxPrice);
-    const minPriceNumber = Number(minPrice);
-    const maxPriceNumber = Number(maxPrice);
-    return {
-        minPrice: minPrice && !Number.isNaN(minPriceNumber) ? minPriceNumber : undefined,
-        maxPrice: maxPrice && !Number.isNaN(maxPriceNumber) ? maxPriceNumber : undefined,
-    };
-}
-
-export function stringifyProductFiltersToUrlSearchParams({
-    minPrice,
-    maxPrice,
-}: IProductFilters): URLSearchParams {
-    const searchParams = new URLSearchParams();
-    if (minPrice !== undefined) searchParams.set(ProductFilter.minPrice, minPrice.toString());
-    if (maxPrice !== undefined) searchParams.set(ProductFilter.maxPrice, maxPrice.toString());
-    return searchParams;
-}
+export const productFiltersSearchParamsConverter: SearchParamsStateConverter<IProductFilters> = {
+    fromSearchParams: (params) => {
+        const minPrice = params.get(ProductFilter.minPrice);
+        const maxPrice = params.get(ProductFilter.maxPrice);
+        const minPriceNumber = Number(minPrice);
+        const maxPriceNumber = Number(maxPrice);
+        return {
+            minPrice: minPrice && !Number.isNaN(minPriceNumber) ? minPriceNumber : undefined,
+            maxPrice: maxPrice && !Number.isNaN(maxPriceNumber) ? maxPriceNumber : undefined,
+        };
+    },
+    toSearchParams: ({ minPrice, maxPrice }) => {
+        const params = new URLSearchParams();
+        if (minPrice !== undefined) params.set(ProductFilter.minPrice, minPrice.toString());
+        if (maxPrice !== undefined) params.set(ProductFilter.maxPrice, maxPrice.toString());
+        return params;
+    },
+};
