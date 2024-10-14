@@ -5,6 +5,8 @@ import { CloseIcon, LockIcon } from '~/components/icons';
 import { CartItem } from '../cart-item/cart-item';
 
 import styles from './cart-view.module.scss';
+import { Link } from '@remix-run/react';
+import { ROUTES } from '~/router/config';
 
 export interface CartViewProps {
     cart?: Cart;
@@ -77,12 +79,13 @@ export const CartView = ({
                         >
                             Checkout
                         </button>
-                        <button
+                        <Link
                             className={classNames('button', styles.viewCartButton)}
+                            to={ROUTES.cart.to()}
                             onClick={onViewCart}
                         >
                             View Cart
-                        </button>
+                        </Link>
 
                         <div className={styles.secureCheckout}>
                             <LockIcon width={11} />
