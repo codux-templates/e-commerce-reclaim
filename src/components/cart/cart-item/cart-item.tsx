@@ -30,8 +30,10 @@ export const CartItem = ({
     const [quantity, setQuantity] = useState(item.quantity!);
 
     useEffect(() => {
-        setQuantity(item.quantity!);
-    }, [item.quantity]);
+        if (!isUpdating) {
+            setQuantity(item.quantity!);
+        }
+    }, [item.quantity, isUpdating]);
 
     const updateItemQuantityDebounced = useMemo(
         () => debounce(onQuantityChange, 300),
