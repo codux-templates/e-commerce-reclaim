@@ -98,12 +98,9 @@ export const CartItem = ({
                                     >
                                         {moreOptionsExpanded ? 'Less Details' : 'More Details'}
                                         <DropdownIcon
-                                            width={12}
-                                            style={
-                                                moreOptionsExpanded
-                                                    ? { transform: 'rotate(180deg)' }
-                                                    : undefined
-                                            }
+                                            className={classNames(styles.moreOptionsIcon, {
+                                                [styles.rotated]: moreOptionsExpanded,
+                                            })}
                                         />
                                     </button>
                                 )}

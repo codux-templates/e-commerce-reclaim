@@ -72,6 +72,14 @@
     color: var(--secondary3);
 }
 
+.moreOptionsIcon {
+    width: 12px;
+}
+
+.moreOptionsIcon.rotated {
+    transform: rotate(180deg);
+}
+
 .price {
     grid-area: price;
 }
