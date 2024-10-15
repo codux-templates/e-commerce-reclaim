@@ -4,6 +4,7 @@ import {
     useCartData,
     useUpdateCartItemQuantity,
     useRemoveItemFromCart,
+    useAddToCart,
 } from '~/api/api-hooks';
 import { useEcomAPI } from '~/api/ecom-api-context-provider';
 
@@ -12,17 +13,21 @@ export const useCart = () => {
     const [updatingCartItems, setUpdatingCartItems] = useState<string[]>([]);
 
     const { data: cartData } = useCartData();
-    const { data: cartTotalsData, isUpdatingOnCartChange: isCartTotalsUpdatingOnCartChange } =
-        useCartTotals();
-    const cartTotals = cartTotalsData?.data;
+    const { data: cartTotals, isValidating: isCartTotalsValidating } = useCartTotals();
 
     const { trigger: triggerUpdateItemQuantity } = useUpdateCartItemQuantity();
     const { trigger: triggerRemoveItem } = useRemoveItemFromCart();
+    const { trigger: triggerAddToCart, isMutating: isAddingToCart } = useAddToCart();
 
-    const updateItemQuantity = async ({ id, quantity }: { id: string; quantity: number }) => {
+    const updateItemQuantity = ({ id, quantity }: { id: string; quantity: number }) => {
         setUpdatingCartItems((prev) => [...prev, id]);
-        await triggerUpdateItemQuantity({ id, quantity });
-        setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id));
+        triggerUpdateItemQuantity(
+            { id, quantity },
+            {
+                onSuccess: () =>
+                    setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id)),
+            },
+        );
     };
 
     const removeItem = async (id: string) => {
@@ -30,6 +35,9 @@ export const useCart = () => {
         await triggerRemoveItem(id);
         setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id));
     };
+
+    const addToCart = (productId: string, quantity: number) =>
+        triggerAddToCart({ id: productId, quantity });
 
     const checkout = async () => {
         const checkoutResponse = await ecomAPI.checkout();
@@ -44,10 +52,14 @@ export const useCart = () => {
     return {
         cartData,
         cartTotals,
-        isCartItemUpdating: (id: string) => updatingCartItems.includes(id),
-        isCartTotalsUpdating: updatingCartItems.length > 0 || isCartTotalsUpdatingOnCartChange,
+        updatingCartItems,
+
+        isAddingToCart,
+        isCartTotalsUpdating: updatingCartItems.length > 0 || isCartTotalsValidating,
+
         updateItemQuantity,
         removeItem,
+        addToCart,
         checkout,
     };
 };

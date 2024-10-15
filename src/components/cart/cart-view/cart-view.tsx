@@ -9,25 +9,25 @@ import styles from './cart-view.module.scss';
 export interface CartViewProps {
     cart?: Cart;
     cartTotals?: CartTotals;
+    updatingCartItems?: string[];
+    isUpdating?: boolean;
     onClose: () => void;
     onCheckout: () => void;
     onViewCart: () => void;
     onItemQuantityChange: (args: { id: string; quantity: number }) => void;
     onItemRemove: (id: string) => void;
-    isCartItemUpdating?: (id: string) => boolean;
-    isCartUpdating?: boolean;
 }
 
 export const CartView = ({
     cart,
     cartTotals,
+    updatingCartItems = [],
+    isUpdating = false,
     onClose,
     onCheckout,
     onViewCart,
     onItemQuantityChange,
     onItemRemove,
-    isCartItemUpdating,
-    isCartUpdating = false,
 }: CartViewProps) => {
     const itemsCount = cart ? calculateCartItemsCount(cart) : 0;
 
@@ -49,9 +49,7 @@ export const CartView = ({
                             <CartItem
                                 key={item._id}
                                 item={item}
-                                isUpdating={
-                                    isCartItemUpdating ? isCartItemUpdating(item._id!) : false
-                                }
+                                isUpdating={updatingCartItems.includes(item._id!)}
                                 priceBreakdown={findLineItemPriceBreakdown(item, cartTotals)}
                                 onQuantityChange={(quantity: number) =>
                                     onItemQuantityChange({ id: item._id!, quantity })
@@ -81,7 +79,7 @@ export const CartView = ({
                                 styles.checkoutButton,
                             )}
                             onClick={onCheckout}
-                            disabled={isCartUpdating}
+                            disabled={isUpdating}
                         >
                             Checkout
                         </button>

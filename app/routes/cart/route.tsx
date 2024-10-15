@@ -14,7 +14,7 @@ export default function CartPage() {
         cartData,
         cartTotals,
         isCartTotalsUpdating,
-        isCartItemUpdating,
+        updatingCartItems,
         checkout,
         removeItem,
         updateItemQuantity,
@@ -44,7 +44,7 @@ export default function CartPage() {
                         <CartItem
                             key={item._id}
                             item={item}
-                            isUpdating={isCartItemUpdating(item._id!)}
+                            isUpdating={updatingCartItems.includes(item._id!)}
                             priceBreakdown={findLineItemPriceBreakdown(item, cartTotals)}
                             onRemove={() => removeItem(item._id!)}
                             onQuantityChange={(quantity: number) =>
@@ -58,7 +58,7 @@ export default function CartPage() {
                 <h1 className={styles.summaryHeader}>Order summary</h1>
                 <div
                     className={classNames(styles.summarySection, {
-                        [styles.updating]: isCartTotalsUpdating,
+                        [styles.loading]: isCartTotalsUpdating,
                     })}
                 >
                     <div className={styles.summaryRow}>

@@ -19,7 +19,6 @@ export const useCartData = () => {
 export const useCartTotals = () => {
     const ecomApi = useEcomAPI();
     const { data } = useCartData();
-    const [isUpdatingOnCartChange, setIsUpdatingOnCartChange] = useState(false);
 
     const cartTotals = useSwr('cart-totals', async () => {
         const response = await ecomApi.getCartTotals();
@@ -31,14 +30,11 @@ export const useCartTotals = () => {
     });
 
     useEffect(() => {
-        setIsUpdatingOnCartChange(true);
-        cartTotals.mutate().finally(() => {
-            setIsUpdatingOnCartChange(false);
-        });
+        cartTotals.mutate();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
-    return { data: cartTotals, isUpdatingOnCartChange };
+    return cartTotals;
 };
 
 type Args = { id: string; quantity: number };
