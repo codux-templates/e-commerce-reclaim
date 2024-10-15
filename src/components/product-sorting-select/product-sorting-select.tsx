@@ -28,7 +28,10 @@ export const ProductSortingSelect = () => {
         );
     };
 
-    const selectedOption = sortingOptions.find((option) => option.value === sortBy)!;
+    const renderValue = (value: ProductSortBy) => {
+        const option = sortingOptions.find((option) => option.value === value)!;
+        return `Sort by: ${option.label}`;
+    };
 
     return (
         <Select
@@ -36,7 +39,7 @@ export const ProductSortingSelect = () => {
             onValueChange={handleChange}
             className={styles.select}
             dropdownClassName={styles.selectDropdown}
-            customSelectedValue={`Sort by: ${selectedOption.label}`}
+            renderValue={renderValue}
         >
             {sortingOptions.map((option) => (
                 <SelectItem key={option.value} value={option.value} className={styles.selectItem}>

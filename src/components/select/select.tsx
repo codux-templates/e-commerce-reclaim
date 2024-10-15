@@ -11,7 +11,11 @@ export interface SelectProps<V extends string> {
     children: React.ReactNode;
     className?: string;
     dropdownClassName?: string;
-    customSelectedValue?: React.ReactNode;
+    /**
+     * Allows to customize the selected value.
+     * By default the selected item's text will be rendered.
+     */
+    renderValue?: (value: V) => React.ReactNode;
 }
 
 export const Select = <V extends string>({
@@ -20,12 +24,12 @@ export const Select = <V extends string>({
     placeholder,
     children,
     className,
-    customSelectedValue,
     dropdownClassName,
+    renderValue,
 }: SelectProps<V>) => (
     <RadixSelect.Root value={value} onValueChange={onValueChange}>
         <RadixSelect.Trigger className={classNames(styles.trigger, className)}>
-            <RadixSelect.Value placeholder={placeholder}>{customSelectedValue}</RadixSelect.Value>
+            <RadixSelect.Value placeholder={placeholder}>{renderValue?.(value)}</RadixSelect.Value>
             <RadixSelect.Icon className={styles.triggerIcon}>
                 <DropdownIcon width={12} />
             </RadixSelect.Icon>
