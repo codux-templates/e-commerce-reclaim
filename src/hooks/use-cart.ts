@@ -12,7 +12,9 @@ export const useCart = () => {
     const [updatingCartItems, setUpdatingCartItems] = useState<string[]>([]);
 
     const { data: cartData } = useCartData();
-    const { data: cartTotals, isValidating: isCartTotalsUpdating } = useCartTotals();
+    const { data: cartTotalsData, isUpdatingOnCartChange: isCartTotalsUpdatingOnCartChange } =
+        useCartTotals();
+    const cartTotals = cartTotalsData?.data;
 
     const { trigger: triggerUpdateItemQuantity } = useUpdateCartItemQuantity();
     const { trigger: triggerRemoveItem } = useRemoveItemFromCart();
@@ -43,7 +45,7 @@ export const useCart = () => {
         cartData,
         cartTotals,
         isCartItemUpdating: (id: string) => updatingCartItems.includes(id),
-        isCartTotalsUpdating: updatingCartItems.length > 0 || isCartTotalsUpdating,
+        isCartTotalsUpdating: updatingCartItems.length > 0 || isCartTotalsUpdatingOnCartChange,
         updateItemQuantity,
         removeItem,
         checkout,

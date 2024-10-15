@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useSwr, { Key } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { findItemIdInCart } from './cart-helpers';
@@ -19,6 +19,7 @@ export const useCartData = () => {
 export const useCartTotals = () => {
     const ecomApi = useEcomAPI();
     const { data } = useCartData();
+    const [isUpdatingOnCartChange, setIsUpdatingOnCartChange] = useState(false);
 
     const cartTotals = useSwr('cart-totals', async () => {
         const response = await ecomApi.getCartTotals();
@@ -30,11 +31,14 @@ export const useCartTotals = () => {
     });
 
     useEffect(() => {
-        cartTotals.mutate();
+        setIsUpdatingOnCartChange(true);
+        cartTotals.mutate().finally(() => {
+            setIsUpdatingOnCartChange(false);
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
-    return cartTotals;
+    return { data: cartTotals, isUpdatingOnCartChange };
 };
 
 type Args = { id: string; quantity: number };
