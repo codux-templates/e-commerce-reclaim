@@ -12,7 +12,7 @@ export const Cart = () => {
         cartData,
         cartTotals,
         isCartTotalsUpdating,
-        updatingCartItems,
+        updatingCartItemIds,
         checkout,
         removeItem,
         updateItemQuantity,
@@ -34,7 +34,7 @@ export const Cart = () => {
                 onItemRemove={removeItem}
                 onItemQuantityChange={updateItemQuantity}
                 isUpdating={isCartTotalsUpdating}
-                updatingCartItems={updatingCartItems}
+                updatingCartItemIds={updatingCartItemIds}
             />
         </Drawer>
     );

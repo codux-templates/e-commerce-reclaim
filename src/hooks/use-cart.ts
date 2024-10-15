@@ -10,7 +10,7 @@ import { useEcomAPI } from '~/api/ecom-api-context-provider';
 
 export const useCart = () => {
     const ecomAPI = useEcomAPI();
-    const [updatingCartItems, setUpdatingCartItems] = useState<string[]>([]);
+    const [updatingCartItemIds, setUpdatingCartItems] = useState<string[]>([]);
 
     const { data: cartData } = useCartData();
     const { data: cartTotals, isValidating: isCartTotalsValidating } = useCartTotals();
@@ -21,19 +21,16 @@ export const useCart = () => {
 
     const updateItemQuantity = ({ id, quantity }: { id: string; quantity: number }) => {
         setUpdatingCartItems((prev) => [...prev, id]);
-        triggerUpdateItemQuantity(
-            { id, quantity },
-            {
-                onSuccess: () =>
-                    setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id)),
-            },
-        );
+        triggerUpdateItemQuantity({ id, quantity }).finally(() => {
+            setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id));
+        });
     };
 
-    const removeItem = async (id: string) => {
+    const removeItem = (id: string) => {
         setUpdatingCartItems((prev) => [...prev, id]);
-        await triggerRemoveItem(id);
-        setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id));
+        triggerRemoveItem(id).finally(() => {
+            setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id));
+        });
     };
 
     const addToCart = (productId: string, quantity: number) =>
@@ -52,10 +49,10 @@ export const useCart = () => {
     return {
         cartData,
         cartTotals,
-        updatingCartItems,
+        updatingCartItemIds,
 
         isAddingToCart,
-        isCartTotalsUpdating: updatingCartItems.length > 0 || isCartTotalsValidating,
+        isCartTotalsUpdating: updatingCartItemIds.length > 0 || isCartTotalsValidating,
 
         updateItemQuantity,
         removeItem,

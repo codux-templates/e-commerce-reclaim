@@ -9,7 +9,7 @@ import styles from './cart-view.module.scss';
 export interface CartViewProps {
     cart?: Cart;
     cartTotals?: CartTotals;
-    updatingCartItems?: string[];
+    updatingCartItemIds?: string[];
     isUpdating?: boolean;
     onClose: () => void;
     onCheckout: () => void;
@@ -21,7 +21,7 @@ export interface CartViewProps {
 export const CartView = ({
     cart,
     cartTotals,
-    updatingCartItems = [],
+    updatingCartItemIds = [],
     isUpdating = false,
     onClose,
     onCheckout,
@@ -49,7 +49,7 @@ export const CartView = ({
                             <CartItem
                                 key={item._id}
                                 item={item}
-                                isUpdating={updatingCartItems.includes(item._id!)}
+                                isUpdating={updatingCartItemIds.includes(item._id!)}
                                 priceBreakdown={findLineItemPriceBreakdown(item, cartTotals)}
                                 onQuantityChange={(quantity: number) =>
                                     onItemQuantityChange({ id: item._id!, quantity })

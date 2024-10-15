@@ -14,7 +14,7 @@ export default function CartPage() {
         cartData,
         cartTotals,
         isCartTotalsUpdating,
-        updatingCartItems,
+        updatingCartItemIds,
         checkout,
         removeItem,
         updateItemQuantity,
@@ -44,7 +44,7 @@ export default function CartPage() {
                         <CartItem
                             key={item._id}
                             item={item}
-                            isUpdating={updatingCartItems.includes(item._id!)}
+                            isUpdating={updatingCartItemIds.includes(item._id!)}
                             priceBreakdown={findLineItemPriceBreakdown(item, cartTotals)}
                             onRemove={() => removeItem(item._id!)}
                             onQuantityChange={(quantity: number) =>
