@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useSwr, { Key } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { findItemIdInCart } from './cart-helpers';
