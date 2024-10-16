@@ -1,16 +1,15 @@
+import { useEffect, useMemo, useState } from 'react';
 import { cart } from '@wix/ecom';
 import { media } from '@wix/sdk';
 import { QuantityInput } from '~/components/quantity-input/quantity-input';
-import { TrashIcon, ImagePlaceholderIcon, ErrorIcon, DropdownIcon } from '~/components/icons';
+import { TrashIcon, ImagePlaceholderIcon, ErrorIcon } from '~/components/icons';
 import { Spinner } from '~/components/spinner/spinner';
 import { ProductPrice } from '~/components/product-price/product-price';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
-import { useEffect, useMemo, useState } from 'react';
+import { CartItemOptions } from '../cart-item-options/cart-item-options';
 
 import styles from './cart-item.module.scss';
-
-const MAX_OPTIONS_VISIBLE = 1;
 
 export interface CartItemProps {
     item: cart.LineItem;
@@ -30,7 +29,6 @@ export const CartItem = ({
     const productName = item.productName?.translated ?? '';
 
     const [quantity, setQuantity] = useState(item.quantity!);
-    const [moreOptionsExpanded, setMoreOptionsExpanded] = useState(false);
 
     useEffect(() => {
         if (!isUpdating) {
@@ -79,32 +77,11 @@ export const CartItem = ({
                         )}
 
                         {item.descriptionLines && item.descriptionLines.length > 0 && (
-                            <div className={styles.options}>
-                                {item.descriptionLines
-                                    .slice(0, moreOptionsExpanded ? undefined : MAX_OPTIONS_VISIBLE)
-                                    .map((option) => (
-                                        <div key={option.name!.translated} className="paragraph3">
-                                            {option.name!.translated}:{' '}
-                                            {option.colorInfo
-                                                ? option.colorInfo.translated
-                                                : option.plainText?.translated}
-                                        </div>
-                                    ))}
-
-                                {item.descriptionLines.length > MAX_OPTIONS_VISIBLE && (
-                                    <button
-                                        className={styles.moreOptionsButton}
-                                        onClick={() => setMoreOptionsExpanded((p) => !p)}
-                                    >
-                                        {moreOptionsExpanded ? 'Less Details' : 'More Details'}
-                                        <DropdownIcon
-                                            className={classNames(styles.moreOptionsIcon, {
-                                                [styles.rotated]: moreOptionsExpanded,
-                                            })}
-                                        />
-                                    </button>
-                                )}
-                            </div>
+                            <CartItemOptions
+                                className={styles.options}
+                                options={item.descriptionLines}
+                                visibleOptionsCount={1}
+                            />
                         )}
                     </div>
 

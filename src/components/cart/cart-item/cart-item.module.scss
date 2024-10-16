@@ -53,31 +53,7 @@
 }
 
 .options {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
     margin-top: 4px;
-}
-
-.moreOptionsButton {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font: var(--paragraph3);
-    cursor: pointer;
-}
-
-.moreOptionsButton:focus,
-.moreOptionsButton:hover {
-    color: var(--secondary3);
-}
-
-.moreOptionsIcon {
-    width: 12px;
-}
-
-.moreOptionsIcon.rotated {
-    transform: rotate(180deg);
 }
 
 .price {
