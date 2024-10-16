@@ -9,8 +9,8 @@ import {
 import { products } from '@wix/stores';
 import classNames from 'classnames';
 import { useState } from 'react';
-import { useAddToCart } from '~/api/api-hooks';
 import { getEcomApi } from '~/api/ecom-api';
+import { useAddToCart } from '~/api/api-hooks';
 import { AddToCartOptions, EcomApiErrorCodes } from '~/api/types';
 import { Accordion } from '~/components/accordion/accordion';
 import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
