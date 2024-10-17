@@ -19,6 +19,7 @@ import {
     isEcomSDKError,
 } from './types';
 import { getSortedProductsQuery } from './product-sorting';
+import { getFilteredProductsQuery } from './product-filters';
 
 function getWixClientId() {
     /**
@@ -88,13 +89,7 @@ function createApi(): EcomAPI {
                     .hasSome('collectionIds', [category._id]);
 
                 if (filters) {
-                    if (filters.minPrice) {
-                        query = query.ge('priceData.price', filters.minPrice);
-                    }
-
-                    if (filters.maxPrice) {
-                        query = query.le('priceData.price', filters.maxPrice);
-                    }
+                    query = getFilteredProductsQuery(query, filters);
                 }
 
                 if (sortBy) {

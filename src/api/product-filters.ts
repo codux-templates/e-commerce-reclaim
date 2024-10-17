@@ -1,3 +1,4 @@
+import { products } from '@wix/stores';
 import { IProductFilters, ProductFilter } from '~/api/types';
 
 export function productFiltersFromSearchParams(params: URLSearchParams): IProductFilters {
@@ -19,4 +20,19 @@ export function searchParamsFromProductFilters({
     if (minPrice !== undefined) params.set(ProductFilter.minPrice, minPrice.toString());
     if (maxPrice !== undefined) params.set(ProductFilter.maxPrice, maxPrice.toString());
     return params;
+}
+
+export function getFilteredProductsQuery(
+    query: products.ProductsQueryBuilder,
+    filters: IProductFilters,
+): products.ProductsQueryBuilder {
+    if (filters.minPrice) {
+        query = query.ge('priceData.price', filters.minPrice);
+    }
+
+    if (filters.maxPrice) {
+        query = query.le('priceData.price', filters.maxPrice);
+    }
+
+    return query;
 }
