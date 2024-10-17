@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import { LockIcon } from '~/components/icons';
 import { ROUTES } from '~/router/config';
 import { Link } from '@remix-run/react';
-import { useCart } from '~/hooks/use-cart';
-import { findLineItemPriceBreakdown } from '~/api/cart-helpers';
+import { useCart } from 'lib/hooks/use-cart';
+import { findLineItemPriceBreakdown } from 'lib/utils';
 
 import styles from './route.module.scss';
 import { Spinner } from '~/components/spinner/spinner';

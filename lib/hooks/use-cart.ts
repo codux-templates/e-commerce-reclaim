@@ -5,9 +5,9 @@ import {
     useUpdateCartItemQuantity,
     useRemoveItemFromCart,
     useAddToCart,
-} from '~/api/api-hooks';
-import { useEcomAPI } from '~/api/ecom-api-context-provider';
-import { AddToCartOptions } from '~/api/types';
+} from 'lib/api/api-hooks';
+import { useEcomAPI } from 'lib/api/ecom-api-context-provider';
+import { AddToCartOptions } from 'lib/api/types';
 
 export const useCart = () => {
     const ecomAPI = useEcomAPI();
