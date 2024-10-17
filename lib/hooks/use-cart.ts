@@ -7,6 +7,7 @@ import {
     useAddToCart,
 } from 'lib/api/api-hooks';
 import { useEcomAPI } from 'lib/api/ecom-api-context-provider';
+import { AddToCartOptions } from 'lib/api/types';
 
 export const useCart = () => {
     const ecomAPI = useEcomAPI();
@@ -33,8 +34,8 @@ export const useCart = () => {
         });
     };
 
-    const addToCart = (productId: string, quantity: number) =>
-        triggerAddToCart({ id: productId, quantity });
+    const addToCart = (productId: string, quantity: number, options?: AddToCartOptions) =>
+        triggerAddToCart({ id: productId, quantity, options });
 
     const checkout = async () => {
         const checkoutResponse = await ecomAPI.checkout();

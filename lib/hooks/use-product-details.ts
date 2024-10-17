@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import { products } from '@wix/stores';
 import type { SerializeFrom } from '@remix-run/node';
-import { useAddToCart } from '../api/api-hooks';
 import { AddToCartOptions } from '../api/types';
 import {
     getMedia,
@@ -13,10 +12,11 @@ import {
     selectedChoicesToVariantChoices,
 } from '../utils/product-utils';
 import { useCartOpen } from '../cart-open-context';
+import { useCart } from './use-cart';
 
 export function useProductDetails(product: SerializeFrom<products.Product>) {
     const cartOpener = useCartOpen();
-    const { trigger: addToCart, isMutating: isAddingToCart } = useAddToCart();
+    const { addToCart, isAddingToCart } = useCart();
 
     const getInitialSelectedChoices = () => {
         const result: Record<string, products.Choice | undefined> = {};
@@ -51,16 +51,7 @@ export function useProductDetails(product: SerializeFrom<products.Product>) {
                 ? { variantId: selectedVariant._id }
                 : { options: selectedChoicesToVariantChoices(product, selectedChoices) };
 
-        addToCart(
-            {
-                id: product._id!,
-                quantity,
-                options,
-            },
-            {
-                onSuccess: () => cartOpener.setIsOpen(true),
-            },
-        );
+        addToCart(product._id!, quantity, options).then(() => cartOpener.setIsOpen(true));
     }, [addToCart, cartOpener, product, quantity, selectedChoices]);
 
     const handleOptionChange = useCallback((optionName: string, newChoice: products.Choice) => {
