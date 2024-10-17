@@ -7,6 +7,7 @@ import {
     useAddToCart,
 } from '~/api/api-hooks';
 import { useEcomAPI } from '~/api/ecom-api-context-provider';
+import { AddToCartOptions } from '~/api/types';
 import { ToastType, useToaster } from '~/components/toaster/toaster-context';
 import { getErrorMessage } from '~/utils';
 
@@ -50,7 +51,7 @@ export const useCart = () => {
             });
     };
 
-    const addToCart = (productId: string, quantity: number) => {
+    const addToCart = (productId: string, quantity: number, options?: AddToCartOptions) => {
         triggerAddToCart({ id: productId, quantity }).catch((error) =>
             runToast({
                 type: ToastType.Error,
