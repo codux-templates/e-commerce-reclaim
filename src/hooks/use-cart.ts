@@ -7,9 +7,12 @@ import {
     useAddToCart,
 } from '~/api/api-hooks';
 import { useEcomAPI } from '~/api/ecom-api-context-provider';
+import { ToastType, useToaster } from '~/components/toaster/toaster-context';
+import { getErrorMessage } from '~/utils';
 
 export const useCart = () => {
     const ecomAPI = useEcomAPI();
+    const { runToast } = useToaster();
     const [updatingCartItemIds, setUpdatingCartItems] = useState<string[]>([]);
 
     const { data: cartData } = useCartData();
@@ -21,20 +24,40 @@ export const useCart = () => {
 
     const updateItemQuantity = ({ id, quantity }: { id: string; quantity: number }) => {
         setUpdatingCartItems((prev) => [...prev, id]);
-        triggerUpdateItemQuantity({ id, quantity }).finally(() => {
-            setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id));
-        });
+        triggerUpdateItemQuantity({ id, quantity })
+            .catch((error) =>
+                runToast({
+                    type: ToastType.Error,
+                    message: `Failed to update the item quantity. ${getErrorMessage(error)}`,
+                }),
+            )
+            .finally(() => {
+                setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id));
+            });
     };
 
     const removeItem = (id: string) => {
         setUpdatingCartItems((prev) => [...prev, id]);
-        triggerRemoveItem(id).finally(() => {
-            setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id));
-        });
+        triggerRemoveItem(id)
+            .catch((error) =>
+                runToast({
+                    type: ToastType.Error,
+                    message: `Failed to remove the item. ${getErrorMessage(error)}`,
+                }),
+            )
+            .finally(() => {
+                setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id));
+            });
     };
 
-    const addToCart = (productId: string, quantity: number) =>
-        triggerAddToCart({ id: productId, quantity });
+    const addToCart = (productId: string, quantity: number) => {
+        triggerAddToCart({ id: productId, quantity }).catch((error) =>
+            runToast({
+                type: ToastType.Error,
+                message: `Failed to add product to the cart. ${getErrorMessage(error)}`,
+            }),
+        );
+    };
 
     const checkout = async () => {
         const checkoutResponse = await ecomAPI.checkout();
@@ -42,7 +65,10 @@ export const useCart = () => {
         if (checkoutResponse.status === 'success') {
             window.location.href = checkoutResponse.body.checkoutUrl;
         } else {
-            alert('checkout is not configured');
+            runToast({
+                type: ToastType.Error,
+                message: `Checkout is not configured. ${getErrorMessage(checkoutResponse.error)}`,
+            });
         }
     };
 

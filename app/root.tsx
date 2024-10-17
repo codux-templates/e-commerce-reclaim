@@ -14,6 +14,7 @@ import {
 import { useEffect } from 'react';
 import { EcomAPIContextProvider } from '~/api/ecom-api-context-provider';
 import { CartOpenContextProvider } from '~/components/cart/cart-open-context';
+import { ToasterContextProvider } from '~/components/toaster/toaster-context';
 import { ErrorPage } from '~/components/error-page/error-page';
 import { SiteWrapper } from '~/components/site-wrapper/site-wrapper';
 import { ROUTES } from '~/router/config';
@@ -63,9 +64,11 @@ export function Layout({ children }: React.PropsWithChildren) {
 function ContentWrapper({ children }: React.PropsWithChildren) {
     return (
         <EcomAPIContextProvider>
-            <CartOpenContextProvider>
-                <SiteWrapper>{children}</SiteWrapper>
-            </CartOpenContextProvider>
+            <ToasterContextProvider>
+                <CartOpenContextProvider>
+                    <SiteWrapper>{children}</SiteWrapper>
+                </CartOpenContextProvider>
+            </ToasterContextProvider>
         </EcomAPIContextProvider>
     );
 }

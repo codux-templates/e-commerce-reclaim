@@ -1,0 +1,58 @@
+@import '@styles/variables.scss';
+
+.root {
+    position: absolute;
+    top: var(--headerHeight);
+    padding: 14px;
+    width: 480px;
+    color: var(--white);
+    pointer-events: all;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 14px;
+}
+
+.root.cart {
+    inset: auto 0 0 auto;
+    width: 100%;
+    max-width: var(--drawerMaxWidth);
+}
+
+@media (max-width: $desktop-width) {
+    .root {
+        top: auto;
+        bottom: 0;
+        width: 100%;
+    }
+}
+
+.root.error {
+    background-color: var(--error);
+}
+
+.root.warning {
+    background-color: var(--colorD2);
+}
+
+.root.success {
+    background-color: var(--colorE4);
+}
+
+.root.info {
+    background-color: var(--colorC3);
+}
+
+.description {
+    font: var(--paragraph3);
+    flex-grow: 1;
+}
+
+.close {
+    flex-shrink: 0;
+}
+
+.closeIcon {
+    cursor: pointer;
+}
