@@ -9,7 +9,7 @@ interface ToastProps {
     children: React.ReactNode;
     type: ToastType;
     isOpen: boolean;
-    isCartOpen?: string;
+    isCartOpen?: boolean;
     className?: string;
     onOpenChange: (isOpen: boolean) => void;
     onClose: () => void;
