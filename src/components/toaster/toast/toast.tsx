@@ -30,12 +30,7 @@ export const Toast = (props: ToastProps) => {
                 {children}
             </RadixToast.Description>
             <RadixToast.Close asChild className={styles.close}>
-                <CloseIcon
-                    width={24}
-                    className={styles.closeIcon}
-                    onClick={onClose}
-                    aria-label="Close"
-                />
+                <CloseIcon width={24} className={styles.closeIcon} onClick={onClose} />
             </RadixToast.Close>
         </RadixToast.Root>
     );
