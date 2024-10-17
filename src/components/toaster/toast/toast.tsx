@@ -9,23 +9,20 @@ interface ToastProps {
     children: React.ReactNode;
     type: ToastType;
     isOpen: boolean;
-    location?: string;
+    isCartOpen?: string;
     className?: string;
     onOpenChange: (isOpen: boolean) => void;
     onClose: () => void;
 }
 
 export const Toast = (props: ToastProps) => {
-    const { children, type, isOpen, location, className, onOpenChange, onClose } = props;
+    const { children, type, isOpen, isCartOpen, className, onOpenChange, onClose } = props;
 
     return (
         <RadixToast.Root
-            className={classNames(
-                styles.root,
-                styles[type],
-                location && styles[location],
-                className,
-            )}
+            className={classNames(styles.root, styles[type], className, {
+                [styles.inCart]: isCartOpen,
+            })}
             open={isOpen}
             onOpenChange={onOpenChange}
         >

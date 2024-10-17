@@ -17,7 +17,7 @@ export function Toaster() {
             <Toast
                 type={toast.type}
                 isOpen={toast.isOpen}
-                location={isCartOpen ? 'cart' : undefined}
+                isCartOpen={isCartOpen}
                 onOpenChange={onOpenChange}
                 onClose={closeToast}
             >
