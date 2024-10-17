@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { Cart, CartTotals } from '~/api/types';
-import { findLineItemPriceBreakdown, calculateCartItemsCount } from '~/api/cart-helpers';
+import { findLineItemPriceBreakdown, calculateCartItemsCount } from '~/utils';
 import { CloseIcon, LockIcon } from '~/components/icons';
 import { CartItem } from '../cart-item/cart-item';
 

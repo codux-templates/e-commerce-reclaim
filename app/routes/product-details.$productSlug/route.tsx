@@ -23,8 +23,9 @@ import { ProductOption } from '~/components/product-option/product-option';
 import { ShareProductLinks } from '~/components/share-product-links/share-product-links';
 import { ROUTES } from '~/router/config';
 import { BreadcrumbData, RouteHandle } from '~/router/types';
-import { getErrorMessage, removeQueryStringFromUrl } from '~/utils';
 import {
+    getErrorMessage,
+    removeQueryStringFromUrl,
     getMedia,
     getPriceData,
     getProductOptions,
@@ -32,8 +33,8 @@ import {
     getSKU,
     isOutOfStock,
     selectedChoicesToVariantChoices,
-} from '~/utils/product-utils';
-import { useBreadcrumbs } from '~/router/use-breadcrumbs';
+} from '~/utils';
+import { useBreadcrumbs } from '~/hooks/use-breadcrumbs';
 
 import styles from './route.module.scss';
 

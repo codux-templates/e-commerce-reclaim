@@ -4,7 +4,7 @@ import { LockIcon } from '~/components/icons';
 import { ROUTES } from '~/router/config';
 import { Link } from '@remix-run/react';
 import { useCart } from '~/hooks/use-cart';
-import { findLineItemPriceBreakdown } from '~/api/cart-helpers';
+import { findLineItemPriceBreakdown } from '~/utils';
 
 import styles from './route.module.scss';
 import { Spinner } from '~/components/spinner/spinner';

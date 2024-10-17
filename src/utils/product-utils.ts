@@ -158,3 +158,14 @@ function getChoiceAvailabilityInfo(
         ),
     };
 }
+
+export function formatPrice(price: number, currency: string): string {
+    const formatter = Intl.NumberFormat('en-US', {
+        currency,
+        style: 'currency',
+        currencyDisplay: 'narrowSymbol',
+        minimumFractionDigits: 2,
+    });
+
+    return formatter.format(price);
+}

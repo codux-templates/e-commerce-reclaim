@@ -5,7 +5,7 @@ import styles from './header.module.scss';
 import { CartIcon, MenuIcon } from '~/components/icons';
 import { useCartOpen } from '../cart/cart-open-context';
 import { useCartData } from '~/api/api-hooks';
-import { calculateCartItemsCount } from '~/api/cart-helpers';
+import { calculateCartItemsCount } from '~/utils';
 import { useState } from 'react';
 import { NavigationMenu } from '../navigation-menu/navigation-menu';
 import { SidebarNavigationMenu } from '../sidebar-navigation-menu/sidebar-navigation-menu';

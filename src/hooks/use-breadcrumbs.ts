@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useLocation, useMatches } from '@remix-run/react';
-import { BreadcrumbData, RouteMatch } from './types';
+import { BreadcrumbData, RouteMatch } from '../router/types';
 
 export function useBreadcrumbs(): BreadcrumbData[] {
     const matches = useMatches() as RouteMatch[];

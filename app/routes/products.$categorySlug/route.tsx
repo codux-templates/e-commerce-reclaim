@@ -8,7 +8,7 @@ import {
 } from '@remix-run/react';
 import classNames from 'classnames';
 import { getEcomApi } from '~/api/ecom-api';
-import { productFiltersFromSearchParams, useAppliedProductFilters } from '~/api/product-filters';
+import { productFiltersFromSearchParams } from '~/api/product-filters';
 import { productSortByFromSearchParams } from '~/api/product-sorting';
 import { EcomApiErrorCodes } from '~/api/types';
 import { AppliedProductFilters } from '~/components/applied-product-filters/applied-product-filters';
@@ -21,9 +21,10 @@ import { ProductFilters } from '~/components/product-filters/product-filters';
 import { ProductLink } from '~/components/product-link/product-link';
 import { ProductSortingSelect } from '~/components/product-sorting-select/product-sorting-select';
 import { FadeIn } from '~/components/visual-effects';
+import { useAppliedProductFilters } from '~/hooks/use-applied-product-filters';
 import { ROUTES } from '~/router/config';
 import { RouteHandle } from '~/router/types';
-import { useBreadcrumbs } from '~/router/use-breadcrumbs';
+import { useBreadcrumbs } from '~/hooks/use-breadcrumbs';
 import { getErrorMessage } from '~/utils';
 
 import styles from './route.module.scss';
