@@ -1,7 +1,7 @@
 import { Link, NavLink } from '@remix-run/react';
 import classNames from 'classnames';
 import { CategoryLink } from '~/components/category-link/category-link';
-import { FadeIn } from '~/components/visual-effects';
+import { FadeIn } from 'lib/components/visual-effects';
 import { ROUTES } from '~/router/config';
 
 import styles from './footer.module.scss';

@@ -3,7 +3,7 @@ import styles from './product-images.module.scss';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { ImagePlaceholderIcon } from '../icons';
-import { getClickableElementAttributes } from '~/utils';
+import { getClickableElementAttributes } from 'lib/utils';
 
 interface ProductImagesProps {
     media?: products.Media;

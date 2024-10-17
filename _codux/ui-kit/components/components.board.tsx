@@ -5,7 +5,7 @@ import { QuantityInput } from '~/components/quantity-input/quantity-input';
 import { Select, SelectItem } from '~/components/select/select';
 import classNames from 'classnames';
 import { CategoryLink } from '~/components/category-link/category-link';
-import { ColorSelect } from '~/components/color-select/color-select';
+import { ColorSelect } from 'lib/components/color-select/color-select';
 import ComponentWrapper from '_codux/board-wrappers/component-wrapper';
 import { Kit } from '../ui-kit-utils/kit';
 

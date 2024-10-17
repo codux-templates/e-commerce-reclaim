@@ -1,7 +1,7 @@
 import { Drawer } from '~/components/drawer/drawer';
-import { useCartOpen } from './cart-open-context';
+import { useCartOpen } from 'lib/cart-open-context';
 import { CartView } from './cart-view/cart-view';
-import { useCart } from '~/hooks/use-cart';
+import { useCart } from 'lib/hooks/use-cart';
 import { useNavigate } from '@remix-run/react';
 import { ROUTES } from '~/router/config';
 

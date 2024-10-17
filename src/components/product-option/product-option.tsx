@@ -1,7 +1,7 @@
 import { products } from '@wix/stores';
-import { ColorSelect } from '~/components/color-select/color-select';
+import { ColorSelect } from 'lib/components/color-select/color-select';
 import { Select, SelectItem } from '~/components/select/select';
-import { getChoiceValue } from '~/utils/product-utils';
+import { getChoiceValue } from 'lib/utils';
 import { ErrorIcon } from '../icons';
 
 import styles from './product-option.module.scss';
