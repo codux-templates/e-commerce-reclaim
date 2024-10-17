@@ -10,8 +10,6 @@ export function Toaster() {
     const { toast, onOpenChange, closeToast } = useToaster();
     const { isOpen: isCartOpen } = useCartOpen();
 
-    console.log('isCartOpen', isCartOpen);
-
     if (!toast) return null;
 
     return (

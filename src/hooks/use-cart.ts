@@ -26,12 +26,13 @@ export const useCart = () => {
     const updateItemQuantity = ({ id, quantity }: { id: string; quantity: number }) => {
         setUpdatingCartItems((prev) => [...prev, id]);
         triggerUpdateItemQuantity({ id, quantity })
-            .catch((error) =>
+            .catch((error) => {
                 runToast({
                     type: ToastType.Error,
                     message: `Failed to update the item quantity. ${getErrorMessage(error)}`,
-                }),
-            )
+                });
+                throw error;
+            })
             .finally(() => {
                 setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id));
             });
@@ -40,25 +41,26 @@ export const useCart = () => {
     const removeItem = (id: string) => {
         setUpdatingCartItems((prev) => [...prev, id]);
         triggerRemoveItem(id)
-            .catch((error) =>
+            .catch((error) => {
                 runToast({
                     type: ToastType.Error,
                     message: `Failed to remove the item. ${getErrorMessage(error)}`,
-                }),
-            )
+                });
+                throw error;
+            })
             .finally(() => {
                 setUpdatingCartItems((prev) => prev.filter((itemId) => itemId !== id));
             });
     };
 
-    const addToCart = (productId: string, quantity: number, options?: AddToCartOptions) => {
-        triggerAddToCart({ id: productId, quantity }).catch((error) =>
+    const addToCart = (productId: string, quantity: number, options?: AddToCartOptions) =>
+        triggerAddToCart({ id: productId, quantity, options }).catch((error) => {
             runToast({
                 type: ToastType.Error,
                 message: `Failed to add product to the cart. ${getErrorMessage(error)}`,
-            }),
-        );
-    };
+            });
+            throw error;
+        });
 
     const checkout = async () => {
         const checkoutResponse = await ecomAPI.checkout();
@@ -70,6 +72,7 @@ export const useCart = () => {
                 type: ToastType.Error,
                 message: `Checkout is not configured. ${getErrorMessage(checkoutResponse.error)}`,
             });
+            throw checkoutResponse.error;
         }
     };
 

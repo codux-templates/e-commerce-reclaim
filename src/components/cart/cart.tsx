@@ -29,7 +29,9 @@ export const Cart = () => {
                 cart={cartData}
                 cartTotals={cartTotals}
                 onClose={() => setIsOpen(false)}
-                onCheckout={checkout}
+                onCheckout={() => {
+                    checkout().then(() => alert('success'));
+                }}
                 onViewCart={handleViewCart}
                 onItemRemove={removeItem}
                 onItemQuantityChange={updateItemQuantity}
