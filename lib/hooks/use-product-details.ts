@@ -10,7 +10,7 @@ import {
     getSKU,
     isOutOfStock,
     selectedChoicesToVariantChoices,
-} from 'lib/utils/product-utils';
+} from 'lib/utils';
 import { useCartOpen } from 'lib/cart-open-context';
 
 export function useProductDetails(product: SerializeFrom<products.Product>) {
