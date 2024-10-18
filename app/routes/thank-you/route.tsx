@@ -1,10 +1,10 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { isRouteErrorResponse, useLoaderData, useRouteError } from '@remix-run/react';
-import { getErrorMessage } from 'lib/utils';
-import { getThankYouRouteData } from 'lib/route-loaders';
-import { CategoryLink } from '~/components/category-link/category-link';
-import { ErrorPage } from '~/components/error-page/error-page';
-import { OrderSummary } from '~/components/order-summary/order-summary';
+import { getErrorMessage } from '~/lib/utils';
+import { getThankYouRouteData } from '~/lib/route-loaders';
+import { CategoryLink } from '~/src/components/category-link/category-link';
+import { ErrorPage } from '~/src/components/error-page/error-page';
+import { OrderSummary } from '~/src/components/order-summary/order-summary';
 
 import styles from './route.module.scss';
 

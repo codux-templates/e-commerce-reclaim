@@ -3,8 +3,8 @@ import { redirects } from '@wix/redirects';
 import { createClient, OAuthStrategy } from '@wix/sdk';
 import { collections, products } from '@wix/stores';
 import Cookies from 'js-cookie';
-import { ROUTES } from '~/router/config';
-import { getErrorMessage } from 'lib/utils';
+import { ROUTES } from '~/src/router/config';
+import { getErrorMessage } from '~/lib/utils';
 import {
     DEMO_STORE_WIX_CLIENT_ID,
     WIX_CLIENT_ID_COOKIE_KEY,

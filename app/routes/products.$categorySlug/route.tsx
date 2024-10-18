@@ -1,21 +1,22 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from '@remix-run/react';
 import classNames from 'classnames';
-import { EcomApiErrorCodes } from 'lib/ecom';
-import { useAppliedProductFilters } from 'lib/hooks';
-import { getProductsRouteData } from 'lib/route-loaders';
-import { FadeIn } from 'lib/components/visual-effects';
-import { getErrorMessage } from 'lib/utils';
-import { AppliedProductFilters } from '~/components/applied-product-filters/applied-product-filters';
-import { Breadcrumbs, RouteBreadcrumbs, useBreadcrumbs } from '~/components/breadcrumbs';
-import { CategoryLink } from '~/components/category-link/category-link';
-import { EmptyProductsCategory } from '~/components/empty-products-category/empty-products-category';
-import { ErrorPage } from '~/components/error-page/error-page';
-import { ProductCard } from '~/components/product-card/product-card';
-import { ProductFilters } from '~/components/product-filters/product-filters';
-import { ProductLink } from '~/components/product-link/product-link';
-import { ProductSortingSelect } from '~/components/product-sorting-select/product-sorting-select';
-import { ROUTES } from '~/router/config';
+import { EcomApiErrorCodes } from '~/lib/ecom';
+import { useAppliedProductFilters } from '~/lib/hooks';
+import { getProductsRouteData } from '~/lib/route-loaders';
+import { FadeIn } from '~/lib/components/visual-effects';
+import { getErrorMessage } from '~/lib/utils';
+import { AppliedProductFilters } from '~/src/components/applied-product-filters/applied-product-filters';
+import { Breadcrumbs } from '~/src/components/breadcrumbs/breadcrumbs';
+import { useBreadcrumbs, RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
+import { CategoryLink } from '~/src/components/category-link/category-link';
+import { EmptyProductsCategory } from '~/src/components/empty-products-category/empty-products-category';
+import { ErrorPage } from '~/src/components/error-page/error-page';
+import { ProductCard } from '~/src/components/product-card/product-card';
+import { ProductFilters } from '~/src/components/product-filters/product-filters';
+import { ProductLink } from '~/src/components/product-link/product-link';
+import { ProductSortingSelect } from '~/src/components/product-sorting-select/product-sorting-select';
+import { ROUTES } from '~/src/router/config';
 
 import styles from './route.module.scss';
 

@@ -1,24 +1,20 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from '@remix-run/react';
 import classNames from 'classnames';
-import { EcomApiErrorCodes } from 'lib/ecom';
-import { useProductDetails } from 'lib/hooks';
-import { getProductDetailsRouteData } from 'lib/route-loaders';
-import { getErrorMessage } from 'lib/utils';
-import { Accordion } from '~/components/accordion/accordion';
-import {
-    BreadcrumbData,
-    Breadcrumbs,
-    RouteBreadcrumbs,
-    useBreadcrumbs,
-} from '~/components/breadcrumbs';
-import { ErrorPage } from '~/components/error-page/error-page';
-import { ProductImages } from '~/components/product-images/product-images';
-import { ProductPrice } from '~/components/product-price/product-price';
-import { QuantityInput } from '~/components/quantity-input/quantity-input';
-import { ProductOption } from '~/components/product-option/product-option';
-import { ShareProductLinks } from '~/components/share-product-links/share-product-links';
-import { ROUTES } from '~/router/config';
+import { EcomApiErrorCodes } from '~/lib/ecom';
+import { useProductDetails } from '~/lib/hooks';
+import { getProductDetailsRouteData } from '~/lib/route-loaders';
+import { getErrorMessage } from '~/lib/utils';
+import { Accordion } from '~/src/components/accordion/accordion';
+import { BreadcrumbData, Breadcrumbs } from '~/src/components/breadcrumbs/breadcrumbs';
+import { useBreadcrumbs, RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
+import { ErrorPage } from '~/src/components/error-page/error-page';
+import { ProductImages } from '~/src/components/product-images/product-images';
+import { ProductPrice } from '~/src/components/product-price/product-price';
+import { QuantityInput } from '~/src/components/quantity-input/quantity-input';
+import { ProductOption } from '~/src/components/product-option/product-option';
+import { ShareProductLinks } from '~/src/components/share-product-links/share-product-links';
+import { ROUTES } from '~/src/router/config';
 
 import styles from './route.module.scss';
 

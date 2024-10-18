@@ -3,7 +3,7 @@ import {
     getEcomApi,
     productFiltersFromSearchParams,
     productSortByFromSearchParams,
-} from 'lib/ecom';
+} from '~/lib/ecom';
 
 export async function getProductsRouteData(categorySlug: string | undefined, url: string) {
     if (!categorySlug) throw new Error('Missing category slug');

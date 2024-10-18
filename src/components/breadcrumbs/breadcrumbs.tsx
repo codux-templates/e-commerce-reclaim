@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from '@remix-run/react';
 import { ClientOnly } from 'remix-utils/client-only';
-import { ChevronRightIcon } from '~/components/icons';
+import { ChevronRightIcon } from '~/src/components/icons';
 
 import styles from './breadcrumbs.module.scss';
 

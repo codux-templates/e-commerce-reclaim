@@ -12,19 +12,19 @@ import {
     useRouteError,
 } from '@remix-run/react';
 import { useEffect } from 'react';
-import { EcomAPIContextProvider } from 'lib/ecom';
-import { CartOpenContextProvider } from 'lib/cart-open-context';
-import { getErrorMessage, routeLocationToUrl } from 'lib/utils';
-import { ErrorPage } from '~/components/error-page/error-page';
-import { SiteWrapper } from '~/components/site-wrapper/site-wrapper';
-import { ROUTES } from '~/router/config';
-import { RouteBreadcrumbs } from '~/components/breadcrumbs';
+import { EcomAPIContextProvider } from '~/lib/ecom';
+import { CartOpenContextProvider } from '~/lib/cart-open-context';
+import { getErrorMessage, routeLocationToUrl } from '~/lib/utils';
+import { ErrorPage } from '~/src/components/error-page/error-page';
+import { SiteWrapper } from '~/src/components/site-wrapper/site-wrapper';
+import { ROUTES } from '~/src/router/config';
+import { RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
 
-import '~/styles/reset.scss';
-import '~/styles/colors.scss';
-import '~/styles/typography.scss';
-import '~/styles/common.scss';
-import '~/styles/index.scss';
+import '~/src/styles/reset.scss';
+import '~/src/styles/colors.scss';
+import '~/src/styles/typography.scss';
+import '~/src/styles/common.scss';
+import '~/src/styles/index.scss';
 
 export const meta: MetaFunction = () => {
     return [{ title: 'ReClaim: Home Goods Store' }];

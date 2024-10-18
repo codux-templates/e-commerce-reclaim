@@ -1,5 +1,5 @@
 import { isRouteErrorResponse, Location } from '@remix-run/react';
-import { isEcomSDKError } from 'lib/ecom';
+import { isEcomSDKError } from '~/lib/ecom';
 
 /**
  * It's important to add an appropriate role and a keyboard support
