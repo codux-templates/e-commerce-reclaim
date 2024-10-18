@@ -1,10 +1,11 @@
 import { createContext, useContext, useState } from 'react';
 
 const TOAST_REMOVE_DELAY = 3000;
+type ToastType = 'success' | 'error' | 'warning' | 'info';
 
 interface ToastData {
     type: string;
-    message: string;
+    message: ToastType;
     isOpen: boolean;
     timeoutId: number;
 }
@@ -18,7 +19,7 @@ export function ToasterContextProvider({ children }: React.PropsWithChildren) {
         duration,
     }: {
         type: string;
-        message: string;
+        message: ToastType;
         duration?: number;
     }) => {
         setToastData({
@@ -46,7 +47,7 @@ export function ToasterContextProvider({ children }: React.PropsWithChildren) {
 
 interface ToasterContextType {
     toastData: ToastData | null;
-    toast: (toastData: { type: string; message: string; duration?: number }) => void;
+    toast: (toastData: { type: string; message: ToastType; duration?: number }) => void;
     closeToast: () => void;
     onOpenChange: (isOpen: boolean) => void;
 }
