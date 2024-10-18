@@ -4,8 +4,8 @@ const TOAST_REMOVE_DELAY = 3000;
 type ToastType = 'success' | 'error' | 'warning' | 'info';
 
 interface ToastData {
-    type: string;
-    message: ToastType;
+    type: ToastType;
+    message: string;
     isOpen: boolean;
     timeoutId: number;
 }
@@ -18,8 +18,8 @@ export function ToasterContextProvider({ children }: React.PropsWithChildren) {
         message,
         duration,
     }: {
-        type: string;
-        message: ToastType;
+        type: ToastType;
+        message: string;
         duration?: number;
     }) => {
         setToastData({
@@ -47,7 +47,7 @@ export function ToasterContextProvider({ children }: React.PropsWithChildren) {
 
 interface ToasterContextType {
     toastData: ToastData | null;
-    toast: (toastData: { type: string; message: ToastType; duration?: number }) => void;
+    toast: (toastData: { type: ToastType; message: string; duration?: number }) => void;
     closeToast: () => void;
     onOpenChange: (isOpen: boolean) => void;
 }
