@@ -1,9 +1,9 @@
 import * as RadixToast from '@radix-ui/react-toast';
 import { Toast } from './toast/toast';
 import { useToast } from './toaster-context';
+import classNames from 'classnames';
 
 import styles from './toaster.module.scss';
-import classNames from 'classnames';
 
 export function Toaster() {
     const { toastData: toast, onOpenChange, closeToast } = useToast();

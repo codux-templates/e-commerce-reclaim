@@ -1,6 +1,7 @@
 import { createBoard } from '@wixc3/react-board';
 import * as RadixToast from '@radix-ui/react-toast';
-import { Toast } from '~/components/toaster/toast/toast';
+import { Toast } from '~/src/components/toaster/toast/toast';
+
 import styles from './toast.board.module.scss';
 
 const noop = () => {};
