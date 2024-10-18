@@ -4,6 +4,8 @@ import { CloseIcon } from '../../icons';
 
 import styles from './toast.module.scss';
 
+const toastTypes = ['info', 'success', 'warning', 'error'];
+
 interface ToastProps {
     children: React.ReactNode;
     type: string;
@@ -16,9 +18,10 @@ interface ToastProps {
 export const Toast = (props: ToastProps) => {
     const { children, type, isOpen, className, onOpenChange, onClose } = props;
 
+    const typeStyle = toastTypes.includes(type) ? styles[type] : undefined;
     return (
         <RadixToast.Root
-            className={classNames(styles.root, styles[type], className)}
+            className={classNames(styles.root, typeStyle, className)}
             open={isOpen}
             onOpenChange={onOpenChange}
         >
