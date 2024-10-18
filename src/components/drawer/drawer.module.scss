@@ -1,7 +1,3 @@
-:root {
-    --drawerMaxWidth: 420px;
-}
-
 .backdrop {
     position: fixed;
     inset: 0;
@@ -13,7 +9,7 @@
     top: 0;
     right: 0;
     width: 100%;
-    max-width: var(--drawerMaxWidth);
+    max-width: 420px;
     height: 100%;
     background: var(--primary1);
 }
