@@ -14,10 +14,10 @@ import {
 import { useEffect } from 'react';
 import { EcomAPIContextProvider } from 'lib/api/ecom-api-context-provider';
 import { CartOpenContextProvider } from 'lib/cart-open-context';
+import { getErrorMessage, routeLocationToUrl } from 'lib/utils';
 import { ErrorPage } from '~/components/error-page/error-page';
 import { SiteWrapper } from '~/components/site-wrapper/site-wrapper';
 import { ROUTES } from '~/router/config';
-import { getErrorMessage, routeLocationToUrl } from 'lib/utils';
 import { RouteBreadcrumbs } from '~/components/breadcrumbs';
 
 import '~/styles/reset.scss';

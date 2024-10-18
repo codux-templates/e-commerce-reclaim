@@ -1,7 +1,7 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { json } from '@remix-run/react';
-import { getEcomApi } from '../api/ecom-api';
-import { OrderDetails } from '../api/types';
+import { getEcomApi } from 'lib/api/ecom-api';
+import { OrderDetails } from 'lib/api/types';
 
 export async function thankYouRouteLoader({
     request,

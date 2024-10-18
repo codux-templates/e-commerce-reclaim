@@ -1,8 +1,8 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { json } from '@remix-run/react';
-import { getEcomApi } from '../api/ecom-api';
-import { productFiltersFromSearchParams } from '../api/product-filters';
-import { productSortByFromSearchParams } from '../api/product-sorting';
+import { getEcomApi } from 'lib/api/ecom-api';
+import { productFiltersFromSearchParams } from 'lib/api/product-filters';
+import { productSortByFromSearchParams } from 'lib/api/product-sorting';
 
 export async function productsRouteLoader({ params, request }: LoaderFunctionArgs) {
     const categorySlug = params.categorySlug;

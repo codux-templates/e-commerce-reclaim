@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import useSwr, { Key } from 'swr';
 import useSWRMutation from 'swr/mutation';
-import { findItemIdInCart } from '../utils/cart-utils';
+import { findItemIdInCart } from 'lib/utils/cart-utils';
 import { useEcomAPI } from './ecom-api-context-provider';
 import { AddToCartOptions } from './types';
 

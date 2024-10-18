@@ -3,6 +3,8 @@ import classNames from 'classnames';
 import { EcomApiErrorCodes } from 'lib/api/types';
 import { useAppliedProductFilters } from 'lib/hooks/use-applied-product-filters';
 import { productsRouteLoader } from 'lib/route-loaders/products-route-loader';
+import { FadeIn } from 'lib/components/visual-effects';
+import { getErrorMessage } from 'lib/utils';
 import { AppliedProductFilters } from '~/components/applied-product-filters/applied-product-filters';
 import { Breadcrumbs, RouteBreadcrumbs, useBreadcrumbs } from '~/components/breadcrumbs';
 import { CategoryLink } from '~/components/category-link/category-link';
@@ -12,9 +14,7 @@ import { ProductCard } from '~/components/product-card/product-card';
 import { ProductFilters } from '~/components/product-filters/product-filters';
 import { ProductLink } from '~/components/product-link/product-link';
 import { ProductSortingSelect } from '~/components/product-sorting-select/product-sorting-select';
-import { FadeIn } from 'lib/components/visual-effects';
 import { ROUTES } from '~/router/config';
-import { getErrorMessage } from 'lib/utils';
 
 import styles from './route.module.scss';
 

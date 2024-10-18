@@ -4,9 +4,9 @@ import classNames from 'classnames';
 import useSWR from 'swr';
 import { getEcomApi } from 'lib/api/ecom-api';
 import { CollectionDetails, isEcomSDKError } from 'lib/api/types';
+import { FadeIn, Reveal } from 'lib/components/visual-effects';
 import { ProductCard, ProductCardSkeleton } from '~/components/product-card/product-card';
 import { ProductLink } from '~/components/product-link/product-link';
-import { FadeIn, Reveal } from 'lib/components/visual-effects';
 
 import styles from './featured-products-section.module.scss';
 

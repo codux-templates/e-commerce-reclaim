@@ -1,7 +1,7 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { json } from '@remix-run/react';
-import { getEcomApi } from '../api/ecom-api';
-import { removeQueryStringFromUrl } from '../utils';
+import { getEcomApi } from 'lib/api/ecom-api';
+import { removeQueryStringFromUrl } from 'lib/utils';
 
 export async function productDetailsRouteLoader({ params, request }: LoaderFunctionArgs) {
     const productSlug = params.productSlug;
