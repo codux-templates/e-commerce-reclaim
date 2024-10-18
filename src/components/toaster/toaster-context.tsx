@@ -12,10 +12,19 @@ interface ToastData {
 export function ToasterContextProvider({ children }: React.PropsWithChildren) {
     const [toastData, setToastData] = useState<ToastData | null>(null);
 
-    const toast = (toastData: { type: string; message: string; origin?: string }) => {
+    const toast = ({
+        type,
+        message,
+        duration,
+    }: {
+        type: string;
+        message: string;
+        duration?: number;
+    }) => {
         setToastData({
-            ...toastData,
-            timeoutId: window.setTimeout(closeToast, TOAST_REMOVE_DELAY),
+            type,
+            message,
+            timeoutId: window.setTimeout(closeToast, duration ?? TOAST_REMOVE_DELAY),
             isOpen: true,
         });
     };
