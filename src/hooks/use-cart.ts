@@ -8,7 +8,6 @@ import {
 } from '~/api/api-hooks';
 import { useEcomAPI } from '~/api/ecom-api-context-provider';
 import { AddToCartOptions } from '~/api/types';
-import { getErrorMessage } from '~/utils';
 
 export const useCart = () => {
     const ecomAPI = useEcomAPI();
