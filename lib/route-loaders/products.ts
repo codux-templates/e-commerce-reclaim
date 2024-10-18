@@ -1,17 +1,15 @@
-import type { LoaderFunctionArgs } from '@remix-run/node';
 import { json } from '@remix-run/react';
-import { getEcomApi } from 'lib/api/ecom-api';
-import { productFiltersFromSearchParams } from 'lib/api/product-filters';
-import { productSortByFromSearchParams } from 'lib/api/product-sorting';
+import {
+    getEcomApi,
+    productFiltersFromSearchParams,
+    productSortByFromSearchParams,
+} from 'lib/ecom';
 
-export async function productsRouteLoader({ params, request }: LoaderFunctionArgs) {
-    const categorySlug = params.categorySlug;
-    if (!categorySlug) {
-        throw new Error('Missing category slug');
-    }
+export async function getProductsRouteData(categorySlug: string | undefined, url: string) {
+    if (!categorySlug) throw new Error('Missing category slug');
 
     const api = getEcomApi();
-    const url = new URL(request.url);
+    const searchParams = new URL(url).searchParams;
 
     const [
         currentCategoryResponse,
@@ -21,8 +19,8 @@ export async function productsRouteLoader({ params, request }: LoaderFunctionArg
     ] = await Promise.all([
         api.getCategoryBySlug(categorySlug),
         api.getProductsByCategory(categorySlug, {
-            filters: productFiltersFromSearchParams(url.searchParams),
-            sortBy: productSortByFromSearchParams(url.searchParams),
+            filters: productFiltersFromSearchParams(searchParams),
+            sortBy: productSortByFromSearchParams(searchParams),
         }),
         api.getAllCategories(),
         api.getProductPriceBounds(categorySlug),

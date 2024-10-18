@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { useSearchParams } from '@remix-run/react';
-import { ProductFilter } from 'lib/api/types';
-import { productFiltersFromSearchParams } from 'lib/api/product-filters';
+import { ProductFilter, productFiltersFromSearchParams } from 'lib/ecom';
 
 export function useAppliedProductFilters() {
     const [searchParams, setSearchParams] = useSearchParams();

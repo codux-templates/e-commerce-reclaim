@@ -1,12 +1,12 @@
 import { useCallback, useMemo } from 'react';
-import { IProductFilters } from 'lib/api/types';
 import {
+    IProductFilters,
     productFiltersFromSearchParams,
     searchParamsFromProductFilters,
-} from 'lib/api/product-filters';
+} from 'lib/ecom';
 import { RangeSlider } from 'lib/components/range-slider/range-slider';
 import { formatPrice, mergeUrlSearchParams } from 'lib/utils';
-import { useSearchParamsOptimistic } from 'lib/hooks/use-search-params-optimistic';
+import { useSearchParamsOptimistic } from 'lib/hooks';
 import { Accordion } from '../accordion/accordion';
 
 interface ProductFiltersProps {

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { products } from '@wix/stores';
 import type { SerializeFrom } from '@remix-run/node';
-import { AddToCartOptions } from 'lib/api/types';
+import { AddToCartOptions, useCart } from 'lib/ecom';
 import {
     getMedia,
     getPriceData,
@@ -12,7 +12,6 @@ import {
     selectedChoicesToVariantChoices,
 } from 'lib/utils/product-utils';
 import { useCartOpen } from 'lib/cart-open-context';
-import { useCart } from './use-cart';
 
 export function useProductDetails(product: SerializeFrom<products.Product>) {
     const cartOpener = useCartOpen();

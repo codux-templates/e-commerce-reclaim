@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import classNames from 'classnames';
-import { ProductFilter, IProductFilters } from 'lib/api/types';
+import { ProductFilter, IProductFilters } from 'lib/ecom';
 import { formatPrice } from 'lib/utils';
 import { AppliedFilter } from '../applied-filter/applied-filter';
 

@@ -1,8 +1,9 @@
+import type { LoaderFunctionArgs } from '@remix-run/node';
 import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from '@remix-run/react';
 import classNames from 'classnames';
-import { EcomApiErrorCodes } from 'lib/api/types';
-import { useProductDetails } from 'lib/hooks/use-product-details';
-import { productDetailsRouteLoader } from 'lib/route-loaders/product-details-route-loader';
+import { EcomApiErrorCodes } from 'lib/ecom';
+import { useProductDetails } from 'lib/hooks';
+import { getProductDetailsRouteData } from 'lib/route-loaders';
 import { getErrorMessage } from 'lib/utils';
 import { Accordion } from '~/components/accordion/accordion';
 import {
@@ -21,7 +22,9 @@ import { ROUTES } from '~/router/config';
 
 import styles from './route.module.scss';
 
-export const loader = productDetailsRouteLoader;
+export const loader = ({ params, request }: LoaderFunctionArgs) => {
+    return getProductDetailsRouteData(params.productSlug, request.url);
+};
 
 interface ProductDetailsLocationState {
     fromCategory?: {

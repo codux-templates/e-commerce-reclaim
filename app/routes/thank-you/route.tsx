@@ -1,13 +1,16 @@
+import type { LoaderFunctionArgs } from '@remix-run/node';
 import { isRouteErrorResponse, useLoaderData, useRouteError } from '@remix-run/react';
 import { getErrorMessage } from 'lib/utils';
-import { thankYouRouteLoader } from 'lib/route-loaders/thank-you-route-loader';
+import { getThankYouRouteData } from 'lib/route-loaders';
 import { CategoryLink } from '~/components/category-link/category-link';
 import { ErrorPage } from '~/components/error-page/error-page';
 import { OrderSummary } from '~/components/order-summary/order-summary';
 
 import styles from './route.module.scss';
 
-export const loader = thankYouRouteLoader;
+export const loader = ({ request }: LoaderFunctionArgs) => {
+    return getThankYouRouteData(request.url);
+};
 
 export default function ThankYouPage() {
     const { order } = useLoaderData<typeof loader>();

@@ -1,6 +1,5 @@
-import { productSortByFromSearchParams, SORT_BY_SEARCH_PARAM } from 'lib/api/product-sorting';
-import { ProductSortBy } from 'lib/api/types';
-import { useSearchParamsOptimistic } from 'lib/hooks/use-search-params-optimistic';
+import { productSortByFromSearchParams, SORT_BY_SEARCH_PARAM, ProductSortBy } from 'lib/ecom';
+import { useSearchParamsOptimistic } from 'lib/hooks';
 import { Select, SelectItem } from '../select/select';
 
 import styles from './product-sorting-select.module.scss';

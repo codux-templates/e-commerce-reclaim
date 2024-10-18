@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Cart, CartTotals } from 'lib/api/types';
+import { Cart, CartTotals } from 'lib/ecom';
 import { findLineItemPriceBreakdown, calculateCartItemsCount } from 'lib/utils';
 import { CloseIcon, LockIcon } from '~/components/icons';
 import { CartItem } from '../cart-item/cart-item';

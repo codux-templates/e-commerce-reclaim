@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from '@remix-run/react';
 import classNames from 'classnames';
+import { useCartData } from 'lib/ecom';
 import { useCartOpen } from 'lib/cart-open-context';
-import { useCartData } from 'lib/api/api-hooks';
 import { calculateCartItemsCount } from 'lib/utils';
 import { ROUTES } from '~/router/config';
 import { CartIcon, MenuIcon } from '~/components/icons';

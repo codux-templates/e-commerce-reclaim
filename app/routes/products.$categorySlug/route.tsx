@@ -1,8 +1,9 @@
+import type { LoaderFunctionArgs } from '@remix-run/node';
 import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from '@remix-run/react';
 import classNames from 'classnames';
-import { EcomApiErrorCodes } from 'lib/api/types';
-import { useAppliedProductFilters } from 'lib/hooks/use-applied-product-filters';
-import { productsRouteLoader } from 'lib/route-loaders/products-route-loader';
+import { EcomApiErrorCodes } from 'lib/ecom';
+import { useAppliedProductFilters } from 'lib/hooks';
+import { getProductsRouteData } from 'lib/route-loaders';
 import { FadeIn } from 'lib/components/visual-effects';
 import { getErrorMessage } from 'lib/utils';
 import { AppliedProductFilters } from '~/components/applied-product-filters/applied-product-filters';
@@ -18,7 +19,9 @@ import { ROUTES } from '~/router/config';
 
 import styles from './route.module.scss';
 
-export const loader = productsRouteLoader;
+export const loader = ({ params, request }: LoaderFunctionArgs) => {
+    return getProductsRouteData(params.categorySlug, request.url);
+};
 
 const breadcrumbs: RouteBreadcrumbs<typeof loader> = (match) => [
     {

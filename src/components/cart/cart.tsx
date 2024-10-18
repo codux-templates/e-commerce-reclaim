@@ -1,6 +1,6 @@
 import { useNavigate } from '@remix-run/react';
 import { useCartOpen } from 'lib/cart-open-context';
-import { useCart } from 'lib/hooks/use-cart';
+import { useCart } from 'lib/ecom';
 import { ROUTES } from '~/router/config';
 import { Drawer } from '~/components/drawer/drawer';
 import { CartView } from './cart-view/cart-view';

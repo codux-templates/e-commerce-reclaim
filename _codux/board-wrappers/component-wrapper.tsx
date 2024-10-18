@@ -1,6 +1,6 @@
 import { createRemixStub } from '@remix-run/testing';
 import { PropsWithChildren } from 'react';
-import { EcomAPIContextProvider } from 'lib/api/ecom-api-context-provider';
+import { EcomAPIContextProvider } from 'lib/ecom';
 import { ROUTES } from '~/router/config';
 
 export interface ComponentWrapperProps extends PropsWithChildren {

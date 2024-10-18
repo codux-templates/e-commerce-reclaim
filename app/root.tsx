@@ -12,7 +12,7 @@ import {
     useRouteError,
 } from '@remix-run/react';
 import { useEffect } from 'react';
-import { EcomAPIContextProvider } from 'lib/api/ecom-api-context-provider';
+import { EcomAPIContextProvider } from 'lib/ecom';
 import { CartOpenContextProvider } from 'lib/cart-open-context';
 import { getErrorMessage, routeLocationToUrl } from 'lib/utils';
 import { ErrorPage } from '~/components/error-page/error-page';

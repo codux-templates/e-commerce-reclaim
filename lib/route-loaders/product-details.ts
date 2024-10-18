@@ -1,10 +1,8 @@
-import type { LoaderFunctionArgs } from '@remix-run/node';
 import { json } from '@remix-run/react';
-import { getEcomApi } from 'lib/api/ecom-api';
+import { getEcomApi } from 'lib/ecom';
 import { removeQueryStringFromUrl } from 'lib/utils';
 
-export async function productDetailsRouteLoader({ params, request }: LoaderFunctionArgs) {
-    const productSlug = params.productSlug;
+export async function getProductDetailsRouteData(productSlug: string | undefined, url: string) {
     if (!productSlug) throw new Error('Missing product slug');
 
     const productResponse = await getEcomApi().getProductBySlug(productSlug);
@@ -12,6 +10,6 @@ export async function productDetailsRouteLoader({ params, request }: LoaderFunct
 
     return {
         product: productResponse.body,
-        canonicalUrl: removeQueryStringFromUrl(request.url),
+        canonicalUrl: removeQueryStringFromUrl(url),
     };
 }
