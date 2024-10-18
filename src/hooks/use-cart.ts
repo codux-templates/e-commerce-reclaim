@@ -8,12 +8,12 @@ import {
 } from '~/api/api-hooks';
 import { useEcomAPI } from '~/api/ecom-api-context-provider';
 import { AddToCartOptions } from '~/api/types';
-import { ToastType, useToaster } from '~/components/toaster/toaster-context';
+import { useToast } from '~/components/toaster/toaster-context';
 import { getErrorMessage } from '~/utils';
 
 export const useCart = () => {
     const ecomAPI = useEcomAPI();
-    const { runToast } = useToaster();
+    const { toast } = useToast();
     const [updatingCartItemIds, setUpdatingCartItems] = useState<string[]>([]);
 
     const { data: cartData } = useCartData();
@@ -27,8 +27,8 @@ export const useCart = () => {
         setUpdatingCartItems((prev) => [...prev, id]);
         triggerUpdateItemQuantity({ id, quantity })
             .catch((error) => {
-                runToast({
-                    type: ToastType.Error,
+                toast({
+                    type: 'error',
                     message: `Failed to update the item quantity. ${getErrorMessage(error)}`,
                 });
                 throw error;
@@ -42,8 +42,8 @@ export const useCart = () => {
         setUpdatingCartItems((prev) => [...prev, id]);
         triggerRemoveItem(id)
             .catch((error) => {
-                runToast({
-                    type: ToastType.Error,
+                toast({
+                    type: 'error',
                     message: `Failed to remove the item. ${getErrorMessage(error)}`,
                 });
                 throw error;
@@ -55,8 +55,8 @@ export const useCart = () => {
 
     const addToCart = (productId: string, quantity: number, options?: AddToCartOptions) =>
         triggerAddToCart({ id: productId, quantity, options }).catch((error) => {
-            runToast({
-                type: ToastType.Error,
+            toast({
+                type: 'error',
                 message: `Failed to add product to the cart. ${getErrorMessage(error)}`,
             });
             throw error;
@@ -68,9 +68,9 @@ export const useCart = () => {
         if (checkoutResponse.status === 'success') {
             window.location.href = checkoutResponse.body.checkoutUrl;
         } else {
-            runToast({
-                type: ToastType.Error,
-                message: `Checkout is not configured. ${getErrorMessage(checkoutResponse.error)}`,
+            toast({
+                type: 'error',
+                message: `Failed to checkout. ${getErrorMessage(checkoutResponse.error)}`,
             });
             throw checkoutResponse.error;
         }

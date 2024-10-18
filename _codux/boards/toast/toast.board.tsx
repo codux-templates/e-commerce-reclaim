@@ -1,7 +1,6 @@
 import { createBoard } from '@wixc3/react-board';
 import * as RadixToast from '@radix-ui/react-toast';
 import { Toast } from '~/components/toaster/toast/toast';
-import { ToastType } from '~/components/toaster/toaster-context';
 import styles from './toast.board.module.scss';
 
 const noop = () => {};
@@ -12,7 +11,7 @@ export default createBoard({
         return (
             <RadixToast.Provider>
                 <Toast
-                    type={ToastType.Success}
+                    type="success"
                     isOpen={true}
                     onOpenChange={noop}
                     onClose={noop}
@@ -22,7 +21,7 @@ export default createBoard({
                 </Toast>
 
                 <Toast
-                    type={ToastType.Error}
+                    type="error"
                     isOpen={true}
                     onOpenChange={noop}
                     onClose={noop}
@@ -32,7 +31,7 @@ export default createBoard({
                 </Toast>
 
                 <Toast
-                    type={ToastType.Warning}
+                    type="warning"
                     isOpen={true}
                     onOpenChange={noop}
                     onClose={noop}
@@ -43,7 +42,7 @@ export default createBoard({
                 </Toast>
 
                 <Toast
-                    type={ToastType.Info}
+                    type="info"
                     isOpen={true}
                     onOpenChange={noop}
                     onClose={noop}

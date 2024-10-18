@@ -3,11 +3,10 @@ import classNames from 'classnames';
 import { CloseIcon } from '../../icons';
 
 import styles from './toast.module.scss';
-import { ToastType } from '../toaster-context';
 
 interface ToastProps {
     children: React.ReactNode;
-    type: ToastType;
+    type: string;
     isOpen: boolean;
     isCartOpen?: boolean;
     className?: string;
