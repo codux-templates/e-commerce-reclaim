@@ -37,7 +37,7 @@ export function ToasterContextProvider({ children }: React.PropsWithChildren) {
         });
     };
 
-    const onOpenChange = () => (isOpen: boolean) => {
+    const onOpenChange = (isOpen: boolean) => {
         setToastData((prevToastData) => (prevToastData ? { ...prevToastData, isOpen } : null));
     };
 
