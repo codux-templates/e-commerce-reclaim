@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { FadeIn } from '~/lib/components/visual-effects';
 import { EcomApiErrorCodes } from '~/lib/ecom';
 import { useAppliedProductFilters } from '~/lib/hooks';
-import { useProductSlice } from '~/lib/hooks/use-product-slice';
+import { useProductResults } from '~/lib/hooks/use-product-results';
 import { useProductSorting } from '~/lib/hooks/use-product-sorting';
 import { getProductsRouteData } from '~/lib/route-loaders';
 import { getErrorMessage } from '~/lib/utils';
@@ -40,22 +40,22 @@ export const handle = {
 export default function ProductsPage() {
     const {
         category,
-        categoryProductSlice: initialSlice,
+        categoryProductSlice: initialResultsFromLoader,
         allCategories,
         productPriceBounds,
     } = useLoaderData<typeof loader>();
 
     const { appliedFilters, someFiltersApplied, clearFilters, clearAllFilters } =
         useAppliedProductFilters();
-    const { productsSortBy } = useProductSorting();
-    const { productSlice, isLoadingProducts, canLoadMore, loadMore } = useProductSlice(
-        category.slug!,
-        appliedFilters,
-        productsSortBy,
-        initialSlice,
-    );
+    const { sorting } = useProductSorting();
+    const { products, totalProducts, loadMoreProducts, isLoadingMoreProducts } = useProductResults({
+        categorySlug: category.slug!,
+        filters: appliedFilters,
+        sorting,
+        initialResultsFromLoader,
+    });
 
-    const currency = productSlice.items[0]?.priceData?.currency ?? 'USD';
+    const currency = products[0]?.priceData?.currency ?? 'USD';
 
     const breadcrumbs = useBreadcrumbs();
 
@@ -69,7 +69,7 @@ export default function ProductsPage() {
             );
         }
 
-        if (someFiltersApplied && productSlice.items.length === 0) {
+        if (someFiltersApplied && products.length === 0) {
             return (
                 <EmptyProductsCategory
                     title="We couldn't find any matches"
@@ -85,7 +85,7 @@ export default function ProductsPage() {
 
         return (
             <div className={styles.productsList}>
-                {productSlice.items.map((product) => (
+                {products.map((product) => (
                     <FadeIn key={product._id} duration={0.9}>
                         <ProductLink
                             className={styles.productLink}
@@ -176,8 +176,7 @@ export default function ProductsPage() {
 
                     <div className={styles.countAndSorting}>
                         <p className={styles.productsCount}>
-                            {productSlice.totalCount}{' '}
-                            {productSlice.totalCount === 1 ? 'product' : 'products'}
+                            {totalProducts} {totalProducts === 1 ? 'product' : 'products'}
                         </p>
 
                         <ProductSortingSelect />
@@ -185,14 +184,14 @@ export default function ProductsPage() {
 
                     {renderProducts()}
 
-                    {canLoadMore && (
+                    {products.length < totalProducts && (
                         <div className={styles.loadMoreWrapper}>
                             <button
                                 className="button secondaryButton"
-                                onClick={loadMore}
-                                disabled={isLoadingProducts}
+                                onClick={loadMoreProducts}
+                                disabled={isLoadingMoreProducts}
                             >
-                                {isLoadingProducts ? 'Loading...' : 'Load More'}
+                                {isLoadingMoreProducts ? 'Loading...' : 'Load More'}
                             </button>
                         </div>
                     )}

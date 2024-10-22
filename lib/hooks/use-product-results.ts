@@ -3,31 +3,38 @@ import { useEffect, useState } from 'react';
 import { getEcomApi, IProductFilters, Product, ProductSortBy, Slice } from '../ecom';
 import { getErrorMessage } from '../utils';
 
+export interface UseProductResultsArgs {
+    categorySlug: string;
+    filters: IProductFilters;
+    sorting: ProductSortBy;
+    initialResultsFromLoader: Slice<Product | SerializeFrom<Product>>;
+}
+
 /**
  * Manages product slicing and loads next slices from the client side
- * without a full page reload. Syncs with initialSlice data from the page loader.
+ * without a full page reload. Syncs with initialResultsFromLoader.
  */
-export function useProductSlice(
-    categorySlug: string,
-    filters: IProductFilters,
-    sortBy: ProductSortBy,
-    initialSlice: Slice<Product | SerializeFrom<Product>>,
-) {
-    const [productSlice, setProductSlice] = useState(initialSlice);
+export function useProductResults({
+    categorySlug,
+    filters,
+    sorting,
+    initialResultsFromLoader,
+}: UseProductResultsArgs) {
+    const [productSlice, setProductSlice] = useState(initialResultsFromLoader);
     useEffect(() => {
-        setProductSlice(initialSlice);
-    }, [initialSlice]);
+        setProductSlice(initialResultsFromLoader);
+    }, [initialResultsFromLoader]);
 
-    const [isLoadingProducts, setIsLoadingProducts] = useState(false);
+    const [isLoadingMoreProducts, setIsLoadingMoreProducts] = useState(false);
 
     const api = getEcomApi();
-    const loadMore = async () => {
-        setIsLoadingProducts(true);
+    const loadMoreProducts = async () => {
+        setIsLoadingMoreProducts(true);
 
         try {
             const nextProductsResponse = await api.getProductsByCategory(categorySlug, {
                 filters,
-                sortBy,
+                sortBy: sorting,
                 skip: productSlice.items.length,
             });
 
@@ -42,14 +49,14 @@ export function useProductSlice(
         } catch (e) {
             alert(getErrorMessage(e));
         } finally {
-            setIsLoadingProducts(false);
+            setIsLoadingMoreProducts(false);
         }
     };
 
     return {
-        productSlice,
-        isLoadingProducts,
-        loadMore,
-        canLoadMore: productSlice.items.length < productSlice.totalCount,
+        products: productSlice.items,
+        totalProducts: productSlice.totalCount,
+        isLoadingMoreProducts,
+        loadMoreProducts,
     };
 }

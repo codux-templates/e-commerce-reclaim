@@ -4,11 +4,8 @@ import { productSortByFromSearchParams } from '../ecom';
 
 export function useProductSorting() {
     const [searchParams] = useSearchParams();
-    const productsSortBy = useMemo(
-        () => productSortByFromSearchParams(searchParams),
-        [searchParams],
-    );
+    const sorting = useMemo(() => productSortByFromSearchParams(searchParams), [searchParams]);
     return {
-        productsSortBy,
+        sorting,
     };
 }
