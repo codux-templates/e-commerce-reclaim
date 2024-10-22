@@ -38,7 +38,11 @@ export function useProductsList(
             if (nextProductsResponse.status === 'success') {
                 setProducts((prev) => [...prev, ...nextProductsResponse.body.items]);
                 setTotalProductsCount(nextProductsResponse.body.totalCount);
+            } else {
+                console.error(nextProductsResponse.error);
             }
+        } catch (e) {
+            console.error(e);
         } finally {
             setIsLoadingProducts(false);
         }
