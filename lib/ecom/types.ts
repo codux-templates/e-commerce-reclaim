@@ -80,6 +80,7 @@ export enum ProductSortBy {
 }
 
 interface GetProductsByCategoryOptions {
+    skip?: number;
     limit?: number;
     filters?: IProductFilters;
     sortBy?: ProductSortBy;
