@@ -90,16 +90,16 @@ export type AddToCartOptions =
     | { variantId: string }
     | { options: Record<string, string | undefined> };
 
+export interface Slice<T> {
+    items: T[];
+    totalCount: number;
+}
+
 export type EcomAPI = {
     getProductsByCategory: (
         categorySlug: string,
         options?: GetProductsByCategoryOptions,
-    ) => Promise<
-        EcomAPIResponse<{
-            items: Product[];
-            totalCount: number;
-        }>
-    >;
+    ) => Promise<EcomAPIResponse<Slice<Product>>>;
     getPromotedProducts: () => Promise<EcomAPIResponse<Product[]>>;
     getProductBySlug: (slug: string) => Promise<EcomAPIResponse<Product>>;
     getCart: () => Promise<EcomAPIResponse<Cart>>;
