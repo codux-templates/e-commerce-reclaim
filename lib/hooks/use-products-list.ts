@@ -1,6 +1,7 @@
 import { SerializeFrom } from '@remix-run/node';
 import { useEffect, useState } from 'react';
 import { getEcomApi, Product } from '../ecom';
+import { getErrorMessage } from '../utils';
 import { useAppliedProductFilters } from './use-applied-product-filters';
 import { useProductSorting } from './use-product-sorting';
 
@@ -39,10 +40,10 @@ export function useProductsList(
                 setProducts((prev) => [...prev, ...nextProductsResponse.body.items]);
                 setTotalProductsCount(nextProductsResponse.body.totalCount);
             } else {
-                console.error(nextProductsResponse.error);
+                throw nextProductsResponse.error;
             }
         } catch (e) {
-            console.error(e);
+            alert(getErrorMessage(e));
         } finally {
             setIsLoadingProducts(false);
         }
