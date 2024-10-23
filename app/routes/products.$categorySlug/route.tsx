@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import { FadeIn } from '~/lib/components/visual-effects';
 import { EcomApiErrorCodes } from '~/lib/ecom';
 import { useAppliedProductFilters } from '~/lib/hooks';
-import { ProductsPageResults, useProductsPageResults } from '~/lib/hooks/use-products-page-results';
 import { useProductSorting } from '~/lib/hooks/use-product-sorting';
+import { useProductsPageResults } from '~/lib/hooks/use-products-page-results';
 import { getProductsRouteData } from '~/lib/route-loaders';
 import { getErrorMessage } from '~/lib/utils';
 import { AppliedProductFilters } from '~/src/components/applied-product-filters/applied-product-filters';
@@ -21,7 +21,6 @@ import { ProductSortingSelect } from '~/src/components/product-sorting-select/pr
 import { ROUTES } from '~/src/router/config';
 
 import styles from './route.module.scss';
-import { useMemo } from 'react';
 
 export const loader = ({ params, request }: LoaderFunctionArgs) => {
     return getProductsRouteData(params.categorySlug, request.url);
@@ -41,7 +40,7 @@ export const handle = {
 export default function ProductsPage() {
     const {
         category,
-        categoryProducts: productsFromLoader,
+        categoryProducts: resultsFromLoader,
         allCategories,
         productPriceBounds,
     } = useLoaderData<typeof loader>();
@@ -49,13 +48,6 @@ export default function ProductsPage() {
     const { appliedFilters, someFiltersApplied, clearFilters, clearAllFilters } =
         useAppliedProductFilters();
     const { sorting } = useProductSorting();
-    const resultsFromLoader = useMemo<ProductsPageResults>(
-        () => ({
-            products: productsFromLoader.items,
-            totalProducts: productsFromLoader.totalCount,
-        }),
-        [productsFromLoader],
-    );
     const { products, totalProducts, loadMoreProducts, isLoadingMoreProducts } =
         useProductsPageResults({
             categorySlug: category.slug!,

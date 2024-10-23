@@ -4,8 +4,8 @@ import { getEcomApi, IProductFilters, Product, ProductSortBy } from '../ecom';
 import { getErrorMessage } from '../utils';
 
 export interface ProductsPageResults {
-    products: (Product | SerializeFrom<Product>)[];
-    totalProducts: number;
+    items: (Product | SerializeFrom<Product>)[];
+    totalCount: number;
 }
 
 export interface UseProductsPageResultsArgs {
@@ -52,7 +52,7 @@ export function useProductsPageResults({
             const nextProductsResponse = await api.getProductsByCategory(categorySlug, {
                 filters,
                 sortBy: sorting,
-                skip: results.products.length,
+                skip: results.items.length,
             });
 
             if (nextProductsResponse.status === 'success') {
@@ -62,8 +62,8 @@ export function useProductsPageResults({
                 }
 
                 setResults((prev) => ({
-                    totalProducts: nextProductsResponse.body.totalCount,
-                    products: [...prev.products, ...nextProductsResponse.body.items],
+                    totalCount: nextProductsResponse.body.totalCount,
+                    items: [...prev.items, ...nextProductsResponse.body.items],
                 }));
             } else {
                 throw new Error('Failed to load products', { cause: nextProductsResponse.error });
@@ -76,8 +76,8 @@ export function useProductsPageResults({
     };
 
     return {
-        products: results.products,
-        totalProducts: results.totalProducts,
+        products: results.items,
+        totalProducts: results.totalCount,
         isLoadingMoreProducts,
         loadMoreProducts,
     };
