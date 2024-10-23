@@ -29,7 +29,7 @@ export function useProductsPageResults({
 }: UseProductsPageResultsArgs) {
     const [results, setResults] = useState(resultsFromLoader);
 
-    const paramsVersionRef = useRef(0);
+    const resultsFromLoaderVersionRef = useRef(0);
 
     // When the filters or category change, the loader fetches the first batch of new
     // results without a full-page reload, and we need to reset the state of this hook.
@@ -37,7 +37,7 @@ export function useProductsPageResults({
         setResults(resultsFromLoader);
 
         return () => {
-            paramsVersionRef.current = paramsVersionRef.current + 1;
+            resultsFromLoaderVersionRef.current = resultsFromLoaderVersionRef.current + 1;
         };
     }, [resultsFromLoader]);
 
@@ -47,7 +47,7 @@ export function useProductsPageResults({
     const loadMoreProducts = async () => {
         setIsLoadingMoreProducts(true);
 
-        const paramsVersion = paramsVersionRef.current;
+        const resultsFromLoaderVersion = resultsFromLoaderVersionRef.current;
         try {
             const nextProductsResponse = await api.getProductsByCategory(categorySlug, {
                 filters,
@@ -56,8 +56,8 @@ export function useProductsPageResults({
             });
 
             if (nextProductsResponse.status === 'success') {
-                // ignore loaded data when loading started for previous parameters version
-                if (paramsVersion !== paramsVersionRef.current) {
+                // ignore data if loading started for other loader data
+                if (resultsFromLoaderVersion !== resultsFromLoaderVersionRef.current) {
                     return;
                 }
 
