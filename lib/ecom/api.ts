@@ -78,7 +78,7 @@ function createApi(): EcomAPI {
     const wixClient = getWixClient();
 
     return {
-        async getProductsByCategory(categorySlug, { skip, limit, filters, sortBy } = {}) {
+        async getProductsByCategory(categorySlug, { skip = 0, limit = 100, filters, sortBy } = {}) {
             try {
                 const category = (await wixClient.collections.getCollectionBySlug(categorySlug))
                     .collection;
@@ -96,10 +96,7 @@ function createApi(): EcomAPI {
                     query = getSortedProductsQuery(query, sortBy);
                 }
 
-                const { items, totalCount = 0 } = await query
-                    .skip(skip ?? 0)
-                    .limit(limit ?? 100)
-                    .find();
+                const { items, totalCount = 0 } = await query.skip(skip).limit(limit).find();
 
                 return successResponse({ items, totalCount });
             } catch (e) {

@@ -41,7 +41,7 @@ export async function getProductsRouteData(categorySlug: string | undefined, url
 
     return {
         category: currentCategoryResponse.body,
-        categoryProductSlice: categoryProductsResponse.body,
+        categoryProducts: categoryProductsResponse.body,
         allCategories: allCategoriesResponse.body,
         productPriceBounds: productPriceBoundsResponse.body,
     };

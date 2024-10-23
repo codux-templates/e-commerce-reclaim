@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { FadeIn } from '~/lib/components/visual-effects';
 import { EcomApiErrorCodes } from '~/lib/ecom';
 import { useAppliedProductFilters } from '~/lib/hooks';
-import { useProductResults } from '~/lib/hooks/use-product-results';
+import { ProductsPageResults, useProductsPageResults } from '~/lib/hooks/use-products-page-results';
 import { useProductSorting } from '~/lib/hooks/use-product-sorting';
 import { getProductsRouteData } from '~/lib/route-loaders';
 import { getErrorMessage } from '~/lib/utils';
@@ -21,6 +21,7 @@ import { ProductSortingSelect } from '~/src/components/product-sorting-select/pr
 import { ROUTES } from '~/src/router/config';
 
 import styles from './route.module.scss';
+import { useMemo } from 'react';
 
 export const loader = ({ params, request }: LoaderFunctionArgs) => {
     return getProductsRouteData(params.categorySlug, request.url);
@@ -40,7 +41,7 @@ export const handle = {
 export default function ProductsPage() {
     const {
         category,
-        categoryProductSlice: initialResultsFromLoader,
+        categoryProducts: productsFromLoader,
         allCategories,
         productPriceBounds,
     } = useLoaderData<typeof loader>();
@@ -48,12 +49,20 @@ export default function ProductsPage() {
     const { appliedFilters, someFiltersApplied, clearFilters, clearAllFilters } =
         useAppliedProductFilters();
     const { sorting } = useProductSorting();
-    const { products, totalProducts, loadMoreProducts, isLoadingMoreProducts } = useProductResults({
-        categorySlug: category.slug!,
-        filters: appliedFilters,
-        sorting,
-        initialResultsFromLoader,
-    });
+    const resultsFromLoader = useMemo<ProductsPageResults>(
+        () => ({
+            products: productsFromLoader.items,
+            totalProducts: productsFromLoader.totalCount,
+        }),
+        [productsFromLoader],
+    );
+    const { products, totalProducts, loadMoreProducts, isLoadingMoreProducts } =
+        useProductsPageResults({
+            categorySlug: category.slug!,
+            filters: appliedFilters,
+            sorting,
+            resultsFromLoader,
+        });
 
     const currency = products[0]?.priceData?.currency ?? 'USD';
 
