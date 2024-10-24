@@ -19,6 +19,7 @@ import { ErrorPage } from '~/src/components/error-page/error-page';
 import { SiteWrapper } from '~/src/components/site-wrapper/site-wrapper';
 import { ROUTES } from '~/src/router/config';
 import { RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
+import { ToasterContextProvider } from '~/src/components/toaster/toaster-context';
 
 import '~/src/styles/reset.scss';
 import '~/src/styles/colors.scss';
@@ -65,9 +66,11 @@ export function Layout({ children }: React.PropsWithChildren) {
 function ContentWrapper({ children }: React.PropsWithChildren) {
     return (
         <EcomAPIContextProvider>
-            <CartOpenContextProvider>
-                <SiteWrapper>{children}</SiteWrapper>
-            </CartOpenContextProvider>
+            <ToasterContextProvider>
+                <CartOpenContextProvider>
+                    <SiteWrapper>{children}</SiteWrapper>
+                </CartOpenContextProvider>
+            </ToasterContextProvider>
         </EcomAPIContextProvider>
     );
 }
