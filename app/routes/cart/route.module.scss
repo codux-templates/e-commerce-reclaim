@@ -76,14 +76,16 @@
     font: var(--paragraph3);
 }
 
-.emptyCartMessage {
-    font-size: 22px;
+.emptyCart {
     text-align: center;
     padding: 175px 0;
 }
 
+.emptyCartMessage {
+    font-size: 22px;
+}
+
 .continueBrowsingLink {
-    font: var(--paragraph1);
     text-decoration: underline;
     cursor: pointer;
 }
