@@ -76,6 +76,18 @@
     font: var(--paragraph3);
 }
 
+.emptyCartMessage {
+    font-size: 22px;
+    text-align: center;
+    padding: 175px 0;
+}
+
+.continueBrowsingLink {
+    font: var(--paragraph1);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 @media (max-width: $desktop-width) {
     .summary {
         width: 100%;
