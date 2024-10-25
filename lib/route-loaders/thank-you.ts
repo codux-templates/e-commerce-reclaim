@@ -1,6 +1,5 @@
 import { json } from '@remix-run/react';
-import { OrderDetails } from '~/lib/ecom';
-import { getEcomApi } from '~/lib/ecom/api';
+import { OrderDetails, getEcomApi } from '~/lib/ecom';
 
 export async function getThankYouRouteData(url: string): Promise<{ order?: OrderDetails }> {
     const orderId = new URL(url).searchParams.get('orderId');
