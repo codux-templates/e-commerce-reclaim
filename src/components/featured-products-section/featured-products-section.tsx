@@ -2,8 +2,9 @@ import { collections } from '@wix/stores';
 import { Product } from '@wix/stores_products';
 import classNames from 'classnames';
 import useSWR from 'swr';
-import { getEcomApi, CollectionDetails, isEcomSDKError } from '~/lib/ecom';
 import { FadeIn, Reveal } from '~/lib/components/visual-effects';
+import { CollectionDetails, isEcomSDKError } from '~/lib/ecom';
+import { getEcomApi } from '~/lib/ecom/api';
 import { ProductCard, ProductCardSkeleton } from '~/src/components/product-card/product-card';
 import { ProductLink } from '~/src/components/product-link/product-link';
 
@@ -18,7 +19,7 @@ const getFeaturedProducts = async (
     categorySlug: string,
     limit: number,
 ): Promise<FeaturedProductsData | null> => {
-    const api = getEcomApi();
+    const api = await getEcomApi();
 
     let category: CollectionDetails | undefined;
     const response = await api.getCategoryBySlug(categorySlug);

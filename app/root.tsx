@@ -1,3 +1,4 @@
+import { json, LoaderFunctionArgs } from '@remix-run/node';
 import {
     isRouteErrorResponse,
     Links,
@@ -12,13 +13,14 @@ import {
     useRouteError,
 } from '@remix-run/react';
 import { useEffect } from 'react';
-import { EcomAPIContextProvider } from '~/lib/ecom';
 import { CartOpenContextProvider } from '~/lib/cart-open-context';
+import { EcomAPIContextProvider } from '~/lib/ecom/api-context';
+import { initializeSession } from '~/lib/ecom/session';
 import { getErrorMessage, routeLocationToUrl } from '~/lib/utils';
+import { RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
 import { ErrorPage } from '~/src/components/error-page/error-page';
 import { SiteWrapper } from '~/src/components/site-wrapper/site-wrapper';
 import { ROUTES } from '~/src/router/config';
-import { RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
 
 import '~/src/styles/reset.scss';
 import '~/src/styles/colors.scss';
@@ -30,12 +32,24 @@ export const meta: MetaFunction = () => {
     return [{ title: 'ReClaim: Home Goods Store' }];
 };
 
-export async function loader() {
-    return {
-        ENV: {
-            WIX_CLIENT_ID: process?.env?.WIX_CLIENT_ID,
+export async function loader({ request }: LoaderFunctionArgs) {
+    const { wixEcomTokens, setCookie } = await initializeSession(request);
+
+    return json(
+        {
+            ENV: {
+                WIX_CLIENT_ID: process?.env?.WIX_CLIENT_ID,
+            },
+            wixEcomTokens,
         },
-    };
+        setCookie
+            ? {
+                  headers: {
+                      'Set-Cookie': setCookie,
+                  },
+              }
+            : undefined,
+    );
 }
 
 const breadcrumbs: RouteBreadcrumbs = () => [{ title: 'Home', to: ROUTES.home.path }];
@@ -64,25 +78,25 @@ export function Layout({ children }: React.PropsWithChildren) {
 
 function ContentWrapper({ children }: React.PropsWithChildren) {
     return (
-        <EcomAPIContextProvider>
-            <CartOpenContextProvider>
-                <SiteWrapper>{children}</SiteWrapper>
-            </CartOpenContextProvider>
-        </EcomAPIContextProvider>
+        <CartOpenContextProvider>
+            <SiteWrapper>{children}</SiteWrapper>
+        </CartOpenContextProvider>
     );
 }
 
 export default function App() {
-    const data = useLoaderData<typeof loader>();
+    const { ENV, wixEcomTokens } = useLoaderData<typeof loader>();
 
     if (typeof window !== 'undefined' && typeof window.ENV === 'undefined') {
-        window.ENV = data.ENV;
+        window.ENV = ENV;
     }
 
     return (
-        <ContentWrapper>
-            <Outlet />
-        </ContentWrapper>
+        <EcomAPIContextProvider tokens={wixEcomTokens}>
+            <ContentWrapper>
+                <Outlet />
+            </ContentWrapper>
+        </EcomAPIContextProvider>
     );
 }
 
@@ -104,13 +118,15 @@ export function ErrorBoundary() {
     const isPageNotFoundError = isRouteErrorResponse(error) && error.status === 404;
 
     return (
-        <ContentWrapper>
-            <ErrorPage
-                title={isPageNotFoundError ? 'Page Not Found' : 'Oops, something went wrong'}
-                message={isPageNotFoundError ? undefined : getErrorMessage(error)}
-                actionButtonText="Back to shopping"
-                onActionButtonClick={() => navigate(ROUTES.products.to('all-products'))}
-            />
-        </ContentWrapper>
+        <EcomAPIContextProvider>
+            <ContentWrapper>
+                <ErrorPage
+                    title={isPageNotFoundError ? 'Page Not Found' : 'Oops, something went wrong'}
+                    message={isPageNotFoundError ? undefined : getErrorMessage(error)}
+                    actionButtonText="Back to shopping"
+                    onActionButtonClick={() => navigate(ROUTES.products.to('all-products'))}
+                />
+            </ContentWrapper>
+        </EcomAPIContextProvider>
     );
 }

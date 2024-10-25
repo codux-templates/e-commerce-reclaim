@@ -1,14 +1,11 @@
 import { json } from '@remix-run/react';
-import {
-    getEcomApi,
-    productFiltersFromSearchParams,
-    productSortByFromSearchParams,
-} from '~/lib/ecom';
+import { productFiltersFromSearchParams, productSortByFromSearchParams } from '~/lib/ecom';
+import { getEcomApi } from '~/lib/ecom/api';
 
 export async function getProductsRouteData(categorySlug: string | undefined, url: string) {
     if (!categorySlug) throw new Error('Missing category slug');
 
-    const api = getEcomApi();
+    const api = await getEcomApi();
     const searchParams = new URL(url).searchParams;
 
     const [

@@ -1,16 +1,11 @@
 import { currentCart, orders } from '@wix/ecom';
 import { redirects } from '@wix/redirects';
-import { createClient, OAuthStrategy } from '@wix/sdk';
+import { createClient, IOAuthStrategy, OAuthStrategy, Tokens, WixClient } from '@wix/sdk';
 import { collections, products } from '@wix/stores';
-import Cookies from 'js-cookie';
 import { getErrorMessage } from '~/lib/utils';
 import { ROUTES } from '~/src/router/config';
-import {
-    DEMO_STORE_WIX_CLIENT_ID,
-    WIX_CLIENT_ID_COOKIE_KEY,
-    WIX_SESSION_TOKEN_COOKIE_KEY,
-    WIX_STORES_APP_ID,
-} from './constants';
+import { deferred } from '../utils/deferred';
+import { DEMO_STORE_WIX_CLIENT_ID, WIX_STORES_APP_ID } from './constants';
 import { getFilteredProductsQuery } from './product-filters';
 import { getSortedProductsQuery } from './product-sorting';
 import {
@@ -21,7 +16,7 @@ import {
     isEcomSDKError,
 } from './types';
 
-function getWixClientId() {
+export function getWixClientId() {
     /**
      * this file is used on both sides: client and server,
      * so we are trying to read WIX_CLIENT_ID from process.env on server side
@@ -37,28 +32,7 @@ function getWixClientId() {
     return env.WIX_CLIENT_ID ?? DEMO_STORE_WIX_CLIENT_ID;
 }
 
-function ensureSessionIntegrity() {
-    const sessionWixClientId = Cookies.get(WIX_CLIENT_ID_COOKIE_KEY);
-    const configuredWixClientId = getWixClientId();
-
-    // Clear user session if headless site changed.
-    // This will clear old cart if it exists.
-    // We have to do this because old cart may contain products from old site.
-    if (sessionWixClientId !== configuredWixClientId) {
-        Cookies.remove(WIX_SESSION_TOKEN_COOKIE_KEY);
-    }
-
-    Cookies.set(WIX_CLIENT_ID_COOKIE_KEY, configuredWixClientId);
-}
-
-function getTokensClient() {
-    ensureSessionIntegrity();
-
-    const tokens = Cookies.get(WIX_SESSION_TOKEN_COOKIE_KEY);
-    return tokens ? JSON.parse(tokens) : undefined;
-}
-
-function getWixClient() {
+function createApiWixClient(tokens?: Tokens) {
     return createClient({
         modules: {
             products,
@@ -69,14 +43,39 @@ function getWixClient() {
         },
         auth: OAuthStrategy({
             clientId: getWixClientId(),
-            tokens: getTokensClient(),
+            tokens,
         }),
     });
 }
 
-function createApi(): EcomAPI {
-    const wixClient = getWixClient();
+const { resolve: setApi, promise: getApi } = deferred<EcomAPI>();
 
+export function initializeEcomApi(tokens?: Tokens) {
+    const client = createApiWixClient(tokens);
+
+    const api = createApi(client);
+    setApi(api);
+
+    return { client, api };
+}
+
+export function getEcomApi() {
+    return getApi;
+}
+
+type WixApiClient = WixClient<
+    undefined,
+    IOAuthStrategy,
+    {
+        products: typeof products;
+        currentCart: typeof currentCart;
+        redirects: typeof redirects;
+        collections: typeof collections;
+        orders: typeof orders;
+    }
+>;
+
+function createApi(wixClient: WixApiClient): EcomAPI {
     return {
         async getProductsByCategory(categorySlug, { skip = 0, limit = 100, filters, sortBy } = {}) {
             try {
@@ -189,9 +188,6 @@ function createApi(): EcomAPI {
                     throw new Error('Failed to add item to cart');
                 }
 
-                const tokens = wixClient.auth.getTokens();
-                Cookies.set(WIX_SESSION_TOKEN_COOKIE_KEY, JSON.stringify(tokens));
-
                 return successResponse(result.cart);
             } catch {
                 return failureResponse(EcomApiErrorCodes.AddCartItemFailure);
@@ -291,15 +287,6 @@ function createApi(): EcomAPI {
             }
         },
     };
-}
-
-let api: EcomAPI | undefined;
-export function getEcomApi() {
-    if (api === undefined) {
-        api = createApi();
-    }
-
-    return api;
 }
 
 function failureResponse(code: EcomApiErrorCodes, message?: string): EcomAPIFailureResponse {
