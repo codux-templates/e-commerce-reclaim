@@ -15,7 +15,7 @@ const { getSession, commitSession } = createCookieSessionStorage<SessionData, vo
         httpOnly: true,
         sameSite: 'lax',
 
-        secrets: [process.env.SESSION_COOKIE_SIGNING_SECRET || 's3cret1'],
+        secrets: [process.env.SESSION_COOKIE_SIGNING_SECRET ?? 's3cret1'],
     },
 });
 
@@ -30,13 +30,13 @@ export async function initializeSession(request: Request) {
 
     const { client } = initializeEcomApi(tokens);
 
-    let setCookie: string | undefined;
+    let sessionCookie: string | undefined;
     if (tokens === undefined) {
         tokens = await client.auth.generateVisitorTokens();
         session.set('wixEcomTokens', tokens);
         session.set('wixClientId', wixClientId);
-        setCookie = await commitSession(session);
+        sessionCookie = await commitSession(session);
     }
 
-    return { session, wixEcomTokens: tokens, setCookie };
+    return { session, wixEcomTokens: tokens, sessionCookie };
 }

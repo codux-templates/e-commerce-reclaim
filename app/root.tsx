@@ -14,7 +14,7 @@ import {
 } from '@remix-run/react';
 import { useEffect } from 'react';
 import { CartOpenContextProvider } from '~/lib/cart-open-context';
-import { EcomAPIContextProvider } from '~/lib/ecom/api-context';
+import { EcomAPIContextProvider } from '~/lib/ecom';
 import { initializeSession } from '~/lib/ecom/session';
 import { getErrorMessage, routeLocationToUrl } from '~/lib/utils';
 import { RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
@@ -33,7 +33,7 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
-    const { wixEcomTokens, setCookie } = await initializeSession(request);
+    const { wixEcomTokens, sessionCookie } = await initializeSession(request);
 
     return json(
         {
@@ -42,10 +42,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
             },
             wixEcomTokens,
         },
-        setCookie
+        sessionCookie
             ? {
                   headers: {
-                      'Set-Cookie': setCookie,
+                      'Set-Cookie': sessionCookie,
                   },
               }
             : undefined,

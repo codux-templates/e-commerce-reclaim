@@ -14,11 +14,11 @@ export const useEcomAPI = (): EcomAPI => {
     return context;
 };
 
-export interface EcomAPIContextProvider extends React.PropsWithChildren {
+export interface EcomAPIContextProviderProps extends React.PropsWithChildren {
     tokens?: Tokens;
 }
 
-export const EcomAPIContextProvider: FC<EcomAPIContextProvider> = ({ tokens, children }) => {
+export const EcomAPIContextProvider: FC<EcomAPIContextProviderProps> = ({ tokens, children }) => {
     return (
         <SWRConfig
             value={{

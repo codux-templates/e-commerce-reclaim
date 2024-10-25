@@ -3,8 +3,7 @@ import { Product } from '@wix/stores_products';
 import classNames from 'classnames';
 import useSWR from 'swr';
 import { FadeIn, Reveal } from '~/lib/components/visual-effects';
-import { CollectionDetails, isEcomSDKError } from '~/lib/ecom';
-import { getEcomApi } from '~/lib/ecom/api';
+import { CollectionDetails, isEcomSDKError, getEcomApi } from '~/lib/ecom';
 import { ProductCard, ProductCardSkeleton } from '~/src/components/product-card/product-card';
 import { ProductLink } from '~/src/components/product-link/product-link';
 

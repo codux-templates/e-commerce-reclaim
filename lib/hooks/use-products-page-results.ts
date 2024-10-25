@@ -1,7 +1,6 @@
 import { SerializeFrom } from '@remix-run/node';
 import { useEffect, useRef, useState } from 'react';
-import { IProductFilters, Product, ProductSortBy } from '../ecom';
-import { useEcomAPI } from '../ecom/api-context';
+import { IProductFilters, Product, ProductSortBy, useEcomAPI } from '../ecom';
 import { getErrorMessage } from '../utils';
 
 export interface ProductsPageResults {

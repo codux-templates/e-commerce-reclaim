@@ -1,5 +1,5 @@
 import { json } from '@remix-run/react';
-import { getEcomApi } from '~/lib/ecom/api';
+import { getEcomApi } from '~/lib/ecom';
 import { removeQueryStringFromUrl } from '~/lib/utils';
 
 export async function getProductDetailsRouteData(productSlug: string | undefined, url: string) {
