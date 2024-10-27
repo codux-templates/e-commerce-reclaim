@@ -123,4 +123,5 @@ export type EcomAPI = {
     getProductPriceBounds: (
         categorySlug: string,
     ) => Promise<EcomAPIResponse<{ lowest: number; highest: number }>>;
+    getAllProducts: () => Promise<EcomAPIResponse<Product[]>>;
 };

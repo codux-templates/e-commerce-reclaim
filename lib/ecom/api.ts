@@ -290,6 +290,15 @@ function createApi(): EcomAPI {
                 return failureResponse(EcomApiErrorCodes.GetProductsFailure, getErrorMessage(e));
             }
         },
+        async getAllProducts(limit = 100) {
+            try {
+                const allProducts = (await wixClient.products.queryProducts().limit(limit).find())
+                    .items;
+                return successResponse(allProducts);
+            } catch (e) {
+                return failureResponse(EcomApiErrorCodes.GetProductsFailure, getErrorMessage(e));
+            }
+        },
     };
 }
 
