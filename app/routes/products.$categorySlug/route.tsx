@@ -32,13 +32,13 @@ const breadcrumbs: RouteBreadcrumbs<typeof loader> = (match) => [
 ];
 
 export const getStaticRoutes = async () => {
-    const products = await getEcomApi().getAllProducts();
+    const categories = await getEcomApi().getAllCategories();
 
-    if (products.status === 'failure') {
-        throw new Error(`${products.error.code} ${products.error.message || ''}`);
+    if (categories.status === 'failure') {
+        throw new Error(`${categories.error.code} ${categories.error.message || ''}`);
     }
 
-    return products.body.map((product) => `/products/${product.slug}`);
+    return categories.body.map((category) => `/products/${category.slug}`);
 };
 
 export const handle = {
