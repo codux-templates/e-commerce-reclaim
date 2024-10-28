@@ -10,7 +10,7 @@ export type SessionData = {
 const { getSession, commitSession } = createCookieSessionStorage<SessionData, void>({
     cookie: {
         name: '__session',
-        maxAge: 3600 * 24 * 30 * 3, // 3 months
+        maxAge: 3600 * 24 * 100, // 100 days
         secure: true,
         httpOnly: true,
         sameSite: 'lax',
