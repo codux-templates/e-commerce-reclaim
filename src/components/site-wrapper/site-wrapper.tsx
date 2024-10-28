@@ -1,7 +1,8 @@
+import { Toaster } from 'react-hot-toast';
 import { Cart } from '../cart/cart';
 import { Footer } from '../footer/footer';
 import { Header } from '../header/header';
-import { Toaster } from '../toaster/toaster';
+import { Toast } from '../toast/toast';
 
 import styles from './site-wrapper.module.scss';
 
@@ -12,7 +13,13 @@ export const SiteWrapper = ({ children }: React.PropsWithChildren) => {
             <main className={styles.main}>{children}</main>
             <Footer />
 
-            <Toaster />
+            <Toaster
+                containerStyle={{
+                    inset: '100px 0 0 0',
+                }}
+            >
+                {(t) => <Toast toastData={t} />}
+            </Toaster>
             <Cart />
         </div>
     );

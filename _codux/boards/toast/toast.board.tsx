@@ -1,64 +1,61 @@
 import { createBoard } from '@wixc3/react-board';
-import * as RadixToast from '@radix-ui/react-toast';
-import { Toast } from '~/src/components/toaster/toast/toast';
+import { Toast } from '~/src/components/toast/toast';
 
 import styles from './toast.board.module.scss';
-
-const noop = () => {};
 
 export default createBoard({
     name: 'Toasts',
     Board: () => {
         return (
-            <RadixToast.Provider>
+            <div className={styles.container}>
                 <Toast
-                    type="success"
-                    isOpen={true}
-                    onOpenChange={noop}
-                    onClose={noop}
-                    className={styles.toast}
-                >
-                    The product is added to the cart
-                </Toast>
-
+                    toastData={{
+                        type: 'success',
+                        id: '1',
+                        message: 'The product is added to the cart',
+                        pauseDuration: 0,
+                        ariaProps: {
+                            role: 'status',
+                            'aria-live': 'polite',
+                        },
+                        createdAt: Date.now(),
+                        visible: true,
+                    }}
+                />
                 <Toast
-                    type="error"
-                    isOpen={true}
-                    onOpenChange={noop}
-                    onClose={noop}
-                    className={styles.toast}
-                >
-                    Failed to update the item quantity
-                </Toast>
-
+                    toastData={{
+                        type: 'error',
+                        id: '2',
+                        message: 'Failed to update the item quantity',
+                        pauseDuration: 0,
+                        ariaProps: {
+                            role: 'status',
+                            'aria-live': 'polite',
+                        },
+                        createdAt: Date.now(),
+                        visible: true,
+                    }}
+                />
                 <Toast
-                    type="warning"
-                    isOpen={true}
-                    onOpenChange={noop}
-                    onClose={noop}
-                    className={styles.toast}
-                >
-                    Some items in your cart may incur additional taxes during shipping to your
-                    country
-                </Toast>
-
-                <Toast
-                    type="info"
-                    isOpen={true}
-                    onOpenChange={noop}
-                    onClose={noop}
-                    className={styles.toast}
-                >
-                    Payments on the website will be unavailable for maintenance from 00:00 to 06:00
-                    on Tuesday, April 25, 2035.
-                </Toast>
-
-                <RadixToast.Viewport className={styles.viewport} />
-            </RadixToast.Provider>
+                    toastData={{
+                        type: 'blank',
+                        id: '3',
+                        message:
+                            'Payments on the website will be unavailable for maintenance from 00:00 to 06:00 on Tuesday, April 25, 2035',
+                        pauseDuration: 0,
+                        ariaProps: {
+                            role: 'status',
+                            'aria-live': 'polite',
+                        },
+                        createdAt: Date.now(),
+                        visible: true,
+                    }}
+                />
+            </div>
         );
     },
     environmentProps: {
-        windowWidth: 510,
-        windowHeight: 314,
+        windowWidth: 472,
+        windowHeight: 261,
     },
 });

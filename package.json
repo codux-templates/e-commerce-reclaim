@@ -17,7 +17,6 @@
     "@netlify/functions": "^2.8.2",
     "@netlify/remix-adapter": "^2.5.1",
     "@radix-ui/react-select": "^2.1.2",
-    "@radix-ui/react-toast": "^1.2.2",
     "@remix-run/node": "^2.12.1",
     "@remix-run/react": "^2.12.1",
     "@remix-run/serve": "^2.12.1",
@@ -34,6 +33,7 @@
     "lodash.debounce": "^4.0.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.4.1",
     "react-remove-scroll": "^2.6.0",
     "remix-utils": "^7.7.0",
     "swr": "^2.2.5"

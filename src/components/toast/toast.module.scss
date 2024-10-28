@@ -1,12 +1,9 @@
 @import '@styles/variables.scss';
 
 .root {
-    position: absolute;
-    top: 100px;
     padding: 14px;
     width: 480px;
     color: var(--white);
-    pointer-events: all;
 
     display: flex;
     justify-content: space-between;
@@ -16,8 +13,6 @@
 
 @media (max-width: $desktop-width) {
     .root {
-        top: auto;
-        bottom: 0;
         width: 100%;
     }
 }
@@ -26,15 +21,11 @@
     background-color: var(--error);
 }
 
-.root.warning {
-    background-color: var(--colorD2);
-}
-
 .root.success {
     background-color: var(--colorE4);
 }
 
-.root.info {
+.root.blank {
     background-color: var(--colorC3);
 }
 
@@ -45,8 +36,36 @@
 
 .close {
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+
+    .closeIcon {
+        cursor: pointer;
+    }
 }
 
-.closeIcon {
-    cursor: pointer;
+@keyframes defaultEnter {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes defaultExit {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.defaultEnter {
+    animation: defaultEnter 0.5s ease forwards;
+}
+
+.defaultExit {
+    animation: defaultExit 0.5s ease forwards;
 }
