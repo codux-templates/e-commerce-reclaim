@@ -12,6 +12,7 @@ import {
     useNavigation,
     useRouteError,
 } from '@remix-run/react';
+import { Tokens } from '@wix/sdk';
 import { useEffect } from 'react';
 import { CartOpenContextProvider } from '~/lib/cart-open-context';
 import { EcomAPIContextProvider } from '~/lib/ecom';
@@ -77,11 +78,17 @@ export function Layout({ children }: React.PropsWithChildren) {
     );
 }
 
-function ContentWrapper({ children }: React.PropsWithChildren) {
+interface ContentWrapperProps extends React.PropsWithChildren {
+    tokens?: Tokens;
+}
+
+function ContentWrapper({ children, tokens }: ContentWrapperProps) {
     return (
-        <CartOpenContextProvider>
-            <SiteWrapper>{children}</SiteWrapper>
-        </CartOpenContextProvider>
+        <EcomAPIContextProvider tokens={tokens}>
+            <CartOpenContextProvider>
+                <SiteWrapper>{children}</SiteWrapper>
+            </CartOpenContextProvider>
+        </EcomAPIContextProvider>
     );
 }
 
@@ -93,11 +100,9 @@ export default function App() {
     }
 
     return (
-        <EcomAPIContextProvider tokens={wixEcomTokens}>
-            <ContentWrapper>
-                <Outlet />
-            </ContentWrapper>
-        </EcomAPIContextProvider>
+        <ContentWrapper tokens={wixEcomTokens}>
+            <Outlet />
+        </ContentWrapper>
     );
 }
 
@@ -119,15 +124,13 @@ export function ErrorBoundary() {
     const isPageNotFoundError = isRouteErrorResponse(error) && error.status === 404;
 
     return (
-        <EcomAPIContextProvider>
-            <ContentWrapper>
-                <ErrorPage
-                    title={isPageNotFoundError ? 'Page Not Found' : 'Oops, something went wrong'}
-                    message={isPageNotFoundError ? undefined : getErrorMessage(error)}
-                    actionButtonText="Back to shopping"
-                    onActionButtonClick={() => navigate(ROUTES.products.to('all-products'))}
-                />
-            </ContentWrapper>
-        </EcomAPIContextProvider>
+        <ContentWrapper>
+            <ErrorPage
+                title={isPageNotFoundError ? 'Page Not Found' : 'Oops, something went wrong'}
+                message={isPageNotFoundError ? undefined : getErrorMessage(error)}
+                actionButtonText="Back to shopping"
+                onActionButtonClick={() => navigate(ROUTES.products.to('all-products'))}
+            />
+        </ContentWrapper>
     );
 }
