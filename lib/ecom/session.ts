@@ -21,7 +21,7 @@ const { getSession, commitSession } = createCookieSessionStorage<SessionData, vo
 
 export { commitSession };
 
-export async function initializeSession(request: Request) {
+export async function initializeEcomSession(request: Request) {
     const session = await getSession(request.headers.get('Cookie'));
 
     const sessionWixClientId = session.get('wixClientId');
@@ -43,8 +43,8 @@ export async function initializeSession(request: Request) {
     return { wixEcomTokens, session, shouldUpdateSessionCookie };
 }
 
-export async function initializeApi(request: Request) {
-    const { session } = await initializeSession(request);
+export async function initializeEcomApi(request: Request) {
+    const { session } = await initializeEcomSession(request);
     const tokens = session.get('wixEcomTokens');
     const client = createWixClient(tokens);
     return createApi(client);

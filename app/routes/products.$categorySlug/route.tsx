@@ -3,7 +3,7 @@ import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from 
 import classNames from 'classnames';
 import { FadeIn } from '~/lib/components/visual-effects';
 import { EcomApiErrorCodes } from '~/lib/ecom';
-import { initializeApi } from '~/lib/ecom/session';
+import { initializeEcomApi } from '~/lib/ecom/session';
 import { useAppliedProductFilters } from '~/lib/hooks';
 import { useProductSorting } from '~/lib/hooks/use-product-sorting';
 import { useProductsPageResults } from '~/lib/hooks/use-products-page-results';
@@ -24,7 +24,7 @@ import { ROUTES } from '~/src/router/config';
 import styles from './route.module.scss';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-    const api = await initializeApi(request);
+    const api = await initializeEcomApi(request);
     return getProductsRouteData(api, params.categorySlug, request.url);
 };
 

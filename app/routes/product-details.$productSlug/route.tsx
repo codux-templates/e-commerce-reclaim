@@ -2,7 +2,7 @@ import type { LoaderFunctionArgs } from '@remix-run/node';
 import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from '@remix-run/react';
 import classNames from 'classnames';
 import { EcomApiErrorCodes } from '~/lib/ecom';
-import { initializeApi } from '~/lib/ecom/session';
+import { initializeEcomApi } from '~/lib/ecom/session';
 import { useProductDetails } from '~/lib/hooks';
 import { getProductDetailsRouteData } from '~/lib/route-loaders';
 import { getErrorMessage } from '~/lib/utils';
@@ -20,7 +20,7 @@ import { ROUTES } from '~/src/router/config';
 import styles from './route.module.scss';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-    const api = await initializeApi(request);
+    const api = await initializeEcomApi(request);
 
     return getProductDetailsRouteData(api, params.productSlug, request.url);
 };

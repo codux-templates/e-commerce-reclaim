@@ -86,6 +86,29 @@ export function createApi(wixClient: WixApiClient): EcomAPI {
                 return failureResponse(EcomApiErrorCodes.GetProductsFailure, getErrorMessage(e));
             }
         },
+        async getFeaturedProducts(categorySlug, count) {
+            try {
+                let category = (await wixClient.collections.getCollectionBySlug(categorySlug))
+                    .collection;
+                if (!category) {
+                    category = (await wixClient.collections.getCollectionBySlug('all-products'))
+                        .collection;
+                }
+                if (!category) {
+                    throw new Error('Category not found');
+                }
+
+                const { items } = await wixClient.products
+                    .queryProducts()
+                    .hasSome('collectionIds', [category._id])
+                    .limit(count)
+                    .find();
+
+                return successResponse({ items, category });
+            } catch (e) {
+                return failureResponse(EcomApiErrorCodes.GetProductsFailure, getErrorMessage(e));
+            }
+        },
         async getPromotedProducts() {
             try {
                 const products = (await wixClient.products.queryProducts().limit(4).find()).items;

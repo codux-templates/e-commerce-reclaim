@@ -15,7 +15,7 @@ import {
 import { useEffect } from 'react';
 import { CartOpenContextProvider } from '~/lib/cart-open-context';
 import { EcomAPIContextProvider } from '~/lib/ecom';
-import { commitSession, initializeSession } from '~/lib/ecom/session';
+import { commitSession, initializeEcomSession } from '~/lib/ecom/session';
 import { getErrorMessage, routeLocationToUrl } from '~/lib/utils';
 import { RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
 import { ErrorPage } from '~/src/components/error-page/error-page';
@@ -33,7 +33,8 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
-    const { wixEcomTokens, session, shouldUpdateSessionCookie } = await initializeSession(request);
+    const { wixEcomTokens, session, shouldUpdateSessionCookie } =
+        await initializeEcomSession(request);
 
     return json(
         {
