@@ -1,8 +1,8 @@
 import { createCookieSessionStorage } from '@remix-run/node';
 import { Tokens } from '@wix/sdk';
-import { getWixClientId, initializeEcomApi } from './api';
+import { createApi, createWixClient, getWixClientId } from './api';
 
-type SessionData = {
+export type SessionData = {
     wixEcomTokens: Tokens;
     wixClientId: string;
 };
@@ -19,6 +19,8 @@ const { getSession, commitSession } = createCookieSessionStorage<SessionData, vo
     },
 });
 
+export { commitSession };
+
 export async function initializeSession(request: Request) {
     const session = await getSession(request.headers.get('Cookie'));
 
@@ -26,17 +28,24 @@ export async function initializeSession(request: Request) {
     const wixClientId = getWixClientId();
 
     // reset token if wix client id has changed
-    let tokens = sessionWixClientId !== wixClientId ? undefined : session.get('wixEcomTokens');
+    let wixEcomTokens =
+        sessionWixClientId === wixClientId ? session.get('wixEcomTokens') : undefined;
+    let shouldUpdateSessionCookie = false;
 
-    const { client } = initializeEcomApi(tokens);
-
-    let sessionCookie: string | undefined;
-    if (tokens === undefined) {
-        tokens = await client.auth.generateVisitorTokens();
-        session.set('wixEcomTokens', tokens);
+    const client = createWixClient(wixEcomTokens);
+    if (wixEcomTokens === undefined) {
+        shouldUpdateSessionCookie = true;
+        wixEcomTokens = await client.auth.generateVisitorTokens();
+        session.set('wixEcomTokens', wixEcomTokens);
         session.set('wixClientId', wixClientId);
-        sessionCookie = await commitSession(session);
     }
 
-    return { session, wixEcomTokens: tokens, sessionCookie };
+    return { wixEcomTokens, session, shouldUpdateSessionCookie };
+}
+
+export async function initializeApi(request: Request) {
+    const { session } = await initializeSession(request);
+    const tokens = session.get('wixEcomTokens');
+    const client = createWixClient(tokens);
+    return createApi(client);
 }

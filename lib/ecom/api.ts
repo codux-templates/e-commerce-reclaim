@@ -4,7 +4,6 @@ import { createClient, IOAuthStrategy, OAuthStrategy, Tokens, WixClient } from '
 import { collections, products } from '@wix/stores';
 import { getErrorMessage } from '~/lib/utils';
 import { ROUTES } from '~/src/router/config';
-import { deferred } from '../utils/deferred';
 import { DEMO_STORE_WIX_CLIENT_ID, WIX_STORES_APP_ID } from './constants';
 import { getFilteredProductsQuery } from './product-filters';
 import { getSortedProductsQuery } from './product-sorting';
@@ -15,6 +14,18 @@ import {
     EcomAPISuccessResponse,
     isEcomSDKError,
 } from './types';
+
+type WixApiClient = WixClient<
+    undefined,
+    IOAuthStrategy,
+    {
+        products: typeof products;
+        currentCart: typeof currentCart;
+        redirects: typeof redirects;
+        collections: typeof collections;
+        orders: typeof orders;
+    }
+>;
 
 export function getWixClientId() {
     /**
@@ -32,7 +43,7 @@ export function getWixClientId() {
     return env.WIX_CLIENT_ID ?? DEMO_STORE_WIX_CLIENT_ID;
 }
 
-function createApiWixClient(tokens?: Tokens) {
+export function createWixClient(tokens?: Tokens): WixApiClient {
     return createClient({
         modules: {
             products,
@@ -48,34 +59,7 @@ function createApiWixClient(tokens?: Tokens) {
     });
 }
 
-const { resolve: setApi, promise: getApi } = deferred<EcomAPI>();
-
-export function initializeEcomApi(tokens?: Tokens) {
-    const client = createApiWixClient(tokens);
-
-    const api = createApi(client);
-    setApi(api);
-
-    return { client, api };
-}
-
-export function getEcomApi() {
-    return getApi;
-}
-
-type WixApiClient = WixClient<
-    undefined,
-    IOAuthStrategy,
-    {
-        products: typeof products;
-        currentCart: typeof currentCart;
-        redirects: typeof redirects;
-        collections: typeof collections;
-        orders: typeof orders;
-    }
->;
-
-function createApi(wixClient: WixApiClient): EcomAPI {
+export function createApi(wixClient: WixApiClient): EcomAPI {
     return {
         async getProductsByCategory(categorySlug, { skip = 0, limit = 100, filters, sortBy } = {}) {
             try {

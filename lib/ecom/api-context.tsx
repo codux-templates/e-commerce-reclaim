@@ -1,7 +1,7 @@
 import { Tokens } from '@wix/sdk';
 import React, { FC } from 'react';
 import { SWRConfig } from 'swr';
-import { initializeEcomApi } from './api';
+import { createApi, createWixClient } from './api';
 import { EcomAPI } from './types';
 
 export const EcomAPIContext = React.createContext<EcomAPI | null>(null);
@@ -19,6 +19,9 @@ export interface EcomAPIContextProviderProps extends React.PropsWithChildren {
 }
 
 export const EcomAPIContextProvider: FC<EcomAPIContextProviderProps> = ({ tokens, children }) => {
+    const client = createWixClient(tokens);
+    const api = createApi(client);
+
     return (
         <SWRConfig
             value={{
@@ -29,9 +32,7 @@ export const EcomAPIContextProvider: FC<EcomAPIContextProviderProps> = ({ tokens
                 keepPreviousData: true,
             }}
         >
-            <EcomAPIContext.Provider value={initializeEcomApi(tokens).api}>
-                {children}
-            </EcomAPIContext.Provider>
+            <EcomAPIContext.Provider value={api}>{children}</EcomAPIContext.Provider>
         </SWRConfig>
     );
 };

@@ -15,25 +15,25 @@ import {
 import { useEffect } from 'react';
 import { CartOpenContextProvider } from '~/lib/cart-open-context';
 import { EcomAPIContextProvider } from '~/lib/ecom';
-import { initializeSession } from '~/lib/ecom/session';
+import { commitSession, initializeSession } from '~/lib/ecom/session';
 import { getErrorMessage, routeLocationToUrl } from '~/lib/utils';
 import { RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
 import { ErrorPage } from '~/src/components/error-page/error-page';
 import { SiteWrapper } from '~/src/components/site-wrapper/site-wrapper';
 import { ROUTES } from '~/src/router/config';
 
-import '~/src/styles/reset.scss';
 import '~/src/styles/colors.scss';
-import '~/src/styles/typography.scss';
 import '~/src/styles/common.scss';
 import '~/src/styles/index.scss';
+import '~/src/styles/reset.scss';
+import '~/src/styles/typography.scss';
 
 export const meta: MetaFunction = () => {
     return [{ title: 'ReClaim: Home Goods Store' }];
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
-    const { wixEcomTokens, sessionCookie } = await initializeSession(request);
+    const { wixEcomTokens, session, shouldUpdateSessionCookie } = await initializeSession(request);
 
     return json(
         {
@@ -42,10 +42,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
             },
             wixEcomTokens,
         },
-        sessionCookie
+        shouldUpdateSessionCookie
             ? {
                   headers: {
-                      'Set-Cookie': sessionCookie,
+                      'Set-Cookie': await commitSession(session),
                   },
               }
             : undefined,

@@ -3,7 +3,7 @@ import { Product } from '@wix/stores_products';
 import classNames from 'classnames';
 import useSWR from 'swr';
 import { FadeIn, Reveal } from '~/lib/components/visual-effects';
-import { CollectionDetails, isEcomSDKError, getEcomApi } from '~/lib/ecom';
+import { CollectionDetails, EcomAPI, isEcomSDKError, useEcomAPI } from '~/lib/ecom';
 import { ProductCard, ProductCardSkeleton } from '~/src/components/product-card/product-card';
 import { ProductLink } from '~/src/components/product-link/product-link';
 
@@ -15,11 +15,10 @@ interface FeaturedProductsData {
 }
 
 const getFeaturedProducts = async (
+    api: EcomAPI,
     categorySlug: string,
     limit: number,
 ): Promise<FeaturedProductsData | null> => {
-    const api = await getEcomApi();
-
     let category: CollectionDetails | undefined;
     const response = await api.getCategoryBySlug(categorySlug);
     if (response.status === 'success') {
@@ -54,8 +53,10 @@ interface FeaturedProductsSectionProps {
 export const FeaturedProductsSection = (props: FeaturedProductsSectionProps) => {
     const { title, description, productCount = 4, categorySlug, className } = props;
 
+    const api = useEcomAPI();
+
     const { data } = useSWR(`/category/${categorySlug}/featured/limit/${productCount}`, () =>
-        getFeaturedProducts(categorySlug, productCount),
+        getFeaturedProducts(api, categorySlug, productCount),
     );
 
     return (
