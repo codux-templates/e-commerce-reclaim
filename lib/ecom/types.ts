@@ -29,7 +29,7 @@ export enum EcomApiErrorCodes {
     GetOrderFailure = 'GetOrderFailure',
 }
 
-export type EcomAPIError = { code: EcomApiErrorCodes; message?: string };
+export type EcomAPIError = { code: EcomApiErrorCodes; message: string };
 export type EcomAPISuccessResponse<T> = { status: 'success'; body: T };
 export type EcomAPIFailureResponse = { status: 'failure'; error: EcomAPIError };
 export type EcomAPIResponse<T> = EcomAPISuccessResponse<T> | EcomAPIFailureResponse;
@@ -80,6 +80,7 @@ export enum ProductSortBy {
 }
 
 interface GetProductsByCategoryOptions {
+    skip?: number;
     limit?: number;
     filters?: IProductFilters;
     sortBy?: ProductSortBy;
@@ -93,12 +94,7 @@ export type EcomAPI = {
     getProductsByCategory: (
         categorySlug: string,
         options?: GetProductsByCategoryOptions,
-    ) => Promise<
-        EcomAPIResponse<{
-            items: Product[];
-            totalCount: number;
-        }>
-    >;
+    ) => Promise<EcomAPIResponse<{ items: Product[]; totalCount: number }>>;
     getPromotedProducts: () => Promise<EcomAPIResponse<Product[]>>;
     getProductBySlug: (slug: string) => Promise<EcomAPIResponse<Product>>;
     getCart: () => Promise<EcomAPIResponse<Cart>>;
