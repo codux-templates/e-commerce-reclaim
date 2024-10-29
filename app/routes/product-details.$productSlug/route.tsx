@@ -1,29 +1,33 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from '@remix-run/react';
 import classNames from 'classnames';
-import { EcomApiErrorCodes, getEcomApi } from '~/lib/ecom';
+import { createApi, createWixClient, EcomApiErrorCodes } from '~/lib/ecom';
+import { initializeEcomApi } from '~/lib/ecom/session';
 import { useProductDetails } from '~/lib/hooks';
 import { getProductDetailsRouteData } from '~/lib/route-loaders';
 import { getErrorMessage } from '~/lib/utils';
 import { Accordion } from '~/src/components/accordion/accordion';
 import { BreadcrumbData, Breadcrumbs } from '~/src/components/breadcrumbs/breadcrumbs';
-import { useBreadcrumbs, RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
+import { RouteBreadcrumbs, useBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
 import { ErrorPage } from '~/src/components/error-page/error-page';
 import { ProductImages } from '~/src/components/product-images/product-images';
+import { ProductOption } from '~/src/components/product-option/product-option';
 import { ProductPrice } from '~/src/components/product-price/product-price';
 import { QuantityInput } from '~/src/components/quantity-input/quantity-input';
-import { ProductOption } from '~/src/components/product-option/product-option';
 import { ShareProductLinks } from '~/src/components/share-product-links/share-product-links';
 import type { GetStaticRoutes } from '@wixc3/define-remix-app';
 
 import styles from './route.module.scss';
 
-export const loader = ({ params, request }: LoaderFunctionArgs) => {
-    return getProductDetailsRouteData(params.productSlug, request.url);
+export const loader = async ({ params, request }: LoaderFunctionArgs) => {
+    const api = await initializeEcomApi(request);
+
+    return getProductDetailsRouteData(api, params.productSlug, request.url);
 };
 
 export const getStaticRoutes: GetStaticRoutes = async () => {
-    const products = await getEcomApi().getAllProducts();
+    const api = createApi(createWixClient());
+    const products = await api.getProducts();
 
     if (products.status === 'failure') {
         throw products.error;

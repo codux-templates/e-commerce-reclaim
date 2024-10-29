@@ -91,10 +91,15 @@ export type AddToCartOptions =
     | { options: Record<string, string | undefined> };
 
 export type EcomAPI = {
+    getProducts: (limit?: number) => Promise<EcomAPIResponse<Product[]>>;
     getProductsByCategory: (
         categorySlug: string,
         options?: GetProductsByCategoryOptions,
     ) => Promise<EcomAPIResponse<{ items: Product[]; totalCount: number }>>;
+    getFeaturedProducts: (
+        categorySlug: string,
+        count: number,
+    ) => Promise<EcomAPIResponse<{ category: Collection; items: Product[] }>>;
     getPromotedProducts: () => Promise<EcomAPIResponse<Product[]>>;
     getProductBySlug: (slug: string) => Promise<EcomAPIResponse<Product>>;
     getCart: () => Promise<EcomAPIResponse<Cart>>;
@@ -119,5 +124,4 @@ export type EcomAPI = {
     getProductPriceBounds: (
         categorySlug: string,
     ) => Promise<EcomAPIResponse<{ lowest: number; highest: number }>>;
-    getAllProducts: () => Promise<EcomAPIResponse<Product[]>>;
 };
