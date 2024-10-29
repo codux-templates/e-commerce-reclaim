@@ -1,4 +1,4 @@
-@import '@styles/variables.scss';
+@use '@styles/variables.scss' as *;
 
 .root {
     margin: 0 calc(-1 * var(--pagePaddingHoriz));
