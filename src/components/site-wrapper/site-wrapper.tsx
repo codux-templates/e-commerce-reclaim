@@ -1,8 +1,8 @@
-import { Toaster } from 'react-hot-toast';
 import { Cart } from '../cart/cart';
 import { Footer } from '../footer/footer';
 import { Header } from '../header/header';
-import { Toast } from '../toast/toast';
+import { Toaster } from 'react-hot-toast';
+import { Toast } from '../toaster/toast/toast';
 
 import styles from './site-wrapper.module.scss';
 

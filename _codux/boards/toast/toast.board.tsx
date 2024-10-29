@@ -1,5 +1,5 @@
 import { createBoard } from '@wixc3/react-board';
-import { Toast } from '~/src/components/toast/toast';
+import { Toast } from '~/src/components/toaster/toast/toast';
 
 import styles from './toast.board.module.scss';
 
@@ -51,11 +51,25 @@ export default createBoard({
                         visible: true,
                     }}
                 />
+                <Toast
+                    toastData={{
+                        type: 'loading',
+                        id: '4',
+                        message: 'Loading...',
+                        pauseDuration: 0,
+                        ariaProps: {
+                            role: 'status',
+                            'aria-live': 'polite',
+                        },
+                        createdAt: Date.now(),
+                        visible: true,
+                    }}
+                />
             </div>
         );
     },
     environmentProps: {
-        windowWidth: 1100,
-        windowHeight: 250,
+        windowWidth: 1096,
+        windowHeight: 294,
     },
 });

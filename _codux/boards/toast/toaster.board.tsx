@@ -1,12 +1,11 @@
 import { createBoard } from '@wixc3/react-board';
 import toast, { Toaster } from 'react-hot-toast';
-import { Toast } from '~/src/components/toast/toast';
-import classNames from 'classnames';
+import { Toast } from '~/src/components/toaster/toast/toast';
 
-import styles from './toast.board.module.scss';
+import styles from './toaster.board.module.scss';
 
 export default createBoard({
-    name: 'Toasts positions',
+    name: 'Toaster',
     Board: () => {
         const handleTopToast = () => {
             toast('Toast notification at the top of the page', {
@@ -22,7 +21,7 @@ export default createBoard({
         };
 
         return (
-            <div className={classNames(styles.container, styles.buttons)}>
+            <div className={styles.container}>
                 <button className="button" onClick={handleTopToast}>
                     Open toast at the top center
                 </button>

@@ -4,19 +4,3 @@
     align-items: center;
     gap: 10px;
 }
-
-.buttons {
-    height: 300px;
-    width: 300px;
-    padding: 150px 10px 10px;
-}
-
-.customToast {
-    width: 280px;
-}
-
-@media (max-width: 1024px) {
-    .toaster {
-        padding-top: 0;
-    }
-}

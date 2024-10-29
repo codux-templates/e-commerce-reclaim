@@ -4,17 +4,10 @@
     padding: 14px;
     width: 480px;
     color: var(--white);
-
     display: flex;
     justify-content: space-between;
     align-items: start;
     gap: 14px;
-}
-
-@media (max-width: $desktop-width) {
-    .root {
-        width: 100%;
-    }
 }
 
 .root.error {
@@ -29,6 +22,20 @@
     background-color: var(--colorC3);
 }
 
+.root.loading {
+    width: 280px;
+    text-align: center;
+    background-color: var(--secondary1);
+    color: var(--secondary4);
+}
+
+@media (max-width: $desktop-width) {
+    .root,
+    .root.loading {
+        width: 100%;
+    }
+}
+
 .description {
     font: var(--paragraph3);
     flex-grow: 1;
@@ -37,7 +44,6 @@
 .close {
     flex-shrink: 0;
     display: flex;
-    flex-direction: column;
 
     .closeIcon {
         cursor: pointer;

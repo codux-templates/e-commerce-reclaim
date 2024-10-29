@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { CloseIcon } from '../icons';
+import { CloseIcon } from '../../icons';
 import { toast, Toast as ReactHotToastType, resolveValue } from 'react-hot-toast';
 
 import styles from './toast.module.scss';
