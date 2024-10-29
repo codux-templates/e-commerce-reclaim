@@ -1,9 +1,9 @@
 import { createBoard } from '@wixc3/react-board';
 import toast, { Toaster } from 'react-hot-toast';
 import { Toast } from '~/src/components/toast/toast';
+import classNames from 'classnames';
 
 import styles from './toast.board.module.scss';
-import classNames from 'classnames';
 
 export default createBoard({
     name: 'Toasts positions',
@@ -17,9 +17,7 @@ export default createBoard({
         const handleBottomToast = () => {
             toast('Toast at the bottom right', {
                 position: 'bottom-right',
-                style: {
-                    width: '280px',
-                },
+                className: styles.customToast,
             });
         };
 
@@ -34,8 +32,9 @@ export default createBoard({
 
                 <Toaster
                     containerStyle={{
-                        inset: '50px 0 0 0',
+                        inset: '0',
                     }}
+                    containerClassName={styles.toaster}
                 >
                     {(t) => <Toast toastData={t} />}
                 </Toaster>
@@ -43,7 +42,7 @@ export default createBoard({
         );
     },
     environmentProps: {
-        windowHeight: 330,
-        windowWidth: 1078,
+        windowHeight: 350,
+        windowWidth: 1100,
     },
 });

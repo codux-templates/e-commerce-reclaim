@@ -15,7 +15,7 @@ export const SiteWrapper = ({ children }: React.PropsWithChildren) => {
 
             <Toaster
                 containerStyle={{
-                    inset: '100px 0 0 0',
+                    inset: '0',
                 }}
             >
                 {(t) => <Toast toastData={t} />}

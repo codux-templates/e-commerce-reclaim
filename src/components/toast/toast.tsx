@@ -15,7 +15,13 @@ export const Toast = ({ toastData, style, className }: ToastProps) => {
 
     return (
         <div
-            className={classNames(styles.root, styles[toastData.type], className, defaultAnimation)}
+            className={classNames(
+                styles.root,
+                styles[toastData.type],
+                className,
+                toastData.className,
+                defaultAnimation,
+            )}
             style={{
                 ...style,
                 ...toastData.style,
