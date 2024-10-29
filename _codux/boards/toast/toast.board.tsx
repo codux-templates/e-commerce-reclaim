@@ -18,6 +18,7 @@ export default createBoard({
                             role: 'status',
                             'aria-live': 'polite',
                         },
+                        className: styles.noAnimation,
                         createdAt: Date.now(),
                         visible: true,
                     }}
@@ -32,6 +33,7 @@ export default createBoard({
                             role: 'status',
                             'aria-live': 'polite',
                         },
+                        className: styles.noAnimation,
                         createdAt: Date.now(),
                         visible: true,
                     }}
@@ -47,6 +49,7 @@ export default createBoard({
                             role: 'status',
                             'aria-live': 'polite',
                         },
+                        className: styles.noAnimation,
                         createdAt: Date.now(),
                         visible: true,
                     }}
@@ -61,6 +64,7 @@ export default createBoard({
                             role: 'status',
                             'aria-live': 'polite',
                         },
+                        className: styles.noAnimation,
                         createdAt: Date.now(),
                         visible: true,
                     }}
@@ -69,7 +73,7 @@ export default createBoard({
         );
     },
     environmentProps: {
-        windowWidth: 1096,
-        windowHeight: 294,
+        windowWidth: 1080,
+        windowHeight: 300,
     },
 });
