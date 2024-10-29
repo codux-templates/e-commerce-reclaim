@@ -7,6 +7,7 @@ import { DEMO_STORE_WIX_CLIENT_ID, WIX_STORES_APP_ID } from './constants';
 import { getFilteredProductsQuery } from './product-filters';
 import { getSortedProductsQuery } from './product-sorting';
 import {
+    CollectionDetails,
     EcomAPI,
     EcomApiErrorCodes,
     EcomAPIFailureResponse,
@@ -86,27 +87,29 @@ export function createApi(wixClient: WixApiClient): EcomAPI {
             }
         },
         async getFeaturedProducts(categorySlug, count) {
-            try {
-                let category = (await wixClient.collections.getCollectionBySlug(categorySlug))
-                    .collection;
-                if (!category) {
-                    category = (await wixClient.collections.getCollectionBySlug('all-products'))
-                        .collection;
+            let category: CollectionDetails | undefined;
+            const response = await this.getCategoryBySlug(categorySlug);
+            if (response.status === 'success') {
+                category = response.body;
+            } else {
+                const error = response.error;
+                if (error.code === EcomApiErrorCodes.CategoryNotFound) {
+                    const response = await this.getCategoryBySlug('all-products');
+                    if (response.status === 'success') {
+                        category = response.body;
+                    } else {
+                        throw error;
+                    }
+                } else {
+                    throw error;
                 }
-                if (!category) {
-                    throw new Error('Category not found');
-                }
-
-                const { items } = await wixClient.products
-                    .queryProducts()
-                    .hasSome('collectionIds', [category._id])
-                    .limit(count)
-                    .find();
-
-                return successResponse({ items, category });
-            } catch (e) {
-                return failureResponse(EcomApiErrorCodes.GetProductsFailure, getErrorMessage(e));
             }
+
+            const productsResponse = await this.getProductsByCategory(category.slug!, {
+                limit: count,
+            });
+            if (productsResponse.status === 'failure') throw productsResponse.error;
+            return successResponse({ category, items: productsResponse.body.items });
         },
         async getPromotedProducts() {
             try {
