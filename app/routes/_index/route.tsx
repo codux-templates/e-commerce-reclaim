@@ -62,7 +62,7 @@ export default function HomePage() {
 
             <FeaturedProductsSection
                 className="alternateBackground"
-                categorySlug="new-inn"
+                categorySlug="new-in"
                 title="New In"
                 description="Embrace a sustainable lifestyle with our newest drop-ins."
             />
