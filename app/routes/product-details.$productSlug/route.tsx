@@ -14,6 +14,7 @@ import { ProductPrice } from '~/src/components/product-price/product-price';
 import { QuantityInput } from '~/src/components/quantity-input/quantity-input';
 import { ProductOption } from '~/src/components/product-option/product-option';
 import { ShareProductLinks } from '~/src/components/share-product-links/share-product-links';
+import type { GetStaticRoutes } from '@wixc3/define-remix-app';
 
 import styles from './route.module.scss';
 
@@ -21,7 +22,7 @@ export const loader = ({ params, request }: LoaderFunctionArgs) => {
     return getProductDetailsRouteData(params.productSlug, request.url);
 };
 
-export const getStaticRoutes = async () => {
+export const getStaticRoutes: GetStaticRoutes = async () => {
     const products = await getEcomApi().getAllProducts();
 
     if (products.status === 'failure') {

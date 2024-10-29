@@ -18,6 +18,7 @@ import { ProductCard } from '~/src/components/product-card/product-card';
 import { ProductFilters } from '~/src/components/product-filters/product-filters';
 import { ProductLink } from '~/src/components/product-link/product-link';
 import { ProductSortingSelect } from '~/src/components/product-sorting-select/product-sorting-select';
+import type { GetStaticRoutes } from '@wixc3/define-remix-app';
 
 import styles from './route.module.scss';
 
@@ -32,7 +33,7 @@ const breadcrumbs: RouteBreadcrumbs<typeof loader> = (match) => [
     },
 ];
 
-export const getStaticRoutes = async () => {
+export const getStaticRoutes: GetStaticRoutes = async () => {
     const categories = await getEcomApi().getAllCategories();
 
     if (categories.status === 'failure') {
