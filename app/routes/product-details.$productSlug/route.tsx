@@ -1,5 +1,6 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from '@remix-run/react';
+import type { GetStaticRoutes } from '@wixc3/define-remix-app';
 import classNames from 'classnames';
 import { createApi, createWixClient, EcomApiErrorCodes } from '~/lib/ecom';
 import { initializeEcomApi } from '~/lib/ecom/session';
@@ -15,7 +16,6 @@ import { ProductOption } from '~/src/components/product-option/product-option';
 import { ProductPrice } from '~/src/components/product-price/product-price';
 import { QuantityInput } from '~/src/components/quantity-input/quantity-input';
 import { ShareProductLinks } from '~/src/components/share-product-links/share-product-links';
-import type { GetStaticRoutes } from '@wixc3/define-remix-app';
 
 import styles from './route.module.scss';
 
