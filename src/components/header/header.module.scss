@@ -4,6 +4,8 @@
     --headerTopBarHeight: 50px;
     --headerNavigationHeight: 54px;
     --headerHeight: calc(var(--headerTopBarHeight) + var(--headerNavigationHeight));
+
+    --actionsWidth: 500px;
 }
 
 .root {
@@ -41,7 +43,7 @@
 }
 
 .navigation .empty {
-    width: 160px;
+    width: var(--actionsWidth);
     flex-shrink: 1;
     flex-grow: 0;
 }
@@ -52,10 +54,11 @@
 
 .navigation .actions {
     flex-shrink: 0;
-    width: 160px;
+    width: var(--actionsWidth);
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    gap: 8px;
     padding: 0 8px;
 }
 

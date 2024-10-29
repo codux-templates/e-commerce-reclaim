@@ -1,5 +1,7 @@
-import { collections, products } from '@wix/stores';
 import { cart, currentCart, orders } from '@wix/ecom';
+import { members } from '@wix/members';
+import { OauthData, Tokens } from '@wix/sdk';
+import { collections, products } from '@wix/stores';
 
 export type Product = products.Product;
 export type Collection = collections.Collection;
@@ -10,6 +12,7 @@ export type CartItemDetails = cart.LineItem & cart.CartNonNullableFields['lineIt
 export type CartTotals = currentCart.EstimateTotalsResponse &
     currentCart.EstimateTotalsResponseNonNullableFields;
 export type OrderDetails = orders.Order & orders.OrderNonNullableFields;
+export type Member = members.Member & members.MemberNonNullableFields;
 
 export enum EcomApiErrorCodes {
     ProductNotFound = 'ProductNotFound',
@@ -123,4 +126,12 @@ export type EcomAPI = {
     getProductPriceBounds: (
         categorySlug: string,
     ) => Promise<EcomAPIResponse<{ lowest: number; highest: number }>>;
+    isUserLoggedIn: () => boolean;
+    getUser: () => Promise<Member | undefined>;
+    login: (callbackUrl: string) => Promise<{
+        oAuthData: OauthData;
+        authUrl: string;
+    }>;
+    logout: (returnUrl: string) => Promise<{ logoutUrl: string }>;
+    handleLoginCallback(url: string, oAuthData: OauthData | undefined): Promise<Tokens | undefined>;
 };

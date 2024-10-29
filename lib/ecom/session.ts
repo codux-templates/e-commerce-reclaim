@@ -1,5 +1,5 @@
 import { createCookieSessionStorage } from '@remix-run/node';
-import { Tokens } from '@wix/sdk';
+import { OauthData, Tokens } from '@wix/sdk';
 import { createApi, createWixClient, getWixClientId } from './api';
 
 export type SessionData = {
@@ -7,7 +7,14 @@ export type SessionData = {
     wixClientId: string;
 };
 
-const { getSession, commitSession } = createCookieSessionStorage<SessionData, void>({
+type FlashData = {
+    oAuthData: OauthData;
+};
+
+const { getSession, commitSession, destroySession } = createCookieSessionStorage<
+    SessionData,
+    FlashData
+>({
     cookie: {
         name: '__session',
         maxAge: 3600 * 24 * 100, // 100 days
@@ -19,7 +26,7 @@ const { getSession, commitSession } = createCookieSessionStorage<SessionData, vo
     },
 });
 
-export { commitSession };
+export { commitSession, destroySession, getSession };
 
 export async function initializeEcomSession(request: Request) {
     const session = await getSession(request.headers.get('Cookie'));

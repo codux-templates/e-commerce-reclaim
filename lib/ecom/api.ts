@@ -1,4 +1,5 @@
 import { currentCart, orders } from '@wix/ecom';
+import { members } from '@wix/members';
 import { redirects } from '@wix/redirects';
 import { createClient, IOAuthStrategy, OAuthStrategy, Tokens, WixClient } from '@wix/sdk';
 import { collections, products } from '@wix/stores';
@@ -24,6 +25,7 @@ type WixApiClient = WixClient<
         redirects: typeof redirects;
         collections: typeof collections;
         orders: typeof orders;
+        members: typeof members;
     }
 >;
 
@@ -51,6 +53,7 @@ export function createWixClient(tokens?: Tokens): WixApiClient {
             redirects,
             collections,
             orders,
+            members,
         },
         auth: OAuthStrategy({
             clientId: getWixClientId(),
@@ -303,6 +306,46 @@ export function createApi(wixClient: WixApiClient): EcomAPI {
             } catch (e) {
                 return failureResponse(EcomApiErrorCodes.GetProductsFailure, getErrorMessage(e));
             }
+        },
+        isUserLoggedIn() {
+            return wixClient.auth.loggedIn();
+        },
+        async getUser() {
+            const response = await wixClient.members.getCurrentMember();
+            return response.member;
+        },
+        async login(callbackUrl: string) {
+            const oAuthData = wixClient.auth.generateOAuthData(callbackUrl);
+
+            const { authUrl } = await wixClient.auth.getAuthUrl(oAuthData, {
+                responseMode: 'query',
+            });
+
+            return { oAuthData, authUrl };
+        },
+        async logout(returnUrl: string) {
+            const result = await wixClient.auth.logout(returnUrl);
+            return result;
+        },
+        async handleLoginCallback(url, oAuthData) {
+            const returnedOAuthData = wixClient.auth.parseFromUrl(url, 'query');
+            if (returnedOAuthData.error) {
+                throw new Error(`Error: ${returnedOAuthData.errorDescription}`);
+            }
+
+            if (!oAuthData) {
+                throw new Error(`Error: Could not get oAuthData`);
+            }
+
+            const memberTokens = await wixClient.auth.getMemberTokens(
+                returnedOAuthData.code,
+                returnedOAuthData.state,
+                oAuthData,
+            );
+
+            wixClient.auth.setTokens(memberTokens);
+
+            return memberTokens;
         },
     };
 }

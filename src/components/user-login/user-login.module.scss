@@ -1,0 +1,14 @@
+.root {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.root:hover .loginLink {
+    opacity: 0.7;
+}
+
+.loginLink {
+    font: var(--paragraph3);
+}

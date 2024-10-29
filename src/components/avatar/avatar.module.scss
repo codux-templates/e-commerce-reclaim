@@ -1,0 +1,23 @@
+:root {
+    --avatarSize: 22px;
+}
+
+.root {
+    width: var(--avatarSize);
+    height: var(--avatarSize);
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    border-radius: var(--avatarSize);
+}
+
+.root img,
+.root svg {
+    width: var(--avatarSize);
+    height: var(--avatarSize);
+}
+
+.defaultAvatar {
+    fill: var(--primary5);
+}
