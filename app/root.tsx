@@ -21,7 +21,6 @@ import { getErrorMessage, routeLocationToUrl } from '~/lib/utils';
 import { RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
 import { ErrorPage } from '~/src/components/error-page/error-page';
 import { SiteWrapper } from '~/src/components/site-wrapper/site-wrapper';
-import { ROUTES } from '~/src/router/config';
 
 import '~/src/styles/reset.scss';
 import '~/src/styles/colors.scss';
@@ -54,7 +53,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     );
 }
 
-const breadcrumbs: RouteBreadcrumbs = () => [{ title: 'Home', to: ROUTES.home.path }];
+const breadcrumbs: RouteBreadcrumbs = () => [{ title: 'Home', to: '/' }];
 
 export const handle = {
     breadcrumbs,
@@ -129,7 +128,7 @@ export function ErrorBoundary() {
                 title={isPageNotFoundError ? 'Page Not Found' : 'Oops, something went wrong'}
                 message={isPageNotFoundError ? undefined : getErrorMessage(error)}
                 actionButtonText="Back to shopping"
-                onActionButtonClick={() => navigate(ROUTES.products.to('all-products'))}
+                onActionButtonClick={() => navigate('/products/all-products')}
             />
         </ContentWrapper>
     );

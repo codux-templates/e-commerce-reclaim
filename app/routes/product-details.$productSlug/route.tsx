@@ -15,7 +15,6 @@ import { ProductOption } from '~/src/components/product-option/product-option';
 import { ProductPrice } from '~/src/components/product-price/product-price';
 import { QuantityInput } from '~/src/components/quantity-input/quantity-input';
 import { ShareProductLinks } from '~/src/components/share-product-links/share-product-links';
-import { ROUTES } from '~/src/router/config';
 
 import styles from './route.module.scss';
 
@@ -41,14 +40,14 @@ const breadcrumbs: RouteBreadcrumbs<typeof loader, ProductDetailsLocationState> 
     const breadcrumbs: BreadcrumbData[] = [
         {
             title: match.data.product.name!,
-            to: ROUTES.productDetails.to(match.data.product.slug!),
+            to: `/product-details/${match.data.product.slug}`,
         },
     ];
 
     if (fromCategory) {
         breadcrumbs.unshift({
             title: fromCategory.name,
-            to: ROUTES.products.to(fromCategory.slug),
+            to: `/products/${fromCategory.slug}`,
             clientOnly: true,
         });
     }
@@ -189,7 +188,7 @@ export function ErrorBoundary() {
             title={title}
             message={message}
             actionButtonText="Back to shopping"
-            onActionButtonClick={() => navigate(ROUTES.products.to('all-products'))}
+            onActionButtonClick={() => navigate('/products/all-products')}
         />
     );
 }

@@ -3,8 +3,10 @@ import { redirects } from '@wix/redirects';
 import { createClient, IOAuthStrategy, OAuthStrategy, Tokens, WixClient } from '@wix/sdk';
 import { collections, products } from '@wix/stores';
 import { getErrorMessage } from '~/lib/utils';
-import { ROUTES } from '~/src/router/config';
-import { DEMO_STORE_WIX_CLIENT_ID, WIX_STORES_APP_ID } from './constants';
+import {
+    DEMO_STORE_WIX_CLIENT_ID,
+    WIX_STORES_APP_ID,
+} from './constants';
 import { getFilteredProductsQuery } from './product-filters';
 import { getSortedProductsQuery } from './product-sorting';
 import {
@@ -217,7 +219,7 @@ export function createApi(wixClient: WixApiClient): EcomAPI {
                     ecomCheckout: { checkoutId },
                     callbacks: {
                         postFlowUrl: window.location.origin,
-                        thankYouPageUrl: `${window.location.origin}${ROUTES.thankYou.path}`,
+                        thankYouPageUrl: `${window.location.origin}/thank-you`,
                     },
                 });
                 if (!redirectSession?.fullUrl) {
