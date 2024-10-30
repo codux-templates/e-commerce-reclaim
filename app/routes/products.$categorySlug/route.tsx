@@ -1,8 +1,10 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from '@remix-run/react';
+import type { GetStaticRoutes } from '@wixc3/define-remix-app';
 import classNames from 'classnames';
 import { FadeIn } from '~/lib/components/visual-effects';
-import { EcomApiErrorCodes } from '~/lib/ecom';
+import { EcomApiErrorCodes, initializeEcomApiAnonymous } from '~/lib/ecom';
+import { initializeEcomApiForRequest } from '~/lib/ecom/session';
 import { useAppliedProductFilters } from '~/lib/hooks';
 import { useProductSorting } from '~/lib/hooks/use-product-sorting';
 import { useProductsPageResults } from '~/lib/hooks/use-products-page-results';
@@ -21,8 +23,9 @@ import { ProductSortingSelect } from '~/src/components/product-sorting-select/pr
 
 import styles from './route.module.scss';
 
-export const loader = ({ params, request }: LoaderFunctionArgs) => {
-    return getProductsRouteData(params.categorySlug, request.url);
+export const loader = async ({ params, request }: LoaderFunctionArgs) => {
+    const api = await initializeEcomApiForRequest(request);
+    return getProductsRouteData(api, params.categorySlug, request.url);
 };
 
 const breadcrumbs: RouteBreadcrumbs<typeof loader> = (match) => [
@@ -31,6 +34,17 @@ const breadcrumbs: RouteBreadcrumbs<typeof loader> = (match) => [
         to: `/products/${match.data.category.slug}`,
     },
 ];
+
+export const getStaticRoutes: GetStaticRoutes = async () => {
+    const api = initializeEcomApiAnonymous();
+    const categories = await api.getAllCategories();
+
+    if (categories.status === 'failure') {
+        throw categories.error;
+    }
+
+    return categories.body.map((category) => `/products/${category.slug}`);
+};
 
 export const handle = {
     breadcrumbs,

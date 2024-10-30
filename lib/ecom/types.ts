@@ -79,7 +79,8 @@ export enum ProductSortBy {
     nameDesc = 'nameDesc',
 }
 
-interface GetProductsByCategoryOptions {
+interface GetProductsOptions {
+    categorySlug?: string;
     skip?: number;
     limit?: number;
     filters?: IProductFilters;
@@ -91,10 +92,13 @@ export type AddToCartOptions =
     | { options: Record<string, string | undefined> };
 
 export type EcomAPI = {
-    getProductsByCategory: (
-        categorySlug: string,
-        options?: GetProductsByCategoryOptions,
+    getProducts: (
+        options?: GetProductsOptions,
     ) => Promise<EcomAPIResponse<{ items: Product[]; totalCount: number }>>;
+    getFeaturedProducts: (
+        categorySlug: string,
+        count: number,
+    ) => Promise<EcomAPIResponse<{ category: Collection; items: Product[] }>>;
     getPromotedProducts: () => Promise<EcomAPIResponse<Product[]>>;
     getProductBySlug: (slug: string) => Promise<EcomAPIResponse<Product>>;
     getCart: () => Promise<EcomAPIResponse<Cart>>;
