@@ -1,6 +1,11 @@
 import { createCookieSessionStorage } from '@remix-run/node';
 import { Tokens } from '@wix/sdk';
-import { createEcomApi, createWixClient, getWixClientId } from './api';
+import {
+    createWixClient,
+    getWixClientId,
+    initializeEcomApiAnonymous,
+    initializeEcomApiWithTokens,
+} from './api';
 
 export type SessionData = {
     wixEcomTokens: Tokens;
@@ -46,6 +51,5 @@ export async function initializeEcomSession(request: Request) {
 export async function initializeEcomApiForRequest(request: Request) {
     const { session } = await initializeEcomSession(request);
     const tokens = session.get('wixEcomTokens');
-    const client = createWixClient(tokens);
-    return createEcomApi(client);
+    return tokens ? initializeEcomApiWithTokens(tokens) : initializeEcomApiAnonymous();
 }

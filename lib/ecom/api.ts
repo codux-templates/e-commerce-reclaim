@@ -69,7 +69,7 @@ export function initializeEcomApiAnonymous() {
     return createEcomApi(client);
 }
 
-export function createEcomApi(wixClient: WixApiClient): EcomAPI {
+function createEcomApi(wixClient: WixApiClient): EcomAPI {
     return {
         async getProducts({ categorySlug, skip = 0, limit = 100, filters, sortBy } = {}) {
             try {
