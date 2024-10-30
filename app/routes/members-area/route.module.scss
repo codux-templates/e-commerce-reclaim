@@ -1,0 +1,27 @@
+.page {
+    padding-top: 100px;
+    width: 980px;
+    margin: 0 auto;
+}
+
+.menu {
+    display: flex;
+    border-bottom: 1px solid var(--secondary1);
+}
+
+.menuItem {
+    padding: 14px 30px;
+    border-bottom: 4px solid transparent;
+}
+
+.menuItem:hover {
+    border-bottom-color: var(--secondary2);
+}
+
+.menuItem.active {
+    border-bottom-color: var(--secondary3);
+}
+
+.content {
+    padding: 30px;
+}
