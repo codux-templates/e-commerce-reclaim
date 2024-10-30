@@ -1,51 +1,10 @@
-@import '@styles/variables.scss';
-
 .page {
     padding-top: 100px;
-    width: 980px;
+    width: 100%;
+    max-width: 980px;
     margin: 0 auto;
-}
-
-.menu {
-    display: flex;
-    border-bottom: 1px solid var(--secondary1);
-    overflow: scroll;
-}
-
-.menuItem {
-    padding: 14px 30px;
-    border-bottom: 4px solid transparent;
-    flex-shrink: 0;
-}
-
-.menuItem:hover {
-    border-bottom-color: var(--secondary2);
-}
-
-.menuItem.active {
-    border-bottom-color: var(--secondary3);
 }
 
 .content {
     padding: 30px;
-}
-
-@media (max-width: $desktop-width) {
-    .page {
-        width: 100%;
-    }    
-}
-
-@media (max-width: $tablet-width) {
-    .menuItem {
-        padding: 14px 20px;
-    }
-    
-    .menuItem.active {
-        color: var(--primary4);
-    }
-
-    .menuItem.active, .menuItem:hover {
-        border-bottom-color: transparent;
-    }
 }
