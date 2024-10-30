@@ -87,6 +87,7 @@ export default function ProductDetailsPage() {
         handleAddToCart,
         handleOptionChange,
         handleQuantityChange,
+        handleAddToCartAndCheckout,
     } = useProductDetails(product);
 
     const breadcrumbs = useBreadcrumbs();
@@ -154,6 +155,17 @@ export default function ProductDetailsPage() {
                         disabled={outOfStock || isAddingToCart}
                     >
                         {outOfStock ? 'Out of stock' : 'Add to Cart'}
+                    </button>
+                    <button
+                        className={classNames(
+                            'button',
+                            'primaryButton',
+                            styles.addToCartAndCheckoutButton,
+                        )}
+                        onClick={handleAddToCartAndCheckout}
+                        disabled={outOfStock || isAddingToCart}
+                    >
+                        {outOfStock ? 'Out of stock' : 'Add to Cart and check out'}
                     </button>
 
                     {product.additionalInfoSections &&
