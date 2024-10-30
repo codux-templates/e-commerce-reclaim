@@ -365,7 +365,7 @@
 .tabs {
     display: flex;
     border-bottom: 1px solid var(--secondary1);
-    overflow: scroll;
+    overflow: auto;
 }
 
 .tab {
