@@ -62,17 +62,29 @@ export function createWixClient(tokens?: Tokens): WixApiClient {
     });
 }
 
-export function createApi(wixClient: WixApiClient): EcomAPI {
-    return {
-        async getProductsByCategory(categorySlug, { skip = 0, limit = 100, filters, sortBy } = {}) {
-            try {
-                const category = (await wixClient.collections.getCollectionBySlug(categorySlug))
-                    .collection;
-                if (!category) throw new Error('Category not found');
+export function initializeEcomApiWithTokens(tokens: Tokens) {
+    const client = createWixClient(tokens);
+    return createEcomApi(client);
+}
 
-                let query = wixClient.products
-                    .queryProducts()
-                    .hasSome('collectionIds', [category._id]);
+export function initializeEcomApiAnonymous() {
+    const client = createWixClient();
+    return createEcomApi(client);
+}
+
+function createEcomApi(wixClient: WixApiClient): EcomAPI {
+    return {
+        async getProducts({ categorySlug, skip = 0, limit = 100, filters, sortBy } = {}) {
+            try {
+                const { collection } = categorySlug
+                    ? await wixClient.collections.getCollectionBySlug(categorySlug)
+                    : {};
+
+                let query = wixClient.products.queryProducts();
+
+                if (collection) {
+                    query = query.hasSome('collectionIds', [collection._id]);
+                }
 
                 if (filters) {
                     query = getFilteredProductsQuery(query, filters);
@@ -108,19 +120,12 @@ export function createApi(wixClient: WixApiClient): EcomAPI {
                 }
             }
 
-            const productsResponse = await this.getProductsByCategory(category.slug!, {
+            const productsResponse = await this.getProducts({
+                categorySlug: category.slug!,
                 limit: count,
             });
             if (productsResponse.status === 'failure') throw productsResponse.error;
             return successResponse({ category, items: productsResponse.body.items });
-        },
-        async getPromotedProducts() {
-            try {
-                const products = (await wixClient.products.queryProducts().limit(4).find()).items;
-                return successResponse(products);
-            } catch (e) {
-                return failureResponse(EcomApiErrorCodes.GetProductsFailure, getErrorMessage(e));
-            }
         },
         async getProductBySlug(slug) {
             try {
