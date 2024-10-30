@@ -128,10 +128,16 @@ export type EcomAPI = {
     ) => Promise<EcomAPIResponse<{ lowest: number; highest: number }>>;
     isUserLoggedIn: () => boolean;
     getUser: () => Promise<Member | undefined>;
-    login: (callbackUrl: string) => Promise<{
+    login: (
+        callbackUrl: string,
+        returnUrl: string,
+    ) => Promise<{
         oAuthData: OauthData;
         authUrl: string;
     }>;
     logout: (returnUrl: string) => Promise<{ logoutUrl: string }>;
-    handleLoginCallback(url: string, oAuthData: OauthData | undefined): Promise<Tokens | undefined>;
+    handleLoginCallback(
+        url: string,
+        oAuthData: OauthData | undefined,
+    ): Promise<{ memberTokens: Tokens | undefined; returnUrl: string }>;
 };

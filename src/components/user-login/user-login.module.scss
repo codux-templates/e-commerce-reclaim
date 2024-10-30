@@ -1,14 +1,35 @@
 .root {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
     cursor: pointer;
 }
 
-.root:hover .loginLink {
+.root:hover .actionLink,
+.actionLink:hover {
     opacity: 0.7;
 }
 
-.loginLink {
+.actionLink {
     font: var(--paragraph3);
+}
+
+.root .select {
+    border: none;
+    background: transparent;
+}
+
+body .dropdown {
+    width: unset;
+    background-color: var(--primary1);
+    border: 1px solid rgba(23, 17, 13, 0.2);
+}
+
+.dropdown .selectItem {
+    padding: 0 20px;
+}
+
+.dropdown .selectItem:hover,
+.dropdown .selectItem:focus {
+    background: unset;
 }

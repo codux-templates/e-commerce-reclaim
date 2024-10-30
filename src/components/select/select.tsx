@@ -7,7 +7,7 @@ import styles from './select.module.scss';
 export interface SelectProps<V extends string> {
     value: V;
     onValueChange: (value: V) => void;
-    placeholder?: string;
+    placeholder?: React.ReactNode;
     children: React.ReactNode;
     className?: string;
     dropdownClassName?: string;

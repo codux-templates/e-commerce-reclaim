@@ -2,10 +2,14 @@ import { LoaderFunctionArgs, redirect } from '@remix-run/node';
 import { commitSession, getSession, initializeEcomApi } from '~/lib/ecom/session';
 
 export async function loader({ request }: LoaderFunctionArgs) {
-    const api = await initializeEcomApi(request);
-
     const currentUrl = new URL(request.url);
-    const { oAuthData, authUrl } = await api.login(`${currentUrl.origin}/login-callback`);
+    const returnUrlPath = currentUrl.searchParams.get('returnPath') ?? '/';
+
+    const loginCallbackUrl = `${currentUrl.origin}/login-callback`;
+    const returnUrl = `${currentUrl.origin}${returnUrlPath}`;
+
+    const api = await initializeEcomApi(request);
+    const { oAuthData, authUrl } = await api.login(loginCallbackUrl, returnUrl);
 
     const session = await getSession(request.headers.get('Cookie'));
 

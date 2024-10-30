@@ -314,8 +314,8 @@ export function createApi(wixClient: WixApiClient): EcomAPI {
             const response = await wixClient.members.getCurrentMember();
             return response.member;
         },
-        async login(callbackUrl: string) {
-            const oAuthData = wixClient.auth.generateOAuthData(callbackUrl);
+        async login(callbackUrl: string, returnUrl: string) {
+            const oAuthData = wixClient.auth.generateOAuthData(callbackUrl, returnUrl);
 
             const { authUrl } = await wixClient.auth.getAuthUrl(oAuthData, {
                 responseMode: 'query',
@@ -345,7 +345,7 @@ export function createApi(wixClient: WixApiClient): EcomAPI {
 
             wixClient.auth.setTokens(memberTokens);
 
-            return memberTokens;
+            return { memberTokens, returnUrl: oAuthData.originalUri };
         },
     };
 }
