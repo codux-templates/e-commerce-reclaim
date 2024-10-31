@@ -19,7 +19,7 @@ import { ShareProductLinks } from '~/src/components/share-product-links/share-pr
 import styles from './route.module.scss';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-    if (!params.productSlug) throw new Response(null, { status: 400 });
+    if (!params.productSlug) throw new Response('Bad Request', { status: 400 });
     const api = await initializeEcomApiForRequest(request);
     const product = await api.getProductBySlug(params.productSlug);
     if (!product) throw new Response('Product Not Found', { status: 404 });
