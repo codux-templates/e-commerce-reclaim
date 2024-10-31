@@ -101,13 +101,13 @@ export default function App() {
 
     const [searchParams, setSearchParams] = useSearchParams();
 
+    // clear `logged-in` parameter from URL, see `login-callback` route for details
     useEffect(() => {
-        if (searchParams.has('code') && searchParams.has('state')) {
+        if (searchParams.has('logged-in')) {
             setSearchParams(
                 (prev) => {
                     const params = new URLSearchParams(prev);
-                    params.delete('code');
-                    params.delete('state');
+                    params.delete('logged-in');
                     return params;
                 },
                 { preventScrollReset: true },

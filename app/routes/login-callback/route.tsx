@@ -11,7 +11,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
         session.set('wixEcomTokens', memberTokens);
     }
 
-    return redirect(returnUrl, {
+    const redirectUrl = new URL(returnUrl);
+    // add some query string to redirect url, because netlify in production mode
+    // keeps query string even if it is not present in redirect location
+    // and this results in `code` and `state` params presence in URL after login
+    redirectUrl.searchParams.set('logged-in', 'true');
+
+    return redirect(redirectUrl.toString(), {
         headers: {
             'Set-Cookie': await commitSession(session),
         },
