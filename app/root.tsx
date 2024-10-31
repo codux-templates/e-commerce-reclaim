@@ -11,6 +11,7 @@ import {
     useNavigate,
     useNavigation,
     useRouteError,
+    useSearchParams,
 } from '@remix-run/react';
 import { Tokens } from '@wix/sdk';
 import { useEffect } from 'react';
@@ -97,6 +98,22 @@ export default function App() {
     if (typeof window !== 'undefined' && typeof window.ENV === 'undefined') {
         window.ENV = ENV;
     }
+
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    useEffect(() => {
+        if (searchParams.has('code') && searchParams.has('state')) {
+            setSearchParams(
+                (prev) => {
+                    const params = new URLSearchParams(prev);
+                    params.delete('code');
+                    params.delete('state');
+                    return params;
+                },
+                { preventScrollReset: true },
+            );
+        }
+    }, [searchParams, setSearchParams]);
 
     return (
         <ContentWrapper tokens={wixEcomTokens}>
