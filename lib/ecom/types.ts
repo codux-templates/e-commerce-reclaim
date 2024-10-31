@@ -82,7 +82,7 @@ export enum ProductSortBy {
     nameDesc = 'nameDesc',
 }
 
-interface GetProductsOptions {
+export interface GetProductsOptions {
     categorySlug?: string;
     skip?: number;
     limit?: number;
@@ -98,10 +98,6 @@ export type EcomAPI = {
     getProducts: (
         options?: GetProductsOptions,
     ) => Promise<EcomAPIResponse<{ items: Product[]; totalCount: number }>>;
-    getFeaturedProducts: (
-        categorySlug: string,
-        count: number,
-    ) => Promise<EcomAPIResponse<{ category: Collection; items: Product[] }>>;
     getProductBySlug: (slug: string) => Promise<EcomAPIResponse<Product>>;
     getCart: () => Promise<EcomAPIResponse<Cart>>;
     getCartTotals: () => Promise<EcomAPIResponse<CartTotals>>;
