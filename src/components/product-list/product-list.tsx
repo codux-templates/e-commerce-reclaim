@@ -48,7 +48,7 @@ export const ProductList = React.memo<ProductListProps>(function ProductList({
     }
 
     return (
-        <div className={styles.productsList}>
+        <div className={styles.productList}>
             {products.map((product) => (
                 <FadeIn key={product._id} duration={0.9}>
                     <ProductLink

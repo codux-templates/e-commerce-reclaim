@@ -1,4 +1,6 @@
-.productsList {
+@import '@styles/variables.scss';
+
+.productList {
     --minCardSize: 404px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(var(--minCardSize), 100%), 1fr));
@@ -16,4 +18,10 @@
 
 .clearFiltersButton:hover {
     color: rgba(23, 17, 13, 0.7);
+}
+
+@media (max-width: $desktop-width) {
+    .productList {
+        --minCardSize: 250px;
+    }
 }
