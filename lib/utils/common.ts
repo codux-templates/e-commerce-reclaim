@@ -1,5 +1,4 @@
 import { isRouteErrorResponse, Location } from '@remix-run/react';
-import { isEcomSDKError } from '~/lib/ecom';
 
 /**
  * It's important to add an appropriate role and a keyboard support
@@ -27,28 +26,19 @@ export function removeQueryStringFromUrl(url: string) {
 
 /*
  * Retrieves the message from a thrown error.
- * - Handles Remix ErrorResponse (non-Error instance).
- * - Handles Wix eCom SDK errors (non-Error instance).
+ * - Handles Remix ErrorResponse (a wrapper containing an error).
  * - Handles plain objects structured like an Error.
  * - Converts plain objects with unknown structure into
  *   a JSON string to help in debugging their source.
  * - Falls back to converting the value to a string.
  */
 export function getErrorMessage(error: unknown): string {
-    if (error instanceof Error) {
-        return error.message;
-    }
-
-    if (isEcomSDKError(error)) {
-        return error.message;
-    }
-
     // Remix ErrorResponse thrown from an action or loader:
     // - throw new Response('oops');
     // - throw json('oops')
     // - throw json({message: 'oops'})
     if (isRouteErrorResponse(error)) {
-        error = error.data;
+        return getErrorMessage(error.data) || error.statusText;
     }
 
     if (typeof error == 'object' && error !== null) {
