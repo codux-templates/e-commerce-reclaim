@@ -8,11 +8,21 @@
     gap: 12px;
 }
 
-.root:hover .actionLink,
-.actionLink:hover {
-    opacity: 0.7;
+.dropDownContent {
+    padding: 10px 0;
 }
 
-.actionLink {
+.menuItem {
+    display: flex;
+    justify-content: center;
+}
+
+.menuLink {
     font: var(--paragraph3);
+}
+
+.root:hover .menuLink,
+.menuLink:hover,
+.menuLink.active {
+    opacity: 0.7;
 }

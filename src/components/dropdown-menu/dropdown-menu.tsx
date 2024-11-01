@@ -6,9 +6,10 @@ import styles from './dropdown-menu.module.scss';
 
 export interface DropdownMenuProps extends React.PropsWithChildren {
     trigger: React.ReactNode;
+    contentClassName?: string;
 }
 
-export const DropdownMenu = ({ trigger, children }: DropdownMenuProps) => (
+export const DropdownMenu = ({ trigger, children, contentClassName }: DropdownMenuProps) => (
     <RadixDropdownMenu.Root>
         <RadixDropdownMenu.Trigger asChild className={styles.trigger}>
             {trigger}
@@ -16,10 +17,10 @@ export const DropdownMenu = ({ trigger, children }: DropdownMenuProps) => (
 
         <RadixDropdownMenu.Portal>
             <RadixDropdownMenu.Content
+                className={classNames(styles.content, contentClassName)}
                 sideOffset={3}
                 align={'end'}
                 alignOffset={-5}
-                className={styles.content}
             >
                 {children}
             </RadixDropdownMenu.Content>
@@ -29,7 +30,7 @@ export const DropdownMenu = ({ trigger, children }: DropdownMenuProps) => (
 
 export interface DropdownMenuItemProps extends React.PropsWithChildren {
     className?: string;
-    onClick: () => void;
+    onClick?: () => void;
 }
 
 export const DropdownMenuItem = ({ children, className, onClick }: DropdownMenuItemProps) => {

@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from '@remix-run/react';
+import { NavLink, useLocation, useNavigate } from '@remix-run/react';
 import { useUserInfo } from '~/lib/hooks';
 import { Avatar } from '../avatar/avatar';
 import { DropdownMenu, DropdownMenuItem } from '../dropdown-menu/dropdown-menu';
@@ -18,12 +18,6 @@ export const UserMenu = () => {
         }
     };
 
-    const handleLogoutClick = () => {
-        if (isLoggedIn) {
-            navigate(`/logout?returnPath=${location.pathname}`);
-        }
-    };
-
     const content = (
         <div className={styles.contentWrapper}>
             <Avatar imageSrc={user?.profile?.photo?.url} altText={user?.profile?.nickname || ''} />
@@ -38,9 +32,14 @@ export const UserMenu = () => {
     return (
         <div className={styles.root} onClick={handleRootClick}>
             {isLoggedIn ? (
-                <DropdownMenu trigger={content}>
-                    <DropdownMenuItem className={styles.actionLink} onClick={handleLogoutClick}>
-                        Log out
+                <DropdownMenu trigger={content} contentClassName={styles.dropDownContent}>
+                    <DropdownMenuItem className={styles.menuItem}>
+                        <NavLink
+                            className={styles.menuLink}
+                            to={`/logout?returnPath=${location.pathname}`}
+                        >
+                            Log out
+                        </NavLink>
                     </DropdownMenuItem>
                 </DropdownMenu>
             ) : (
