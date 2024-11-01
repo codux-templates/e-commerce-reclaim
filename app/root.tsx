@@ -28,10 +28,6 @@ import '~/src/styles/typography.scss';
 import '~/src/styles/common.scss';
 import '~/src/styles/index.scss';
 
-export const meta: MetaFunction = () => {
-    return [{ title: 'ReClaim: Home Goods Store' }];
-};
-
 export async function loader({ request }: LoaderFunctionArgs) {
     const { wixEcomTokens, session, shouldUpdateSessionCookie } =
         await initializeEcomSession(request);
@@ -133,3 +129,49 @@ export function ErrorBoundary() {
         </ContentWrapper>
     );
 }
+
+export const meta: MetaFunction = () => {
+    const title = 'ReClaim: Home Goods Store';
+    const description = 'Essential home products for sustainable living';
+    const imagePath = '/cover.jpg';
+
+    return [
+        { title: title },
+        {
+            name: 'description',
+            content: description,
+        },
+        {
+            property: 'robots',
+            content: 'index, follow',
+        },
+        {
+            property: 'og:title',
+            content: title,
+        },
+        {
+            property: 'og:description',
+            content: description,
+        },
+        {
+            property: 'og:image',
+            content: imagePath,
+        },
+        {
+            name: 'twitter:card',
+            content: 'summary_large_image',
+        },
+        {
+            name: 'twitter:title',
+            content: title,
+        },
+        {
+            name: 'twitter:description',
+            content: description,
+        },
+        {
+            name: 'twitter:image',
+            content: imagePath,
+        },
+    ];
+};

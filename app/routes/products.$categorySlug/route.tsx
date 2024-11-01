@@ -1,5 +1,11 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
-import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from '@remix-run/react';
+import {
+    isRouteErrorResponse,
+    type MetaFunction,
+    useLoaderData,
+    useNavigate,
+    useRouteError,
+} from '@remix-run/react';
 import type { GetStaticRoutes } from '@wixc3/define-remix-app';
 import classNames from 'classnames';
 import { EcomApiErrorCodes, initializeEcomApiAnonymous } from '~/lib/ecom';
@@ -184,3 +190,17 @@ export function ErrorBoundary() {
         />
     );
 }
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+    return [
+        { title: data?.category.name ?? 'ReClaim: Products' },
+        {
+            name: 'description',
+            content: data?.category.description ?? 'Category description',
+        },
+        {
+            property: 'robots',
+            content: 'index, follow',
+        },
+    ];
+};

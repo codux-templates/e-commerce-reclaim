@@ -1,5 +1,11 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
-import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from '@remix-run/react';
+import {
+    isRouteErrorResponse,
+    type MetaFunction,
+    useLoaderData,
+    useNavigate,
+    useRouteError,
+} from '@remix-run/react';
 import type { GetStaticRoutes } from '@wixc3/define-remix-app';
 import classNames from 'classnames';
 import { initializeEcomApiAnonymous } from '~/lib/ecom';
@@ -205,3 +211,49 @@ export function ErrorBoundary() {
         />
     );
 }
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+    const title = data?.product.name ?? 'Product Details';
+    const description = data?.product.description ?? 'Product Description';
+    const imageURL = data?.product.media?.mainMedia?.image?.url ?? '/cover.jpg';
+
+    return [
+        { title: title },
+        {
+            name: 'description',
+            content: description,
+        },
+        {
+            property: 'robots',
+            content: 'index, follow',
+        },
+        {
+            property: 'og:title',
+            content: title,
+        },
+        {
+            property: 'og:description',
+            content: description,
+        },
+        {
+            property: 'og:image',
+            content: imageURL,
+        },
+        {
+            name: 'twitter:card',
+            content: 'summary_large_image',
+        },
+        {
+            name: 'twitter:title',
+            content: title,
+        },
+        {
+            name: 'twitter:description',
+            content: description,
+        },
+        {
+            name: 'twitter:image',
+            content: imageURL,
+        },
+    ];
+};

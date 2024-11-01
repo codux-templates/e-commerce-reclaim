@@ -1,4 +1,4 @@
-import { Link } from '@remix-run/react';
+import { Link, type MetaFunction } from '@remix-run/react';
 import classNames from 'classnames';
 import { useCart, useCheckout } from '~/lib/ecom';
 import { findLineItemPriceBreakdown, getErrorMessage } from '~/lib/utils';
@@ -108,3 +108,17 @@ export default function CartPage() {
         </div>
     );
 }
+
+export const meta: MetaFunction = () => {
+    return [
+        { title: 'Cart' },
+        {
+            name: 'description',
+            content: 'Essential home products for sustainable living',
+        },
+        {
+            property: 'robots',
+            content: 'noindex, nofollow',
+        },
+    ];
+};
