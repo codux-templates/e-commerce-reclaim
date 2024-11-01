@@ -40,3 +40,11 @@ export const DropdownMenuItem = ({ children, className, onClick }: DropdownMenuI
         </RadixDropdownMenu.Item>
     );
 };
+
+export interface DropdownMenuSeparatorProps {
+    className?: string;
+}
+
+export const DropdownMenuSeparator = ({ className }: DropdownMenuSeparatorProps) => {
+    return <RadixDropdownMenu.Separator className={classNames(styles.separator, className)} />;
+};

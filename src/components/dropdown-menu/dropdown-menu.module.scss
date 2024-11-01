@@ -23,3 +23,11 @@
 .item:hover {
     box-shadow: none;
 }
+
+.separator {
+    margin: 5px 20px;
+    height: 1px;
+    border: solid 1px #eee;
+    border-style: inset;
+    opacity: 0.4;
+}

@@ -1,7 +1,12 @@
 import { NavLink, useLocation, useNavigate } from '@remix-run/react';
+import classNames from 'classnames';
 import { useUserInfo } from '~/lib/hooks';
 import { Avatar } from '../avatar/avatar';
-import { DropdownMenu, DropdownMenuItem } from '../dropdown-menu/dropdown-menu';
+import {
+    DropdownMenu,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+} from '../dropdown-menu/dropdown-menu';
 import { ChevronDownIcon } from '../icons';
 
 import styles from './user-menu.module.scss';
@@ -29,10 +34,29 @@ export const UserMenu = () => {
         </div>
     );
 
+    const menuItemStyle = ({ isActive }: { isActive: boolean }) =>
+        classNames(styles.menuLink, {
+            [styles.active]: isActive,
+        });
+
     return (
         <div className={styles.root} onClick={handleRootClick}>
             {isLoggedIn ? (
                 <DropdownMenu trigger={content} contentClassName={styles.dropDownContent}>
+                    <DropdownMenuItem className={styles.menuItem}>
+                        <NavLink className={menuItemStyle} to="/members-area/my-account">
+                            My Account
+                        </NavLink>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem className={styles.menuItem}>
+                        <NavLink className={menuItemStyle} to="/members-area/my-orders">
+                            My Orders
+                        </NavLink>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuSeparator />
+
                     <DropdownMenuItem className={styles.menuItem}>
                         <NavLink
                             className={styles.menuLink}
