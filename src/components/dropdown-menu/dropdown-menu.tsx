@@ -15,7 +15,12 @@ export const DropdownMenu = ({ trigger, children }: DropdownMenuProps) => (
         </RadixDropdownMenu.Trigger>
 
         <RadixDropdownMenu.Portal>
-            <RadixDropdownMenu.Content sideOffset={3} align={'end'} alignOffset={-5} className={styles.content}>
+            <RadixDropdownMenu.Content
+                sideOffset={3}
+                align={'end'}
+                alignOffset={-5}
+                className={styles.content}
+            >
                 {children}
             </RadixDropdownMenu.Content>
         </RadixDropdownMenu.Portal>
