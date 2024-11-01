@@ -102,6 +102,7 @@ export default function HomePage() {
 export const meta: MetaFunction = () => {
     const title = 'ReClaim: Home Goods Store';
     const description = 'Essential home products for sustainable living';
+    const imagePath = '/cover.jpg';
 
     return [
         { title },
@@ -120,6 +121,10 @@ export const meta: MetaFunction = () => {
         {
             property: 'og:description',
             content: description,
+        },
+        {
+            property: 'og:image',
+            content: imagePath,
         },
         {
             name: 'twitter:card',
