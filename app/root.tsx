@@ -11,7 +11,6 @@ import {
     useNavigate,
     useNavigation,
     useRouteError,
-    useSearchParams,
 } from '@remix-run/react';
 import { Tokens } from '@wix/sdk';
 import { useEffect } from 'react';
@@ -98,22 +97,6 @@ export default function App() {
     if (typeof window !== 'undefined' && typeof window.ENV === 'undefined') {
         window.ENV = ENV;
     }
-
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    // clear `logged-in` parameter from URL, see `login-callback` route for details
-    useEffect(() => {
-        if (searchParams.has('logged-in')) {
-            setSearchParams(
-                (prev) => {
-                    const params = new URLSearchParams(prev);
-                    params.delete('logged-in');
-                    return params;
-                },
-                { preventScrollReset: true },
-            );
-        }
-    }, [searchParams, setSearchParams]);
 
     return (
         <ContentWrapper tokens={wixEcomTokens}>

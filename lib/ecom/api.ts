@@ -1,7 +1,7 @@
 import { currentCart, orders } from '@wix/ecom';
 import { members } from '@wix/members';
 import { redirects } from '@wix/redirects';
-import { createClient, IOAuthStrategy, OAuthStrategy, Tokens, WixClient } from '@wix/sdk';
+import { createClient, OAuthStrategy, Tokens } from '@wix/sdk';
 import { collections, products } from '@wix/stores';
 import { getErrorMessage } from '~/lib/utils';
 import { DEMO_STORE_WIX_CLIENT_ID, WIX_STORES_APP_ID } from './constants';
@@ -13,20 +13,8 @@ import {
     EcomAPIFailureResponse,
     EcomAPISuccessResponse,
     isEcomSDKError,
+    WixApiClient,
 } from './types';
-
-type WixApiClient = WixClient<
-    undefined,
-    IOAuthStrategy,
-    {
-        products: typeof products;
-        currentCart: typeof currentCart;
-        redirects: typeof redirects;
-        collections: typeof collections;
-        orders: typeof orders;
-        members: typeof members;
-    }
->;
 
 export function getWixClientId() {
     /**
@@ -73,6 +61,9 @@ export function initializeEcomApiAnonymous() {
 
 function createEcomApi(wixClient: WixApiClient): EcomAPI {
     return {
+        getWixClient() {
+            return wixClient;
+        },
         async getProducts({ categorySlug, skip = 0, limit = 100, filters, sortBy } = {}) {
             try {
                 const { collection } = categorySlug
@@ -304,26 +295,6 @@ function createEcomApi(wixClient: WixApiClient): EcomAPI {
         async logout(returnUrl: string) {
             const result = await wixClient.auth.logout(returnUrl);
             return result;
-        },
-        async handleLoginCallback(url, oAuthData) {
-            const returnedOAuthData = wixClient.auth.parseFromUrl(url, 'query');
-            if (returnedOAuthData.error) {
-                throw new Error(`Error: ${returnedOAuthData.errorDescription}`);
-            }
-
-            if (!oAuthData) {
-                throw new Error(`Error: Could not get oAuthData`);
-            }
-
-            const memberTokens = await wixClient.auth.getMemberTokens(
-                returnedOAuthData.code,
-                returnedOAuthData.state,
-                oAuthData,
-            );
-
-            wixClient.auth.setTokens(memberTokens);
-
-            return { memberTokens, returnUrl: oAuthData.originalUri };
         },
     };
 }

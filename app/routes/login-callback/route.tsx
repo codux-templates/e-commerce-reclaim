@@ -3,19 +3,31 @@ import { commitSession, getSession, initializeEcomApiForRequest } from '~/lib/ec
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const session = await getSession(request.headers.get('Cookie'));
-    const oAuthData = session.get('oAuthData');
+    const storedOauthData = session.get('oAuthData');
 
-    const api = await initializeEcomApiForRequest(request);
-    const { memberTokens, returnUrl } = await api.handleLoginCallback(request.url, oAuthData);
-    if (memberTokens) {
-        session.set('wixEcomTokens', memberTokens);
+    if (storedOauthData === undefined) {
+        return redirect('/login');
     }
 
-    const redirectUrl = new URL(returnUrl);
-    // add some query string to redirect url, because netlify in production mode
-    // keeps query string even if it is not present in redirect location
-    // and this results in `code` and `state` params presence in URL after login
-    redirectUrl.searchParams.set('logged-in', 'true');
+    const api = await initializeEcomApiForRequest(request);
+    const wixClient = api.getWixClient();
+
+    const returnedOAuthData = wixClient.auth.parseFromUrl(request.url, 'query');
+    if (returnedOAuthData.error) {
+        throw new Error(`Error: ${returnedOAuthData.errorDescription}`);
+    }
+
+    const memberTokens = await wixClient.auth.getMemberTokens(
+        returnedOAuthData.code,
+        returnedOAuthData.state,
+        storedOauthData,
+    );
+    wixClient.auth.setTokens(memberTokens);
+
+    session.set('wixEcomTokens', memberTokens);
+
+    const redirectUrl = new URL(storedOauthData.originalUri || new URL(request.url).host);
+    redirectUrl.searchParams.set('login', 'success');
 
     return redirect(redirectUrl.toString(), {
         headers: {

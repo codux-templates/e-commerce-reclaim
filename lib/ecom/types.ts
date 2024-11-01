@@ -1,6 +1,7 @@
 import { cart, currentCart, orders } from '@wix/ecom';
 import { members } from '@wix/members';
-import { OauthData, Tokens } from '@wix/sdk';
+import { redirects } from '@wix/redirects';
+import { IOAuthStrategy, OauthData, WixClient } from '@wix/sdk';
 import { collections, products } from '@wix/stores';
 
 export type Product = products.Product;
@@ -94,7 +95,21 @@ export type AddToCartOptions =
     | { variantId: string }
     | { options: Record<string, string | undefined> };
 
+export type WixApiClient = WixClient<
+    undefined,
+    IOAuthStrategy,
+    {
+        products: typeof products;
+        currentCart: typeof currentCart;
+        redirects: typeof redirects;
+        collections: typeof collections;
+        orders: typeof orders;
+        members: typeof members;
+    }
+>;
+
 export type EcomAPI = {
+    getWixClient(): WixApiClient;
     getProducts: (
         options?: GetProductsOptions,
     ) => Promise<EcomAPIResponse<{ items: Product[]; totalCount: number }>>;
@@ -131,8 +146,4 @@ export type EcomAPI = {
         authUrl: string;
     }>;
     logout: (returnUrl: string) => Promise<{ logoutUrl: string }>;
-    handleLoginCallback(
-        url: string,
-        oAuthData: OauthData | undefined,
-    ): Promise<{ memberTokens: Tokens | undefined; returnUrl: string }>;
 };

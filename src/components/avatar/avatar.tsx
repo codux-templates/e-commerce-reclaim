@@ -11,7 +11,7 @@ export const Avatar = ({ imageSrc, altText }: AvatarProps) => {
     return (
         <div className={styles.root}>
             {imageSrc ? (
-                <img alt={altText} src={imageSrc}></img>
+                <img alt={altText} src={imageSrc} />
             ) : (
                 <DefaultAvatar className={styles.defaultAvatar} />
             )}

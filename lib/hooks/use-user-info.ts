@@ -6,7 +6,7 @@ export function useUserInfo() {
 
     const [user, setUser] = useState<Member>();
 
-    const isUserLoggedIn = useMemo(() => api.isUserLoggedIn(), [api]);
+    const isLoggedIn = useMemo(() => api.isUserLoggedIn(), [api]);
 
     useEffect(() => {
         if (api.isUserLoggedIn()) {
@@ -14,5 +14,5 @@ export function useUserInfo() {
         }
     }, [api]);
 
-    return { user, isUserLoggedIn };
+    return { user, isLoggedIn };
 }
