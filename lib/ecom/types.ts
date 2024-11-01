@@ -16,8 +16,6 @@ export type OrderDetails = orders.Order & orders.OrderNonNullableFields;
 export type Member = members.Member & members.MemberNonNullableFields;
 
 export enum EcomApiErrorCodes {
-    ProductNotFound = 'ProductNotFound',
-    GetProductFailure = 'GetProductFailure',
     GetProductsFailure = 'GetProductsFailure',
     CategoryNotFound = 'CategoryNotFound',
     GetCategoryFailure = 'GetCategoryFailure',
@@ -29,35 +27,12 @@ export enum EcomApiErrorCodes {
     AddCartItemFailure = 'AddCartItemFailure',
     CreateCheckoutFailure = 'CreateCheckoutFailure',
     CreateCheckoutRedirectSessionFailure = 'CreateCheckoutRedirectSessionFailure',
-    OrderNotFound = 'OrderNotFound',
-    GetOrderFailure = 'GetOrderFailure',
 }
 
 export type EcomAPIError = { code: EcomApiErrorCodes; message: string };
 export type EcomAPISuccessResponse<T> = { status: 'success'; body: T };
 export type EcomAPIFailureResponse = { status: 'failure'; error: EcomAPIError };
 export type EcomAPIResponse<T> = EcomAPISuccessResponse<T> | EcomAPIFailureResponse;
-
-export type EcomSDKError = {
-    message: string;
-    details: {
-        applicationError: {
-            description: string;
-            code: number;
-        };
-    };
-};
-
-export function isEcomSDKError(error: unknown): error is EcomSDKError {
-    return (
-        error instanceof Object &&
-        'message' in error &&
-        'details' in error &&
-        error.details instanceof Object &&
-        'applicationError' in error.details &&
-        error.details.applicationError instanceof Object
-    );
-}
 
 export enum ProductFilter {
     minPrice = 'minPrice',
@@ -113,7 +88,7 @@ export type EcomAPI = {
     getProducts: (
         options?: GetProductsOptions,
     ) => Promise<EcomAPIResponse<{ items: Product[]; totalCount: number }>>;
-    getProductBySlug: (slug: string) => Promise<EcomAPIResponse<Product>>;
+    getProductBySlug: (slug: string) => Promise<Product | undefined>;
     getCart: () => Promise<EcomAPIResponse<Cart>>;
     getCartTotals: () => Promise<EcomAPIResponse<CartTotals>>;
     updateCartItemQuantity: (
@@ -129,7 +104,7 @@ export type EcomAPI = {
     checkout: () => Promise<EcomAPIResponse<{ checkoutUrl: string }>>;
     getAllCategories: () => Promise<EcomAPIResponse<Collection[]>>;
     getCategoryBySlug: (slug: string) => Promise<EcomAPIResponse<CollectionDetails>>;
-    getOrder: (id: string) => Promise<EcomAPIResponse<OrderDetails>>;
+    getOrder: (id: string) => Promise<OrderDetails | undefined>;
     /**
      * Returns the lowest and the highest product price in the category.
      */
