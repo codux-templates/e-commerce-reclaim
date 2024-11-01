@@ -1,15 +1,10 @@
 import { useLocation, useNavigate } from '@remix-run/react';
-import classNames from 'classnames';
 import { useUserInfo } from '~/lib/hooks';
 import { Avatar } from '../avatar/avatar';
-import { Select, SelectItem } from '../select/select';
+import { DropdownMenu, DropdownMenuItem } from '../dropdown-menu/dropdown-menu';
 
+import { ChevronDownIcon } from '../icons';
 import styles from './user-login.module.scss';
-
-enum LoginMenuAction {
-    initial = '',
-    logout = 'logout',
-}
 
 export const UserLogin = () => {
     const { isUserLoggedIn, user } = useUserInfo();
@@ -18,42 +13,38 @@ export const UserLogin = () => {
     const location = useLocation();
 
     const handleLoginClick = () => {
-        navigate(`/login?returnPath=${location.pathname}`);
+        if (!isUserLoggedIn) {
+            navigate(`/login?returnPath=${location.pathname}`);
+        }
     };
 
-    const handleAction = (value: LoginMenuAction) => {
-        if (value === LoginMenuAction.logout) {
+    const handleLogoutClick = () => {
+        if (isUserLoggedIn) {
             navigate(`/logout?returnPath=${location.pathname}`);
         }
     };
 
-    const avatar = (
-        <Avatar imageSrc={user?.profile?.photo?.url} altText={user?.profile?.nickname || ''} />
+    const content = (
+        <div className={styles.contentWrapper}>
+            <Avatar imageSrc={user?.profile?.photo?.url} altText={user?.profile?.nickname || ''} />
+            {isUserLoggedIn ? (
+                <ChevronDownIcon width={10} height={10} />
+            ) : (
+                <span className={styles.actionLink}>Log In</span>
+            )}
+        </div>
     );
 
     return (
         <div className={styles.root} onClick={handleLoginClick}>
             {isUserLoggedIn ? (
-                <Select
-                    className={styles.select}
-                    dropdownClassName={styles.dropdown}
-                    value={LoginMenuAction.initial}
-                    onValueChange={handleAction}
-                    placeholder={avatar}
-                    renderValue={() => avatar}
-                >
-                    <SelectItem
-                        className={classNames(styles.selectItem, styles.actionLink)}
-                        value={LoginMenuAction.logout}
-                    >
+                <DropdownMenu trigger={content}>
+                    <DropdownMenuItem className={styles.actionLink} onClick={handleLogoutClick}>
                         Log out
-                    </SelectItem>
-                </Select>
+                    </DropdownMenuItem>
+                </DropdownMenu>
             ) : (
-                <>
-                    {avatar}
-                    <span className={styles.actionLink}>Log In</span>
-                </>
+                content
             )}
         </div>
     );

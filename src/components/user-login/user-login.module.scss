@@ -1,8 +1,11 @@
 .root {
+    cursor: pointer;
+}
+
+.contentWrapper {
     display: flex;
     align-items: center;
     gap: 12px;
-    cursor: pointer;
 }
 
 .root:hover .actionLink,
@@ -12,24 +15,4 @@
 
 .actionLink {
     font: var(--paragraph3);
-}
-
-.root .select {
-    border: none;
-    background: transparent;
-}
-
-body .dropdown {
-    width: unset;
-    background-color: var(--primary1);
-    border: 1px solid rgba(23, 17, 13, 0.2);
-}
-
-.dropdown .selectItem {
-    padding: 0 20px;
-}
-
-.dropdown .selectItem:hover,
-.dropdown .selectItem:focus {
-    background: unset;
 }
