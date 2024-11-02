@@ -296,6 +296,7 @@ const withNormalizedWixClientErrors = (api: EcomApi): EcomApi => {
                         throw normalizeWixClientError(error);
                     });
                 }
+                return result;
             } catch (error) {
                 throw normalizeWixClientError(error);
             }
