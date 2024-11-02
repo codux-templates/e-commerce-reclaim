@@ -11,6 +11,7 @@ export interface CartViewProps {
     cartTotals?: CartTotals;
     updatingCartItemIds?: string[];
     isUpdating?: boolean;
+    isCheckoutInProgress: boolean;
     onClose: () => void;
     onCheckout: () => void;
     onViewCart: () => void;
@@ -23,6 +24,7 @@ export const CartView = ({
     cartTotals,
     updatingCartItemIds = [],
     isUpdating = false,
+    isCheckoutInProgress,
     onClose,
     onCheckout,
     onViewCart,
@@ -79,7 +81,7 @@ export const CartView = ({
                                 styles.checkoutButton,
                             )}
                             onClick={onCheckout}
-                            disabled={isUpdating}
+                            disabled={isCheckoutInProgress || isUpdating}
                         >
                             Checkout
                         </button>
