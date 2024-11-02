@@ -280,6 +280,10 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
         },
     });
 
+/**
+ * Wraps all methods of the EcomApi with a try-catch block that fixes broken
+ * error messages in WixClient errors and rethrows them.
+ */
 const withNormalizedWixClientErrors = (api: EcomApi): EcomApi => {
     for (const key of Object.keys(api)) {
         const original = Reflect.get(api, key);
