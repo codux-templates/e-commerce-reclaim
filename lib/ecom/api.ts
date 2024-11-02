@@ -113,22 +113,12 @@ function createEcomApi(wixClient: WixApiClient): EcomApi {
             return items.at(0);
         },
 
-        async getCart() {
-            try {
-                const currentCart = await wixClient.currentCart.getCurrentCart();
-                return successResponse(currentCart);
-            } catch (e) {
-                return failureResponse(EcomApiErrorCodes.GetCartFailure, getErrorMessage(e));
-            }
+        getCart() {
+            return wixClient.currentCart.getCurrentCart();
         },
 
-        async getCartTotals() {
-            try {
-                const cartTotals = await wixClient.currentCart.estimateCurrentCartTotals();
-                return successResponse(cartTotals);
-            } catch (e) {
-                return failureResponse(EcomApiErrorCodes.GetCartTotalsFailure, getErrorMessage(e));
-            }
+        getCartTotals() {
+            return wixClient.currentCart.estimateCurrentCartTotals();
         },
 
         async updateCartItemQuantity(id, quantity) {
@@ -151,41 +141,25 @@ function createEcomApi(wixClient: WixApiClient): EcomApi {
             }
         },
 
-        async removeItemFromCart(id) {
-            try {
-                const result = await wixClient.currentCart.removeLineItemsFromCurrentCart([id]);
-                if (!result.cart) {
-                    throw new Error('Failed to remove cart item');
-                }
-                return successResponse(result.cart);
-            } catch (e) {
-                return failureResponse(EcomApiErrorCodes.RemoveCartItemFailure, getErrorMessage(e));
-            }
+        async removeFromCart(id) {
+            const { cart } = await wixClient.currentCart.removeLineItemsFromCurrentCart([id]);
+            return cart!;
         },
 
         async addToCart(id, quantity, options) {
-            try {
-                const result = await wixClient.currentCart.addToCurrentCart({
-                    lineItems: [
-                        {
-                            catalogReference: {
-                                catalogItemId: id,
-                                appId: WIX_STORES_APP_ID,
-                                options,
-                            },
-                            quantity,
+            const { cart } = await wixClient.currentCart.addToCurrentCart({
+                lineItems: [
+                    {
+                        catalogReference: {
+                            catalogItemId: id,
+                            appId: WIX_STORES_APP_ID,
+                            options,
                         },
-                    ],
-                });
-
-                if (!result.cart) {
-                    throw new Error('Failed to add item to cart');
-                }
-
-                return successResponse(result.cart);
-            } catch (e) {
-                return failureResponse(EcomApiErrorCodes.AddCartItemFailure, getErrorMessage(e));
-            }
+                        quantity,
+                    },
+                ],
+            });
+            return cart!;
         },
 
         async checkout() {

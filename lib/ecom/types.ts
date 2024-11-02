@@ -16,11 +16,7 @@ export enum EcomApiErrorCodes {
     CategoryNotFound = 'CategoryNotFound',
     GetCategoryFailure = 'GetCategoryFailure',
     GetAllCategoriesFailure = 'GetAllCategoriesFailure',
-    GetCartFailure = 'GetCartFailure',
-    GetCartTotalsFailure = 'GetCartTotalsFailure',
     UpdateCartItemQuantityFailure = 'UpdateCartItemQuantityFailure',
-    RemoveCartItemFailure = 'RemoveCartItemFailure',
-    AddCartItemFailure = 'AddCartItemFailure',
     CreateCheckoutFailure = 'CreateCheckoutFailure',
     CreateCheckoutRedirectSessionFailure = 'CreateCheckoutRedirectSessionFailure',
 }
@@ -71,18 +67,14 @@ export type EcomApi = {
         options?: GetProductsOptions,
     ) => Promise<EcomApiResponse<{ items: Product[]; totalCount: number }>>;
     getProductBySlug: (slug: string) => Promise<Product | undefined>;
-    getCart: () => Promise<EcomApiResponse<Cart>>;
-    getCartTotals: () => Promise<EcomApiResponse<CartTotals>>;
+    getCart: () => Promise<Cart>;
+    getCartTotals: () => Promise<CartTotals>;
     updateCartItemQuantity: (
         id: string | undefined | null,
         quantity: number,
     ) => Promise<EcomApiResponse<Cart>>;
-    removeItemFromCart: (id: string) => Promise<EcomApiResponse<Cart>>;
-    addToCart: (
-        id: string,
-        quantity: number,
-        options?: AddToCartOptions,
-    ) => Promise<EcomApiResponse<Cart>>;
+    addToCart: (id: string, quantity: number, options?: AddToCartOptions) => Promise<Cart>;
+    removeFromCart: (id: string) => Promise<Cart>;
     checkout: () => Promise<EcomApiResponse<{ checkoutUrl: string }>>;
     getAllCategories: () => Promise<EcomApiResponse<Collection[]>>;
     getCategoryBySlug: (slug: string) => Promise<EcomApiResponse<CollectionDetails>>;

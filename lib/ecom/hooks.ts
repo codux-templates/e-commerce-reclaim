@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import useSwr, { Key, SWRResponse } from 'swr';
+import useSwr, { Key, SWRResponse, mutate } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { findItemIdInCart } from '~/lib/utils';
 import { useEcomApi } from './api-context';
@@ -7,35 +7,14 @@ import { AddToCartOptions, CollectionDetails, GetProductsOptions, Product } from
 
 export const useCartData = () => {
     const ecomApi = useEcomApi();
-    return useSwr('cart', async () => {
-        const response = await ecomApi.getCart();
-        if (response.status === 'failure') {
-            throw response.error;
-        }
-
-        return response.body;
-    });
+    return useSwr('cart', () => ecomApi.getCart());
 };
 
 export const useCartTotals = () => {
     const ecomApi = useEcomApi();
-    const { data } = useCartData();
-
-    const cartTotals = useSwr('cart-totals', async () => {
-        const response = await ecomApi.getCartTotals();
-        if (response.status === 'failure') {
-            throw response.error;
-        }
-
-        return response.body;
-    });
-
-    useEffect(() => {
-        cartTotals.mutate();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
-
-    return cartTotals;
+    const cart = useCartData();
+    useEffect(() => void mutate('cart-totals'), [cart.data]);
+    return useSwr('cart-totals', () => ecomApi.getCartTotals());
 };
 
 interface AddToCartArgs {
@@ -63,11 +42,7 @@ export const useAddToCart = () => {
                 return updateCartItemQuantityResponse.body;
             }
 
-            const addToCartResponse = await ecomApi.addToCart(arg.id, arg.quantity, arg.options);
-            if (addToCartResponse.status === 'failure') {
-                throw addToCartResponse.error;
-            }
-            return addToCartResponse.body;
+            return ecomApi.addToCart(arg.id, arg.quantity, arg.options);
         },
         {
             revalidate: false,
@@ -101,20 +76,10 @@ export const useUpdateCartItemQuantity = () => {
 
 export const useRemoveItemFromCart = () => {
     const ecomApi = useEcomApi();
-    return useSWRMutation(
-        'cart',
-        async (_key: Key, { arg }: { arg: string }) => {
-            const response = await ecomApi.removeItemFromCart(arg);
-            if (response.status === 'failure') {
-                throw response.error;
-            }
-            return response.body;
-        },
-        {
-            revalidate: false,
-            populateCache: true,
-        },
-    );
+    return useSWRMutation('cart', (_key, { arg }: { arg: string }) => ecomApi.removeFromCart(arg), {
+        revalidate: false,
+        populateCache: true,
+    });
 };
 
 export const useCart = () => {
