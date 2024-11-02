@@ -1,46 +1,75 @@
-import { CartItem } from '~/src/components/cart/cart-item/cart-item';
-import classNames from 'classnames';
-import { LockIcon } from '~/src/components/icons';
 import { Link } from '@remix-run/react';
-import { useCart } from '~/lib/ecom';
-import { findLineItemPriceBreakdown } from '~/lib/utils';
+import classNames from 'classnames';
+import { useCart, useCheckout } from '~/lib/ecom';
+import { findLineItemPriceBreakdown, getErrorMessage } from '~/lib/utils';
+import { CartItem } from '~/src/components/cart/cart-item/cart-item';
+import { LockIcon } from '~/src/components/icons';
+import { Spinner } from '~/src/components/spinner/spinner';
 
 import styles from './route.module.scss';
-import { Spinner } from '~/src/components/spinner/spinner';
 
 export default function CartPage() {
     const {
-        cartData,
+        cart,
         cartTotals,
-        isCartLoading,
-        isCartTotalsUpdating,
+        isCartUpdating,
         updatingCartItemIds,
-        checkout,
         removeItem,
         updateItemQuantity,
     } = useCart();
 
-    if (!cartData && isCartLoading) return null;
+    const { checkout, isCheckoutInProgress } = useCheckout({
+        successUrl: '/thank-you',
+        cancelUrl: '/products/all-products',
+        onError: (error) => alert(getErrorMessage(error)),
+    });
 
-    if (!cartData?.lineItems.length)
+    if (cart.isLoading) {
         return (
-            <div className={styles.cart}>
-                <h1 className={styles.cartHeader}>My cart</h1>
-                <div className={styles.emptyCart}>
-                    <div className={styles.emptyCartMessage}>Cart is empty</div>
-                    <Link to="/" className={styles.continueBrowsingLink}>
-                        Continue Browsing
-                    </Link>
+            <div className={styles.page}>
+                <div className={styles.cart}>
+                    <h1 className={styles.cartHeader}>My cart</h1>
+                    <div className={styles.cartStatus}>
+                        <Spinner size={50} />
+                    </div>
                 </div>
             </div>
         );
+    }
+
+    if (!cart.data) {
+        return (
+            <div className={styles.page}>
+                <div className={styles.cart}>
+                    <h1 className={styles.cartHeader}>My cart</h1>
+                    <div className={styles.cartStatus}>{getErrorMessage(cart.error)}</div>
+                </div>
+            </div>
+        );
+    }
+
+    if (!cart.data?.lineItems.length) {
+        return (
+            <div className={styles.page}>
+                <div className={styles.cart}>
+                    <h1 className={styles.cartHeader}>My cart</h1>
+                    <div className={styles.cartStatus}>
+                        <div className={styles.cartStatusHeader}>Cart is empty</div>
+                        <Link to="/products/all-products" className={styles.continueBrowsingLink}>
+                            Continue Browsing
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.page}>
             <div className={styles.cart}>
                 <h1 className={styles.cartHeader}>My cart</h1>
                 <div className={styles.cartItems}>
-                    {cartData?.lineItems.map((item) => (
+                    {cart.data.lineItems.map((item) => (
                         <CartItem
                             key={item._id}
                             item={item}
@@ -57,8 +86,8 @@ export default function CartPage() {
             <div className={styles.summary}>
                 <h1 className={styles.summaryHeader}>Order summary</h1>
                 <div
-                    className={classNames(styles.summarySection, {
-                        [styles.loading]: isCartTotalsUpdating,
+                    className={classNames(styles.summaryContent, {
+                        [styles.loading]: isCartUpdating,
                     })}
                 >
                     <div className={styles.summaryRow}>
@@ -80,7 +109,7 @@ export default function CartPage() {
                         <span>Total</span>
                         <span>{cartTotals?.priceSummary?.total?.formattedConvertedAmount}</span>
                     </div>
-                    {isCartTotalsUpdating && (
+                    {isCartUpdating && (
                         <div className={styles.spinner}>
                             <Spinner size={50} />
                         </div>
@@ -90,9 +119,9 @@ export default function CartPage() {
                 <button
                     className={classNames('button', styles.checkoutButton)}
                     onClick={checkout}
-                    disabled={isCartTotalsUpdating}
+                    disabled={isCheckoutInProgress || isCartUpdating}
                 >
-                    Checkout
+                    {isCheckoutInProgress ? <Spinner size="1lh" /> : 'Checkout'}
                 </button>
 
                 <div className={styles.secureCheckout}>

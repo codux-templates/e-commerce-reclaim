@@ -1,19 +1,27 @@
+import classNames from 'classnames';
 import styles from './spinner.module.scss';
 
-interface SpinnerProps {
-    size: number;
+interface SpinnerProps extends React.SVGProps<SVGSVGElement> {
+    size: number | string;
 }
 
-export const Spinner = ({ size }: SpinnerProps) => {
+export const Spinner = ({ className, size, ...props }: SpinnerProps) => {
     return (
-        <svg viewBox="0 0 50 50" width={size} height={size} className={styles.spinner}>
+        <svg
+            className={classNames(styles.spinner, className)}
+            viewBox="0 0 50 50"
+            width={size}
+            height={size}
+            {...props}
+        >
             <circle
+                className={styles.circle}
                 cx="25"
                 cy="25"
                 r="20"
                 fill="none"
                 strokeWidth="1"
-                className={styles.circle}
+                vectorEffect="non-scaling-stroke"
             ></circle>
         </svg>
     );

@@ -1,8 +1,9 @@
 import classNames from 'classnames';
 import { Cart, CartTotals } from '~/lib/ecom';
-import { findLineItemPriceBreakdown, calculateCartItemsCount } from '~/lib/utils';
+import { calculateCartItemsCount, findLineItemPriceBreakdown } from '~/lib/utils';
+import { CartItem } from '~/src/components/cart/cart-item/cart-item';
 import { CloseIcon, LockIcon } from '~/src/components/icons';
-import { CartItem } from '../cart-item/cart-item';
+import { Spinner } from '~/src/components/spinner/spinner';
 
 import styles from './cart-view.module.scss';
 
@@ -10,7 +11,8 @@ export interface CartViewProps {
     cart?: Cart;
     cartTotals?: CartTotals;
     updatingCartItemIds?: string[];
-    isUpdating?: boolean;
+    isCartUpdating: boolean;
+    isCheckoutInProgress: boolean;
     onClose: () => void;
     onCheckout: () => void;
     onViewCart: () => void;
@@ -22,20 +24,21 @@ export const CartView = ({
     cart,
     cartTotals,
     updatingCartItemIds = [],
-    isUpdating = false,
+    isCartUpdating,
+    isCheckoutInProgress,
     onClose,
     onCheckout,
     onViewCart,
     onItemQuantityChange,
     onItemRemove,
 }: CartViewProps) => {
-    const itemsCount = cart ? calculateCartItemsCount(cart) : 0;
+    const itemCount = cart ? calculateCartItemsCount(cart) : 0;
 
     return (
         <div className={styles.cart}>
             <div className={styles.header}>
                 <span className="heading6">
-                    Cart ({itemsCount} {itemsCount === 1 ? 'item' : 'items'})
+                    Cart ({itemCount} {itemCount === 1 ? 'item' : 'items'})
                 </span>
                 <button className={styles.closeButton} onClick={onClose}>
                     <CloseIcon />
@@ -79,9 +82,9 @@ export const CartView = ({
                                 styles.checkoutButton,
                             )}
                             onClick={onCheckout}
-                            disabled={isUpdating}
+                            disabled={isCheckoutInProgress || isCartUpdating}
                         >
-                            Checkout
+                            {isCheckoutInProgress ? <Spinner size="1lh" /> : 'Checkout'}
                         </button>
                         <button
                             className={classNames('button', styles.viewCartButton)}
@@ -97,7 +100,7 @@ export const CartView = ({
                     </div>
                 </>
             ) : (
-                <div className={styles.emptyCartMessage}>Your cart is empty.</div>
+                <div className={styles.emptyCartMessage}>Your cart is empty</div>
             )}
         </div>
     );

@@ -107,109 +107,60 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
         },
 
         async getCart() {
-            try {
-                const currentCart = await wixClient.currentCart.getCurrentCart();
-                return successResponse(currentCart);
-            } catch (e) {
-                return failureResponse(EcomApiErrorCodes.GetCartFailure, getErrorMessage(e));
-            }
+            return wixClient.currentCart.getCurrentCart();
         },
 
         async getCartTotals() {
-            try {
-                const cartTotals = await wixClient.currentCart.estimateCurrentCartTotals();
-                return successResponse(cartTotals);
-            } catch (e) {
-                return failureResponse(EcomApiErrorCodes.GetCartTotalsFailure, getErrorMessage(e));
-            }
+            return wixClient.currentCart.estimateCurrentCartTotals();
         },
 
         async updateCartItemQuantity(id, quantity) {
-            try {
-                const result = await wixClient.currentCart.updateCurrentCartLineItemQuantity([
-                    {
-                        _id: id || undefined,
-                        quantity,
-                    },
-                ]);
-                if (!result.cart) {
-                    throw new Error('Failed to update cart item quantity');
-                }
-                return successResponse(result.cart);
-            } catch (e) {
-                return failureResponse(
-                    EcomApiErrorCodes.UpdateCartItemQuantityFailure,
-                    getErrorMessage(e),
-                );
-            }
+            const { cart } = await wixClient.currentCart.updateCurrentCartLineItemQuantity([
+                { _id: id, quantity },
+            ]);
+
+            if (!cart) throw new Error('Failed to update cart item quantity');
+            return cart;
         },
 
         async removeItemFromCart(id) {
-            try {
-                const result = await wixClient.currentCart.removeLineItemsFromCurrentCart([id]);
-                if (!result.cart) {
-                    throw new Error('Failed to remove cart item');
-                }
-                return successResponse(result.cart);
-            } catch (e) {
-                return failureResponse(EcomApiErrorCodes.RemoveCartItemFailure, getErrorMessage(e));
-            }
+            const { cart } = await wixClient.currentCart.removeLineItemsFromCurrentCart([id]);
+
+            if (!cart) throw new Error('Failed to remove cart item');
+            return cart;
         },
 
         async addToCart(id, quantity, options) {
-            try {
-                const result = await wixClient.currentCart.addToCurrentCart({
-                    lineItems: [
-                        {
-                            catalogReference: {
-                                catalogItemId: id,
-                                appId: WIX_STORES_APP_ID,
-                                options,
-                            },
-                            quantity,
+            const { cart } = await wixClient.currentCart.addToCurrentCart({
+                lineItems: [
+                    {
+                        catalogReference: {
+                            catalogItemId: id,
+                            appId: WIX_STORES_APP_ID,
+                            options,
                         },
-                    ],
-                });
+                        quantity,
+                    },
+                ],
+            });
 
-                if (!result.cart) {
-                    throw new Error('Failed to add item to cart');
-                }
-
-                return successResponse(result.cart);
-            } catch (e) {
-                return failureResponse(EcomApiErrorCodes.AddCartItemFailure, getErrorMessage(e));
-            }
+            if (!cart) throw new Error('Failed to add item to cart');
+            return cart;
         },
 
-        async checkout() {
-            let checkoutId;
-            try {
-                const result = await wixClient.currentCart.createCheckoutFromCurrentCart({
-                    channelType: currentCart.ChannelType.WEB,
-                });
-                checkoutId = result.checkoutId;
-            } catch (e) {
-                return failureResponse(EcomApiErrorCodes.CreateCheckoutFailure, getErrorMessage(e));
-            }
+        async checkout({ successUrl, cancelUrl }) {
+            const { checkoutId } = await wixClient.currentCart.createCheckoutFromCurrentCart({
+                channelType: currentCart.ChannelType.WEB,
+            });
 
-            try {
-                const { redirectSession } = await wixClient.redirects.createRedirectSession({
-                    ecomCheckout: { checkoutId },
-                    callbacks: {
-                        postFlowUrl: window.location.origin,
-                        thankYouPageUrl: `${window.location.origin}/thank-you`,
-                    },
-                });
-                if (!redirectSession?.fullUrl) {
-                    throw new Error('Missing redirect session url');
-                }
-                return successResponse({ checkoutUrl: redirectSession?.fullUrl });
-            } catch (e) {
-                return failureResponse(
-                    EcomApiErrorCodes.CreateCheckoutRedirectSessionFailure,
-                    getErrorMessage(e),
-                );
-            }
+            const { redirectSession } = await wixClient.redirects.createRedirectSession({
+                ecomCheckout: { checkoutId },
+                callbacks: { postFlowUrl: cancelUrl, thankYouPageUrl: successUrl },
+            });
+
+            const checkoutUrl = redirectSession?.fullUrl;
+            if (!checkoutUrl) throw new Error('Failed to retrieve checkout URL');
+            return { checkoutUrl };
         },
 
         async getAllCategories() {
