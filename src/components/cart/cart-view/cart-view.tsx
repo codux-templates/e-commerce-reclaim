@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import { Cart, CartTotals } from '~/lib/ecom';
-import { findLineItemPriceBreakdown, calculateCartItemsCount } from '~/lib/utils';
+import { calculateCartItemsCount, findLineItemPriceBreakdown } from '~/lib/utils';
 import { CloseIcon, LockIcon } from '~/src/components/icons';
+import { Spinner } from '~/src/components/spinner/spinner';
 import { CartItem } from '../cart-item/cart-item';
 
 import styles from './cart-view.module.scss';
@@ -83,7 +84,7 @@ export const CartView = ({
                             onClick={onCheckout}
                             disabled={isCheckoutInProgress || isUpdating}
                         >
-                            Checkout
+                            {isCheckoutInProgress ? <Spinner size="1lh" /> : 'Checkout'}
                         </button>
                         <button
                             className={classNames('button', styles.viewCartButton)}

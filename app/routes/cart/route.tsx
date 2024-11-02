@@ -1,12 +1,12 @@
-import { CartItem } from '~/src/components/cart/cart-item/cart-item';
-import classNames from 'classnames';
-import { LockIcon } from '~/src/components/icons';
 import { Link } from '@remix-run/react';
+import classNames from 'classnames';
 import { useCart, useCheckout } from '~/lib/ecom';
 import { findLineItemPriceBreakdown, getErrorMessage } from '~/lib/utils';
+import { CartItem } from '~/src/components/cart/cart-item/cart-item';
+import { LockIcon } from '~/src/components/icons';
+import { Spinner } from '~/src/components/spinner/spinner';
 
 import styles from './route.module.scss';
-import { Spinner } from '~/src/components/spinner/spinner';
 
 export default function CartPage() {
     const {
@@ -97,7 +97,7 @@ export default function CartPage() {
                     onClick={checkout}
                     disabled={isCheckoutInProgress || isCartTotalsUpdating}
                 >
-                    Checkout
+                    {isCheckoutInProgress ? <Spinner size="1lh" /> : 'Checkout'}
                 </button>
 
                 <div className={styles.secureCheckout}>
