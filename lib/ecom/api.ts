@@ -12,7 +12,7 @@ import {
     EcomApiFailureResponse,
     EcomApiSuccessResponse,
 } from './types';
-import { isNotFoundWixClientError, throwNormalizedWixClientError } from './wix-client-error';
+import { isNotFoundWixClientError, normalizeWixClientError } from './wix-client-error';
 
 type WixApiClient = WixClient<
     undefined,
@@ -292,10 +292,12 @@ const withNormalizedWixClientErrors = (api: EcomApi): EcomApi => {
             try {
                 const result = Reflect.apply(original, api, args);
                 if (result instanceof Promise) {
-                    return result.catch(throwNormalizedWixClientError);
+                    return result.catch((error) => {
+                        throw normalizeWixClientError(error);
+                    });
                 }
             } catch (error) {
-                throwNormalizedWixClientError(error);
+                throw normalizeWixClientError(error);
             }
         });
     }
