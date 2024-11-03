@@ -1,9 +1,3 @@
-/**
- * This is intended to be a basic starting point for linting in your app.
- * It relies on recommended configs out of the box for simplicity, but you can
- * and should modify this configuration to best suit your team's needs.
- */
-
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
     root: true,
@@ -23,10 +17,15 @@ module.exports = {
     // Base config
     extends: ['eslint:recommended'],
 
+    rules: {
+        'no-empty': 'off',
+        'no-console': 'error',
+    },
+
     overrides: [
         // React
         {
-            files: ['**/*.{js,jsx,ts,tsx}'],
+            files: ['**/*.{ts,tsx}'],
             plugins: ['react', 'jsx-a11y'],
             extends: [
                 'plugin:react/recommended',
@@ -49,12 +48,9 @@ module.exports = {
             },
             rules: {
                 'react/prop-types': 'off',
+                'react/jsx-no-target-blank': 'off',
                 'jsx-a11y/click-events-have-key-events': 'off',
                 'jsx-a11y/no-static-element-interactions': 'off',
-                'import/no-extraneous-dependencies': [
-                    'error',
-                    { devDependencies: ['_codux/**/*'] },
-                ],
             },
         },
 
@@ -81,7 +77,7 @@ module.exports = {
             ],
             rules: {
                 '@typescript-eslint/no-explicit-any': 'off',
-                'react/jsx-no-target-blank': 'off',
+                '@typescript-eslint/explicit-member-accessibility': 'error',
                 'import/no-extraneous-dependencies': [
                     'error',
                     { devDependencies: ['_codux/**/*', 'vite.config.ts'] },
