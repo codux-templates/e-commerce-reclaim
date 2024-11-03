@@ -15,7 +15,7 @@ import { RouteBreadcrumbs, useBreadcrumbs } from '~/src/components/breadcrumbs/u
 import { CategoryLink } from '~/src/components/category-link/category-link';
 import { ErrorPage } from '~/src/components/error-page/error-page';
 import { ProductFilters } from '~/src/components/product-filters/product-filters';
-import { ProductGrid } from '~/src/components/product-list/product-grid';
+import { ProductGrid } from '~/src/components/product-grid/product-grid';
 import { ProductSortingSelect } from '~/src/components/product-sorting-select/product-sorting-select';
 import styles from './route.module.scss';
 
