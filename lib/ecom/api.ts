@@ -1,6 +1,6 @@
 import { currentCart, orders } from '@wix/ecom';
 import { redirects } from '@wix/redirects';
-import { createClient, IOAuthStrategy, OAuthStrategy, Tokens, WixClient } from '@wix/sdk';
+import { createClient, OAuthStrategy, Tokens } from '@wix/sdk';
 import { collections, products } from '@wix/stores';
 import { getErrorMessage } from '~/lib/utils';
 import { DEMO_STORE_WIX_CLIENT_ID, WIX_STORES_APP_ID } from './constants';
@@ -11,20 +11,9 @@ import {
     EcomApiErrorCodes,
     EcomApiFailureResponse,
     EcomApiSuccessResponse,
+    WixApiClient,
 } from './types';
 import { isNotFoundWixClientError, throwNormalizedWixClientError } from './wix-client-error';
-
-type WixApiClient = WixClient<
-    undefined,
-    IOAuthStrategy,
-    {
-        products: typeof products;
-        currentCart: typeof currentCart;
-        redirects: typeof redirects;
-        collections: typeof collections;
-        orders: typeof orders;
-    }
->;
 
 export function getWixClientId() {
     /**
@@ -70,6 +59,9 @@ export function initializeEcomApiAnonymous() {
 
 function createEcomApi(wixClient: WixApiClient): EcomApi {
     return {
+        getWixClient() {
+            return wixClient;
+        },
         async getProducts({ categorySlug, skip = 0, limit = 100, filters, sortBy } = {}) {
             try {
                 const { collection } = categorySlug
@@ -284,6 +276,19 @@ function createEcomApi(wixClient: WixApiClient): EcomApi {
             } catch (e) {
                 return failureResponse(EcomApiErrorCodes.GetProductsFailure, getErrorMessage(e));
             }
+        },
+        async login(callbackUrl: string, returnUrl: string) {
+            const oAuthData = wixClient.auth.generateOAuthData(callbackUrl, returnUrl);
+
+            const { authUrl } = await wixClient.auth.getAuthUrl(oAuthData, {
+                responseMode: 'query',
+            });
+
+            return { oAuthData, authUrl };
+        },
+        async logout(returnUrl: string) {
+            const result = await wixClient.auth.logout(returnUrl);
+            return result;
         },
     };
 }
