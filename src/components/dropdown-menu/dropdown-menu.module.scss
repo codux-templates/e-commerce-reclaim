@@ -1,0 +1,33 @@
+.trigger {
+    cursor: pointer;
+}
+
+.content {
+    background: var(--primary1);
+    border: 1px solid rgba(23, 17, 13, 0.2);
+}
+
+.content:hover,
+.content:focus-within {
+    box-shadow: none;
+}
+
+.item {
+    cursor: pointer;
+    padding: 0 20px;
+    min-height: 35px;
+    display: flex;
+    align-items: center;
+}
+
+.item:hover {
+    box-shadow: none;
+}
+
+.separator {
+    margin: 5px 20px;
+    height: 1px;
+    border: solid 1px #eee;
+    border-style: inset;
+    opacity: 0.4;
+}
