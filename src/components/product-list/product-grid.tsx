@@ -5,9 +5,9 @@ import type { CollectionDetails, Product } from '~/lib/ecom';
 import { EmptyProductsCategory } from '../empty-products-category/empty-products-category';
 import { ProductCard } from '../product-card/product-card';
 import { ProductLink } from '../product-link/product-link';
-import styles from './product-list.module.scss';
+import styles from './product-grid.module.scss';
 
-export interface ProductListProps {
+export interface ProductGridProps {
     /** list of products to show (either from API or serialized from loader) */
     products: Array<Product | SerializeFrom<Product>>;
     /** category containing the shown products */
@@ -18,7 +18,7 @@ export interface ProductListProps {
     onClickClearFilters?: () => void;
 }
 
-export const ProductList = React.memo<ProductListProps>(function ProductList({
+export const ProductGrid = React.memo<ProductGridProps>(function ProductGrid({
     category,
     products,
     filtersApplied,
@@ -48,7 +48,7 @@ export const ProductList = React.memo<ProductListProps>(function ProductList({
     }
 
     return (
-        <div className={styles.productList}>
+        <div className={styles.productGrid}>
             {products.map((product) => (
                 <FadeIn key={product._id} duration={0.9}>
                     <ProductLink

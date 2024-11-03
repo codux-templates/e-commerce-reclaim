@@ -1,6 +1,6 @@
 @import '@styles/variables.scss';
 
-.productList {
+.productGrid {
     --minCardSize: 404px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(var(--minCardSize), 100%), 1fr));
@@ -21,7 +21,7 @@
 }
 
 @media (max-width: $desktop-width) {
-    .productList {
+    .productGrid {
         --minCardSize: 250px;
     }
 }
