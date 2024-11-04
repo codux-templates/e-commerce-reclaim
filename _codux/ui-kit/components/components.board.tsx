@@ -26,7 +26,12 @@ export default createBoard({
 
                     <Kit.Item>
                         <Variant name="Disabled Input">
-                            <input disabled className="text-input" value="disabled input" onChange={() => {}} />
+                            <input
+                                disabled
+                                className="text-input"
+                                value="disabled input"
+                                onChange={() => {}}
+                            />
                         </Variant>
                         <Kit.Description>Disabled Input</Kit.Description>
                     </Kit.Item>
