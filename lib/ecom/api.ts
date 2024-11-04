@@ -115,23 +115,10 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
         },
 
         async updateCartItemQuantity(id, quantity) {
-            try {
-                const result = await wixClient.currentCart.updateCurrentCartLineItemQuantity([
-                    {
-                        _id: id || undefined,
-                        quantity,
-                    },
-                ]);
-                if (!result.cart) {
-                    throw new Error('Failed to update cart item quantity');
-                }
-                return successResponse(result.cart);
-            } catch (e) {
-                return failureResponse(
-                    EcomApiErrorCodes.UpdateCartItemQuantityFailure,
-                    getErrorMessage(e),
-                );
-            }
+            const { cart } = await wixClient.currentCart.updateCurrentCartLineItemQuantity([
+                { _id: id, quantity },
+            ]);
+            return cart!;
         },
 
         async removeFromCart(id) {

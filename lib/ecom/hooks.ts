@@ -28,18 +28,14 @@ export const useAddToCart = () => {
     const { data: cart } = useCartData();
     return useSWRMutation(
         'cart',
-        async (_key: Key, { arg }: { arg: AddToCartArgs }) => {
+        (_key: Key, { arg }: { arg: AddToCartArgs }) => {
             const itemInCart = cart ? findItemIdInCart(cart, arg.id, arg.options) : undefined;
 
             if (itemInCart) {
-                const updateCartItemQuantityResponse = await ecomApi.updateCartItemQuantity(
-                    itemInCart._id,
+                return ecomApi.updateCartItemQuantity(
+                    itemInCart._id!,
                     (itemInCart.quantity ?? 0) + arg.quantity,
                 );
-                if (updateCartItemQuantityResponse.status === 'failure') {
-                    throw updateCartItemQuantityResponse.error;
-                }
-                return updateCartItemQuantityResponse.body;
             }
 
             return ecomApi.addToCart(arg.id, arg.quantity, arg.options);
@@ -60,13 +56,8 @@ export const useUpdateCartItemQuantity = () => {
     const ecomApi = useEcomApi();
     return useSWRMutation(
         'cart',
-        async (_key: Key, { arg }: { arg: UpdateCartItemQuantityArgs }) => {
-            const response = await ecomApi.updateCartItemQuantity(arg.id, arg.quantity);
-            if (response.status === 'failure') {
-                throw response.error;
-            }
-            return response.body;
-        },
+        (_key: Key, { arg }: { arg: UpdateCartItemQuantityArgs }) =>
+            ecomApi.updateCartItemQuantity(arg.id, arg.quantity),
         {
             revalidate: false,
             populateCache: true,

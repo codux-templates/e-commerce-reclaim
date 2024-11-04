@@ -16,7 +16,6 @@ export enum EcomApiErrorCodes {
     CategoryNotFound = 'CategoryNotFound',
     GetCategoryFailure = 'GetCategoryFailure',
     GetAllCategoriesFailure = 'GetAllCategoriesFailure',
-    UpdateCartItemQuantityFailure = 'UpdateCartItemQuantityFailure',
 }
 
 export type EcomApiError = { code: EcomApiErrorCodes; message: string };
@@ -67,10 +66,7 @@ export type EcomApi = {
     getProductBySlug: (slug: string) => Promise<Product | undefined>;
     getCart: () => Promise<Cart>;
     getCartTotals: () => Promise<CartTotals>;
-    updateCartItemQuantity: (
-        id: string | undefined | null,
-        quantity: number,
-    ) => Promise<EcomApiResponse<Cart>>;
+    updateCartItemQuantity: (id: string, quantity: number) => Promise<Cart>;
     addToCart: (id: string, quantity: number, options?: AddToCartOptions) => Promise<Cart>;
     removeFromCart: (id: string) => Promise<Cart>;
     checkout: (params: {
