@@ -17,8 +17,6 @@ export enum EcomApiErrorCodes {
     GetCategoryFailure = 'GetCategoryFailure',
     GetAllCategoriesFailure = 'GetAllCategoriesFailure',
     UpdateCartItemQuantityFailure = 'UpdateCartItemQuantityFailure',
-    CreateCheckoutFailure = 'CreateCheckoutFailure',
-    CreateCheckoutRedirectSessionFailure = 'CreateCheckoutRedirectSessionFailure',
 }
 
 export type EcomApiError = { code: EcomApiErrorCodes; message: string };
@@ -75,7 +73,12 @@ export type EcomApi = {
     ) => Promise<EcomApiResponse<Cart>>;
     addToCart: (id: string, quantity: number, options?: AddToCartOptions) => Promise<Cart>;
     removeFromCart: (id: string) => Promise<Cart>;
-    checkout: () => Promise<EcomApiResponse<{ checkoutUrl: string }>>;
+    checkout: (params: {
+        /** Redirect URL after successful checkout, e.g., 'Thank You' page. */
+        successUrl: string;
+        /** Redirect URL if checkout is cancelled, e.g., 'Browse Products' page. */
+        cancelUrl: string;
+    }) => Promise<{ checkoutUrl: string }>;
     getAllCategories: () => Promise<EcomApiResponse<Collection[]>>;
     getCategoryBySlug: (slug: string) => Promise<EcomApiResponse<CollectionDetails>>;
     getOrder: (id: string) => Promise<OrderDetails | undefined>;
