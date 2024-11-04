@@ -18,6 +18,13 @@
     align-items: center;
 }
 
+.item .contentWrapper {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 300px;
+}
+
 .item:focus-visible {
     color: var(--colorD4);
     box-shadow: none;

@@ -42,7 +42,7 @@ export const DropdownMenuItem = ({
             disabled={disabled}
             {...restProps}
         >
-            {children}
+            <div className={styles.contentWrapper}>{children}</div>
         </RadixDropdownMenu.Item>
     );
 };
