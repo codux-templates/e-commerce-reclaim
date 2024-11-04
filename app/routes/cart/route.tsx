@@ -1,34 +1,39 @@
-import { CartItem } from '~/src/components/cart/cart-item/cart-item';
-import classNames from 'classnames';
-import { LockIcon } from '~/src/components/icons';
-import { ROUTES } from '~/src/router/config';
 import { Link } from '@remix-run/react';
-import { useCart } from '~/lib/ecom';
-import { findLineItemPriceBreakdown } from '~/lib/utils';
+import classNames from 'classnames';
+import { useCart, useCheckout } from '~/lib/ecom';
+import { findLineItemPriceBreakdown, getErrorMessage } from '~/lib/utils';
+import { CartItem } from '~/src/components/cart/cart-item/cart-item';
+import { LockIcon } from '~/src/components/icons';
+import { Spinner } from '~/src/components/spinner/spinner';
 
 import styles from './route.module.scss';
-import { Spinner } from '~/src/components/spinner/spinner';
 
 export default function CartPage() {
     const {
         cartData,
         cartTotals,
+        isCartLoading,
         isCartTotalsUpdating,
         updatingCartItemIds,
-        checkout,
         removeItem,
         updateItemQuantity,
     } = useCart();
 
-    if (!cartData) return null;
+    const { checkout, isCheckoutInProgress } = useCheckout({
+        successUrl: '/thank-you',
+        cancelUrl: '/products/all-products',
+        onError: (error) => alert(getErrorMessage(error)),
+    });
 
-    if (!cartData.lineItems.length)
+    if (!cartData && isCartLoading) return null;
+
+    if (!cartData?.lineItems.length)
         return (
             <div className={styles.cart}>
                 <h1 className={styles.cartHeader}>My cart</h1>
                 <div className={styles.emptyCart}>
                     <div className={styles.emptyCartMessage}>Cart is empty</div>
-                    <Link to={ROUTES.home.to()} className={styles.continueBrowsingLink}>
+                    <Link to="/" className={styles.continueBrowsingLink}>
                         Continue Browsing
                     </Link>
                 </div>
@@ -90,9 +95,9 @@ export default function CartPage() {
                 <button
                     className={classNames('button', styles.checkoutButton)}
                     onClick={checkout}
-                    disabled={isCartTotalsUpdating}
+                    disabled={isCheckoutInProgress || isCartTotalsUpdating}
                 >
-                    Checkout
+                    {isCheckoutInProgress ? <Spinner size="1lh" /> : 'Checkout'}
                 </button>
 
                 <div className={styles.secureCheckout}>

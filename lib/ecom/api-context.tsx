@@ -1,19 +1,28 @@
-import React, { FC } from 'react';
+import { Tokens } from '@wix/sdk';
+import React, { FC, useMemo } from 'react';
 import { SWRConfig } from 'swr';
-import { getEcomApi } from './api';
-import { EcomAPI } from './types';
+import { initializeEcomApiAnonymous, initializeEcomApiWithTokens } from './api';
+import { EcomApi } from './types';
 
-export const EcomAPIContext = React.createContext<EcomAPI | null>(null);
+export const EcomApiContext = React.createContext<EcomApi | null>(null);
 
-export const useEcomAPI = (): EcomAPI => {
-    const context = React.useContext(EcomAPIContext);
+export const useEcomApi = (): EcomApi => {
+    const context = React.useContext(EcomApiContext);
     if (!context) {
-        throw new Error('useEcomAPI must be used within a EcomAPIContextProvider');
+        throw new Error('useEcomApi must be used within a EcomApiContextProvider');
     }
     return context;
 };
 
-export const EcomAPIContextProvider: FC<React.PropsWithChildren> = ({ children }) => {
+export interface EcomApiContextProviderProps extends React.PropsWithChildren {
+    tokens?: Tokens;
+}
+
+export const EcomApiContextProvider: FC<EcomApiContextProviderProps> = ({ tokens, children }) => {
+    const api = useMemo(() => {
+        return tokens ? initializeEcomApiWithTokens(tokens) : initializeEcomApiAnonymous();
+    }, [tokens]);
+
     return (
         <SWRConfig
             value={{
@@ -24,7 +33,7 @@ export const EcomAPIContextProvider: FC<React.PropsWithChildren> = ({ children }
                 keepPreviousData: true,
             }}
         >
-            <EcomAPIContext.Provider value={getEcomApi()}>{children}</EcomAPIContext.Provider>
+            <EcomApiContext.Provider value={api}>{children}</EcomApiContext.Provider>
         </SWRConfig>
     );
 };

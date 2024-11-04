@@ -12,48 +12,16 @@ export type CartTotals = currentCart.EstimateTotalsResponse &
 export type OrderDetails = orders.Order & orders.OrderNonNullableFields;
 
 export enum EcomApiErrorCodes {
-    ProductNotFound = 'ProductNotFound',
-    GetProductFailure = 'GetProductFailure',
     GetProductsFailure = 'GetProductsFailure',
     CategoryNotFound = 'CategoryNotFound',
     GetCategoryFailure = 'GetCategoryFailure',
     GetAllCategoriesFailure = 'GetAllCategoriesFailure',
-    GetCartFailure = 'GetCartFailure',
-    GetCartTotalsFailure = 'GetCartTotalsFailure',
-    UpdateCartItemQuantityFailure = 'UpdateCartItemQuantityFailure',
-    RemoveCartItemFailure = 'RemoveCartItemFailure',
-    AddCartItemFailure = 'AddCartItemFailure',
-    CreateCheckoutFailure = 'CreateCheckoutFailure',
-    CreateCheckoutRedirectSessionFailure = 'CreateCheckoutRedirectSessionFailure',
-    OrderNotFound = 'OrderNotFound',
-    GetOrderFailure = 'GetOrderFailure',
 }
 
-export type EcomAPIError = { code: EcomApiErrorCodes; message: string };
-export type EcomAPISuccessResponse<T> = { status: 'success'; body: T };
-export type EcomAPIFailureResponse = { status: 'failure'; error: EcomAPIError };
-export type EcomAPIResponse<T> = EcomAPISuccessResponse<T> | EcomAPIFailureResponse;
-
-export type EcomSDKError = {
-    message: string;
-    details: {
-        applicationError: {
-            description: string;
-            code: number;
-        };
-    };
-};
-
-export function isEcomSDKError(error: unknown): error is EcomSDKError {
-    return (
-        error instanceof Object &&
-        'message' in error &&
-        'details' in error &&
-        error.details instanceof Object &&
-        'applicationError' in error.details &&
-        error.details.applicationError instanceof Object
-    );
-}
+export type EcomApiError = { code: EcomApiErrorCodes; message: string };
+export type EcomApiSuccessResponse<T> = { status: 'success'; body: T };
+export type EcomApiFailureResponse = { status: 'failure'; error: EcomApiError };
+export type EcomApiResponse<T> = EcomApiSuccessResponse<T> | EcomApiFailureResponse;
 
 export enum ProductFilter {
     minPrice = 'minPrice',
@@ -79,7 +47,8 @@ export enum ProductSortBy {
     nameDesc = 'nameDesc',
 }
 
-interface GetProductsByCategoryOptions {
+export interface GetProductsOptions {
+    categorySlug?: string;
     skip?: number;
     limit?: number;
     filters?: IProductFilters;
@@ -90,33 +59,29 @@ export type AddToCartOptions =
     | { variantId: string }
     | { options: Record<string, string | undefined> };
 
-export type EcomAPI = {
-    getProductsByCategory: (
-        categorySlug: string,
-        options?: GetProductsByCategoryOptions,
-    ) => Promise<EcomAPIResponse<{ items: Product[]; totalCount: number }>>;
-    getPromotedProducts: () => Promise<EcomAPIResponse<Product[]>>;
-    getProductBySlug: (slug: string) => Promise<EcomAPIResponse<Product>>;
-    getCart: () => Promise<EcomAPIResponse<Cart>>;
-    getCartTotals: () => Promise<EcomAPIResponse<CartTotals>>;
-    updateCartItemQuantity: (
-        id: string | undefined | null,
-        quantity: number,
-    ) => Promise<EcomAPIResponse<Cart>>;
-    removeItemFromCart: (id: string) => Promise<EcomAPIResponse<Cart>>;
-    addToCart: (
-        id: string,
-        quantity: number,
-        options?: AddToCartOptions,
-    ) => Promise<EcomAPIResponse<Cart>>;
-    checkout: () => Promise<EcomAPIResponse<{ checkoutUrl: string }>>;
-    getAllCategories: () => Promise<EcomAPIResponse<Collection[]>>;
-    getCategoryBySlug: (slug: string) => Promise<EcomAPIResponse<CollectionDetails>>;
-    getOrder: (id: string) => Promise<EcomAPIResponse<OrderDetails>>;
+export type EcomApi = {
+    getProducts: (
+        options?: GetProductsOptions,
+    ) => Promise<EcomApiResponse<{ items: Product[]; totalCount: number }>>;
+    getProductBySlug: (slug: string) => Promise<Product | undefined>;
+    getCart: () => Promise<Cart>;
+    getCartTotals: () => Promise<CartTotals>;
+    updateCartItemQuantity: (id: string, quantity: number) => Promise<Cart>;
+    addToCart: (id: string, quantity: number, options?: AddToCartOptions) => Promise<Cart>;
+    removeFromCart: (id: string) => Promise<Cart>;
+    checkout: (params: {
+        /** Redirect URL after successful checkout, e.g., 'Thank You' page. */
+        successUrl: string;
+        /** Redirect URL if checkout is cancelled, e.g., 'Browse Products' page. */
+        cancelUrl: string;
+    }) => Promise<{ checkoutUrl: string }>;
+    getAllCategories: () => Promise<EcomApiResponse<Collection[]>>;
+    getCategoryBySlug: (slug: string) => Promise<EcomApiResponse<CollectionDetails>>;
+    getOrder: (id: string) => Promise<OrderDetails | undefined>;
     /**
      * Returns the lowest and the highest product price in the category.
      */
     getProductPriceBounds: (
         categorySlug: string,
-    ) => Promise<EcomAPIResponse<{ lowest: number; highest: number }>>;
+    ) => Promise<EcomApiResponse<{ lowest: number; highest: number }>>;
 };
