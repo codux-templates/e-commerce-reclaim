@@ -20,7 +20,10 @@ export default createBoard({
                 >
                     <DropdownMenuItem>Menu Item 1</DropdownMenuItem>
                     <DropdownMenuItem>Menu Item 2</DropdownMenuItem>
-                    <DropdownMenuItem>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s</DropdownMenuItem>
+                    <DropdownMenuItem>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s
+                    </DropdownMenuItem>
                     <DropdownMenuItem disabled>Disabled Menu Item</DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
