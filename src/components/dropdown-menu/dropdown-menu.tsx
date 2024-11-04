@@ -17,6 +17,7 @@ export const DropdownMenu = ({ trigger, children, contentProps }: DropdownMenuPr
 
         <RadixDropdownMenu.Portal>
             <RadixDropdownMenu.Content
+                onCloseAutoFocus={(e) => e.preventDefault()}
                 {...contentProps}
                 className={classNames(styles.content, contentProps?.className)}
             >

@@ -2,12 +2,6 @@
     cursor: pointer;
 }
 
-.trigger:focus-visible {
-    box-shadow:
-        0 0 0 1px #ffffff,
-        0 0 0 3px var(--primary4);
-}
-
 .content {
     padding: 10px 0;
     background: var(--primary1);
