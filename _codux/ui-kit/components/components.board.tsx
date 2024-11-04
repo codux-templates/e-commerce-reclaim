@@ -18,6 +18,20 @@ export default createBoard({
             <Kit category="Core Components" title="Components & Elements">
                 <Kit.Section title="Inputs">
                     <Kit.Item>
+                        <Variant name="Input">
+                            <input className="text-input" value="text input" onChange={() => {}} />
+                        </Variant>
+                        <Kit.Description>Input</Kit.Description>
+                    </Kit.Item>
+
+                    <Kit.Item>
+                        <Variant name="Disabled Input">
+                            <input disabled className="text-input" value="disabled input" onChange={() => {}} />
+                        </Variant>
+                        <Kit.Description>Disabled Input</Kit.Description>
+                    </Kit.Item>
+
+                    <Kit.Item>
                         <Variant name="Number Input">
                             <QuantityInput value={6} onChange={() => {}} />
                         </Variant>

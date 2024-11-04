@@ -90,6 +90,28 @@
     color: var(--primary1);
 }
 
+/* Input **********************************************************************/
+
+input.text-input {
+    color: var(--primary5);
+    background: transparent;
+    padding: 8px 0;
+    border-bottom: solid 1px rgba(23, 17, 13, 0.4);
+}
+
+input.text-input {
+    box-shadow: none;
+}
+
+input.text-input:disabled {
+    opacity: 0.5;
+}
+
+input.text-input:focus,
+input.text-input:hover:not(:disabled) {
+    border-bottom-color: var(--primary5);
+}
+
 /* Icons **********************************************************************/
 
 .smallIcon {
