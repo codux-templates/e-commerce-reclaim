@@ -89,3 +89,24 @@ export const normalizeWixClientError = (error: unknown): unknown => {
     }
     return error;
 };
+
+/**
+ * Wraps a function with a try-catch block that fixes broken error messages in
+ * WixClient errors and rethrows them.
+ * @see {@link getWixClientErrorMessage} for details.
+ */
+export const withNormalizedWixClientErrors = <T extends (...args: any[]) => any>(func: T): T => {
+    return function (this: unknown, ...args) {
+        try {
+            const result = func.apply(this, args);
+            if (result instanceof Promise) {
+                return result.catch((error) => {
+                    throw normalizeWixClientError(error);
+                });
+            }
+            return result;
+        } catch (error) {
+            throw normalizeWixClientError(error);
+        }
+    } as T;
+};
