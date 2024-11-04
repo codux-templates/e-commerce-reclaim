@@ -133,10 +133,9 @@ export function ErrorBoundary() {
 export const meta: MetaFunction = () => {
     const title = 'ReClaim: Home Goods Store';
     const description = 'Essential home products for sustainable living';
-    const imagePath = '/cover.jpg';
 
     return [
-        { title: title },
+        { title },
         {
             name: 'description',
             content: description,
@@ -155,23 +154,7 @@ export const meta: MetaFunction = () => {
         },
         {
             property: 'og:image',
-            content: imagePath,
-        },
-        {
-            name: 'twitter:card',
-            content: 'summary_large_image',
-        },
-        {
-            name: 'twitter:title',
-            content: title,
-        },
-        {
-            name: 'twitter:description',
-            content: description,
-        },
-        {
-            name: 'twitter:image',
-            content: imagePath,
+            content: '/social-media-image.jpg',
         },
     ];
 };
