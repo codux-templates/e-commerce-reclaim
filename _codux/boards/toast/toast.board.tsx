@@ -1,5 +1,5 @@
 import { createBoard } from '@wixc3/react-board';
-import { Toast } from '~/src/components/toaster/toast/toast';
+import { Toast } from '~/src/components/toast/toast/toast';
 
 import styles from './toast.board.module.scss';
 

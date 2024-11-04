@@ -28,15 +28,11 @@ export const Toast = ({ toastData, style, className }: ToastProps) => {
             }}
         >
             <div className={styles.description}>{resolveValue(toastData.message, toastData)}</div>
-            <div className={styles.close}>
-                {toastData.type !== 'loading' && (
-                    <CloseIcon
-                        width={24}
-                        className={styles.closeIcon}
-                        onClick={() => toast.dismiss(toastData.id)}
-                    />
-                )}
-            </div>
+            {toastData.type !== 'loading' && (
+                <button className={styles.closeButton} onClick={() => toast.dismiss(toastData.id)}>
+                    <CloseIcon width={24} />
+                </button>
+            )}
         </div>
     );
 };
