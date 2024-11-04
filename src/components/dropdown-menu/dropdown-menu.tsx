@@ -6,10 +6,10 @@ import styles from './dropdown-menu.module.scss';
 
 export interface DropdownMenuProps extends React.PropsWithChildren {
     trigger: React.ReactNode;
-    contentClassName?: string;
+    contentProps?: RadixDropdownMenu.DropdownMenuContentProps & React.RefAttributes<HTMLDivElement>;
 }
 
-export const DropdownMenu = ({ trigger, children, contentClassName }: DropdownMenuProps) => (
+export const DropdownMenu = ({ trigger, children, contentProps }: DropdownMenuProps) => (
     <RadixDropdownMenu.Root>
         <RadixDropdownMenu.Trigger asChild className={styles.trigger}>
             {trigger}
@@ -17,10 +17,8 @@ export const DropdownMenu = ({ trigger, children, contentClassName }: DropdownMe
 
         <RadixDropdownMenu.Portal>
             <RadixDropdownMenu.Content
-                className={classNames(styles.content, contentClassName)}
-                sideOffset={3}
-                align={'end'}
-                alignOffset={-5}
+                {...contentProps}
+                className={classNames(styles.content, contentProps?.className)}
             >
                 {children}
             </RadixDropdownMenu.Content>
@@ -28,23 +26,34 @@ export const DropdownMenu = ({ trigger, children, contentClassName }: DropdownMe
     </RadixDropdownMenu.Root>
 );
 
-export interface DropdownMenuItemProps extends React.PropsWithChildren {
-    className?: string;
-    onClick?: () => void;
-}
+export type DropdownMenuItemProps = RadixDropdownMenu.DropdownMenuItemProps &
+    React.RefAttributes<HTMLDivElement>;
 
-export const DropdownMenuItem = ({ children, className, onClick }: DropdownMenuItemProps) => {
+export const DropdownMenuItem = ({
+    children,
+    className,
+    disabled,
+    ...restProps
+}: DropdownMenuItemProps) => {
     return (
-        <RadixDropdownMenu.Item className={classNames(styles.item, className)} onClick={onClick}>
+        <RadixDropdownMenu.Item
+            className={classNames(styles.item, className)}
+            disabled={disabled}
+            {...restProps}
+        >
             {children}
         </RadixDropdownMenu.Item>
     );
 };
 
-export interface DropdownMenuSeparatorProps {
-    className?: string;
-}
+export type DropdownMenuSeparatorProps = RadixDropdownMenu.DropdownMenuSeparatorProps &
+    React.RefAttributes<HTMLDivElement>;
 
-export const DropdownMenuSeparator = ({ className }: DropdownMenuSeparatorProps) => {
-    return <RadixDropdownMenu.Separator className={classNames(styles.separator, className)} />;
+export const DropdownMenuSeparator = ({ className, ...restProps }: DropdownMenuSeparatorProps) => {
+    return (
+        <RadixDropdownMenu.Separator
+            className={classNames(styles.separator, className)}
+            {...restProps}
+        />
+    );
 };

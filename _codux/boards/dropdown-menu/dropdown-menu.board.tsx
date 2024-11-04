@@ -12,10 +12,15 @@ export default createBoard({
     Board: () => {
         return (
             <div className={styles.container}>
-                <DropdownMenu trigger={<button>Open Dropdown Menu</button>}>
+                <DropdownMenu
+                    trigger={<button className="button primaryButton">Open Dropdown Menu</button>}
+                    contentProps={{
+                        align: 'start',
+                    }}
+                >
                     <DropdownMenuItem>Menu Item 1</DropdownMenuItem>
                     <DropdownMenuItem>Menu Item 2</DropdownMenuItem>
-                    <DropdownMenuItem>Menu Item 3</DropdownMenuItem>
+                    <DropdownMenuItem disabled>Disabled Menu Item</DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
                         <span>Exit</span>

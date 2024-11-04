@@ -2,17 +2,21 @@
     cursor: pointer;
 }
 
-.content {
-    background: var(--primary1);
-    border: 1px solid rgba(23, 17, 13, 0.2);
+.trigger:focus-visible {
+    box-shadow:
+        0 0 0 1px #ffffff,
+        0 0 0 3px var(--primary4);
 }
 
-.content:hover,
-.content:focus-within {
+.content {
+    padding: 10px 0;
+    background: var(--primary1);
+    border: 1px solid rgba(23, 17, 13, 0.2);
     box-shadow: none;
 }
 
 .item {
+    color: var(--primary5);
     cursor: pointer;
     padding: 0 20px;
     min-height: 35px;
@@ -20,8 +24,14 @@
     align-items: center;
 }
 
-.item:hover {
+.item:focus-visible {
+    color: var(--colorD4);
     box-shadow: none;
+}
+
+.item[data-disabled] {
+    opacity: 0.5;
+    cursor: default;
 }
 
 .separator {
