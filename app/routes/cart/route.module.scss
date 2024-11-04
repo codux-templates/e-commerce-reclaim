@@ -71,7 +71,7 @@
     font: var(--paragraph3);
 }
 
-/* Loading / error / empty state */
+/* Fallback for loading, error, and empty cart states */
 .cartFallback {
     min-height: 300px;
     display: grid;

@@ -1,5 +1,6 @@
 import { Link } from '@remix-run/react';
 import classNames from 'classnames';
+import { type ReactNode } from 'react';
 import { useCart, useCheckout } from '~/lib/ecom';
 import { findLineItemPriceBreakdown, getErrorMessage } from '~/lib/utils';
 import { CartItem } from '~/src/components/cart/cart-item/cart-item';
@@ -7,7 +8,6 @@ import { LockIcon } from '~/src/components/icons';
 import { Spinner } from '~/src/components/spinner/spinner';
 
 import styles from './route.module.scss';
-import { ReactNode } from 'react';
 
 export default function CartPage() {
     const {
