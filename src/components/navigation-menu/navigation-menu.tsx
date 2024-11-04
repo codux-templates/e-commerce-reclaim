@@ -42,66 +42,6 @@ export const NavigationMenu = ({ className, vertical = false }: NavigationMenuPr
                         About Us
                     </NavLink>
                 </li>
-                <li>
-                    <CategoryLink categorySlug="kitchen-essentials" className={menuItemStyle}>
-                        Kitchen
-                    </CategoryLink>
-                </li>
-                <li>
-                    <CategoryLink categorySlug="bath" className={menuItemStyle}>
-                        Bath
-                    </CategoryLink>
-                </li>
-                <li>
-                    <CategoryLink categorySlug="on-the-go" className={menuItemStyle}>
-                        On the Go
-                    </CategoryLink>
-                </li>
-                <li>
-                    <NavLink to="/about-us" className={menuItemStyle}>
-                        About Us
-                    </NavLink>
-                </li>
-                <li>
-                    <CategoryLink categorySlug="kitchen-essentials" className={menuItemStyle}>
-                        Kitchen
-                    </CategoryLink>
-                </li>
-                <li>
-                    <CategoryLink categorySlug="bath" className={menuItemStyle}>
-                        Bath
-                    </CategoryLink>
-                </li>
-                <li>
-                    <CategoryLink categorySlug="on-the-go" className={menuItemStyle}>
-                        On the Go
-                    </CategoryLink>
-                </li>
-                <li>
-                    <NavLink to="/about-us" className={menuItemStyle}>
-                        About Us
-                    </NavLink>
-                </li>
-                <li>
-                    <CategoryLink categorySlug="kitchen-essentials" className={menuItemStyle}>
-                        Kitchen
-                    </CategoryLink>
-                </li>
-                <li>
-                    <CategoryLink categorySlug="bath" className={menuItemStyle}>
-                        Bath
-                    </CategoryLink>
-                </li>
-                <li>
-                    <CategoryLink categorySlug="on-the-go" className={menuItemStyle}>
-                        On the Go
-                    </CategoryLink>
-                </li>
-                <li>
-                    <NavLink to="/about-us" className={menuItemStyle}>
-                        About Us
-                    </NavLink>
-                </li>
             </ul>
         </nav>
     );
