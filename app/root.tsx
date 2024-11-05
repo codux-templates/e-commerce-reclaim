@@ -70,20 +70,6 @@ export function Layout({ children }: React.PropsWithChildren) {
     );
 }
 
-interface ContentWrapperProps extends React.PropsWithChildren {
-    tokens?: Tokens;
-}
-
-function ContentWrapper({ children, tokens }: ContentWrapperProps) {
-    return (
-        <EcomApiContextProvider tokens={tokens}>
-            <CartOpenContextProvider>
-                <SiteWrapper>{children}</SiteWrapper>
-            </CartOpenContextProvider>
-        </EcomApiContextProvider>
-    );
-}
-
 export default function App() {
     const { ENV, wixEcomTokens } = useLoaderData<typeof loader>();
 
@@ -92,9 +78,13 @@ export default function App() {
     }
 
     return (
-        <ContentWrapper tokens={wixEcomTokens}>
-            <Outlet />
-        </ContentWrapper>
+        <EcomApiContextProvider tokens={wixEcomTokens}>
+            <CartOpenContextProvider>
+                <SiteWrapper>
+                    <Outlet />
+                </SiteWrapper>
+            </CartOpenContextProvider>
+        </EcomApiContextProvider>
     );
 }
 
