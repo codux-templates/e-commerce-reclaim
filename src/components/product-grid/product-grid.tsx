@@ -40,11 +40,14 @@ export const ProductGrid = React.memo<ProductGridProps>(function ProductGrid({
                 title="We couldn't find any matches"
                 subtitle="Try different filters or another category."
                 actionButton={
-                    <button className={classNames(
-                        styles.clearFiltersButton,
-                        'button',
-                        'transparentButton',
-                    )} onClick={onClickClearFilters}>
+                    <button
+                        className={classNames(
+                            styles.clearFiltersButton,
+                            'button',
+                            'transparentButton',
+                        )}
+                        onClick={onClickClearFilters}
+                    >
                         Clear Filters
                     </button>
                 }

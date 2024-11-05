@@ -33,7 +33,11 @@ export const QuantityInput = ({
 
     return (
         <div className={classNames(styles.root, { [styles.disabled]: disabled }, className)}>
-            <button className={classNames(styles.button, 'button', 'transparentButton')} onClick={decrement} disabled={value <= 1 || disabled}>
+            <button
+                className={classNames(styles.button, 'button', 'transparentButton')}
+                onClick={decrement}
+                disabled={value <= 1 || disabled}
+            >
                 <MinusIcon className={styles.icon} />
             </button>
             <input
@@ -46,7 +50,11 @@ export const QuantityInput = ({
                 onBlur={handleBlur}
                 disabled={disabled}
             />
-            <button className={classNames(styles.button, 'button', 'transparentButton')} onClick={increment} disabled={disabled}>
+            <button
+                className={classNames(styles.button, 'button', 'transparentButton')}
+                onClick={increment}
+                disabled={disabled}
+            >
                 <PlusIcon className={styles.icon} />
             </button>
         </div>
