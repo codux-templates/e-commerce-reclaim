@@ -11,7 +11,7 @@ export interface AvatarProps {
 export const Avatar = ({ className, imageSrc }: AvatarProps) => {
     return (
         <div className={classNames(styles.root, className)}>
-            {imageSrc ? <img src={imageSrc} alt="" /> : <UserIcon className={styles.userIcon} />}
+            {imageSrc ? <img src={imageSrc} alt="" /> : <UserIcon />}
         </div>
     );
 };
