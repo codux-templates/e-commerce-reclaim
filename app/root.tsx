@@ -8,7 +8,6 @@ import {
     ScrollRestoration,
     useLoaderData,
 } from '@remix-run/react';
-import { Tokens } from '@wix/sdk';
 import { CartOpenContextProvider } from '~/lib/cart-open-context';
 import { EcomApiContextProvider } from '~/lib/ecom';
 import { commitSession, initializeEcomSession } from '~/lib/ecom/session';
