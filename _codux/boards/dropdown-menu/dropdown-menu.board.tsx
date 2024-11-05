@@ -14,15 +14,12 @@ export default createBoard({
             <div className={styles.container}>
                 <DropdownMenu
                     trigger={<button className="button primaryButton">Open Dropdown Menu</button>}
-                    contentProps={{
-                        align: 'start',
-                    }}
+                    contentProps={{ align: 'start' }}
                 >
                     <DropdownMenuItem>Menu Item 1</DropdownMenuItem>
                     <DropdownMenuItem>Menu Item 2</DropdownMenuItem>
                     <DropdownMenuItem>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s
+                        Menu Item With A Long Name That Is Going To Be Truncated
                     </DropdownMenuItem>
                     <DropdownMenuItem disabled>Disabled Menu Item</DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -34,7 +31,7 @@ export default createBoard({
         );
     },
     environmentProps: {
-        windowWidth: 400,
-        windowHeight: 400,
+        windowWidth: 460,
+        windowHeight: 320,
     },
 });

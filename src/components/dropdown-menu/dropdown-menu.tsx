@@ -5,11 +5,11 @@ import React from 'react';
 import styles from './dropdown-menu.module.scss';
 
 export interface DropdownMenuProps extends React.PropsWithChildren {
-    trigger: React.ReactNode;
+    trigger: React.ReactElement;
     contentProps?: RadixDropdownMenu.DropdownMenuContentProps & React.RefAttributes<HTMLDivElement>;
 }
 
-export const DropdownMenu = ({ trigger, children, contentProps }: DropdownMenuProps) => (
+export const DropdownMenu = ({ trigger, children, contentProps = {} }: DropdownMenuProps) => (
     <RadixDropdownMenu.Root>
         <RadixDropdownMenu.Trigger asChild className={styles.trigger}>
             {trigger}
@@ -17,9 +17,10 @@ export const DropdownMenu = ({ trigger, children, contentProps }: DropdownMenuPr
 
         <RadixDropdownMenu.Portal>
             <RadixDropdownMenu.Content
+                // Avoid Chrome adding :focus-visible outline to the trigger on close.
                 onCloseAutoFocus={(e) => e.preventDefault()}
-                {...contentProps}
-                className={classNames(styles.content, contentProps?.className)}
+                {...{ collisionPadding: 20, ...contentProps }}
+                className={classNames(styles.content, contentProps.className)}
             >
                 {children}
             </RadixDropdownMenu.Content>
@@ -30,22 +31,9 @@ export const DropdownMenu = ({ trigger, children, contentProps }: DropdownMenuPr
 export type DropdownMenuItemProps = RadixDropdownMenu.DropdownMenuItemProps &
     React.RefAttributes<HTMLDivElement>;
 
-export const DropdownMenuItem = ({
-    children,
-    className,
-    disabled,
-    ...restProps
-}: DropdownMenuItemProps) => {
-    return (
-        <RadixDropdownMenu.Item
-            className={classNames(styles.item, className)}
-            disabled={disabled}
-            {...restProps}
-        >
-            <div className={styles.contentWrapper}>{children}</div>
-        </RadixDropdownMenu.Item>
-    );
-};
+export const DropdownMenuItem = ({ className, ...restProps }: DropdownMenuItemProps) => (
+    <RadixDropdownMenu.Item className={classNames(styles.item, className)} {...restProps} />
+);
 
 export type DropdownMenuSeparatorProps = RadixDropdownMenu.DropdownMenuSeparatorProps &
     React.RefAttributes<HTMLDivElement>;
