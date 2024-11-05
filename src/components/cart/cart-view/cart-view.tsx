@@ -40,7 +40,10 @@ export const CartView = ({
                 <span className="heading6">
                     Cart ({itemsCount} {itemsCount === 1 ? 'item' : 'items'})
                 </span>
-                <button className={styles.closeButton} onClick={onClose}>
+                <button
+                    className={classNames(styles.closeButton, 'button', 'transparentButton')}
+                    onClick={onClose}
+                >
                     <CloseIcon />
                 </button>
             </div>

@@ -1,9 +1,11 @@
+import styles from './route.module.scss';
+
 export default function TermsAndConditionsPage() {
     return (
         <div className="textPage">
             <h1>Terms & Conditions</h1>
 
-            <h2>A Legal Disclaimer</h2>
+            <h2 className={styles.heading2}>A Legal Disclaimer</h2>
             <div>
                 The explanations and information provided on this page are only general and
                 high-level explanations and information on how to write your own document of Terms &
@@ -14,7 +16,7 @@ export default function TermsAndConditionsPage() {
                 understand and to assist you in the creation of your own Terms & Conditions.
             </div>
 
-            <h2>Terms & Conditions - The Basics</h2>
+            <h2 className={styles.heading2}>Terms & Conditions - The Basics</h2>
             <div>
                 Having said that, Terms and Conditions (“T&C”) are a set of legally binding terms
                 defined by you, as the owner of this website. The T&C set forth the legal boundaries
@@ -35,7 +37,7 @@ export default function TermsAndConditionsPage() {
                 exposure.
             </div>
 
-            <h2>What To Include In The T&C Document</h2>
+            <h2 className={styles.heading2}>What To Include In The T&C Document</h2>
             <div>
                 Generally speaking, T&C often address these types of issues: Who is allowed to use
                 the website; the possible payment methods; a declaration that the website owner may

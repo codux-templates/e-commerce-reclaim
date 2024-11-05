@@ -1,9 +1,11 @@
+import styles from './route.module.scss';
+
 export default function ShippingPolicyPage() {
     return (
         <div className="textPage">
             <h1>Shipping Policy</h1>
 
-            <h2>A Legal Disclaimer</h2>
+            <h2 className={styles.heading2}>A Legal Disclaimer</h2>
             <div>
                 The explanations and information provided on this page are only general and
                 high-level explanations and information on how to write your own document of a
@@ -14,7 +16,7 @@ export default function ShippingPolicyPage() {
                 you understand and to assist you in the creation of your own Shipping Policy.
             </div>
 
-            <h2>Shipping Policy - The Basics</h2>
+            <h2 className={styles.heading2}>Shipping Policy - The Basics</h2>
             <div>
                 Having said that, a Shipping Policy is a legally binding document that is meant to
                 establish the legal relations between you and your customers. It is the legal
@@ -30,7 +32,7 @@ export default function ShippingPolicyPage() {
                 your shipping timeframes or processes.
             </div>
 
-            <h2>What To Include In The Shipping Policy</h2>
+            <h2 className={styles.heading2}>What To Include In The Shipping Policy</h2>
             <div>
                 Generally speaking, a Shipping Policy often addresses these types of issues: the
                 timeframe for processing orders; the shipping costs; different domestic and

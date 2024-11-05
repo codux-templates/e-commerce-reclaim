@@ -13,10 +13,11 @@
 
 .clearFiltersButton {
     margin-top: 32px;
+    padding: 0;
     cursor: pointer;
 }
 
-.clearFiltersButton:hover {
+.clearFiltersButton:not(:disabled):hover {
     color: rgba(23, 17, 13, 0.7);
 }
 
