@@ -5,7 +5,7 @@ import { ToastContainer } from '~/src/components/toast/toast-container';
 import styles from './toast-container.board.module.scss';
 
 export default createBoard({
-    name: 'Toaster',
+    name: 'Toast Container',
     Board: () => {
         const handleTopToast = () => {
             toast.success('Toast at the top of the page', {
