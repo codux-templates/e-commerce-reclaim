@@ -1,4 +1,5 @@
 import { currentCart, orders } from '@wix/ecom';
+import { members } from '@wix/members';
 import { redirects } from '@wix/redirects';
 import { createClient, OAuthStrategy, Tokens } from '@wix/sdk';
 import { collections, products } from '@wix/stores';
@@ -32,6 +33,7 @@ export function createWixClient(tokens?: Tokens): WixApiClient {
             redirects,
             collections,
             orders,
+            members,
         },
         auth: OAuthStrategy({
             clientId: getWixClientId(),
@@ -183,6 +185,13 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
         async logout(returnUrl: string) {
             const result = await wixClient.auth.logout(returnUrl);
             return result;
+        },
+        isUserLoggedIn() {
+            return wixClient.auth.loggedIn();
+        },
+        async getUser() {
+            const response = await wixClient.members.getCurrentMember();
+            return response.member;
         },
     });
 

@@ -1,0 +1,24 @@
+.root {
+    cursor: pointer;
+}
+
+.contentWrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dropdownMenu:focus-visible,
+.dropdownMenuItem:focus-visible {
+    box-shadow: none;
+}
+
+.link {
+    font: var(--paragraph3);
+}
+
+.root:hover .link,
+.dropdownMenuItem:focus-visible .link,
+.link.active {
+    opacity: 0.7;
+}
