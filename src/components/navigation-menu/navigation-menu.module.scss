@@ -3,7 +3,6 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    height: 100%;
 }
 
 .menuList.vertical {
@@ -12,8 +11,7 @@
 
 .menuItem {
     display: block;
-    padding: 10px;
-    margin: 4px 8px;
+    padding: 14px 18px;
     white-space: nowrap;
 }
 
