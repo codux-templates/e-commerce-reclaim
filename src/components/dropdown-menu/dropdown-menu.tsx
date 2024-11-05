@@ -31,7 +31,7 @@ export const DropdownMenu = ({ trigger, children, contentProps = {} }: DropdownM
 export type DropdownMenuItemProps = RadixDropdownMenu.DropdownMenuItemProps &
     React.RefAttributes<HTMLDivElement>;
 
-export const DropdownMenuItem = React.forwardRef<HTMLDivElement>(
+export const DropdownMenuItem = React.forwardRef<HTMLDivElement, DropdownMenuItemProps>(
     ({ className, ...restProps }: DropdownMenuItemProps, forwardedRef) => (
         <RadixDropdownMenu.Item
             ref={forwardedRef}
@@ -45,7 +45,7 @@ DropdownMenuItem.displayName = 'DropdownMenuItem';
 export type DropdownMenuSeparatorProps = RadixDropdownMenu.DropdownMenuSeparatorProps &
     React.RefAttributes<HTMLDivElement>;
 
-export const DropdownMenuSeparator = React.forwardRef<HTMLDivElement>(
+export const DropdownMenuSeparator = React.forwardRef<HTMLDivElement, DropdownMenuSeparatorProps>(
     ({ className, ...restProps }: DropdownMenuSeparatorProps, forwardedRef) => {
         return (
             <RadixDropdownMenu.Separator
