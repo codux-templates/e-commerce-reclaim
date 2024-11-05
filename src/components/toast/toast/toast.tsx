@@ -11,7 +11,7 @@ interface ToastProps {
 }
 
 export const Toast = ({ toastData, style, className }: ToastProps) => {
-    const defaultAnimation = toastData.visible ? styles.defaultEnter : styles.defaultExit;
+    const animationClassName = toastData.visible ? styles.enterAnimation : styles.exitAnimation;
 
     return (
         <div
@@ -20,7 +20,7 @@ export const Toast = ({ toastData, style, className }: ToastProps) => {
                 styles[toastData.type],
                 className,
                 toastData.className,
-                defaultAnimation,
+                animationClassName,
             )}
             style={{
                 ...style,

@@ -47,7 +47,7 @@
     cursor: pointer;
 }
 
-@keyframes defaultEnter {
+@keyframes enterKeyframes {
     from {
         opacity: 0;
     }
@@ -56,7 +56,7 @@
     }
 }
 
-@keyframes defaultExit {
+@keyframes exitKeyframes {
     from {
         opacity: 1;
     }
@@ -65,10 +65,10 @@
     }
 }
 
-.defaultEnter {
-    animation: defaultEnter 0.5s ease forwards;
+.enterAnimation {
+    animation: enterKeyframes 0.5s ease forwards;
 }
 
-.defaultExit {
-    animation: defaultExit 0.5s ease forwards;
+.exitAnimation {
+    animation: exitKeyframes 0.5s ease forwards;
 }

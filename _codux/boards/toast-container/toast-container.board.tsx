@@ -1,8 +1,8 @@
 import { createBoard } from '@wixc3/react-board';
-import toast, { Toaster } from 'react-hot-toast';
-import { Toast } from '~/src/components/toast/toast/toast';
+import toast from 'react-hot-toast';
+import { ToastContainer } from '~/src/components/toast/toast-container';
 
-import styles from './toaster.board.module.scss';
+import styles from './toast-container.board.module.scss';
 
 export default createBoard({
     name: 'Toaster',
@@ -29,26 +29,7 @@ export default createBoard({
                     Open toast at the right bottom
                 </button>
 
-                <Toaster
-                    containerStyle={{
-                        inset: '0',
-                    }}
-                    containerClassName={styles.toaster}
-                    position="top-center"
-                    reverseOrder={false}
-                    gutter={8}
-                    toastOptions={{
-                        style: {},
-                        success: {
-                            style: {},
-                        },
-                        error: {
-                            style: {},
-                        },
-                    }}
-                >
-                    {(t) => <Toast toastData={t} />}
-                </Toaster>
+                <ToastContainer className={styles.toastContainer} />
             </div>
         );
     },

@@ -12,13 +12,3 @@
     flex-grow: 1;
     padding: 0 var(--pagePaddingHoriz);
 }
-
-.toaster {
-    padding: 100px 0 0 0;
-}
-
-@media (max-width: $desktop-width) {
-    .toaster {
-        padding-top: 0;
-    }
-}
