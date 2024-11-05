@@ -90,6 +90,24 @@
     color: var(--primary1);
 }
 
+.transparentButton {
+    border: none;
+    background: transparent;
+    color: inherit;
+}
+.button:not(:disabled):hover {
+    background: transparent;
+    color: inherit;
+}
+
+/* Inputs ********************************************************************/
+
+.transparentInput {
+    border: none;
+    background: transparent;
+    color: inherit;
+}
+
 /* Icons **********************************************************************/
 
 .smallIcon {
