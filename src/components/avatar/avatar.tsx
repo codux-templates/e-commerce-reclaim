@@ -1,4 +1,4 @@
-import { DefaultAvatar } from '../icons';
+import { UserIcon } from '../icons';
 
 import styles from './avatar.module.scss';
 
@@ -13,7 +13,7 @@ export const Avatar = ({ imageSrc, altText }: AvatarProps) => {
             {imageSrc ? (
                 <img alt={altText} src={imageSrc} />
             ) : (
-                <DefaultAvatar className={styles.defaultAvatar} />
+                <UserIcon className={styles.userIcon} />
             )}
         </div>
     );

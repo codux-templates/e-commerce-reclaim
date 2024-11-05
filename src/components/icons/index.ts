@@ -2,7 +2,7 @@ export { ArrowRightIcon } from './arrow-right-icon';
 export { CartIcon } from './cart-icon/cart-icon';
 export { ChevronRightIcon } from './chevron-right-icon';
 export { CloseIcon } from './close-icon';
-export { DefaultAvatar } from './default-avatar';
+export { UserIcon } from './user-icon';
 export { DropdownIcon } from './dropdown-icon';
 export { ErrorIcon } from './error-icon';
 export { FacebookIcon } from './facebook-icon';
