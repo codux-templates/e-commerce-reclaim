@@ -18,16 +18,18 @@ export const Toast = ({ toastData, style, className }: ToastProps) => {
             className={classNames(
                 styles.root,
                 styles[toastData.type],
+                animationClassName,
                 className,
                 toastData.className,
-                animationClassName,
             )}
             style={{
                 ...style,
                 ...toastData.style,
             }}
         >
-            <div className={styles.description}>{resolveValue(toastData.message, toastData)}</div>
+            <div className={styles.description} {...toastData.ariaProps}>
+                {resolveValue(toastData.message, toastData)}
+            </div>
             {toastData.type !== 'loading' && (
                 <button className={styles.closeButton} onClick={() => toast.dismiss(toastData.id)}>
                     <CloseIcon width={24} />
