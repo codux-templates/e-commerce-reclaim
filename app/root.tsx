@@ -1,3 +1,9 @@
+import '~/src/styles/reset.scss';
+import '~/src/styles/colors.scss';
+import '~/src/styles/typography.scss';
+import '~/src/styles/common.scss';
+import '~/src/styles/index.scss';
+
 import { json, LoaderFunctionArgs } from '@remix-run/node';
 import {
     isRouteErrorResponse,
@@ -21,12 +27,6 @@ import { getErrorMessage, routeLocationToUrl } from '~/lib/utils';
 import { RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
 import { ErrorPage } from '~/src/components/error-page/error-page';
 import { SiteWrapper } from '~/src/components/site-wrapper/site-wrapper';
-
-import '~/src/styles/reset.scss';
-import '~/src/styles/colors.scss';
-import '~/src/styles/typography.scss';
-import '~/src/styles/common.scss';
-import '~/src/styles/index.scss';
 
 export const meta: MetaFunction = () => {
     return [{ title: 'ReClaim: Home Goods Store' }];
