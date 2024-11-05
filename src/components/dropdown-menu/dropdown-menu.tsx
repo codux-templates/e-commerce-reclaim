@@ -28,13 +28,12 @@ export const DropdownMenu = ({ trigger, children, contentProps = {} }: DropdownM
     </RadixDropdownMenu.Root>
 );
 
-export type DropdownMenuItemProps = RadixDropdownMenu.DropdownMenuItemProps &
-    React.RefAttributes<HTMLDivElement>;
+export type DropdownMenuItemProps = RadixDropdownMenu.DropdownMenuItemProps;
 
 export const DropdownMenuItem = React.forwardRef<HTMLDivElement, DropdownMenuItemProps>(
-    ({ className, ...restProps }: DropdownMenuItemProps, forwardedRef) => (
+    ({ className, ...restProps }: DropdownMenuItemProps, ref) => (
         <RadixDropdownMenu.Item
-            ref={forwardedRef}
+            ref={ref}
             className={classNames(styles.item, className)}
             {...restProps}
         />
@@ -42,14 +41,13 @@ export const DropdownMenuItem = React.forwardRef<HTMLDivElement, DropdownMenuIte
 );
 DropdownMenuItem.displayName = 'DropdownMenuItem';
 
-export type DropdownMenuSeparatorProps = RadixDropdownMenu.DropdownMenuSeparatorProps &
-    React.RefAttributes<HTMLDivElement>;
+export type DropdownMenuSeparatorProps = RadixDropdownMenu.DropdownMenuSeparatorProps;
 
 export const DropdownMenuSeparator = React.forwardRef<HTMLDivElement, DropdownMenuSeparatorProps>(
-    ({ className, ...restProps }: DropdownMenuSeparatorProps, forwardedRef) => {
+    ({ className, ...restProps }: DropdownMenuSeparatorProps, ref) => {
         return (
             <RadixDropdownMenu.Separator
-                ref={forwardedRef}
+                ref={ref}
                 className={classNames(styles.separator, className)}
                 {...restProps}
             />
