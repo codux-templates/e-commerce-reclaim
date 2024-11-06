@@ -1,12 +1,11 @@
 import type { MetaFunction } from '@remix-run/react';
-import styles from './route.module.scss';
 
 export default function RefundPolicyPage() {
     return (
         <div className="textPage">
             <h1>Refund Policy</h1>
 
-            <h2 className={styles.heading2}>A Legal Disclaimer</h2>
+            <h2>A Legal Disclaimer</h2>
             <div>
                 The explanations and information provided on this page are only general and
                 high-level explanations and information on how to write your own document of a
@@ -17,7 +16,7 @@ export default function RefundPolicyPage() {
                 you understand and to assist you in the creation of your own Refund Policy.
             </div>
 
-            <h2 className={styles.heading2}>Refund Policy - The Basics</h2>
+            <h2>Refund Policy - The Basics</h2>
             <div>
                 Having said that, a Refund Policy is a legally binding document that is meant to
                 establish the legal relations between you and your customers regarding how and if
@@ -28,7 +27,7 @@ export default function RefundPolicyPage() {
                 claims from customers that are not satisfied with the products they purchased.
             </div>
 
-            <h2 className={styles.heading2}>What To Include in the Refund Policy</h2>
+            <h2>What To Include in the Refund Policy</h2>
             <div>
                 Generally speaking, a Refund Policy often addresses these types of issues: the
                 timeframe for asking for a refund; will the refund be full or partial; under which

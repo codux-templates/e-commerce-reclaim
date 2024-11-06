@@ -1,12 +1,11 @@
 import type { MetaFunction } from '@remix-run/react';
-import styles from './route.module.scss';
 
 export default function PrivacyPolicyPage() {
     return (
         <div className="textPage">
             <h1>Privacy Policy</h1>
 
-            <h2 className={styles.heading2}>A Legal Disclaimer</h2>
+            <h2>A Legal Disclaimer</h2>
             <div>
                 The explanations and information provided on this page are only general and
                 high-level explanations and information on how to write your own document of a
@@ -17,7 +16,7 @@ export default function PrivacyPolicyPage() {
                 help you understand and to assist you in the creation of your own Privacy Policy.
             </div>
 
-            <h2 className={styles.heading2}>Privacy Policy - The Basics</h2>
+            <h2>Privacy Policy - The Basics</h2>
             <div>
                 Having said that, a privacy policy is a statement that discloses some or all of the
                 ways a website collects, uses, discloses, processes, and manages the data of its
@@ -32,7 +31,7 @@ export default function PrivacyPolicyPage() {
                 legislation to your activities and location.
             </div>
 
-            <h2 className={styles.heading2}>What To Include In The Privacy Policy</h2>
+            <h2>What To Include In The Privacy Policy</h2>
             <div>
                 Generally speaking, a Privacy Policy often addresses these types of issues: the
                 types of information the website is collecting and the manner in which it collects
