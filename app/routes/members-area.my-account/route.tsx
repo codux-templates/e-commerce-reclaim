@@ -1,5 +1,8 @@
 import { LoaderFunctionArgs, redirect } from '@remix-run/node';
 import type { MetaFunction } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
+import classNames from 'classnames';
+import { useState } from 'react';
 import { initializeEcomApiForRequest } from '~/lib/ecom/session';
 
 import styles from './route.module.scss';
@@ -10,13 +13,93 @@ export async function loader({ request }: LoaderFunctionArgs) {
         return redirect('/login');
     }
 
-    return null;
+    const member = await api.getMember();
+    return { member };
 }
 
 export default function MyAccountPage() {
+    const { member } = useLoaderData<typeof loader>();
+
+    const originalFirstName = member?.contact?.firstName ?? '';
+    const originalLastName = member?.contact?.lastName ?? '';
+    const originalPhone = member?.contact?.phones?.[0] ?? '';
+
+    const [firstName, setFirstName] = useState(originalFirstName);
+    const [lastName, setLastName] = useState(originalLastName);
+    const [phone, setPhone] = useState(originalPhone);
+
+    const handleDiscard = () => {
+        setFirstName(originalFirstName);
+        setLastName(originalLastName);
+        setPhone(originalPhone);
+    };
+
     return (
         <div>
-            <div className={styles.underConstructionMessage}>This page is under construction</div>
+            <div className={classNames(styles.section, styles.header)}>
+                <div>
+                    <h2 className="heading4">Account</h2>
+                    <span className="paragraph1">View and edit your personal info below.</span>
+                </div>
+                <div className={styles.actions}>
+                    <button className="button primaryButton smallButton" onClick={handleDiscard}>
+                        Discard
+                    </button>
+                    <button className="button secondaryButton smallButton">Update Info</button>
+                </div>
+            </div>
+
+            <div className={styles.section}>
+                <div>
+                    <h2 className="heading5">Personal info</h2>
+                    <span className="paragraph1">Update you personal information.</span>
+                </div>
+
+                <form className={styles.form}>
+                    <label>
+                        First Name
+                        <input
+                            className="text-input"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                        />
+                    </label>
+
+                    <label>
+                        Last Name
+                        <input
+                            className="text-input"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                        />
+                    </label>
+
+                    <label>
+                        Phone
+                        <input
+                            className="text-input"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                        />
+                    </label>
+                </form>
+
+                <div className={styles.actions}>
+                    <button className="button primaryButton smallButton" onClick={handleDiscard}>
+                        Discard
+                    </button>
+                    <button className="button secondaryButton smallButton">Update Info</button>
+                </div>
+            </div>
+
+            <div className={styles.section}>
+                <div>
+                    <h2 className="heading5">Login info</h2>
+                    <span className="paragraph1">
+                        View and update your login email and password.
+                    </span>
+                </div>
+            </div>
         </div>
     );
 }

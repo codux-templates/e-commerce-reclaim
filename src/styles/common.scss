@@ -97,12 +97,17 @@
     padding: 0;
     cursor: pointer;
 }
+
 .iconButton {
     border: none;
     background: transparent;
     color: inherit;
     padding: 0;
     cursor: pointer;
+}
+
+.smallButton {
+    height: 36px;
 }
 
 /* Inputs ********************************************************************/
