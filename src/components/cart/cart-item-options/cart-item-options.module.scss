@@ -7,13 +7,15 @@
 .moreOptionsButton {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 6px;
+    padding: 0;
     font: var(--paragraph3);
     cursor: pointer;
 }
 
-.moreOptionsButton:focus,
-.moreOptionsButton:hover {
+.moreOptionsButton:not(:disabled):focus,
+.moreOptionsButton:not(:disabled):hover {
     color: var(--secondary3);
 }
 
