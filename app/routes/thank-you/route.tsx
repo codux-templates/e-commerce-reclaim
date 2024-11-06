@@ -52,4 +52,3 @@ export const meta: MetaFunction = () => {
 };
 
 export { ErrorBoundary } from '~/src/components/error-page/error-page';
-  
