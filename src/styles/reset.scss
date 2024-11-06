@@ -1,3 +1,8 @@
+/* Josh Comeau CSS Reset 
+ * Source: https://www.joshwcomeau.com/css/custom-css-reset/
+ * Description: A modern CSS reset to improve consistency and control over default styles.
+ */
+
 /* 1. Use a more-intuitive box-sizing model */
 *,
 *::before,
@@ -57,7 +62,8 @@ h6 {
     isolation: isolate;
 }
 
-/* ToDo: addition to josh reset */
+/* Custom additions to the original Josh Comeau reset by Codux */
+
 a {
     text-decoration: none;
     color: inherit;
