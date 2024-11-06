@@ -43,9 +43,10 @@ export const ErrorBoundary = () => {
         message = '';
     }
 
-    // In Remix dev mode, if an error bubbles up to a parent route's error
-    // boundary and then the user navigates away, some style tags disappear.
-    // This can be prevented by forcing a full page load.
+    // In Remix dev mode, if an error bubbles up from a child route to a parent
+    // route's error boundary, and the user then follows a link, some style tags
+    // disappear. To prevent this, we force a full page load upon navigation
+    // from the error boundary.
     useEffect(() => {
         if (navigation.state === 'loading') {
             const { pathname, search, hash } = navigation.location;
