@@ -60,6 +60,7 @@
     padding: 3px 11px 4px;
     border-radius: 50px;
     border: 1px solid var(--black);
+    cursor: pointer;
     white-space: nowrap;
 
     &:hover {
@@ -71,6 +72,7 @@
 .openMenuButton {
     display: none;
     padding: 0;
+    cursor: pointer;
 }
 
 @media (max-width: $desktop-width) {

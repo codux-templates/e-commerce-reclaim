@@ -51,6 +51,7 @@
     font: var(--paragraph1);
     background: transparent;
     color: var(--primary5);
+    cursor: pointer;
     white-space: nowrap;
     transition: all 200ms ease;
     transition-property: background-color, color;
