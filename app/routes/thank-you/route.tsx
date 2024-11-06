@@ -1,9 +1,7 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
-import { type MetaFunction, useLoaderData, useRouteError } from '@remix-run/react';
+import { type MetaFunction, useLoaderData } from '@remix-run/react';
 import { initializeEcomApiForRequest } from '~/lib/ecom/session';
-import { getErrorMessage } from '~/lib/utils';
 import { CategoryLink } from '~/src/components/category-link/category-link';
-import { ErrorPage } from '~/src/components/error-page/error-page';
 import { OrderSummary } from '~/src/components/order-summary/order-summary';
 
 import styles from './route.module.scss';
@@ -39,11 +37,6 @@ export default function ThankYouPage() {
     );
 }
 
-export function ErrorBoundary() {
-    const error = useRouteError();
-    return <ErrorPage title="Error" message={getErrorMessage(error)} />;
-}
-
 export const meta: MetaFunction = () => {
     return [
         { title: 'Thank You' },
@@ -57,3 +50,6 @@ export const meta: MetaFunction = () => {
         },
     ];
 };
+
+export { ErrorBoundary } from '~/src/components/error-page/error-page';
+  
