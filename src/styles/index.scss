@@ -15,3 +15,8 @@ body {
         0 0 0 1px #ffffff,
         0 0 0 3px var(--colorD4);
 }
+
+#root {
+    /* create a stacking context for the app */
+    isolation: isolate;
+}
