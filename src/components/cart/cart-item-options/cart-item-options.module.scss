@@ -14,8 +14,8 @@
     cursor: pointer;
 }
 
-.moreOptionsButton:not(:disabled):focus,
-.moreOptionsButton:not(:disabled):hover {
+.moreOptionsButton:focus,
+.moreOptionsButton:hover {
     color: var(--secondary3);
 }
 

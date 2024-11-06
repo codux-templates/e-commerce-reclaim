@@ -99,7 +99,7 @@ export const CartItem = ({
                         {priceBreakdown?.lineItemPrice?.formattedConvertedAmount}
                     </div>
                     <button
-                        className={classNames(styles.removeButton, 'button', 'transparentButton')}
+                        className={classNames(styles.removeButton, 'iconButton')}
                         onClick={onRemove}
                     >
                         <TrashIcon />

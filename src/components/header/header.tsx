@@ -42,14 +42,14 @@ export const Header = ({ className }: HeaderProps) => {
                 <NavigationMenu className={styles.menu} />
                 <div className={styles.actions}>
                     <button
-                        className={classNames(styles.cartButton, 'button', 'transparentButton')}
+                        className={classNames(styles.cartButton, 'iconButton')}
                         onClick={() => cartOpener.setIsOpen(true)}
                     >
                         <CartIcon className={styles.cart} count={cartItemsCount} />
                     </button>
 
                     <button
-                        className={classNames(styles.openMenuButton, 'button', 'transparentButton')}
+                        className={classNames(styles.openMenuButton, 'iconButton')}
                         onClick={() => setIsSidebarOpen(true)}
                     >
                         <MenuIcon width={24} height={24} />

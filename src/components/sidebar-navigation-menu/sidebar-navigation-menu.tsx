@@ -24,10 +24,7 @@ export const SidebarNavigationMenu = ({ open, onClose }: SidebarNavigationMenuPr
     return (
         <Drawer open={open} onClose={onClose} drawerClassName={styles.drawer}>
             <NavigationMenu vertical className={styles.menu} />
-            <button
-                className={classNames(styles.closeButton, 'button', 'transparentButton')}
-                onClick={onClose}
-            >
+            <button className={classNames(styles.closeButton, 'iconButton')} onClick={onClose}>
                 <CloseIcon />
             </button>
         </Drawer>

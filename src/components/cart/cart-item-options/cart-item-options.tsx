@@ -34,7 +34,7 @@ export const CartItemOptions = ({
 
             {options.length > visibleOptionsCount && (
                 <button
-                    className={classNames(styles.moreOptionsButton, 'button', 'transparentButton')}
+                    className={classNames(styles.moreOptionsButton, 'linkButton')}
                     onClick={toggleIsExpanded}
                 >
                     {isExpanded ? 'Less Details' : 'More Details'}

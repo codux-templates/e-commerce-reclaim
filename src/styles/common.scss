@@ -90,14 +90,19 @@
     color: var(--primary1);
 }
 
-.transparentButton {
+.linkButton {
     border: none;
     background: transparent;
     color: inherit;
+    padding: 0;
+    cursor: pointer;
 }
-.transparentButton:not(:disabled):hover {
+.iconButton {
+    border: none;
     background: transparent;
     color: inherit;
+    padding: 0;
+    cursor: pointer;
 }
 
 /* Inputs ********************************************************************/

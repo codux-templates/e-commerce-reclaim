@@ -34,7 +34,7 @@ export const QuantityInput = ({
     return (
         <div className={classNames(styles.root, { [styles.disabled]: disabled }, className)}>
             <button
-                className={classNames(styles.button, 'button', 'transparentButton')}
+                className={classNames(styles.button, 'iconButton')}
                 onClick={decrement}
                 disabled={value <= 1 || disabled}
             >
@@ -51,7 +51,7 @@ export const QuantityInput = ({
                 disabled={disabled}
             />
             <button
-                className={classNames(styles.button, 'button', 'transparentButton')}
+                className={classNames(styles.button, 'iconButton')}
                 onClick={increment}
                 disabled={disabled}
             >

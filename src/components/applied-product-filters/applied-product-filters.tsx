@@ -55,7 +55,7 @@ export const AppliedProductFilters = ({
             )}
 
             <button
-                className={classNames(styles.clearAllButton, 'button', 'transparentButton')}
+                className={classNames(styles.clearAllButton, 'linkButton')}
                 onClick={onClearAllFilters}
             >
                 Clear All

@@ -41,11 +41,7 @@ export const ProductGrid = React.memo<ProductGridProps>(function ProductGrid({
                 subtitle="Try different filters or another category."
                 actionButton={
                     <button
-                        className={classNames(
-                            styles.clearFiltersButton,
-                            'button',
-                            'transparentButton',
-                        )}
+                        className={classNames(styles.clearFiltersButton, 'linkButton')}
                         onClick={onClickClearFilters}
                     >
                         Clear Filters
