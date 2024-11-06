@@ -1,3 +1,4 @@
+import { MetaFunction } from '@remix-run/react';
 import styles from './route.module.scss';
 
 export default function TermsAndConditionsPage() {
@@ -59,3 +60,17 @@ export default function TermsAndConditionsPage() {
         </div>
     );
 }
+
+export const meta: MetaFunction = () => {
+    return [
+        { title: 'Terms and Conditions | ReClaim' },
+        {
+            name: 'description',
+            content: 'Essential home products for sustainable living',
+        },
+        {
+            property: 'robots',
+            content: 'index, follow',
+        },
+    ];
+};

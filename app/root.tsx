@@ -20,10 +20,6 @@ import { commitSession, initializeEcomSession } from '~/lib/ecom/session';
 import { RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
 import { SiteWrapper } from '~/src/components/site-wrapper/site-wrapper';
 
-export const meta: MetaFunction = () => {
-    return [{ title: 'ReClaim: Home Goods Store' }];
-};
-
 export async function loader({ request }: LoaderFunctionArgs) {
     const { wixEcomTokens, session, shouldUpdateSessionCookie } =
         await initializeEcomSession(request);
@@ -86,5 +82,34 @@ export default function App() {
         </EcomApiContextProvider>
     );
 }
+
+export const meta: MetaFunction = () => {
+    const title = 'ReClaim: Home Goods Store';
+    const description = 'Essential home products for sustainable living';
+
+    return [
+        { title },
+        {
+            name: 'description',
+            content: description,
+        },
+        {
+            property: 'robots',
+            content: 'index, follow',
+        },
+        {
+            property: 'og:title',
+            content: title,
+        },
+        {
+            property: 'og:description',
+            content: description,
+        },
+        {
+            property: 'og:image',
+            content: '/social-media-image.jpg',
+        },
+    ];
+};
 
 export { ErrorBoundary } from '~/src/components/error-page/error-page';

@@ -1,3 +1,4 @@
+import type { MetaFunction } from '@remix-run/react';
 import styles from './route.module.scss';
 
 export default function PrivacyPolicyPage() {
@@ -54,3 +55,17 @@ export default function PrivacyPolicyPage() {
         </div>
     );
 }
+
+export const meta: MetaFunction = () => {
+    return [
+        { title: 'Privacy Policy | ReClaim' },
+        {
+            name: 'description',
+            content: 'Essential home products for sustainable living',
+        },
+        {
+            property: 'robots',
+            content: 'index, follow',
+        },
+    ];
+};

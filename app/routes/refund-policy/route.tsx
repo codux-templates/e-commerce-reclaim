@@ -1,3 +1,4 @@
+import type { MetaFunction } from '@remix-run/react';
 import styles from './route.module.scss';
 
 export default function RefundPolicyPage() {
@@ -36,3 +37,17 @@ export default function RefundPolicyPage() {
         </div>
     );
 }
+
+export const meta: MetaFunction = () => {
+    return [
+        { title: 'Refund Policy | ReClaim' },
+        {
+            name: 'description',
+            content: 'Essential home products for sustainable living',
+        },
+        {
+            property: 'robots',
+            content: 'index, follow',
+        },
+    ];
+};
