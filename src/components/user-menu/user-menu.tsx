@@ -1,5 +1,6 @@
 import { NavLink, useLocation, useNavigate } from '@remix-run/react';
 import classNames from 'classnames';
+import { useMemo } from 'react';
 import { useMemberInfo } from '~/lib/hooks';
 import { Avatar } from '../avatar/avatar';
 import {
@@ -11,15 +12,29 @@ import { ChevronDownIcon } from '../icons';
 
 import styles from './user-menu.module.scss';
 
+const myAccountPageRoute = '/members-area/my-account';
+const myOrdersPageRoute = '/members-area/my-orders';
+
 export const UserMenu = () => {
     const { isLoggedIn, member } = useMemberInfo();
 
     const navigate = useNavigate();
     const location = useLocation();
 
+    const loginRoute = useMemo(() => `/login?returnPath=${location.pathname}`, [location.pathname]);
+    const logoutRoute = useMemo(
+        () => `/logout?returnPath=${location.pathname}`,
+        [location.pathname],
+    );
+
+    const navigateToMyAccount = () => navigate(myAccountPageRoute);
+    const navigateToMyOrders = () => navigate(myOrdersPageRoute);
+    const navigateToLogin = () => navigate(loginRoute);
+    const navigateToLogout = () => navigate(logoutRoute);
+
     const handleRootClick = () => {
         if (!isLoggedIn) {
-            navigate(`/login?returnPath=${location.pathname}`);
+            navigateToLogin();
         }
     };
 
@@ -29,7 +44,7 @@ export const UserMenu = () => {
             {isLoggedIn ? (
                 <ChevronDownIcon width={10} height={10} />
             ) : (
-                <NavLink className={styles.link} to={`/login?returnPath=${location.pathname}`}>
+                <NavLink className={styles.link} to={loginRoute}>
                     Log In
                 </NavLink>
             )}
@@ -50,25 +65,31 @@ export const UserMenu = () => {
                         className: styles.dropdownMenu,
                     }}
                 >
-                    <DropdownMenuItem className={styles.dropdownMenuItem}>
-                        <NavLink className={getLinkClassName} to="/members-area/my-account">
+                    <DropdownMenuItem
+                        className={styles.dropdownMenuItem}
+                        onSelect={navigateToMyAccount}
+                    >
+                        <NavLink className={getLinkClassName} to={myAccountPageRoute}>
                             My Account
                         </NavLink>
                     </DropdownMenuItem>
 
-                    <DropdownMenuItem className={styles.dropdownMenuItem}>
-                        <NavLink className={getLinkClassName} to="/members-area/my-orders">
+                    <DropdownMenuItem
+                        className={styles.dropdownMenuItem}
+                        onSelect={navigateToMyOrders}
+                    >
+                        <NavLink className={getLinkClassName} to={myOrdersPageRoute}>
                             My Orders
                         </NavLink>
                     </DropdownMenuItem>
 
                     <DropdownMenuSeparator />
 
-                    <DropdownMenuItem className={styles.dropdownMenuItem}>
-                        <NavLink
-                            className={getLinkClassName}
-                            to={`/logout?returnPath=${location.pathname}`}
-                        >
+                    <DropdownMenuItem
+                        className={styles.dropdownMenuItem}
+                        onSelect={navigateToLogout}
+                    >
+                        <NavLink className={getLinkClassName} to={logoutRoute}>
                             Log out
                         </NavLink>
                     </DropdownMenuItem>
