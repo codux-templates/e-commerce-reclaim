@@ -42,7 +42,7 @@ export const Header = ({ className }: HeaderProps) => {
                 <NavigationMenu className={styles.menu} />
                 <div className={styles.actions}>
                     <button
-                        className={classNames(styles.cartBtn, 'button', 'transparentButton')}
+                        className={classNames(styles.cartButton, 'button', 'transparentButton')}
                         onClick={() => cartOpener.setIsOpen(true)}
                     >
                         <CartIcon className={styles.cart} count={cartItemsCount} />
