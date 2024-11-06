@@ -62,7 +62,7 @@ export default function TermsAndConditionsPage() {
 
 export const meta: MetaFunction = () => {
     return [
-        { title: 'Terms and Conditions' },
+        { title: 'Terms and Conditions | ReClaim' },
         {
             name: 'description',
             content: 'Essential home products for sustainable living',

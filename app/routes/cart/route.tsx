@@ -119,7 +119,7 @@ export default function CartPage() {
 
 export const meta: MetaFunction = () => {
     return [
-        { title: 'Cart' },
+        { title: 'Cart | ReClaim' },
         {
             name: 'description',
             content: 'Essential home products for sustainable living',

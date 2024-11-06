@@ -11,7 +11,7 @@ export default function MyOrdersPage() {
 
 export const meta: MetaFunction = () => {
     return [
-        { title: 'My Orders' },
+        { title: 'My Orders | ReClaim' },
         {
             name: 'description',
             content: 'Essential home products for sustainable living',

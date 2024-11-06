@@ -45,7 +45,7 @@ export default function ShippingPolicyPage() {
 
 export const meta: MetaFunction = () => {
     return [
-        { title: 'Shipping Policy' },
+        { title: 'Shipping Policy | ReClaim' },
         {
             name: 'description',
             content: 'Essential home products for sustainable living',

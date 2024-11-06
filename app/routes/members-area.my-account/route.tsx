@@ -11,7 +11,7 @@ export default function MyAccountPage() {
 
 export const meta: MetaFunction = () => {
     return [
-        { title: 'My Account' },
+        { title: 'My Account | ReClaim' },
         {
             name: 'description',
             content: 'Essential home products for sustainable living',

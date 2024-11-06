@@ -57,7 +57,7 @@ export default function PrivacyPolicyPage() {
 
 export const meta: MetaFunction = () => {
     return [
-        { title: 'Privacy Policy' },
+        { title: 'Privacy Policy | ReClaim' },
         {
             name: 'description',
             content: 'Essential home products for sustainable living',

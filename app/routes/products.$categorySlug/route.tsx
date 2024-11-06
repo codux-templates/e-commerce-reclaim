@@ -182,7 +182,7 @@ export default function ProductsPage() {
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
     return [
-        { title: data?.category.name ?? 'ReClaim: Products' },
+        { title: `${data?.category.name ?? 'ReClaim: Products'} | ReClaim` },
         {
             name: 'description',
             content: data?.category.description,
