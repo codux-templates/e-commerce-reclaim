@@ -1,23 +1,20 @@
 import { useState } from 'react';
 import { createBoard } from '@wixc3/react-board';
-import { RangeSlider } from '~/lib/components/range-slider/range-slider';
+import { RangeSlider, type RangeSliderValue } from '~/lib/components/range-slider/range-slider';
 
 import styles from './range-slider.board.module.scss';
 
 export default createBoard({
     name: 'Range Slider',
     Board: () => {
-        const [startValue, setStartValue] = useState(25);
-        const [endValue, setEndValue] = useState(75);
+        const [value, setValue] = useState<RangeSliderValue>({ start: 25, end: 75 });
 
         return (
             <div className={styles.container}>
                 <RangeSlider
                     className="rangeSlider"
-                    startValue={startValue}
-                    endValue={endValue}
-                    onStartValueChange={setStartValue}
-                    onEndValueChange={setEndValue}
+                    value={value}
+                    onChange={setValue}
                     minValue={0}
                     maxValue={100}
                 />
