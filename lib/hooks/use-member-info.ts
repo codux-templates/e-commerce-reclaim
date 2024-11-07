@@ -10,7 +10,7 @@ export function useMemberInfo() {
 
     useEffect(() => {
         if (api.isUserLoggedIn()) {
-            api.getUser().then((u) => setMember(u));
+            api.getMember().then(setMember);
         }
     }, [api]);
 

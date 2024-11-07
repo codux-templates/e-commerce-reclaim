@@ -188,7 +188,7 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
         isUserLoggedIn() {
             return wixClient.auth.loggedIn();
         },
-        async getUser() {
+        async getMember() {
             const response = await wixClient.members.getCurrentMember();
             return response.member;
         },
