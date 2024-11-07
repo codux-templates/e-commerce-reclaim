@@ -11,7 +11,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     const api = await initializeEcomApiForRequest(request);
     const ordersResponse = await api.getOrders();
 
-    return { orders: ordersResponse.orders };
+    return { orders: ordersResponse.items };
 };
 
 export default function MyOrdersPage() {
@@ -42,7 +42,7 @@ export default function MyOrdersPage() {
                     </div>
                     <div>
                         <span className={styles.orderHeaderSectionName}>Total: </span>
-                        {order.priceSummary!.total!.formattedAmount}
+                        {order.priceSummary?.total?.formattedAmount}
                     </div>
                 </div>
             ),

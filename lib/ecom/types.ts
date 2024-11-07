@@ -68,8 +68,8 @@ export type EcomApi = {
     getCategoryBySlug: (slug: string) => Promise<CollectionDetails | undefined>;
     getOrder: (id: string) => Promise<OrderDetails | undefined>;
     getOrders: () => Promise<{
-        orders: OrderDetails[];
-        metadata?: orders.CursorPagingMetadata;
+        items: OrderDetails[];
+        totalCount: number;
     }>;
     /**
      * Returns the lowest and the highest product price in the category.

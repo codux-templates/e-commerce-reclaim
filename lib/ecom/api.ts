@@ -169,7 +169,11 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
         },
 
         async getOrders() {
-            return await wixClient.orders.searchOrders();
+            const searchOrdersResponse = await wixClient.orders.searchOrders();
+            return {
+                items: searchOrdersResponse.orders,
+                totalCount: searchOrdersResponse.metadata?.count ?? 0,
+            };
         },
 
         async getProductPriceBoundsInCategory(categoryId: string) {
