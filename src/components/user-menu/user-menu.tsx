@@ -1,6 +1,4 @@
-import { NavLink, useLocation, useNavigate } from '@remix-run/react';
-import classNames from 'classnames';
-import { useMemo } from 'react';
+import { NavLink, useNavigate } from '@remix-run/react';
 import { useMemberInfo } from '~/lib/hooks';
 import { Avatar } from '../avatar/avatar';
 import {
@@ -12,49 +10,29 @@ import { ChevronDownIcon } from '../icons';
 
 import styles from './user-menu.module.scss';
 
-const myAccountPageRoute = '/members-area/my-account';
-const myOrdersPageRoute = '/members-area/my-orders';
-
 export const UserMenu = () => {
     const { isLoggedIn, member } = useMemberInfo();
 
     const navigate = useNavigate();
-    const location = useLocation();
-
-    const loginRoute = useMemo(() => `/login?returnPath=${location.pathname}`, [location.pathname]);
-    const logoutRoute = useMemo(
-        () => `/logout?returnPath=${location.pathname}`,
-        [location.pathname],
-    );
-
-    const navigateToMyAccount = () => navigate(myAccountPageRoute);
-    const navigateToMyOrders = () => navigate(myOrdersPageRoute);
-    const navigateToLogin = () => navigate(loginRoute);
-    const navigateToLogout = () => navigate(logoutRoute);
 
     const handleRootClick = () => {
         if (!isLoggedIn) {
-            navigateToLogin();
+            navigate('/login');
         }
     };
 
     const content = (
-        <div className={styles.contentWrapper}>
+        <button className={styles.content}>
             <Avatar imageSrc={member?.profile?.photo?.url} />
             {isLoggedIn ? (
                 <ChevronDownIcon width={10} height={10} />
             ) : (
-                <NavLink className={styles.link} to={loginRoute}>
+                <NavLink className={styles.link} to={'/login'}>
                     Log In
                 </NavLink>
             )}
-        </div>
+        </button>
     );
-
-    const getLinkClassName = ({ isActive }: { isActive: boolean }) =>
-        classNames(styles.link, {
-            [styles.active]: isActive,
-        });
 
     return (
         <div className={styles.root} onClick={handleRootClick}>
@@ -62,34 +40,25 @@ export const UserMenu = () => {
                 <DropdownMenu
                     trigger={content}
                     contentProps={{
-                        className: styles.dropdownMenu,
+                        align: 'end',
                     }}
                 >
-                    <DropdownMenuItem
-                        className={styles.dropdownMenuItem}
-                        onSelect={navigateToMyAccount}
-                    >
-                        <NavLink className={getLinkClassName} to={myAccountPageRoute}>
+                    <DropdownMenuItem asChild>
+                        <NavLink className={styles.link} to={'/members-area/my-account'}>
                             My Account
                         </NavLink>
                     </DropdownMenuItem>
 
-                    <DropdownMenuItem
-                        className={styles.dropdownMenuItem}
-                        onSelect={navigateToMyOrders}
-                    >
-                        <NavLink className={getLinkClassName} to={myOrdersPageRoute}>
+                    <DropdownMenuItem asChild>
+                        <NavLink className={styles.link} to={'/members-area/my-orders'}>
                             My Orders
                         </NavLink>
                     </DropdownMenuItem>
 
                     <DropdownMenuSeparator />
 
-                    <DropdownMenuItem
-                        className={styles.dropdownMenuItem}
-                        onSelect={navigateToLogout}
-                    >
-                        <NavLink className={getLinkClassName} to={logoutRoute}>
+                    <DropdownMenuItem asChild>
+                        <NavLink className={styles.link} to={'/logout'}>
                             Log out
                         </NavLink>
                     </DropdownMenuItem>
