@@ -101,4 +101,5 @@ export type EcomApi = {
     logout: (returnUrl: string) => Promise<{ logoutUrl: string }>;
     isLoggedIn: () => boolean;
     getUser: () => Promise<Member | undefined>;
+    updateUser: (id: string, user: members.UpdateMember) => Promise<void>;
 };

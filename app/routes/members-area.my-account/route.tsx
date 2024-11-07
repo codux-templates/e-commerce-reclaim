@@ -3,6 +3,7 @@ import type { MetaFunction } from '@remix-run/react';
 import { useLoaderData } from '@remix-run/react';
 import classNames from 'classnames';
 import { useState } from 'react';
+import { useEcomApi } from '~/lib/ecom';
 import { initializeEcomApiForRequest } from '~/lib/ecom/session';
 
 import styles from './route.module.scss';
@@ -13,7 +14,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
         return redirect('/login');
     }
 
-    const member = await api.getMember();
+    const member = await api.getUser();
     return { member };
 }
 
@@ -28,10 +29,29 @@ export default function MyAccountPage() {
     const [lastName, setLastName] = useState(originalLastName);
     const [phone, setPhone] = useState(originalPhone);
 
+    const [isUpdating, setIsUpdating] = useState(false);
+
     const handleDiscard = () => {
         setFirstName(originalFirstName);
         setLastName(originalLastName);
         setPhone(originalPhone);
+    };
+
+    const api = useEcomApi();
+
+    const handleUpdate = () => {
+        if (!member?._id) {
+            return;
+        }
+
+        setIsUpdating(true);
+        api.updateUser(member._id, {
+            contact: {
+                firstName,
+                lastName,
+                phones: [phone],
+            },
+        }).finally(() => setIsUpdating(false));
     };
 
     return (
@@ -45,7 +65,13 @@ export default function MyAccountPage() {
                     <button className="button primaryButton smallButton" onClick={handleDiscard}>
                         Discard
                     </button>
-                    <button className="button secondaryButton smallButton">Update Info</button>
+                    <button
+                        className="button secondaryButton smallButton"
+                        disabled={isUpdating}
+                        onClick={handleUpdate}
+                    >
+                        Update Info
+                    </button>
                 </div>
             </div>
 
@@ -88,7 +114,13 @@ export default function MyAccountPage() {
                     <button className="button primaryButton smallButton" onClick={handleDiscard}>
                         Discard
                     </button>
-                    <button className="button secondaryButton smallButton">Update Info</button>
+                    <button
+                        className="button secondaryButton smallButton"
+                        disabled={isUpdating}
+                        onClick={handleUpdate}
+                    >
+                        Update Info
+                    </button>
                 </div>
             </div>
 
