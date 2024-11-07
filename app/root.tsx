@@ -25,7 +25,7 @@ import { Header } from '~/src/components/header/header';
 import styles from './root.module.scss';
 
 export async function loader({ request }: LoaderFunctionArgs) {
-    const { wixEcomTokens, session, shouldUpdateSessionCookie } =
+    const { wixSessionTokens, session, shouldUpdateSessionCookie } =
         await initializeEcomSession(request);
 
     return json(
@@ -33,7 +33,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
             ENV: {
                 WIX_CLIENT_ID: process?.env?.WIX_CLIENT_ID,
             },
-            wixEcomTokens,
+            wixSessionTokens,
         },
         shouldUpdateSessionCookie
             ? {
@@ -70,14 +70,14 @@ export function Layout({ children }: React.PropsWithChildren) {
 }
 
 export default function App() {
-    const { ENV, wixEcomTokens } = useLoaderData<typeof loader>();
+    const { ENV, wixSessionTokens } = useLoaderData<typeof loader>();
 
     if (typeof window !== 'undefined' && typeof window.ENV === 'undefined') {
         window.ENV = ENV;
     }
 
     return (
-        <EcomApiContextProvider tokens={wixEcomTokens}>
+        <EcomApiContextProvider tokens={wixSessionTokens}>
             <CartOpenContextProvider>
                 <div className={styles.root}>
                     <Header />
