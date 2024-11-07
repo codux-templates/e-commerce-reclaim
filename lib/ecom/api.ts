@@ -185,10 +185,10 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
         async logout(returnUrl: string) {
             return wixClient.auth.logout(returnUrl);
         },
-        isUserLoggedIn() {
+        isLoggedIn() {
             return wixClient.auth.loggedIn();
         },
-        async getMember() {
+        async getUser() {
             const response = await wixClient.members.getCurrentMember();
             return response.member;
         },

@@ -6,7 +6,7 @@ import styles from './route.module.scss';
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const api = await initializeEcomApiForRequest(request);
-    if (!api.isUserLoggedIn()) {
+    if (!api.isLoggedIn()) {
         return redirect('/login');
     }
 
