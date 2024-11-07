@@ -1,7 +1,6 @@
 import { redirect, type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node';
 import { initializeEcomApiForRequest } from '~/lib/ecom/session';
 import { useLoaderData } from '@remix-run/react';
-import { LoaderFunctionArgs } from '@remix-run/node';
 import { OrderSummary } from '~/src/components/order-summary/order-summary';
 import { Accordion } from '~/src/components/accordion/accordion';
 import { CategoryLink } from '~/src/components/category-link/category-link';
@@ -13,7 +12,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     if (!api.isLoggedIn()) {
         return redirect('/login');
     }
-    
+
     const ordersResponse = await api.getOrders();
     return { orders: ordersResponse.items };
 }
