@@ -181,8 +181,7 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
             return { oAuthData, authUrl };
         },
         async logout(returnUrl: string) {
-            const result = await wixClient.auth.logout(returnUrl);
-            return result;
+            return wixClient.auth.logout(returnUrl);
         },
     });
 
