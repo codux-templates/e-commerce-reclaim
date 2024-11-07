@@ -37,8 +37,6 @@ export const CartView = ({
     onItemQuantityChange,
     onItemRemove,
 }: CartViewProps) => {
-    const itemsCount = cart ? calculateCartItemsCount(cart) : 0;
-
     if (isLoading) {
         return (
             <CartFallback>
@@ -51,6 +49,7 @@ export const CartView = ({
         return error ? <CartFallback>{error}</CartFallback> : null;
     }
 
+    const itemsCount = calculateCartItemsCount(cart);
     return (
         <div className={styles.cart}>
             <div className={styles.header}>
