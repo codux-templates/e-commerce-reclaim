@@ -46,7 +46,7 @@ export const CartView = ({
     }
 
     if (!cart) {
-        return error ? <CartFallback>{error}</CartFallback> : null;
+        return <CartFallback>{error}</CartFallback>;
     }
 
     const itemsCount = calculateCartItemsCount(cart);
