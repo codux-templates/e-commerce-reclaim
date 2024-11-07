@@ -28,19 +28,19 @@ export default function MyOrdersPage() {
     const accordionItems = orders.map((order) => ({
         header: (
             <div className={styles.orderHeader}>
-                <div>
+                <div className={styles.orderHeaderSection}>
                     <span className={styles.orderHeaderSectionName}>Date: </span>
                     {formatOrderCreationDate(new Date(order._createdDate!))}
                 </div>
-                <div>
+                <div className={styles.orderHeaderSection}>
                     <span className={styles.orderHeaderSectionName}>Order: </span>
                     {order.number}
                 </div>
-                <div>
+                <div className={styles.orderHeaderSection}>
                     <span className={styles.orderHeaderSectionName}>Status: </span>
                     {order.status}
                 </div>
-                <div>
+                <div className={styles.orderHeaderSection}>
                     <span className={styles.orderHeaderSectionName}>Total: </span>
                     {order.priceSummary?.total?.formattedAmount}
                 </div>
@@ -61,10 +61,10 @@ export default function MyOrdersPage() {
                 {orders.length > 0 ? (
                     <>
                         <div className={styles.orderListHeader}>
-                            <div>Date</div>
-                            <div>Order</div>
-                            <div>Status</div>
-                            <div>Total</div>
+                            <div className={styles.orderListHeaderSection}>Date</div>
+                            <div className={styles.orderListHeaderSection}>Order</div>
+                            <div className={styles.orderListHeaderSection}>Status</div>
+                            <div className={styles.orderListHeaderSection}>Total</div>
                         </div>
                         <Accordion items={accordionItems} className={styles.orderList} />
                     </>
