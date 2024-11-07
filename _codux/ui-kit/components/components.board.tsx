@@ -93,15 +93,15 @@ export default createBoard({
                             <Accordion
                                 items={[
                                     {
-                                        title: 'Product Info',
+                                        header: 'Product Info',
                                         content: 'Content',
                                     },
                                     {
-                                        title: 'Return & Refund Policy',
+                                        header: 'Return & Refund Policy',
                                         content: 'Content',
                                     },
                                     {
-                                        title: 'Shipping Info ',
+                                        header: 'Shipping Info ',
                                         content: 'Content',
                                     },
                                 ]}
@@ -151,7 +151,7 @@ export default createBoard({
         </ComponentWrapper>
     ),
     environmentProps: {
-        windowWidth: 400,
+        windowWidth: 610,
         windowHeight: 800,
     },
     isSnippet: true,

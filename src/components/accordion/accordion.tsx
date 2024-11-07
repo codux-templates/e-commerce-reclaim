@@ -1,28 +1,39 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import { getClickableElementAttributes } from '~/lib/utils';
-import { MinusIcon, PlusIcon } from '../icons';
+import { DropdownIcon } from '../icons';
 
 import styles from './accordion.module.scss';
 
 interface AccordionItem {
-    title: string;
+    header: React.ReactNode;
     content: React.ReactNode;
 }
 
 interface AccordionProps {
     items: AccordionItem[];
+    initialOpenItemIndex?: number;
     className?: string;
     small?: boolean;
+    expandIcon?: React.ReactNode;
+    collapseIcon?: React.ReactNode;
 }
 
-export const Accordion = ({ items, className, small = false }: AccordionProps) => {
-    const [openItemIndex, setOpenItemIndex] = useState<number | null>(0);
+export const Accordion = ({
+    items,
+    initialOpenItemIndex,
+    className,
+    small = false,
+    expandIcon,
+    collapseIcon,
+}: AccordionProps) => {
+    const [openItemIndex, setOpenItemIndex] = useState<number | null>(initialOpenItemIndex ?? null);
 
     return (
         <div className={classNames({ [styles.small]: small }, className)}>
             {items.map((item, index) => {
                 const isOpen = openItemIndex === index;
+
                 return (
                     <div key={index} className={styles.item}>
                         <div
@@ -31,13 +42,18 @@ export const Accordion = ({ items, className, small = false }: AccordionProps) =
                                 setOpenItemIndex(isOpen ? null : index),
                             )}
                         >
-                            <p className={styles.title}>{item.title}</p>
+                            <div className={styles.headerContent}>{item.header}</div>
 
-                            {isOpen ? (
-                                <MinusIcon className={styles.toggleIcon} />
-                            ) : (
-                                <PlusIcon className={styles.toggleIcon} />
-                            )}
+                            <div className={styles.toggleIconContainer}>
+                                {isOpen
+                                    ? collapseIcon || (
+                                          <DropdownIcon
+                                              width={12}
+                                              className={styles.collapseIcon}
+                                          />
+                                      )
+                                    : expandIcon || <DropdownIcon width={12} />}
+                            </div>
                         </div>
 
                         <div

@@ -38,15 +38,18 @@ export const Header = ({ className }: HeaderProps) => {
                 </div>
             </section>
             <section className={styles.navigation}>
-                <div className={styles.empty} />
+                <div />
                 <NavigationMenu className={styles.menu} />
                 <div className={styles.actions}>
-                    <button onClick={() => cartOpener.setIsOpen(true)}>
+                    <button
+                        className={classNames(styles.cartButton, 'iconButton')}
+                        onClick={() => cartOpener.setIsOpen(true)}
+                    >
                         <CartIcon className={styles.cart} count={cartItemsCount} />
                     </button>
 
                     <button
-                        className={styles.openMenuButton}
+                        className={classNames(styles.openMenuButton, 'iconButton')}
                         onClick={() => setIsSidebarOpen(true)}
                     >
                         <MenuIcon width={24} height={24} />

@@ -90,7 +90,28 @@
     color: var(--primary1);
 }
 
-/* Input **********************************************************************/
+.linkButton {
+    border: none;
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    cursor: pointer;
+}
+.iconButton {
+    border: none;
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* Inputs ********************************************************************/
+
+.transparentInput {
+    border: none;
+    background: transparent;
+    color: inherit;
+}
 
 input.text-input {
     color: var(--primary5);
@@ -140,6 +161,7 @@ input.text-input {
 
 .textPage h2 {
     font-size: 24px;
+    font-weight: 400;
     text-transform: uppercase;
     margin: 36px 0 24px 0;
 }
@@ -166,9 +188,8 @@ input.text-input {
 /* Hero Banner ****************************************************************/
 
 .heroBanner {
-    --bannerHeight: calc(100vh - var(--headerHeight) - var(--pagePaddingHoriz));
     margin-bottom: var(--pagePaddingHoriz);
-    height: var(--bannerHeight);
+    height: 100vh;
     position: relative;
     color: var(--primary1);
     background: var(--black);
@@ -307,7 +328,7 @@ input.text-input {
 }
 
 .floatingCardTitle {
-    font-family: var(--heading-font);
+    font: var(--heading2);
     line-height: 1.2;
     font-size: max(26px, 3.1vw);
     text-transform: uppercase;

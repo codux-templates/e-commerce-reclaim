@@ -1,15 +1,15 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
-import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from '@remix-run/react';
+import { type MetaFunction, useLoaderData } from '@remix-run/react';
 import type { GetStaticRoutes } from '@wixc3/define-remix-app';
 import classNames from 'classnames';
 import { initializeEcomApiAnonymous } from '~/lib/ecom';
 import { initializeEcomApiForRequest } from '~/lib/ecom/session';
 import { useProductDetails } from '~/lib/hooks';
-import { getErrorMessage, removeQueryStringFromUrl } from '~/lib/utils';
+import { removeQueryStringFromUrl } from '~/lib/utils';
 import { Accordion } from '~/src/components/accordion/accordion';
 import { BreadcrumbData, Breadcrumbs } from '~/src/components/breadcrumbs/breadcrumbs';
 import { RouteBreadcrumbs, useBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
-import { ErrorPage } from '~/src/components/error-page/error-page';
+import { MinusIcon, PlusIcon } from '~/src/components/icons';
 import { ProductImages } from '~/src/components/product-images/product-images';
 import { ProductOption } from '~/src/components/product-option/product-option';
 import { ProductPrice } from '~/src/components/product-price/product-price';
@@ -156,8 +156,14 @@ export default function ProductDetailsPage() {
                         product.additionalInfoSections.length > 0 && (
                             <Accordion
                                 className={styles.additionalInfoSections}
+                                expandIcon={<PlusIcon width={22} />}
+                                collapseIcon={<MinusIcon width={22} />}
                                 items={product.additionalInfoSections.map((section) => ({
-                                    title: section.title!,
+                                    header: (
+                                        <div className={styles.additionalInfoSectionTitle}>
+                                            {section.title!}
+                                        </div>
+                                    ),
                                     content: section.description ? (
                                         <div
                                             dangerouslySetInnerHTML={{
@@ -166,6 +172,7 @@ export default function ProductDetailsPage() {
                                         />
                                     ) : null,
                                 }))}
+                                initialOpenItemIndex={0}
                             />
                         )}
 
@@ -179,24 +186,33 @@ export default function ProductDetailsPage() {
     );
 }
 
-export function ErrorBoundary() {
-    const error = useRouteError();
-    const navigate = useNavigate();
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+    const title = `${data?.product.name ?? 'Product Details'} | ReClaim`;
+    const description = data?.product.description;
 
-    let title = 'Error';
-    let message = getErrorMessage(error);
+    return [
+        { title },
+        {
+            name: 'description',
+            content: description,
+        },
+        {
+            property: 'robots',
+            content: 'index, follow',
+        },
+        {
+            property: 'og:title',
+            content: title,
+        },
+        {
+            property: 'og:description',
+            content: description,
+        },
+        {
+            property: 'og:image',
+            content: data?.product.media?.mainMedia?.image?.url ?? '/social-media-image.jpg',
+        },
+    ];
+};
 
-    if (isRouteErrorResponse(error) && error.status === 404) {
-        title = 'Product Not Found';
-        message = "Unfortunately a product page you trying to open doesn't exist";
-    }
-
-    return (
-        <ErrorPage
-            title={title}
-            message={message}
-            actionButtonText="Back to shopping"
-            onActionButtonClick={() => navigate('/products/all-products')}
-        />
-    );
-}
+export { ErrorBoundary } from '~/src/components/error-page/error-page';

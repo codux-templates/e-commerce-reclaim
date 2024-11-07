@@ -1,3 +1,4 @@
+import type { MetaFunction } from '@remix-run/react';
 import { CategoryLink } from '~/src/components/category-link/category-link';
 import { FeaturedProductsSection } from '~/src/components/featured-products-section/featured-products-section';
 import { LabelWithArrow } from '~/src/components/label-with-arrow/label-with-arrow';
@@ -65,6 +66,7 @@ export default function HomePage() {
                 categorySlug="new-in"
                 title="New In"
                 description="Embrace a sustainable lifestyle with our newest drop-ins."
+                productCount={4}
             />
 
             <BackgroundParallax
@@ -93,7 +95,37 @@ export default function HomePage() {
                 categorySlug="best-sellers"
                 title="Best Sellers"
                 description="When quality is eco-friendly. Explore our top picks."
+                productCount={4}
             />
         </div>
     );
 }
+
+export const meta: MetaFunction = () => {
+    const title = 'ReClaim: Home Goods Store';
+    const description = 'Essential home products for sustainable living';
+
+    return [
+        { title },
+        {
+            name: 'description',
+            content: description,
+        },
+        {
+            property: 'robots',
+            content: 'index, follow',
+        },
+        {
+            property: 'og:title',
+            content: title,
+        },
+        {
+            property: 'og:description',
+            content: description,
+        },
+        {
+            property: 'og:image',
+            content: '/social-media-image.jpg',
+        },
+    ];
+};
