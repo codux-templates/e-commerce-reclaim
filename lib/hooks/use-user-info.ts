@@ -9,10 +9,10 @@ export function useUserInfo() {
     const isLoggedIn = useMemo(() => api.isLoggedIn(), [api]);
 
     useEffect(() => {
-        if (api.isLoggedIn()) {
+        if (isLoggedIn) {
             api.getUser().then(setUser);
         }
-    }, [api]);
+    }, [api, isLoggedIn]);
 
     return { user, isLoggedIn };
 }

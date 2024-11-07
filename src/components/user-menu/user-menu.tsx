@@ -7,7 +7,7 @@ import {
     DropdownMenuItem,
     DropdownMenuSeparator,
 } from '../dropdown-menu/dropdown-menu';
-import { ChevronDownIcon } from '../icons';
+import { DropdownIcon } from '../icons';
 
 import styles from './user-menu.module.scss';
 
@@ -17,7 +17,7 @@ export const UserMenu = () => {
     if (!isLoggedIn) {
         return (
             <NavLink className={classNames(styles.link, styles.root)} to={'/login'}>
-                <Avatar imageSrc={user?.profile?.photo?.url} />
+                <Avatar imageSrc={undefined} />
                 Log In
             </NavLink>
         );
@@ -28,12 +28,12 @@ export const UserMenu = () => {
             trigger={
                 <button className={styles.root}>
                     <Avatar imageSrc={user?.profile?.photo?.url} />
-                    <ChevronDownIcon width={10} height={10} />
+                    <DropdownIcon width={10} height={10} />
                 </button>
             }
             contentProps={{
                 align: 'end',
-                sideOffset: 10,
+                sideOffset: 6,
             }}
         >
             <DropdownMenuItem asChild>
