@@ -44,12 +44,15 @@ export const Header = ({ className }: HeaderProps) => {
                 <div className={styles.actions}>
                     <UserMenu />
 
-                    <button onClick={() => cartOpener.setIsOpen(true)}>
+                    <button
+                        className={classNames(styles.cartButton, 'iconButton')}
+                        onClick={() => cartOpener.setIsOpen(true)}
+                    >
                         <CartIcon className={styles.cart} count={cartItemsCount} />
                     </button>
 
                     <button
-                        className={styles.openMenuButton}
+                        className={classNames(styles.openMenuButton, 'iconButton')}
                         onClick={() => setIsSidebarOpen(true)}
                     >
                         <MenuIcon width={24} height={24} />

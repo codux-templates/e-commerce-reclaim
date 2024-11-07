@@ -24,10 +24,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
     );
     wixClient.auth.setTokens(memberTokens);
 
-    session.set('wixEcomTokens', memberTokens);
+    session.set('wixSessionTokens', memberTokens);
 
     const redirectUrl = new URL(storedOauthData.originalUri || new URL(request.url).host);
-    redirectUrl.searchParams.set('login', 'success');
+
+    // Append a dummy query parameter to avoid preserving sensitive auth params (e.g., `code`, `state`)
+    // Some hosts (e.g., Netlify) retain original query params on redirects, which could expose them in the URL
+    redirectUrl.searchParams.append('login', 'success');
 
     return redirect(redirectUrl.toString(), {
         headers: {

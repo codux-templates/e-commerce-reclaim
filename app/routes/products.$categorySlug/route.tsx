@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
-import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from '@remix-run/react';
+import { type MetaFunction, useLoaderData } from '@remix-run/react';
 import type { GetStaticRoutes } from '@wixc3/define-remix-app';
 import classNames from 'classnames';
 import {
@@ -11,12 +11,10 @@ import { initializeEcomApiForRequest } from '~/lib/ecom/session';
 import { useAppliedProductFilters } from '~/lib/hooks';
 import { useProductSorting } from '~/lib/hooks/use-product-sorting';
 import { useProductsPageResults } from '~/lib/hooks/use-products-page-results';
-import { getErrorMessage } from '~/lib/utils';
 import { AppliedProductFilters } from '~/src/components/applied-product-filters/applied-product-filters';
 import { Breadcrumbs } from '~/src/components/breadcrumbs/breadcrumbs';
 import { RouteBreadcrumbs, useBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
 import { CategoryLink } from '~/src/components/category-link/category-link';
-import { ErrorPage } from '~/src/components/error-page/error-page';
 import { ProductFilters } from '~/src/components/product-filters/product-filters';
 import { ProductGrid } from '~/src/components/product-grid/product-grid';
 import { ProductSortingSelect } from '~/src/components/product-sorting-select/product-sorting-select';
@@ -96,7 +94,7 @@ export default function ProductsPage() {
                 <div className={styles.sidebar}>
                     <nav>
                         <h2 className={styles.sidebarTitle}>Browse by</h2>
-                        <ul>
+                        <ul className={styles.categoryList}>
                             {allCategories.map((category) => (
                                 <li key={category._id} className={styles.categoryListItem}>
                                     <CategoryLink
@@ -182,24 +180,18 @@ export default function ProductsPage() {
     );
 }
 
-export function ErrorBoundary() {
-    const error = useRouteError();
-    const navigate = useNavigate();
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+    return [
+        { title: `${data?.category.name ?? 'ReClaim: Products'} | ReClaim` },
+        {
+            name: 'description',
+            content: data?.category.description,
+        },
+        {
+            property: 'robots',
+            content: 'index, follow',
+        },
+    ];
+};
 
-    let title = 'Error';
-    let message = getErrorMessage(error);
-
-    if (isRouteErrorResponse(error) && error.status === 404) {
-        title = 'Category Not Found';
-        message = "Unfortunately, the category page you're trying to open does not exist";
-    }
-
-    return (
-        <ErrorPage
-            title={title}
-            message={message}
-            actionButtonText="Back to shopping"
-            onActionButtonClick={() => navigate('/products/all-products')}
-        />
-    );
-}
+export { ErrorBoundary } from '~/src/components/error-page/error-page';
