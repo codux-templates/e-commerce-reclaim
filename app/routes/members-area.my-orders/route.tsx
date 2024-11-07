@@ -4,6 +4,7 @@ import { useLoaderData } from '@remix-run/react';
 import { LoaderFunctionArgs } from '@remix-run/node';
 import { OrderSummary } from '~/src/components/order-summary/order-summary';
 import { Accordion } from '~/src/components/accordion/accordion';
+import { CategoryLink } from '~/src/components/category-link/category-link';
 
 import styles from './route.module.scss';
 
@@ -57,13 +58,29 @@ export default function MyOrdersPage() {
                 </div>
             </div>
             <div className={styles.orders}>
-                <div className={styles.orderListHeader}>
-                    <div>Date</div>
-                    <div>Order</div>
-                    <div>Status</div>
-                    <div>Total</div>
-                </div>
-                <Accordion items={accordionItems} className={styles.orderList} />
+                {orders.length > 0 ? (
+                    <>
+                        <div className={styles.orderListHeader}>
+                            <div>Date</div>
+                            <div>Order</div>
+                            <div>Status</div>
+                            <div>Total</div>
+                        </div>
+                        <Accordion items={accordionItems} className={styles.orderList} />
+                    </>
+                ) : (
+                    <div className={styles.emptyStateContainer}>
+                        <div className={styles.emptyStateMessage}>
+                            {"You haven't placed any orders yet"}
+                        </div>
+                        <CategoryLink
+                            categorySlug="all-products"
+                            className={styles.startBrowsingLink}
+                        >
+                            Start Browsing
+                        </CategoryLink>
+                    </div>
+                )}
             </div>
         </div>
     );

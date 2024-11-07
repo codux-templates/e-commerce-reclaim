@@ -42,6 +42,25 @@
     border-top: 1px solid var(--primary5);
 }
 
+.emptyStateContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 0;
+    border-top: 1px solid var(--primary3);
+    border-bottom: 1px solid var(--primary3);
+}
+
+.emptyStateMessage {
+    font: var(--heading6);
+}
+
+.startBrowsingLink {
+    text-decoration: underline;
+}
+
 @media (max-width: $mobile-width) {
     .orderListHeader {
         display: none;
@@ -62,5 +81,9 @@
 
     .orderHeaderSectionName {
         display: inline;
+    }
+
+    .emptyStateContainer {
+        padding: 40px 0;
     }
 }
