@@ -1,0 +1,38 @@
+.content {
+    position: fixed;
+    top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+    background-color: #FFF;
+    padding: 80px 32px;
+}
+
+.overlay {
+    background-color: var(--black);
+    opacity: 0.6;
+	position: fixed;
+	inset: 0;
+}
+
+.title {
+    font: var(--heading4);
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.description {
+    font: var(--paragraph1);
+    margin-bottom: 24px;
+    text-align: center;
+}
+    
+
+.content {
+    min-width: 440px;
+}
+
+.closeButton {
+    position: absolute;
+	top: 12px;
+	right: 12px;
+}
