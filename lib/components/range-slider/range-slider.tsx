@@ -44,7 +44,6 @@ export const RangeSlider = ({
     formatValue = (value) => value.toString(),
     className,
 }: RangeSliderProps) => {
-    const [f, setF] = useState(undefined);
     const [sliderRoles, setSliderRoles] = useState<SliderRoles>({ a: 'start', b: 'end' });
 
     const swapSliderRoles = () => {
