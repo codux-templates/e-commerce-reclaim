@@ -168,6 +168,10 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
             }
         },
 
+        async getOrders() {
+            return await wixClient.orders.searchOrders();
+        },
+
         async getProductPriceBoundsInCategory(categoryId: string) {
             const query = wixClient.products.queryProducts().hasSome('collectionIds', [categoryId]);
 
