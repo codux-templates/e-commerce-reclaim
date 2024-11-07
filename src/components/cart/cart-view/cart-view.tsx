@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import classNames from 'classnames';
 import { Cart, CartTotals } from '~/lib/ecom';
 import { calculateCartItemsCount, findLineItemPriceBreakdown } from '~/lib/utils';
@@ -6,7 +7,6 @@ import { Spinner } from '~/src/components/spinner/spinner';
 import { CartItem } from '../cart-item/cart-item';
 
 import styles from './cart-view.module.scss';
-import { ReactNode } from 'react';
 
 export interface CartViewProps {
     cart?: Cart;
