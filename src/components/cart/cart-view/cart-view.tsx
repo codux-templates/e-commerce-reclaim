@@ -1,16 +1,19 @@
 import classNames from 'classnames';
 import { Cart, CartTotals } from '~/lib/ecom';
-import { calculateCartItemsCount, findLineItemPriceBreakdown } from '~/lib/utils';
+import { calculateCartItemsCount, findLineItemPriceBreakdown, getErrorMessage } from '~/lib/utils';
 import { CloseIcon, LockIcon } from '~/src/components/icons';
 import { Spinner } from '~/src/components/spinner/spinner';
 import { CartItem } from '../cart-item/cart-item';
 
 import styles from './cart-view.module.scss';
+import { ReactNode } from 'react';
 
 export interface CartViewProps {
     cart?: Cart;
     cartTotals?: CartTotals;
     updatingCartItemIds?: string[];
+    error?: string;
+    isLoading: boolean;
     isUpdating?: boolean;
     isCheckoutInProgress: boolean;
     onClose: () => void;
@@ -24,6 +27,8 @@ export const CartView = ({
     cart,
     cartTotals,
     updatingCartItemIds = [],
+    error,
+    isLoading,
     isUpdating = false,
     isCheckoutInProgress,
     onClose,
@@ -33,6 +38,18 @@ export const CartView = ({
     onItemRemove,
 }: CartViewProps) => {
     const itemsCount = cart ? calculateCartItemsCount(cart) : 0;
+
+    if (isLoading) {
+        return (
+            <CartFallback>
+                <Spinner size={50} />
+            </CartFallback>
+        );
+    }
+
+    if (!cart) {
+        return error ? <CartFallback>{error}</CartFallback> : null;
+    }
 
     return (
         <div className={styles.cart}>
@@ -45,7 +62,9 @@ export const CartView = ({
                 </button>
             </div>
 
-            {cart && cart.lineItems.length > 0 ? (
+            {cart.lineItems.length === 0 ? (
+                <CartFallback>Your cart is empty.</CartFallback>
+            ) : (
                 <>
                     <div className={styles.cartItems}>
                         {cart.lineItems.map((item) => (
@@ -99,9 +118,11 @@ export const CartView = ({
                         </div>
                     </div>
                 </>
-            ) : (
-                <div className={styles.emptyCartMessage}>Your cart is empty.</div>
             )}
         </div>
     );
 };
+
+const CartFallback = ({ children }: { children: ReactNode }) => (
+    <div className={styles.cartFallback}>{children}</div>
+);
