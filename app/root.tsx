@@ -1,6 +1,11 @@
+import '~/src/styles/reset.scss';
+import '~/src/styles/colors.scss';
+import '~/src/styles/typography.scss';
+import '~/src/styles/common.scss';
+import '~/src/styles/index.scss';
+
 import { json, LoaderFunctionArgs } from '@remix-run/node';
 import {
-    isRouteErrorResponse,
     Links,
     Meta,
     type MetaFunction,
@@ -8,29 +13,12 @@ import {
     Scripts,
     ScrollRestoration,
     useLoaderData,
-    useNavigate,
-    useNavigation,
-    useRouteError,
 } from '@remix-run/react';
-import { Tokens } from '@wix/sdk';
-import { useEffect } from 'react';
 import { CartOpenContextProvider } from '~/lib/cart-open-context';
 import { EcomApiContextProvider } from '~/lib/ecom';
 import { commitSession, initializeEcomSession } from '~/lib/ecom/session';
-import { getErrorMessage, routeLocationToUrl } from '~/lib/utils';
 import { RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
-import { ErrorPage } from '~/src/components/error-page/error-page';
 import { SiteWrapper } from '~/src/components/site-wrapper/site-wrapper';
-
-import '~/src/styles/reset.scss';
-import '~/src/styles/colors.scss';
-import '~/src/styles/typography.scss';
-import '~/src/styles/common.scss';
-import '~/src/styles/index.scss';
-
-export const meta: MetaFunction = () => {
-    return [{ title: 'ReClaim: Home Goods Store' }];
-};
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const { wixEcomTokens, session, shouldUpdateSessionCookie } =
@@ -77,20 +65,6 @@ export function Layout({ children }: React.PropsWithChildren) {
     );
 }
 
-interface ContentWrapperProps extends React.PropsWithChildren {
-    tokens?: Tokens;
-}
-
-function ContentWrapper({ children, tokens }: ContentWrapperProps) {
-    return (
-        <EcomApiContextProvider tokens={tokens}>
-            <CartOpenContextProvider>
-                <SiteWrapper>{children}</SiteWrapper>
-            </CartOpenContextProvider>
-        </EcomApiContextProvider>
-    );
-}
-
 export default function App() {
     const { ENV, wixEcomTokens } = useLoaderData<typeof loader>();
 
@@ -99,37 +73,43 @@ export default function App() {
     }
 
     return (
-        <ContentWrapper tokens={wixEcomTokens}>
-            <Outlet />
-        </ContentWrapper>
+        <EcomApiContextProvider tokens={wixEcomTokens}>
+            <CartOpenContextProvider>
+                <SiteWrapper>
+                    <Outlet />
+                </SiteWrapper>
+            </CartOpenContextProvider>
+        </EcomApiContextProvider>
     );
 }
 
-export function ErrorBoundary() {
-    const error = useRouteError();
-    const navigation = useNavigation();
+export const meta: MetaFunction = () => {
+    const title = 'ReClaim: Home Goods Store';
+    const description = 'Essential home products for sustainable living';
 
-    useEffect(() => {
-        if (navigation.state === 'loading') {
-            const url = routeLocationToUrl(navigation.location, window.location.origin);
-            // force full page reload after navigating from error boundary
-            // to fix remix issue with style tags disappearing
-            window.location.assign(url);
-        }
-    }, [navigation]);
+    return [
+        { title },
+        {
+            name: 'description',
+            content: description,
+        },
+        {
+            property: 'robots',
+            content: 'index, follow',
+        },
+        {
+            property: 'og:title',
+            content: title,
+        },
+        {
+            property: 'og:description',
+            content: description,
+        },
+        {
+            property: 'og:image',
+            content: '/social-media-image.jpg',
+        },
+    ];
+};
 
-    const navigate = useNavigate();
-
-    const isPageNotFoundError = isRouteErrorResponse(error) && error.status === 404;
-
-    return (
-        <ContentWrapper>
-            <ErrorPage
-                title={isPageNotFoundError ? 'Page Not Found' : 'Oops, something went wrong'}
-                message={isPageNotFoundError ? undefined : getErrorMessage(error)}
-                actionButtonText="Back to shopping"
-                onActionButtonClick={() => navigate('/products/all-products')}
-            />
-        </ContentWrapper>
-    );
-}
+export { ErrorBoundary } from '~/src/components/error-page/error-page';
