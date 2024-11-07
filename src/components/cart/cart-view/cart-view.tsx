@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { Cart, CartTotals } from '~/lib/ecom';
-import { calculateCartItemsCount, findLineItemPriceBreakdown, getErrorMessage } from '~/lib/utils';
+import { calculateCartItemsCount, findLineItemPriceBreakdown } from '~/lib/utils';
 import { CloseIcon, LockIcon } from '~/src/components/icons';
 import { Spinner } from '~/src/components/spinner/spinner';
 import { CartItem } from '../cart-item/cart-item';
