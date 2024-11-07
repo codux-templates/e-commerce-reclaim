@@ -17,38 +17,36 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function MyOrdersPage() {
     const { orders } = useLoaderData<typeof loader>();
 
-    const accordionItems = orders.map((order) => {
-        const formatDate = (date: Date) =>
-            date.toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric',
-            });
+    const formatOrderCreationDate = (date: Date) =>
+        date.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+        });
 
-        return {
-            header: (
-                <div className={styles.orderHeader}>
-                    <div>
-                        <span className={styles.orderHeaderSectionName}>Date: </span>
-                        {formatDate(new Date(order._createdDate!))}
-                    </div>
-                    <div>
-                        <span className={styles.orderHeaderSectionName}>Order: </span>
-                        {order.number}
-                    </div>
-                    <div>
-                        <span className={styles.orderHeaderSectionName}>Status: </span>
-                        {order.status}
-                    </div>
-                    <div>
-                        <span className={styles.orderHeaderSectionName}>Total: </span>
-                        {order.priceSummary?.total?.formattedAmount}
-                    </div>
+    const accordionItems = orders.map((order) => ({
+        header: (
+            <div className={styles.orderHeader}>
+                <div>
+                    <span className={styles.orderHeaderSectionName}>Date: </span>
+                    {formatOrderCreationDate(new Date(order._createdDate!))}
                 </div>
-            ),
-            content: <OrderSummary key={order._id} order={order} />,
-        };
-    });
+                <div>
+                    <span className={styles.orderHeaderSectionName}>Order: </span>
+                    {order.number}
+                </div>
+                <div>
+                    <span className={styles.orderHeaderSectionName}>Status: </span>
+                    {order.status}
+                </div>
+                <div>
+                    <span className={styles.orderHeaderSectionName}>Total: </span>
+                    {order.priceSummary?.total?.formattedAmount}
+                </div>
+            </div>
+        ),
+        content: <OrderSummary key={order._id} order={order} />,
+    }));
 
     return (
         <div>
