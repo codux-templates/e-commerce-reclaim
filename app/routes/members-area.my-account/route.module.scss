@@ -62,3 +62,16 @@
         width: 175px;
     }
 }
+
+.confirmationDialog {
+    .title {
+        font-size: 32px;
+    }
+
+    .body {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        padding: 20px 75px 0;
+    }
+}

@@ -8,6 +8,7 @@ import { initializeEcomApiForRequest } from '~/lib/ecom/session';
 
 import styles from './route.module.scss';
 import { Spinner } from '~/src/components/spinner/spinner';
+import { Dialog, DialogDescription, DialogTitle } from '~/src/components/dialog/dialog';
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const api = await initializeEcomApiForRequest(request);
@@ -30,13 +31,20 @@ export default function MyAccountPage() {
     const [lastName, setLastName] = useState(originalLastName);
     const [phone, setPhone] = useState(originalPhone);
 
+    const [discardConfirmationOpen, setDiscardConfirmationOpen] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
     const [isResettingPassword, setIsResettingPassword] = useState(false);
 
-    const handleDiscard = () => {
+    const onDiscardClick = () => {
+        setDiscardConfirmationOpen(true);
+    };
+
+    const discardChanges = () => {
         setFirstName(originalFirstName);
         setLastName(originalLastName);
         setPhone(originalPhone);
+
+        setDiscardConfirmationOpen(false);
     };
 
     const api = useEcomApi();
@@ -73,7 +81,7 @@ export default function MyAccountPage() {
                     <span className="paragraph1">View and edit your personal info below.</span>
                 </div>
                 <div className={styles.actions}>
-                    <button className="button secondaryButton smallButton" onClick={handleDiscard}>
+                    <button className="button secondaryButton smallButton" onClick={onDiscardClick}>
                         Discard
                     </button>
                     <button
@@ -122,7 +130,7 @@ export default function MyAccountPage() {
                 </form>
 
                 <div className={styles.actions}>
-                    <button className="button secondaryButton smallButton" onClick={handleDiscard}>
+                    <button className="button secondaryButton smallButton" onClick={onDiscardClick}>
                         Discard
                     </button>
                     <button
@@ -158,6 +166,28 @@ export default function MyAccountPage() {
                     </div>
                 </div>
             </div>
+
+            <Dialog
+                open={discardConfirmationOpen}
+                onOpenChange={(open) => setDiscardConfirmationOpen(open)}
+                contentProps={{
+                    className: styles.confirmationDialog,
+                }}
+            >
+                <DialogTitle className={styles.title}>Discard changes?</DialogTitle>
+                <DialogDescription>Any changes you made will be lost.</DialogDescription>
+                <div className={styles.body}>
+                    <button
+                        className="button secondaryButton smallButton"
+                        onClick={() => setDiscardConfirmationOpen(false)}
+                    >
+                        Keep Editing
+                    </button>
+                    <button className="button primaryButton smallButton" onClick={discardChanges}>
+                        Discard Changes
+                    </button>
+                </div>
+            </Dialog>
         </div>
     );
 }
