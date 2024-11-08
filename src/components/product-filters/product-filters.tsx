@@ -3,10 +3,10 @@ import {
     IProductFilters,
     productFiltersFromSearchParams,
     searchParamsFromProductFilters,
-} from '~/lib/ecom';
-import { RangeSlider } from '~/lib/components/range-slider/range-slider';
-import { formatPrice, mergeUrlSearchParams } from '~/lib/utils';
-import { useSearchParamsOptimistic } from '~/lib/hooks';
+} from '~/src/wix/ecom';
+import { RangeSlider } from '~/src/components/range-slider/range-slider';
+import { formatPrice, mergeUrlSearchParams } from '~/src/wix/utils';
+import { useSearchParamsOptimistic } from '~/src/wix/hooks';
 import { Accordion } from '../accordion/accordion';
 import { MinusIcon, PlusIcon } from '../icons';
 

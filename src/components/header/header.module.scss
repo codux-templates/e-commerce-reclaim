@@ -1,5 +1,3 @@
-@import '@styles/variables.scss';
-
 .root {
     padding: 0 var(--pagePaddingHoriz);
 }
@@ -10,7 +8,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    border-bottom: 1px solid var(--black);
+    border-bottom: 1px solid #000;
     font: var(--paragraph3);
 }
 
@@ -56,16 +54,16 @@
 .shopNow {
     text-align: center;
     line-height: 1;
-    color: var(--black);
+    color: #000;
     padding: 3px 11px 4px;
     border-radius: 50px;
-    border: 1px solid var(--black);
+    border: 1px solid #000;
     cursor: pointer;
     white-space: nowrap;
 
     &:hover {
         background: var(--primary2);
-        color: var(--black);
+        color: #000;
     }
 }
 
@@ -75,7 +73,7 @@
     cursor: pointer;
 }
 
-@media (max-width: $desktop-width) {
+@media (max-width: 1024px) {
     .menu {
         display: none;
     }
@@ -90,7 +88,7 @@
     }
 }
 
-@media (max-width: $tablet-width) {
+@media (max-width: 768px) {
     .topBar {
         flex-direction: column-reverse;
         align-items: start;

@@ -3,10 +3,10 @@ import type { MetaFunction } from '@remix-run/react';
 import { useLoaderData } from '@remix-run/react';
 import classNames from 'classnames';
 import { useState } from 'react';
-import { initializeEcomApiForRequest } from '~/lib/ecom/session';
-import { useAccountDetailsForm } from '~/lib/hooks';
 import { Dialog, DialogDescription, DialogTitle } from '~/src/components/dialog/dialog';
 import { Spinner } from '~/src/components/spinner/spinner';
+import { initializeEcomApiForRequest } from '~/src/wix/ecom/session';
+import { useAccountDetailsForm } from '~/src/wix/hooks';
 
 import styles from './route.module.scss';
 

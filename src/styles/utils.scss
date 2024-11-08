@@ -2,8 +2,6 @@
  * Reusable utility classes.
  */
 
-@import './variables.scss';
-
 /* Headings *******************************************************************/
 
 .heading1 {
@@ -177,7 +175,7 @@
     margin-top: 24px;
 }
 
-@media (max-width: $tablet-width) {
+@media (max-width: 768px) {
     .textPage {
         margin-top: 24px;
         text-align: left;
@@ -199,7 +197,7 @@
     height: 100vh;
     position: relative;
     color: var(--primary1);
-    background: var(--black);
+    background: #000;
 }
 
 .heroBannerOverlay {
@@ -276,7 +274,7 @@
     display: grid;
     place-content: center;
     overflow: hidden;
-    background: var(--black);
+    background: #000;
 }
 
 .linkCardBackground {
@@ -324,7 +322,7 @@
 .floatingCardHeader {
     text-transform: uppercase;
     padding-bottom: 3px;
-    border-bottom: 1px solid var(--black);
+    border-bottom: 1px solid #000;
 }
 
 .floatingCardContent {
@@ -357,7 +355,7 @@
     aspect-ratio: 2;
 }
 
-@media (max-width: $desktop-width) {
+@media (max-width: 1024px) {
     .floatingCard {
         width: 42%;
         aspect-ratio: 0.9;
@@ -369,7 +367,7 @@
     }
 }
 
-@media (max-width: $tablet-width) {
+@media (max-width: 768px) {
     .floatingCard {
         width: 80%;
         margin: 0 auto;
@@ -381,7 +379,7 @@
     }
 }
 
-@media (max-width: $mobile-width) {
+@media (max-width: 480px) {
     .floatingCardHeader,
     .floatingCardDescription {
         font: var(--paragraph3);
@@ -401,7 +399,7 @@
     flex: 1 1 0;
 }
 
-@media (max-width: $tablet-width) {
+@media (max-width: 768px) {
     .cardsSection {
         flex-direction: column;
         gap: 8px;
@@ -434,7 +432,7 @@
     border-bottom-color: var(--secondary3);
 }
 
-@media (max-width: $tablet-width) {
+@media (max-width: 768px) {
     .tab {
         padding: 14px 20px;
     }
