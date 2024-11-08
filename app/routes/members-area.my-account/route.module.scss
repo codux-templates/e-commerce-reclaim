@@ -1,5 +1,3 @@
-@import '@styles/variables.scss';
-
 .smallButton {
     padding: 5px 16px;
 }
@@ -58,15 +56,13 @@
     justify-content: space-between;
 }
 
-.confirmationDialog {
-    .body {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-    }
+.confirmationDialogBody {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
 }
 
-@media (max-width: $mobile-width) {
+@media (max-width: 480px) {
     .section {
         flex-direction: column;
         gap: 12px;

@@ -37,7 +37,13 @@ export default function MyAccountPage() {
         updateAccountDetails,
         discardChanges,
         sendPasswordResetEmail,
-    } = useAccountDetailsForm(user);
+    } = useAccountDetailsForm({
+        id: user?._id,
+        firstName: user?.contact?.firstName ?? '',
+        lastName: user?.contact?.lastName ?? '',
+        phoneNumber: user?.contact?.phones?.[0] ?? '',
+        loginEmail: user?.loginEmail,
+    });
 
     const onDiscardChangesClick = () => {
         setDiscardConfirmationOpen(true);
@@ -166,13 +172,10 @@ export default function MyAccountPage() {
             <Dialog
                 open={discardConfirmationOpen}
                 onOpenChange={(open) => setDiscardConfirmationOpen(open)}
-                contentProps={{
-                    className: styles.confirmationDialog,
-                }}
             >
                 <DialogTitle className={styles.title}>Discard changes?</DialogTitle>
                 <DialogDescription>Any changes you made will be lost.</DialogDescription>
-                <div className={styles.body}>
+                <div className={styles.confirmationDialogBody}>
                     <button
                         className={classNames('button', 'secondaryButton', styles.smallButton)}
                         onClick={() => setDiscardConfirmationOpen(false)}

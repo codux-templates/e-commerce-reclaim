@@ -1,27 +1,32 @@
-import type { SerializeFrom } from '@remix-run/node';
 import { useState } from 'react';
-import { Member, useEcomApi } from '../ecom';
+import { useEcomApi } from '~/src/wix/ecom';
 
-export function useAccountDetailsForm(loadedUser: Member | SerializeFrom<Member> | undefined) {
+export function useAccountDetailsForm(initialValue: {
+    id: string | undefined | null;
+    loginEmail: string | undefined | null;
+    firstName: string | undefined;
+    lastName: string | undefined;
+    phoneNumber: string | undefined;
+}) {
     const api = useEcomApi();
 
-    const [user, setUser] = useState(loadedUser);
+    const [currentValue, setCurrentValue] = useState(initialValue);
 
-    const [firstName, setFirstName] = useState(loadedUser?.contact?.firstName ?? '');
-    const [lastName, setLastName] = useState(loadedUser?.contact?.lastName ?? '');
-    const [phone, setPhone] = useState(loadedUser?.contact?.phones?.[0] ?? '');
+    const [firstName, setFirstName] = useState(initialValue?.firstName ?? '');
+    const [lastName, setLastName] = useState(initialValue?.lastName ?? '');
+    const [phone, setPhone] = useState(initialValue?.phoneNumber ?? '');
 
     const [isUpdating, setIsUpdating] = useState(false);
     const [isResettingPassword, setIsResettingPassword] = useState(false);
 
     const updateAccountDetails = async () => {
-        if (!user?._id) {
+        if (!initialValue?.id) {
             return;
         }
 
         try {
             setIsUpdating(true);
-            const updatedUser = await api.updateUser(user._id, {
+            const updatedUser = await api.updateUser(initialValue.id, {
                 contact: {
                     firstName,
                     lastName,
@@ -29,26 +34,32 @@ export function useAccountDetailsForm(loadedUser: Member | SerializeFrom<Member>
                 },
             });
 
-            setUser(updatedUser);
+            setCurrentValue({
+                id: updatedUser?._id,
+                loginEmail: updatedUser?.loginEmail,
+                firstName: updatedUser?.contact?.firstName ?? '',
+                lastName: updatedUser?.contact?.lastName ?? '',
+                phoneNumber: updatedUser?.contact?.phones?.[0] ?? '',
+            });
         } finally {
             setIsUpdating(false);
         }
     };
 
     const discardChanges = () => {
-        setFirstName(user?.contact?.firstName ?? '');
-        setLastName(user?.contact?.lastName ?? '');
-        setPhone(user?.contact?.phones?.[0] ?? '');
+        setFirstName(currentValue?.firstName ?? '');
+        setLastName(currentValue?.lastName ?? '');
+        setPhone(currentValue?.phoneNumber ?? '');
     };
 
     const sendPasswordResetEmail = async () => {
-        if (!user?.loginEmail) {
+        if (!currentValue?.loginEmail) {
             return;
         }
 
         try {
             setIsResettingPassword(true);
-            await api.sendPasswordResetEmail(user.loginEmail, document.location.href);
+            await api.sendPasswordResetEmail(currentValue.loginEmail, document.location.href);
         } finally {
             setIsResettingPassword(false);
         }

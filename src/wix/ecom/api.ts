@@ -203,6 +203,8 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
             return response.member;
         },
         async updateUser(id: string, user: members.UpdateMember) {
+            // `updateMember` is not clearing contact phone number, so
+            // if phone should be empty we use separate function for this
             if (!user.contact?.phones?.[0]) {
                 await wixClient.members.deleteMemberPhones(id);
 
