@@ -1,10 +1,13 @@
+@import '@styles/variables.scss';
+
 .content {
     position: fixed;
     top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-    background-color: #FFF;
     padding: 80px 32px;
+    min-width: 440px;
+    background-color: #FFF;
 }
 
 .overlay {
@@ -25,14 +28,26 @@
     margin-bottom: 24px;
     text-align: center;
 }
-    
-
-.content {
-    min-width: 440px;
-}
 
 .closeButton {
     position: absolute;
 	top: 12px;
 	right: 12px;
+}
+
+@media (max-width: $mobile-width) {
+    .content {
+        padding: 20px;
+        min-width: auto;
+    }
+
+    .title {
+        font: var(--heading5);
+        margin-bottom: 12px;
+    }
+
+    .description {
+        margin-bottom: 12px;
+    }
+    
 }

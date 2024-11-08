@@ -1,21 +1,28 @@
+import classNames from 'classnames';
 import React from 'react';
 import * as RadixDialog from '@radix-ui/react-dialog';
-import classNames from 'classnames';
 import { CloseIcon } from '../icons';
 
 import styles from './dialog.module.scss';
 
 export interface DropdownMenuProps extends React.PropsWithChildren {
+    title: string;
+    description?: string;
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
     trigger: React.ReactElement;
-    title: React.ReactNode;
-    description?: React.ReactNode;
 }
 
-export const Dialog = ({ trigger, title, description, children }: DropdownMenuProps) => (
-    <RadixDialog.Root>
-        <RadixDialog.Trigger asChild>
-            <button className="Button violet">Edit profile</button>
-        </RadixDialog.Trigger>
+export const Dialog = ({
+    trigger,
+    title,
+    description,
+    open,
+    onOpenChange,
+    children,
+}: DropdownMenuProps) => (
+    <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
+        <RadixDialog.Trigger asChild>{trigger}</RadixDialog.Trigger>
         <RadixDialog.Portal>
             <RadixDialog.Overlay className={styles.overlay} />
             <RadixDialog.Content className={styles.content}>
@@ -28,7 +35,7 @@ export const Dialog = ({ trigger, title, description, children }: DropdownMenuPr
                 <RadixDialog.Close asChild>
                     <button
                         className={classNames('iconButton', styles.closeButton)}
-                        aria-label="Close"
+                        aria-label="Close dialog"
                     >
                         <CloseIcon width={24} height={24} />
                     </button>
