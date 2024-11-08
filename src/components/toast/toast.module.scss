@@ -10,22 +10,22 @@
     gap: 14px;
 }
 
-/** toast.success(message) */
+/** Toast type: success */
 .root.success {
     background-color: var(--colorE4);
 }
 
-/** toast.error(message) */
+/** Toast type: error */
 .root.error {
     background-color: var(--error);
 }
 
-/** toast(message) with no type specified */
+/** Toast type: unspecified */
 .root.blank {
     background-color: var(--colorC3);
 }
 
-/** toast.loading(message) */
+/** Toast type: loading */
 .root.loading {
     width: max-content;
     min-width: 150px;
