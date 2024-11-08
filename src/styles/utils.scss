@@ -1,3 +1,7 @@
+/**
+ * Reusable utility classes.
+ */
+
 @import './variables.scss';
 
 /* Headings *******************************************************************/
@@ -118,7 +122,7 @@
     color: inherit;
 }
 
-input.text-input {
+.textInput {
     border: none;
     background: transparent;
     color: var(--primary5);
