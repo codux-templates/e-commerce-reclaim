@@ -3,11 +3,25 @@ import { members } from '@wix/members';
 import { redirects } from '@wix/redirects';
 import { createClient, OAuthStrategy, Tokens } from '@wix/sdk';
 import { collections, products } from '@wix/stores';
-import { DEMO_WIX_CLIENT_ID, WIX_STORES_APP_ID } from './constants';
-import { getFilteredProductsQuery } from './product-filters';
-import { getSortedProductsQuery } from './product-sorting';
+import { getFilteredProductsQuery } from '../products/product-filters';
+import { getSortedProductsQuery } from '../products/product-sorting';
 import { EcomApi, WixApiClient } from './types';
 import { isNotFoundWixClientError, normalizeWixClientError } from './wix-client-error';
+
+/**
+ * OAuth app client ID for a demo store, used to access a sample product catalog
+ * until you connect your own Wix store. Once connected, this client ID is
+ * ignored.
+ * https://help.codux.com/kb/en/article/connecting-your-app-to-wix-headless-services
+ */
+const DEMO_WIX_CLIENT_ID = '35a15d20-4732-4bb8-a8ef-194fd1166827';
+
+/**
+ * The Wix Stores App ID is the same for all websites integrating with Wix
+ * Stores. It is required for API calls such as adding products to the cart.
+ * https://dev.wix.com/docs/rest/business-solutions/stores/catalog/e-commerce-integration
+ */
+const WIX_STORES_APP_ID = '1380b703-ce81-ff05-f115-39571d94dfcd';
 
 export function getWixClientId() {
     /**
@@ -181,6 +195,7 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
             const highest = descendingPrice.items[0]?.priceData?.price ?? 0;
             return { lowest, highest };
         },
+
         async login(callbackUrl: string, returnUrl: string) {
             const oAuthData = wixClient.auth.generateOAuthData(callbackUrl, returnUrl);
 
@@ -190,18 +205,22 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
 
             return { oAuthData, authUrl };
         },
+
         async logout(returnUrl: string) {
             return wixClient.auth.logout(returnUrl);
         },
+
         isLoggedIn() {
             return wixClient.auth.loggedIn();
         },
+
         async getUser() {
             const response = await wixClient.members.getCurrentMember({
                 fieldsets: [members.Set.FULL],
             });
             return response.member;
         },
+
         async updateUser(id: string, user: members.UpdateMember) {
             // `updateMember` is not clearing contact phone number, so
             // if phone should be empty we use separate function for this
@@ -215,6 +234,7 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
 
             return wixClient.members.updateMember(id, user);
         },
+
         async sendPasswordResetEmail(email: string, redirectUrl: string) {
             await wixClient.auth.sendPasswordResetEmail(email, redirectUrl);
         },

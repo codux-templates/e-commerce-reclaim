@@ -2,11 +2,6 @@ import type { LoaderFunctionArgs } from '@remix-run/node';
 import { type MetaFunction, useLoaderData } from '@remix-run/react';
 import type { GetStaticRoutes } from '@wixc3/define-remix-app';
 import classNames from 'classnames';
-import toast from 'react-hot-toast';
-import { initializeEcomApiAnonymous } from '~/src/wix/ecom';
-import { initializeEcomApiForRequest } from '~/src/wix/ecom/session';
-import { useProductDetails } from '~/src/wix/hooks';
-import { getErrorMessage, removeQueryStringFromUrl } from '~/src/wix/utils';
 import { Accordion } from '~/src/components/accordion/accordion';
 import { BreadcrumbData, Breadcrumbs } from '~/src/components/breadcrumbs/breadcrumbs';
 import { RouteBreadcrumbs, useBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
@@ -16,6 +11,11 @@ import { ProductOption } from '~/src/components/product-option/product-option';
 import { ProductPrice } from '~/src/components/product-price/product-price';
 import { QuantityInput } from '~/src/components/quantity-input/quantity-input';
 import { ShareProductLinks } from '~/src/components/share-product-links/share-product-links';
+import { toast } from '~/src/components/toast/toast';
+import { initializeEcomApiAnonymous } from '~/src/wix/ecom';
+import { initializeEcomApiForRequest } from '~/src/wix/ecom/session';
+import { useProductDetails } from '~/src/wix/products';
+import { getErrorMessage, removeQueryStringFromUrl } from '~/src/wix/utils';
 
 import styles from './route.module.scss';
 
@@ -148,7 +148,7 @@ export default function ProductDetailsPage() {
 
                     <button
                         className={classNames('button', 'primaryButton', styles.addToCartButton)}
-                        onClick={() => handleAddToCart({ onError: handleError }) }
+                        onClick={() => handleAddToCart({ onError: handleError })}
                         disabled={outOfStock || isAddingToCart}
                     >
                         {outOfStock ? 'Out of stock' : 'Add to Cart'}
