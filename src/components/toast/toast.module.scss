@@ -10,28 +10,28 @@
     gap: 14px;
 }
 
-.root {
-    /** Toast types */
+/** toast.success(message) */
+.root.success {
+    background-color: var(--colorE4);
+}
 
-    &.success {
-        background-color: var(--colorE4);
-    }
+/** toast.error(message) */
+.root.error {
+    background-color: var(--error);
+}
 
-    &.error {
-        background-color: var(--error);
-    }
+/** toast(message) with no type specified */
+.root.blank {
+    background-color: var(--colorC3);
+}
 
-    &.blank {
-        background-color: var(--colorC3);
-    }
-
-    &.loading {
-        width: max-content;
-        min-width: 150px;
-        text-align: center;
-        background-color: var(--secondary1);
-        color: var(--secondary4);
-    }
+/** toast.loading(message) */
+.root.loading {
+    width: max-content;
+    min-width: 150px;
+    text-align: center;
+    background-color: var(--secondary1);
+    color: var(--secondary4);
 }
 
 @media (max-width: $desktop-width) {
