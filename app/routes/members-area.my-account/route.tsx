@@ -85,7 +85,7 @@ export default function MyAccountPage() {
                     <label>
                         First Name
                         <input
-                            className="text-input"
+                            className="textInput"
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
                         />
@@ -94,7 +94,7 @@ export default function MyAccountPage() {
                     <label>
                         Last Name
                         <input
-                            className="text-input"
+                            className="textInput"
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
                         />
@@ -103,7 +103,7 @@ export default function MyAccountPage() {
                     <label>
                         Phone
                         <input
-                            className="text-input"
+                            className="textInput"
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
                         />
