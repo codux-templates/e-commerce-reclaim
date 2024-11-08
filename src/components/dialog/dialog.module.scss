@@ -3,18 +3,18 @@
 .content {
     position: fixed;
     top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 80px 32px;
     min-width: 440px;
-    background-color: #FFF;
+    background-color: #fff;
 }
 
 .overlay {
     background-color: var(--black);
     opacity: 0.6;
-	position: fixed;
-	inset: 0;
+    position: fixed;
+    inset: 0;
 }
 
 .title {
@@ -31,8 +31,8 @@
 
 .closeButton {
     position: absolute;
-	top: 12px;
-	right: 12px;
+    top: 12px;
+    right: 12px;
 }
 
 @media (max-width: $mobile-width) {
@@ -49,5 +49,4 @@
     .description {
         margin-bottom: 12px;
     }
-    
 }
