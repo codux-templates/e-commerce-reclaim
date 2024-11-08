@@ -3,6 +3,9 @@ import ComponentWrapper from '_codux/board-wrappers/component-wrapper';
 
 export default createBoard({
     name: 'New Board',
-    Board: () => <ComponentWrapper />,
-    isSnippet: false,
+    Board: () => (
+        <ComponentWrapper>
+            <div></div>
+        </ComponentWrapper>
+    ),
 });
