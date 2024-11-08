@@ -12,14 +12,16 @@ export default createBoard({
             <div className={styles.container}>
                 <Dialog
                     trigger={<button className="button primaryButton">Open Dialog</button>}
-                    title="Discard changes?"
-                    description="Any changes you made will be lost."
+                    title="Dialog Title"
+                    description="Dialog description"
                     open={open}
                     onOpenChange={(open) => setOpen(open)}
                 >
                     <div className={styles.buttonsContainer}>
-                        <button className="button secondaryButton">Keep Editing</button>
-                        <button className="button primaryButton">Discard Changes</button>
+                        <button className="button secondaryButton" onClick={() => setOpen(false)}>
+                            Close
+                        </button>
+                        <button className="button primaryButton">Confirm</button>
                     </div>
                 </Dialog>
             </div>
