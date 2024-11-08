@@ -6,6 +6,7 @@ import { LockIcon } from '~/src/components/icons';
 import { Spinner } from '~/src/components/spinner/spinner';
 import { findLineItemPriceBreakdown, useCart, useCheckout } from '~/src/wix/cart';
 import { getErrorMessage } from '~/src/wix/utils';
+import { toast } from '~/src/components/toast/toast';
 
 import styles from './route.module.scss';
 
@@ -19,10 +20,12 @@ export default function CartPage() {
         updateItemQuantity,
     } = useCart();
 
+    const handleError = (error: unknown) => toast.error(getErrorMessage(error));
+
     const { checkout, isCheckoutInProgress } = useCheckout({
         successUrl: '/thank-you',
         cancelUrl: '/products/all-products',
-        onError: (error) => alert(getErrorMessage(error)),
+        onError: handleError,
     });
 
     if (cart.isLoading) {
@@ -59,9 +62,9 @@ export default function CartPage() {
                             item={item}
                             isUpdating={updatingCartItemIds.includes(item._id!)}
                             priceBreakdown={findLineItemPriceBreakdown(item, cartTotals)}
-                            onRemove={() => removeItem(item._id!)}
+                            onRemove={() => removeItem(item._id!).catch(handleError)}
                             onQuantityChange={(quantity: number) =>
-                                updateItemQuantity({ id: item._id!, quantity })
+                                updateItemQuantity({ id: item._id!, quantity }).catch(handleError)
                             }
                         />
                     ))}

@@ -2,10 +2,11 @@ import type { LoaderFunctionArgs } from '@remix-run/node';
 import { type MetaFunction, useLoaderData } from '@remix-run/react';
 import type { GetStaticRoutes } from '@wixc3/define-remix-app';
 import classNames from 'classnames';
+import toast from 'react-hot-toast';
 import { initializeEcomApiAnonymous } from '~/src/wix/ecom';
 import { initializeEcomApiForRequest } from '~/src/wix/ecom/session';
 import { useProductDetails } from '~/src/wix/hooks';
-import { removeQueryStringFromUrl } from '~/src/wix/utils';
+import { getErrorMessage, removeQueryStringFromUrl } from '~/src/wix/utils';
 import { Accordion } from '~/src/components/accordion/accordion';
 import { BreadcrumbData, Breadcrumbs } from '~/src/components/breadcrumbs/breadcrumbs';
 import { RouteBreadcrumbs, useBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
@@ -86,6 +87,7 @@ export default function ProductDetailsPage() {
     } = useProductDetails(product);
 
     const breadcrumbs = useBreadcrumbs();
+    const handleError = (error: unknown) => toast.error(getErrorMessage(error));
 
     return (
         <div className={styles.page}>
@@ -146,7 +148,7 @@ export default function ProductDetailsPage() {
 
                     <button
                         className={classNames('button', 'primaryButton', styles.addToCartButton)}
-                        onClick={handleAddToCart}
+                        onClick={() => handleAddToCart({ onError: handleError }) }
                         disabled={outOfStock || isAddingToCart}
                     >
                         {outOfStock ? 'Out of stock' : 'Add to Cart'}

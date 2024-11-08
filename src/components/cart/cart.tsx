@@ -3,6 +3,7 @@ import { Drawer } from '~/src/components/drawer/drawer';
 import { useCart, useCartOpen, useCheckout } from '~/src/wix/cart';
 import { getErrorMessage } from '~/src/wix/utils';
 import { CartView } from './cart-view/cart-view';
+import { toast } from '../toast/toast';
 
 export const Cart = () => {
     const { isOpen, setIsOpen } = useCartOpen();
@@ -16,10 +17,16 @@ export const Cart = () => {
         updateItemQuantity,
     } = useCart();
 
+    const handleError = (error: unknown) =>
+        toast.error(getErrorMessage(error), {
+            position: 'bottom-right',
+            style: { width: 400 },
+        });
+
     const { checkout, isCheckoutInProgress } = useCheckout({
         successUrl: '/thank-you',
         cancelUrl: '/products/all-products',
-        onError: (error) => alert(getErrorMessage(error)),
+        onError: handleError,
     });
 
     const handleViewCart = () => {
@@ -36,8 +43,8 @@ export const Cart = () => {
                 onClose={() => setIsOpen(false)}
                 onCheckout={checkout}
                 onViewCart={handleViewCart}
-                onItemRemove={removeItem}
-                onItemQuantityChange={updateItemQuantity}
+                onItemRemove={(id) => removeItem(id).catch(handleError)}
+                onItemQuantityChange={(args) => updateItemQuantity(args).catch(handleError)}
                 isLoading={cart.isLoading}
                 isUpdating={isCartTotalsUpdating}
                 isCheckoutInProgress={isCheckoutInProgress}
