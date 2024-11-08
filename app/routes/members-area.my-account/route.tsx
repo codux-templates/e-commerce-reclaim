@@ -37,8 +37,7 @@ export default function MyAccountPage() {
         updateAccountDetails,
         discardChanges,
         sendPasswordResetEmail,
-    } = useAccountDetailsForm({
-        id: user?._id,
+    } = useAccountDetailsForm(user?._id, {
         firstName: user?.contact?.firstName ?? '',
         lastName: user?.contact?.lastName ?? '',
         phoneNumber: user?.contact?.phones?.[0] ?? '',

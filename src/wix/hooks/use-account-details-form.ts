@@ -1,32 +1,34 @@
 import { useState } from 'react';
 import { useEcomApi } from '~/src/wix/ecom';
 
-export function useAccountDetailsForm(initialValue: {
-    id: string | undefined | null;
-    loginEmail: string | undefined | null;
-    firstName: string | undefined;
-    lastName: string | undefined;
-    phoneNumber: string | undefined;
-}) {
+export function useAccountDetailsForm(
+    accountId: string | undefined | null,
+    initialFormValue: {
+        loginEmail: string | undefined | null;
+        firstName: string | undefined;
+        lastName: string | undefined;
+        phoneNumber: string | undefined;
+    },
+) {
     const api = useEcomApi();
 
-    const [currentValue, setCurrentValue] = useState(initialValue);
+    const [currentValue, setCurrentValue] = useState(initialFormValue);
 
-    const [firstName, setFirstName] = useState(initialValue?.firstName ?? '');
-    const [lastName, setLastName] = useState(initialValue?.lastName ?? '');
-    const [phone, setPhone] = useState(initialValue?.phoneNumber ?? '');
+    const [firstName, setFirstName] = useState(initialFormValue?.firstName ?? '');
+    const [lastName, setLastName] = useState(initialFormValue?.lastName ?? '');
+    const [phone, setPhone] = useState(initialFormValue?.phoneNumber ?? '');
 
     const [isUpdating, setIsUpdating] = useState(false);
     const [isResettingPassword, setIsResettingPassword] = useState(false);
 
     const updateAccountDetails = async () => {
-        if (!initialValue?.id) {
+        if (!accountId) {
             return;
         }
 
         try {
             setIsUpdating(true);
-            const updatedUser = await api.updateUser(initialValue.id, {
+            const updatedUser = await api.updateUser(accountId, {
                 contact: {
                     firstName,
                     lastName,
@@ -35,7 +37,6 @@ export function useAccountDetailsForm(initialValue: {
             });
 
             setCurrentValue({
-                id: updatedUser?._id,
                 loginEmail: updatedUser?.loginEmail,
                 firstName: updatedUser?.contact?.firstName ?? '',
                 lastName: updatedUser?.contact?.lastName ?? '',
