@@ -63,7 +63,7 @@ export default function MyAccountPage() {
                 </div>
                 <div className={styles.actions}>
                     <button
-                        className={classNames('button', 'secondaryButton', styles.smallButton)}
+                        className={classNames('button', 'secondaryButton', 'smallButton')}
                         onClick={onDiscardChangesClick}
                     >
                         Discard
@@ -72,7 +72,7 @@ export default function MyAccountPage() {
                         className={classNames(
                             'button',
                             'primaryButton',
-                            styles.smallButton,
+                            'smallButton',
                             styles.updateInfoButton,
                         )}
                         disabled={isUpdating}
@@ -120,7 +120,7 @@ export default function MyAccountPage() {
 
                 <div className={styles.actions}>
                     <button
-                        className={classNames('button', 'secondaryButton', styles.smallButton)}
+                        className={classNames('button', 'secondaryButton', 'smallButton')}
                         onClick={onDiscardChangesClick}
                     >
                         Discard
@@ -129,7 +129,7 @@ export default function MyAccountPage() {
                         className={classNames(
                             'button',
                             'primaryButton',
-                            styles.smallButton,
+                            'smallButton',
                             styles.updateInfoButton,
                         )}
                         disabled={isUpdating}
@@ -157,7 +157,7 @@ export default function MyAccountPage() {
                             className={classNames(
                                 'button',
                                 'primaryButton',
-                                styles.smallButton,
+                                'smallButton',
                                 styles.resetPasswordButton,
                             )}
                             disabled={isResettingPassword}
@@ -177,13 +177,13 @@ export default function MyAccountPage() {
                 <DialogDescription>Any changes you made will be lost.</DialogDescription>
                 <div className={styles.confirmationDialogBody}>
                     <button
-                        className={classNames('button', 'secondaryButton', styles.smallButton)}
+                        className={classNames('button', 'secondaryButton', 'smallButton')}
                         onClick={() => setDiscardConfirmationOpen(false)}
                     >
                         Keep Editing
                     </button>
                     <button
-                        className={classNames('button', 'primaryButton', styles.smallButton)}
+                        className={classNames('button', 'primaryButton', 'smallButton')}
                         onClick={handleDiscardChanges}
                     >
                         Discard Changes
