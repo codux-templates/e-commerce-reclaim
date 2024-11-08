@@ -17,15 +17,19 @@ export const Toast = ({ toast }: { toast: ToastData }) => {
         custom: '',
     }[toast.type];
 
-    const className = classNames(
-        styles.root,
-        variantClassName,
-        toast.visible ? styles.enterAnimation : styles.exitAnimation,
-        toast.className,
-    );
+    const animationClassName = toast.visible ? styles.enterAnimation : styles.exitAnimation;
 
     return (
-        <div className={className} style={toast.style} {...toast.ariaProps}>
+        <div
+            className={classNames(
+                styles.root,
+                variantClassName,
+                animationClassName,
+                toast.className,
+            )}
+            style={toast.style}
+            {...toast.ariaProps}
+        >
             <div className={styles.message}>{resolveValue(toast.message, toast)}</div>
             {toast.type === 'loading' ? null : (
                 <button className={styles.closeButton} onClick={() => dismissToast(toast.id)}>
