@@ -16,13 +16,18 @@
 .closeButton {
     width: 24px;
     height: 24px;
+    padding: 0;
     cursor: pointer;
 }
 
-.emptyCartMessage {
+/* Fallback for loading, error, and empty cart states */
+.cartFallback {
     font-size: 20px;
+    min-height: 300px;
+    display: grid;
+    place-content: center;
     text-align: center;
-    margin-top: 148px;
+    padding: 0 20px;
 }
 
 .cartItems {

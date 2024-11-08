@@ -1,5 +1,8 @@
-import { collections, products } from '@wix/stores';
 import { cart, currentCart, orders } from '@wix/ecom';
+import { members } from '@wix/members';
+import { redirects } from '@wix/redirects';
+import { IOAuthStrategy, OauthData, WixClient } from '@wix/sdk';
+import { collections, products } from '@wix/stores';
 
 export type Product = products.Product;
 export type Collection = collections.Collection;
@@ -10,6 +13,7 @@ export type CartItemDetails = cart.LineItem & cart.CartNonNullableFields['lineIt
 export type CartTotals = currentCart.EstimateTotalsResponse &
     currentCart.EstimateTotalsResponseNonNullableFields;
 export type OrderDetails = orders.Order & orders.OrderNonNullableFields;
+export type Member = members.Member & members.MemberNonNullableFields;
 
 export enum ProductFilter {
     minPrice = 'minPrice',
@@ -48,7 +52,21 @@ export type AddToCartOptions =
     | { variantId: string }
     | { options: Record<string, string | undefined> };
 
+export type WixApiClient = WixClient<
+    undefined,
+    IOAuthStrategy,
+    {
+        products: typeof products;
+        currentCart: typeof currentCart;
+        redirects: typeof redirects;
+        collections: typeof collections;
+        orders: typeof orders;
+        members: typeof members;
+    }
+>;
+
 export type EcomApi = {
+    getWixClient(): WixApiClient;
     getProducts: (
         options?: GetProductsOptions,
     ) => Promise<{ items: Product[]; totalCount: number }>;
@@ -67,10 +85,24 @@ export type EcomApi = {
     getAllCategories: () => Promise<Collection[]>;
     getCategoryBySlug: (slug: string) => Promise<CollectionDetails | undefined>;
     getOrder: (id: string) => Promise<OrderDetails | undefined>;
+    getOrders: () => Promise<{
+        items: OrderDetails[];
+        totalCount: number;
+    }>;
     /**
      * Returns the lowest and the highest product price in the category.
      */
     getProductPriceBoundsInCategory: (
         categoryId: string,
     ) => Promise<{ lowest: number; highest: number }>;
+    login: (
+        callbackUrl: string,
+        returnUrl: string,
+    ) => Promise<{
+        oAuthData: OauthData;
+        authUrl: string;
+    }>;
+    logout: (returnUrl: string) => Promise<{ logoutUrl: string }>;
+    isLoggedIn: () => boolean;
+    getUser: () => Promise<Member | undefined>;
 };
