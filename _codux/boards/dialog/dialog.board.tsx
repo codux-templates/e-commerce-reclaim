@@ -1,8 +1,8 @@
+import { useState } from 'react';
 import { createBoard } from '@wixc3/react-board';
-import { Dialog } from '~/src/components/dialog/dialog';
+import { Dialog, DialogTitle, DialogDescription } from '~/src/components/dialog/dialog';
 
 import styles from './dialog.board.module.scss';
-import { useState } from 'react';
 
 export default createBoard({
     name: 'Dialog',
@@ -12,11 +12,11 @@ export default createBoard({
             <div className={styles.container}>
                 <Dialog
                     trigger={<button className="button primaryButton">Open Dialog</button>}
-                    title="Dialog Title"
-                    description="Dialog description"
                     open={open}
                     onOpenChange={(open) => setOpen(open)}
                 >
+                    <DialogTitle>Dialog Title</DialogTitle>
+                    <DialogDescription>Dialog description</DialogDescription>
                     <div className={styles.dialogContent}>
                         <button className="button secondaryButton" onClick={() => setOpen(false)}>
                             Close Dialog
