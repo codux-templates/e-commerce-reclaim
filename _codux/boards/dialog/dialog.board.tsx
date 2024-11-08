@@ -8,13 +8,14 @@ export default createBoard({
     name: 'Dialog',
     Board: () => {
         const [open, setOpen] = useState(true);
+
         return (
             <div className={styles.container}>
-                <Dialog
-                    trigger={<button className="button primaryButton">Open Dialog</button>}
-                    open={open}
-                    onOpenChange={(open) => setOpen(open)}
-                >
+                <button className="button primaryButton" onClick={() => setOpen(true)}>
+                    Open Dialog
+                </button>
+
+                <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
                     <DialogTitle>Dialog Title</DialogTitle>
                     <DialogDescription>Dialog description</DialogDescription>
                     <div className={styles.dialogContent}>

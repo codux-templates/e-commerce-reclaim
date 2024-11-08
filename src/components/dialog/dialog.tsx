@@ -10,7 +10,7 @@ export interface Dialog extends React.PropsWithChildren {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     showCloseButton?: boolean;
-    trigger: React.ReactElement;
+    trigger?: React.ReactElement;
 }
 
 export const Dialog = ({
@@ -22,7 +22,7 @@ export const Dialog = ({
     className,
 }: Dialog) => (
     <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
-        <RadixDialog.Trigger asChild>{trigger}</RadixDialog.Trigger>
+        {trigger && <RadixDialog.Trigger asChild>{trigger}</RadixDialog.Trigger>}
         <RadixDialog.Portal>
             <RadixDialog.Overlay className={styles.overlay} />
             <RadixDialog.Content className={classNames(styles.content, className)}>
