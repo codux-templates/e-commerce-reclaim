@@ -17,18 +17,20 @@ export default createBoard({
                     open={open}
                     onOpenChange={(open) => setOpen(open)}
                 >
-                    <div className={styles.buttonsContainer}>
+                    <div className={styles.dialogContent}>
                         <button className="button secondaryButton" onClick={() => setOpen(false)}>
-                            Close
+                            Close Dialog
                         </button>
-                        <button className="button primaryButton">Confirm</button>
+                        <button className="button primaryButton" onClick={() => setOpen(true)}>
+                            Primary Action
+                        </button>
                     </div>
                 </Dialog>
             </div>
         );
     },
     environmentProps: {
-        windowWidth: 724,
+        windowWidth: 736,
         windowHeight: 528,
     },
 });
