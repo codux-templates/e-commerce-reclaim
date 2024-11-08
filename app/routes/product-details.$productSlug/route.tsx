@@ -87,6 +87,7 @@ export default function ProductDetailsPage() {
     } = useProductDetails(product);
 
     const breadcrumbs = useBreadcrumbs();
+
     const handleError = (error: unknown) => toast.error(getErrorMessage(error));
 
     return (
@@ -148,7 +149,7 @@ export default function ProductDetailsPage() {
 
                     <button
                         className={classNames('button', 'primaryButton', styles.addToCartButton)}
-                        onClick={() => handleAddToCart({ onError: handleError })}
+                        onClick={() => handleAddToCart().catch(handleError)}
                         disabled={outOfStock || isAddingToCart}
                     >
                         {outOfStock ? 'Out of stock' : 'Add to Cart'}

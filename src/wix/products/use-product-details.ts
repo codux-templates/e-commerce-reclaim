@@ -38,25 +38,21 @@ export function useProductDetails(product: SerializeFrom<products.Product>) {
     const media = getMedia(product, selectedChoices);
     const productOptions = getProductOptions(product, selectedChoices);
 
-    const handleAddToCart = useCallback(
-        ({ onError }: { onError: (error: unknown) => void }) => {
-            setAddToCartAttempted(true);
+    const handleAddToCart = useCallback(async () => {
+        setAddToCartAttempted(true);
 
-            if (Object.values(selectedChoices).includes(undefined)) return;
+        if (Object.values(selectedChoices).includes(undefined)) return;
 
-            const selectedVariant = getSelectedVariant(product, selectedChoices);
+        const selectedVariant = getSelectedVariant(product, selectedChoices);
 
-            const options: AddToCartOptions =
-                product.manageVariants && selectedVariant?._id
-                    ? { variantId: selectedVariant._id }
-                    : { options: selectedChoicesToVariantChoices(product, selectedChoices) };
+        const options: AddToCartOptions =
+            product.manageVariants && selectedVariant?._id
+                ? { variantId: selectedVariant._id }
+                : { options: selectedChoicesToVariantChoices(product, selectedChoices) };
 
-            addToCart(product._id!, quantity, options)
-                .then(() => cartOpener.setIsOpen(true))
-                .catch(onError);
-        },
-        [addToCart, cartOpener, product, quantity, selectedChoices],
-    );
+        await addToCart(product._id!, quantity, options);
+        cartOpener.setIsOpen(true);
+    }, [addToCart, cartOpener, product, quantity, selectedChoices]);
 
     const handleOptionChange = useCallback((optionName: string, newChoice: products.Choice) => {
         setQuantity(1);
