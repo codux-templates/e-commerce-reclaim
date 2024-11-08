@@ -219,6 +219,9 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
                 await wixClient.members.deleteMemberPhones(id);
             }
         },
+        async resetPassword(email: string) {
+            await wixClient.auth.sendPasswordResetEmail(email, 'http://localhost:5173/');
+        },
     });
 
 /**

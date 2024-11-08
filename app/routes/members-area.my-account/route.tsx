@@ -7,6 +7,7 @@ import { useEcomApi } from '~/lib/ecom';
 import { initializeEcomApiForRequest } from '~/lib/ecom/session';
 
 import styles from './route.module.scss';
+import { Spinner } from '~/src/components/spinner/spinner';
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const api = await initializeEcomApiForRequest(request);
@@ -14,22 +15,23 @@ export async function loader({ request }: LoaderFunctionArgs) {
         return redirect('/login');
     }
 
-    const member = await api.getUser();
-    return { member };
+    const user = await api.getUser();
+    return { user };
 }
 
 export default function MyAccountPage() {
-    const { member } = useLoaderData<typeof loader>();
+    const { user } = useLoaderData<typeof loader>();
 
-    const originalFirstName = member?.contact?.firstName ?? '';
-    const originalLastName = member?.contact?.lastName ?? '';
-    const originalPhone = member?.contact?.phones?.[0] ?? '';
+    const originalFirstName = user?.contact?.firstName ?? '';
+    const originalLastName = user?.contact?.lastName ?? '';
+    const originalPhone = user?.contact?.phones?.[0] ?? '';
 
     const [firstName, setFirstName] = useState(originalFirstName);
     const [lastName, setLastName] = useState(originalLastName);
     const [phone, setPhone] = useState(originalPhone);
 
     const [isUpdating, setIsUpdating] = useState(false);
+    const [isResettingPassword, setIsResettingPassword] = useState(false);
 
     const handleDiscard = () => {
         setFirstName(originalFirstName);
@@ -40,12 +42,12 @@ export default function MyAccountPage() {
     const api = useEcomApi();
 
     const handleUpdate = () => {
-        if (!member?._id) {
+        if (!user?._id) {
             return;
         }
 
         setIsUpdating(true);
-        api.updateUser(member._id, {
+        api.updateUser(user._id, {
             contact: {
                 firstName,
                 lastName,
@@ -54,23 +56,32 @@ export default function MyAccountPage() {
         }).finally(() => setIsUpdating(false));
     };
 
+    const handleResetPassword = () => {
+        if (!user?.loginEmail) {
+            return;
+        }
+
+        setIsResettingPassword(true);
+        api.resetPassword(user.loginEmail).finally(() => setIsResettingPassword(false));
+    };
+
     return (
-        <div>
+        <div className={styles.root}>
             <div className={classNames(styles.section, styles.header)}>
                 <div>
                     <h2 className="heading4">Account</h2>
                     <span className="paragraph1">View and edit your personal info below.</span>
                 </div>
                 <div className={styles.actions}>
-                    <button className="button primaryButton smallButton" onClick={handleDiscard}>
+                    <button className="button secondaryButton smallButton" onClick={handleDiscard}>
                         Discard
                     </button>
                     <button
-                        className="button secondaryButton smallButton"
+                        className="button primaryButton smallButton"
                         disabled={isUpdating}
                         onClick={handleUpdate}
                     >
-                        Update Info
+                        {isUpdating ? <Spinner size={22} /> : 'Update Info'}
                     </button>
                 </div>
             </div>
@@ -111,15 +122,15 @@ export default function MyAccountPage() {
                 </form>
 
                 <div className={styles.actions}>
-                    <button className="button primaryButton smallButton" onClick={handleDiscard}>
+                    <button className="button secondaryButton smallButton" onClick={handleDiscard}>
                         Discard
                     </button>
                     <button
-                        className="button secondaryButton smallButton"
+                        className="button primaryButton smallButton"
                         disabled={isUpdating}
                         onClick={handleUpdate}
                     >
-                        Update Info
+                        {isUpdating ? <Spinner size={22} /> : 'Update Info'}
                     </button>
                 </div>
             </div>
@@ -127,9 +138,24 @@ export default function MyAccountPage() {
             <div className={styles.section}>
                 <div>
                     <h2 className="heading5">Login info</h2>
-                    <span className="paragraph1">
-                        View and update your login email and password.
-                    </span>
+                    <span className="paragraph1">View your login email and reset password.</span>
+                </div>
+
+                <div className={styles.loginInfoSection}>
+                    <div>
+                        <span>Login email:</span>
+                        <span>{user?.loginEmail}</span>
+                    </div>
+
+                    <div className={styles.actions}>
+                        <button
+                            className="button primaryButton smallButton"
+                            disabled={isResettingPassword}
+                            onClick={handleResetPassword}
+                        >
+                            {isResettingPassword ? <Spinner size={22} /> : 'Reset password'}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,5 +1,7 @@
-:root {
-    --separator-border: solid 1px rgba(23, 17, 13, 0.2);
+.root {
+    button {
+        width: 150px;
+    }
 }
 
 .header {
@@ -14,7 +16,7 @@
 .section {
     padding-bottom: 30px;
     margin-bottom: 30px;
-    border-bottom: var(--separator-border);
+    border-bottom: solid 1px rgba(23, 17, 13, 0.2);
 }
 
 .section h2 {
@@ -42,5 +44,21 @@
 
     input {
         font: var(--paragraph1);
+    }
+}
+
+.loginInfoSection {
+    margin-top: 30px;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+
+    & > div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    button {
+        width: 175px;
     }
 }
