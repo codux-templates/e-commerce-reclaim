@@ -3,12 +3,12 @@ import type { MetaFunction } from '@remix-run/react';
 import { useLoaderData } from '@remix-run/react';
 import classNames from 'classnames';
 import { useState } from 'react';
-import { useEcomApi } from '~/lib/ecom';
 import { initializeEcomApiForRequest } from '~/lib/ecom/session';
+import { useAccountDetailsForm } from '~/lib/hooks';
+import { Dialog, DialogDescription, DialogTitle } from '~/src/components/dialog/dialog';
+import { Spinner } from '~/src/components/spinner/spinner';
 
 import styles from './route.module.scss';
-import { Spinner } from '~/src/components/spinner/spinner';
-import { Dialog, DialogDescription, DialogTitle } from '~/src/components/dialog/dialog';
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const api = await initializeEcomApiForRequest(request);
@@ -23,73 +23,56 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function MyAccountPage() {
     const { user } = useLoaderData<typeof loader>();
 
-    const originalFirstName = user?.contact?.firstName ?? '';
-    const originalLastName = user?.contact?.lastName ?? '';
-    const originalPhone = user?.contact?.phones?.[0] ?? '';
-
-    const [firstName, setFirstName] = useState(originalFirstName);
-    const [lastName, setLastName] = useState(originalLastName);
-    const [phone, setPhone] = useState(originalPhone);
-
     const [discardConfirmationOpen, setDiscardConfirmationOpen] = useState(false);
-    const [isUpdating, setIsUpdating] = useState(false);
-    const [isResettingPassword, setIsResettingPassword] = useState(false);
 
-    const onDiscardClick = () => {
+    const {
+        firstName,
+        setFirstName,
+        lastName,
+        setLastName,
+        phone,
+        setPhone,
+        isUpdating,
+        isResettingPassword,
+        updateAccountDetails,
+        discardChanges,
+        sendPasswordResetEmail,
+    } = useAccountDetailsForm(user);
+
+    const onDiscardChangesClick = () => {
         setDiscardConfirmationOpen(true);
     };
 
-    const discardChanges = () => {
-        setFirstName(originalFirstName);
-        setLastName(originalLastName);
-        setPhone(originalPhone);
-
+    const handleDiscardChanges = () => {
+        discardChanges();
         setDiscardConfirmationOpen(false);
     };
 
-    const api = useEcomApi();
-
-    const handleUpdate = () => {
-        if (!user?._id) {
-            return;
-        }
-
-        setIsUpdating(true);
-        api.updateUser(user._id, {
-            contact: {
-                firstName,
-                lastName,
-                phones: [phone],
-            },
-        }).finally(() => setIsUpdating(false));
-    };
-
-    const handleResetPassword = () => {
-        if (!user?.loginEmail) {
-            return;
-        }
-
-        setIsResettingPassword(true);
-        api.resetPassword(user.loginEmail).finally(() => setIsResettingPassword(false));
-    };
-
     return (
-        <div className={styles.root}>
+        <div>
             <div className={classNames(styles.section, styles.header)}>
                 <div>
                     <h2 className="heading4">Account</h2>
                     <span className="paragraph1">View and edit your personal info below.</span>
                 </div>
                 <div className={styles.actions}>
-                    <button className="button secondaryButton smallButton" onClick={onDiscardClick}>
+                    <button
+                        className={classNames('button', 'secondaryButton', styles.smallButton)}
+                        onClick={onDiscardChangesClick}
+                    >
                         Discard
                     </button>
                     <button
-                        className="button primaryButton smallButton"
+                        className={classNames(
+                            'button',
+                            'primaryButton',
+                            styles.smallButton,
+                            styles.updateInfoButton,
+                        )}
                         disabled={isUpdating}
-                        onClick={handleUpdate}
+                        onClick={updateAccountDetails}
                     >
-                        {isUpdating ? <Spinner size={22} /> : 'Update Info'}
+                        {isUpdating ? <Spinner size={24} /> : 'Update Info'}
                     </button>
                 </div>
             </div>
@@ -130,15 +113,23 @@ export default function MyAccountPage() {
                 </form>
 
                 <div className={styles.actions}>
-                    <button className="button secondaryButton smallButton" onClick={onDiscardClick}>
+                    <button
+                        className={classNames('button', 'secondaryButton', styles.smallButton)}
+                        onClick={onDiscardChangesClick}
+                    >
                         Discard
                     </button>
                     <button
-                        className="button primaryButton smallButton"
+                        className={classNames(
+                            'button',
+                            'primaryButton',
+                            styles.smallButton,
+                            styles.updateInfoButton,
+                        )}
                         disabled={isUpdating}
-                        onClick={handleUpdate}
+                        onClick={updateAccountDetails}
                     >
-                        {isUpdating ? <Spinner size={22} /> : 'Update Info'}
+                        {isUpdating ? <Spinner size={24} /> : 'Update Info'}
                     </button>
                 </div>
             </div>
@@ -151,15 +142,20 @@ export default function MyAccountPage() {
 
                 <div className={styles.loginInfoSection}>
                     <div>
-                        <span>Login email:</span>
-                        <span>{user?.loginEmail}</span>
+                        <div>Login email:</div>
+                        <div>{user?.loginEmail}</div>
                     </div>
 
                     <div className={styles.actions}>
                         <button
-                            className="button primaryButton smallButton"
+                            className={classNames(
+                                'button',
+                                'primaryButton',
+                                styles.smallButton,
+                                styles.resetPasswordButton,
+                            )}
                             disabled={isResettingPassword}
-                            onClick={handleResetPassword}
+                            onClick={sendPasswordResetEmail}
                         >
                             {isResettingPassword ? <Spinner size={22} /> : 'Reset password'}
                         </button>
@@ -178,12 +174,15 @@ export default function MyAccountPage() {
                 <DialogDescription>Any changes you made will be lost.</DialogDescription>
                 <div className={styles.body}>
                     <button
-                        className="button secondaryButton smallButton"
+                        className={classNames('button', 'secondaryButton', styles.smallButton)}
                         onClick={() => setDiscardConfirmationOpen(false)}
                     >
                         Keep Editing
                     </button>
-                    <button className="button primaryButton smallButton" onClick={discardChanges}>
+                    <button
+                        className={classNames('button', 'primaryButton', styles.smallButton)}
+                        onClick={handleDiscardChanges}
+                    >
                         Discard Changes
                     </button>
                 </div>

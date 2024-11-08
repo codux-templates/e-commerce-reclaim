@@ -203,24 +203,18 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
             return response.member;
         },
         async updateUser(id: string, user: members.UpdateMember) {
-            // `updateMember` is not clearing contact phone number,
-            // there is a separate `deleteMemberPhones` function for that
-            // we will handle clear phone number case separately
-            const shouldClearPhoneNumber = user.contact?.phones?.[0] === '';
-            if (shouldClearPhoneNumber) {
-                // sending empty phone number in phones array will result in 400 response
-                user.contact!.phones = [];
+            if (!user.contact?.phones?.[0]) {
+                await wixClient.members.deleteMemberPhones(id);
+
+                if (user.contact?.phones) {
+                    user.contact.phones = [];
+                }
             }
 
-            const updatedUser = await wixClient.members.updateMember(id, user);
-            // if it was requested to clear phone number - use `deleteMemberPhones` function
-            // because `updateMember` does not handle phone deletion
-            if (shouldClearPhoneNumber && updatedUser?.contact?.phones?.[0] !== undefined) {
-                await wixClient.members.deleteMemberPhones(id);
-            }
+            return wixClient.members.updateMember(id, user);
         },
-        async resetPassword(email: string) {
-            await wixClient.auth.sendPasswordResetEmail(email, 'http://localhost:5173/');
+        async sendPasswordResetEmail(email: string, redirectUrl: string) {
+            await wixClient.auth.sendPasswordResetEmail(email, redirectUrl);
         },
     });
 
