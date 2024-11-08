@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import styles from './range-slider.module.scss';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export interface RangeSliderValue {
     start: number;
@@ -30,7 +30,7 @@ export interface RangeSliderProps {
     className?: string;
 }
 
-type SliderRoles = { a: 'start'; b: 'end' } | { a: 'end'; b: 'start' };
+type SliderRoles = ['start', 'end'] | ['end', 'start'];
 
 /**
  * A slider component for selecting a numeric range.
@@ -44,13 +44,13 @@ export const RangeSlider = ({
     formatValue = (value) => value.toString(),
     className,
 }: RangeSliderProps) => {
-    const [sliderRoles, setSliderRoles] = useState<SliderRoles>({ a: 'start', b: 'end' });
+    const [[sliderARole, sliderBRole], setSliderRoles] = useState<SliderRoles>(['start', 'end']);
 
     const swapSliderRoles = () => {
-        setSliderRoles((prev) => {
-            return prev.a === 'start' ? { a: 'end', b: 'start' } : { a: 'start', b: 'end' };
-        });
+        setSliderRoles((prev) => [...prev].reverse() as SliderRoles);
     };
+
+    const sliderFirstTouchChange = useRef(false);
 
     const handleSliderChange = (role: 'start' | 'end', newValue: number) => {
         if (role === 'start') {
@@ -72,25 +72,39 @@ export const RangeSlider = ({
         }
     };
 
+    // When clicking not on one of the thumbs but somewhere on the track,
+    // we decide what value to change, start or end,
+    // depending on which one is closer to the clicked value on the track.
+    // Also, since the track is displayed only by slider A,
+    // we have to ensure its role corresponds to the changed value.
+    const handleSliderFirstTouchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = Number(event.target.value);
+        const distToStart = Math.abs(newValue - value.start);
+        const distToEnd = Math.abs(newValue - value.end);
+
+        if (distToStart < distToEnd || (value.start === value.end && newValue < value.start)) {
+            // New value is closer to the start value.
+            onChange({ ...value, start: newValue });
+            if (sliderARole !== 'start') swapSliderRoles();
+        } else {
+            // New value is closer to the end value.
+            onChange({ ...value, end: newValue });
+            if (sliderARole !== 'end') swapSliderRoles();
+        }
+    };
+
     const handleSliderAChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        handleSliderChange(sliderRoles.a, Number(event.target.value));
+        if (sliderFirstTouchChange.current) {
+            handleSliderFirstTouchChange(event);
+            sliderFirstTouchChange.current = false;
+            return;
+        }
+
+        handleSliderChange(sliderARole, Number(event.target.value));
     };
 
     const handleSliderBChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        handleSliderChange(sliderRoles.b, Number(event.target.value));
-    };
-
-    const handleChangeByClickingOnTrack = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = Number(event.target.value);
-        // Change the start or end value
-        // depending on which one is closer to the clicked value on the track.
-        const distToStart = Math.abs(newValue - value.start);
-        const distToEnd = Math.abs(newValue - value.end);
-        if (distToStart < distToEnd || (value.start === value.end && newValue < value.start)) {
-            onChange({ ...value, start: newValue });
-        } else {
-            onChange({ ...value, end: newValue });
-        }
+        handleSliderChange(sliderBRole, Number(event.target.value));
     };
 
     const getValuePositionOnTrack = (value: number) => {
@@ -99,17 +113,14 @@ export const RangeSlider = ({
 
     return (
         <div className={classNames(styles.root, className)}>
-            {/* The slider is implemented using three native <input type="range" />
+            {/* The slider is implemented using two native <input type="range" />
                 elements stacked on top of each other.
             */}
             <div className={styles.slidersContainer}>
-                {/* Displays the track with the highlighted selected range. The thumb is hidden.
-                    Handles a change when a user clicks somewhere on the track.
-                */}
+                {/* Slider A. Displays the track and the first thumb. */}
                 <input
                     type="range"
-                    tabIndex={-1}
-                    className={classNames(styles.input, styles.trackInput)}
+                    className={classNames(styles.input, styles.sliderA)}
                     style={
                         {
                             '--start': getValuePositionOnTrack(value.start),
@@ -119,29 +130,19 @@ export const RangeSlider = ({
                     step={step}
                     min={minValue}
                     max={maxValue}
-                    value={value.start}
-                    onChange={handleChangeByClickingOnTrack}
-                />
-
-                {/* Slider A. Displays only slider thumb, the track is hidden. */}
-                <input
-                    type="range"
-                    className={classNames(styles.input, styles.thumbInput)}
-                    step={step}
-                    min={minValue}
-                    max={maxValue}
-                    value={sliderRoles.a === 'start' ? value.start : value.end}
+                    value={sliderARole === 'start' ? value.start : value.end}
                     onChange={handleSliderAChange}
+                    onMouseDown={() => (sliderFirstTouchChange.current = true)}
                 />
 
-                {/* Slider B. Displays only slider thumb, the track is hidden. */}
+                {/* Slider B. Displays the second thumb, the track is hidden. */}
                 <input
                     type="range"
-                    className={classNames(styles.input, styles.thumbInput)}
+                    className={classNames(styles.input, styles.sliderB)}
                     step={step}
                     min={minValue}
                     max={maxValue}
-                    value={sliderRoles.b === 'end' ? value.end : value.start}
+                    value={sliderBRole === 'end' ? value.end : value.start}
                     onChange={handleSliderBChange}
                 />
             </div>
