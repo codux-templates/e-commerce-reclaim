@@ -2,7 +2,6 @@ import { vitePlugin as remix } from '@remix-run/dev';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { netlifyPlugin } from '@netlify/remix-adapter/plugin';
-import path from 'node:path';
 
 export default defineConfig({
     plugins: [
@@ -13,12 +12,21 @@ export default defineConfig({
         tsconfigPaths(),
     ],
     resolve: {
-        alias: {
-            '@styles': path.resolve(__dirname, './src/styles/'),
-        },
+        alias: { '~': __dirname },
     },
     optimizeDeps: {
         include: ['@radix-ui/react-select'],
     },
     css: { preprocessorOptions: { scss: { api: 'modern' } } },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.endsWith('.css') || id.endsWith('.scss')) {
+                        return 'styles';
+                    }
+                },
+            },
+        },
+    },
 });

@@ -1,8 +1,8 @@
 import '~/src/styles/reset.scss';
 import '~/src/styles/colors.scss';
 import '~/src/styles/typography.scss';
-import '~/src/styles/common.scss';
-import '~/src/styles/index.scss';
+import '~/src/styles/global.scss';
+import '~/src/styles/utils.scss';
 
 import { json, LoaderFunctionArgs } from '@remix-run/node';
 import {
@@ -18,10 +18,15 @@ import { CartOpenContextProvider } from '~/lib/cart-open-context';
 import { EcomApiContextProvider } from '~/lib/ecom';
 import { commitSession, initializeEcomSession } from '~/lib/ecom/session';
 import { RouteBreadcrumbs } from '~/src/components/breadcrumbs/use-breadcrumbs';
-import { SiteWrapper } from '~/src/components/site-wrapper/site-wrapper';
+import { Cart } from '~/src/components/cart/cart';
+import { Footer } from '~/src/components/footer/footer';
+import { Header } from '~/src/components/header/header';
+import { Toaster } from '~/src/components/toaster/toaster';
+
+import styles from './root.module.scss';
 
 export async function loader({ request }: LoaderFunctionArgs) {
-    const { wixEcomTokens, session, shouldUpdateSessionCookie } =
+    const { wixSessionTokens, session, shouldUpdateSessionCookie } =
         await initializeEcomSession(request);
 
     return json(
@@ -29,7 +34,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
             ENV: {
                 WIX_CLIENT_ID: process?.env?.WIX_CLIENT_ID,
             },
-            wixEcomTokens,
+            wixSessionTokens,
         },
         shouldUpdateSessionCookie
             ? {
@@ -66,18 +71,24 @@ export function Layout({ children }: React.PropsWithChildren) {
 }
 
 export default function App() {
-    const { ENV, wixEcomTokens } = useLoaderData<typeof loader>();
+    const { ENV, wixSessionTokens } = useLoaderData<typeof loader>();
 
     if (typeof window !== 'undefined' && typeof window.ENV === 'undefined') {
         window.ENV = ENV;
     }
 
     return (
-        <EcomApiContextProvider tokens={wixEcomTokens}>
+        <EcomApiContextProvider tokens={wixSessionTokens}>
             <CartOpenContextProvider>
-                <SiteWrapper>
-                    <Outlet />
-                </SiteWrapper>
+                <div className={styles.root}>
+                    <Header />
+                    <main className={styles.main}>
+                        <Outlet />
+                    </main>
+                    <Footer />
+                </div>
+                <Cart />
+                <Toaster />
             </CartOpenContextProvider>
         </EcomApiContextProvider>
     );

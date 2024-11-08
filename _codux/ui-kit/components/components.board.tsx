@@ -5,7 +5,7 @@ import { QuantityInput } from '~/src/components/quantity-input/quantity-input';
 import { Select, SelectItem } from '~/src/components/select/select';
 import classNames from 'classnames';
 import { CategoryLink } from '~/src/components/category-link/category-link';
-import { ColorSelect } from '~/lib/components/color-select/color-select';
+import { ColorSelect } from '~/src/components/color-select/color-select';
 import ComponentWrapper from '_codux/board-wrappers/component-wrapper';
 import { Kit } from '../ui-kit-utils/kit';
 
@@ -17,6 +17,37 @@ export default createBoard({
         <ComponentWrapper>
             <Kit category="Core Components" title="Components & Elements">
                 <Kit.Section title="Inputs">
+                    <Kit.Item>
+                        <Variant name="Input">
+                            <input className="textInput" value="Text input" onChange={() => {}} />
+                        </Variant>
+                        <Kit.Description>Input</Kit.Description>
+                    </Kit.Item>
+
+                    <Kit.Item>
+                        <Variant name="Input Placeholder">
+                            <input
+                                className="textInput"
+                                placeholder="Placeholder"
+                                value=""
+                                onChange={() => {}}
+                            />
+                        </Variant>
+                        <Kit.Description>Input Placeholder</Kit.Description>
+                    </Kit.Item>
+
+                    <Kit.Item>
+                        <Variant name="Disabled Input">
+                            <input
+                                disabled
+                                className="textInput"
+                                value="Disabled input"
+                                onChange={() => {}}
+                            />
+                        </Variant>
+                        <Kit.Description>Disabled Input</Kit.Description>
+                    </Kit.Item>
+
                     <Kit.Item>
                         <Variant name="Number Input">
                             <QuantityInput value={6} onChange={() => {}} />

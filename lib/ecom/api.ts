@@ -1,24 +1,13 @@
 import { currentCart, orders } from '@wix/ecom';
+import { members } from '@wix/members';
 import { redirects } from '@wix/redirects';
-import { createClient, IOAuthStrategy, OAuthStrategy, Tokens, WixClient } from '@wix/sdk';
+import { createClient, OAuthStrategy, Tokens } from '@wix/sdk';
 import { collections, products } from '@wix/stores';
-import { DEMO_STORE_WIX_CLIENT_ID, WIX_STORES_APP_ID } from './constants';
+import { DEMO_WIX_CLIENT_ID, WIX_STORES_APP_ID } from './constants';
 import { getFilteredProductsQuery } from './product-filters';
 import { getSortedProductsQuery } from './product-sorting';
-import { EcomApi } from './types';
+import { EcomApi, WixApiClient } from './types';
 import { isNotFoundWixClientError, normalizeWixClientError } from './wix-client-error';
-
-type WixApiClient = WixClient<
-    undefined,
-    IOAuthStrategy,
-    {
-        products: typeof products;
-        currentCart: typeof currentCart;
-        redirects: typeof redirects;
-        collections: typeof collections;
-        orders: typeof orders;
-    }
->;
 
 export function getWixClientId() {
     /**
@@ -33,7 +22,7 @@ export function getWixClientId() {
               ? process.env
               : {};
 
-    return env.WIX_CLIENT_ID ?? DEMO_STORE_WIX_CLIENT_ID;
+    return env.WIX_CLIENT_ID ?? DEMO_WIX_CLIENT_ID;
 }
 
 export function createWixClient(tokens?: Tokens): WixApiClient {
@@ -44,6 +33,7 @@ export function createWixClient(tokens?: Tokens): WixApiClient {
             redirects,
             collections,
             orders,
+            members,
         },
         auth: OAuthStrategy({
             clientId: getWixClientId(),
@@ -64,6 +54,9 @@ export function initializeEcomApiAnonymous() {
 
 const createEcomApi = (wixClient: WixApiClient): EcomApi =>
     withNormalizedWixClientErrors({
+        getWixClient() {
+            return wixClient;
+        },
         async getProducts(params = {}) {
             let collectionId = params.categoryId;
             if (!collectionId && params.categorySlug) {
@@ -168,6 +161,14 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
             }
         },
 
+        async getOrders() {
+            const searchOrdersResponse = await wixClient.orders.searchOrders();
+            return {
+                items: searchOrdersResponse.orders,
+                totalCount: searchOrdersResponse.metadata?.count ?? 0,
+            };
+        },
+
         async getProductPriceBoundsInCategory(categoryId: string) {
             const query = wixClient.products.queryProducts().hasSome('collectionIds', [categoryId]);
 
@@ -179,6 +180,25 @@ const createEcomApi = (wixClient: WixApiClient): EcomApi =>
             const lowest = ascendingPrice.items[0]?.priceData?.price ?? 0;
             const highest = descendingPrice.items[0]?.priceData?.price ?? 0;
             return { lowest, highest };
+        },
+        async login(callbackUrl: string, returnUrl: string) {
+            const oAuthData = wixClient.auth.generateOAuthData(callbackUrl, returnUrl);
+
+            const { authUrl } = await wixClient.auth.getAuthUrl(oAuthData, {
+                responseMode: 'query',
+            });
+
+            return { oAuthData, authUrl };
+        },
+        async logout(returnUrl: string) {
+            return wixClient.auth.logout(returnUrl);
+        },
+        isLoggedIn() {
+            return wixClient.auth.loggedIn();
+        },
+        async getUser() {
+            const response = await wixClient.members.getCurrentMember();
+            return response.member;
         },
     });
 
