@@ -5,7 +5,7 @@ import { CloseIcon } from '../icons';
 
 import styles from './dialog.module.scss';
 
-export interface Dialog extends React.PropsWithChildren {
+export interface DialogProps extends React.PropsWithChildren {
     className?: string;
     open: boolean;
     onOpenChange: (open: boolean) => void;
@@ -21,7 +21,7 @@ export const Dialog = ({
     onOpenChange,
     children,
     contentProps = {},
-}: Dialog) => (
+}: DialogProps) => (
     <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
         {trigger && <RadixDialog.Trigger asChild>{trigger}</RadixDialog.Trigger>}
         <RadixDialog.Portal>
