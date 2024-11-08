@@ -1,6 +1,6 @@
+import { useRef, useState } from 'react';
 import classNames from 'classnames';
 import styles from './range-slider.module.scss';
-import { useRef, useState } from 'react';
 
 export interface RangeSliderValue {
     start: number;
