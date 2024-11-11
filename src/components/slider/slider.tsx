@@ -6,12 +6,13 @@ import styles from './slider.module.scss';
 
 export const Slider: FC<RadixSliderProps> = (props) => {
     props = useRadixSliderThumbReleaseFix(props);
+    const value = props.value ?? props.defaultValue;
     return (
         <RadixSlider.Root {...props} className={classNames(styles.root, props.className)}>
             <RadixSlider.Track className={styles.track}>
                 <RadixSlider.Range className={styles.range} />
             </RadixSlider.Track>
-            {props.value?.map((_, i) => <RadixSlider.Thumb key={i} className={styles.thumb} />)}
+            {value?.map((_, i) => <RadixSlider.Thumb key={i} className={styles.thumb} />)}
         </RadixSlider.Root>
     );
 };
