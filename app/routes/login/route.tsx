@@ -4,7 +4,6 @@ import { getErrorMessage } from '~/src/wix/utils';
 
 export async function loader({ request }: LoaderFunctionArgs) {
     try {
-        throw new Error('something went wrong');
         const currentUrl = new URL(request.url);
         const returnUrl = request.headers.get('Referer') ?? currentUrl.origin;
 
