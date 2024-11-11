@@ -5,8 +5,8 @@ import { useMemo, useRef } from 'react';
 /**
  * Returns a debounced version of the provided callback function.
  *
- * IMPORTANT: cancel or flush the debounced function on unmount to prevent state
- * updates on unmounted components. Examples:
+ * IMPORTANT: remember to cancel or flush the debounced function on unmount to
+ * prevent state updates on unmounted components. Examples:
  * - `useEffect(() => debouncedFunc.cancel, [debouncedFunc])`
  * - `useEffect(() => debouncedFunc.flush, [debouncedFunc])`
  */
