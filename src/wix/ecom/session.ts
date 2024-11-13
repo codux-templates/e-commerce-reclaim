@@ -35,31 +35,57 @@ export { commitSession, destroySession, getSession };
 
 export async function initializeEcomSession(request: Request) {
     const session = await getSession(request.headers.get('Cookie'));
-
     const sessionWixClientId = session.get('wixClientId');
     const wixClientId = getWixClientId();
 
     // Retrieve session tokens only if the OAuth client ID matches the one associated with the session;
     // otherwise, reset the session tokens due to client ID mismatch.
-    let wixSessionTokens =
+    const wixSessionTokens =
         sessionWixClientId === wixClientId ? session.get('wixSessionTokens') : undefined;
+
+    const effectiveTokens = await getEffectiveWixAuthTokens(wixSessionTokens);
+
     let shouldUpdateSessionCookie = false;
-
-    const client = createWixClient(wixSessionTokens);
-    if (wixSessionTokens === undefined) {
+    if (effectiveTokens !== wixSessionTokens) {
         shouldUpdateSessionCookie = true;
-        wixSessionTokens = await client.auth.generateVisitorTokens();
-        session.set('wixSessionTokens', wixSessionTokens);
+        session.set('wixSessionTokens', effectiveTokens);
+    }
 
-        // Store the OAuth client ID in the session to reset user session in case client id changed.
+    if (sessionWixClientId !== wixClientId) {
+        shouldUpdateSessionCookie = true;
         session.set('wixClientId', wixClientId);
     }
 
-    return { wixSessionTokens, session, shouldUpdateSessionCookie };
+    return { wixSessionTokens: effectiveTokens, session, shouldUpdateSessionCookie };
 }
 
 export async function initializeEcomApiForRequest(request: Request) {
-    const { session } = await initializeEcomSession(request);
-    const tokens = session.get('wixSessionTokens');
-    return tokens ? initializeEcomApiWithTokens(tokens) : initializeEcomApiAnonymous();
+    const { wixSessionTokens } = await initializeEcomSession(request);
+    return wixSessionTokens
+        ? initializeEcomApiWithTokens(wixSessionTokens)
+        : initializeEcomApiAnonymous();
+}
+
+async function getEffectiveWixAuthTokens(sessionTokens: Tokens | undefined) {
+    const client = createWixClient(sessionTokens);
+
+    let effectiveTokens: Tokens | undefined;
+
+    if (sessionTokens === undefined) {
+        effectiveTokens = await client.auth.generateVisitorTokens();
+    } else {
+        effectiveTokens = sessionTokens;
+
+        const currentTimeStampSeconds = Date.now() / 1000;
+        if (currentTimeStampSeconds > effectiveTokens.accessToken.expiresAt) {
+            try {
+                effectiveTokens = await client.auth.renewToken(sessionTokens.refreshToken);
+            } catch {
+                // generate new visitor tokens if renewing process failed
+                effectiveTokens = await client.auth.generateVisitorTokens();
+            }
+        }
+    }
+
+    return effectiveTokens;
 }
