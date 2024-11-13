@@ -1,9 +1,9 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import { Slider } from '../slider/slider';
 import { formatPrice } from '~/src/wix/products';
 import { useDebouncedCallback } from '~/src/wix/utils';
-import styles from './price-filter.module.scss';
 import { alignRangeToNiceStep } from '~/src/wix/utils/align-range';
+import { Slider } from '../slider/slider';
+import styles from './price-filter.module.scss';
 
 export interface PriceFilterProps {
     minAvailablePrice: number;
@@ -22,10 +22,11 @@ export const PriceFilter: FC<PriceFilterProps> = ({
     currency,
     onChange,
 }) => {
+    const priceRange = maxAvailablePrice - minAvailablePrice;
     const sliderRange = alignRangeToNiceStep({
         min: minAvailablePrice,
         max: maxAvailablePrice,
-        step: Math.max(0.1, (maxAvailablePrice - minAvailablePrice) / 100),
+        step: Math.max(priceRange / 100, 0.1),
     });
 
     minSelectedPrice ??= sliderRange.min;
