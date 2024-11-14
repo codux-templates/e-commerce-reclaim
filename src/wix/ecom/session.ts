@@ -66,6 +66,9 @@ export async function initializeEcomApiForRequest(request: Request) {
         : initializeEcomApiAnonymous();
 }
 
+// renew token in one hour before expiration. the token lifetime is 4 hours
+const TOKEN_REFRESH_MARGIN_SECONDS = 60 * 60;
+
 async function getValidAuthTokens(sessionTokens: Tokens | undefined) {
     const client = createWixClient(sessionTokens);
 
@@ -77,7 +80,10 @@ async function getValidAuthTokens(sessionTokens: Tokens | undefined) {
         effectiveTokens = sessionTokens;
 
         const currentTimeStampSeconds = Date.now() / 1000;
-        if (currentTimeStampSeconds > effectiveTokens.accessToken.expiresAt) {
+        if (
+            currentTimeStampSeconds >
+            effectiveTokens.accessToken.expiresAt - TOKEN_REFRESH_MARGIN_SECONDS
+        ) {
             try {
                 effectiveTokens = await client.auth.renewToken(sessionTokens.refreshToken);
             } catch {
