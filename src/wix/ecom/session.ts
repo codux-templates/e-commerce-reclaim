@@ -43,12 +43,12 @@ export async function initializeEcomSession(request: Request) {
     const wixSessionTokens =
         sessionWixClientId === wixClientId ? session.get('wixSessionTokens') : undefined;
 
-    const effectiveTokens = await getEffectiveWixAuthTokens(wixSessionTokens);
+    const validTokens = await getValidAuthTokens(wixSessionTokens);
 
     let shouldUpdateSessionCookie = false;
-    if (effectiveTokens !== wixSessionTokens) {
+    if (validTokens !== wixSessionTokens) {
         shouldUpdateSessionCookie = true;
-        session.set('wixSessionTokens', effectiveTokens);
+        session.set('wixSessionTokens', validTokens);
     }
 
     if (sessionWixClientId !== wixClientId) {
@@ -56,7 +56,7 @@ export async function initializeEcomSession(request: Request) {
         session.set('wixClientId', wixClientId);
     }
 
-    return { wixSessionTokens: effectiveTokens, session, shouldUpdateSessionCookie };
+    return { wixSessionTokens: validTokens, session, shouldUpdateSessionCookie };
 }
 
 export async function initializeEcomApiForRequest(request: Request) {
@@ -66,7 +66,7 @@ export async function initializeEcomApiForRequest(request: Request) {
         : initializeEcomApiAnonymous();
 }
 
-async function getEffectiveWixAuthTokens(sessionTokens: Tokens | undefined) {
+async function getValidAuthTokens(sessionTokens: Tokens | undefined) {
     const client = createWixClient(sessionTokens);
 
     let effectiveTokens: Tokens | undefined;
