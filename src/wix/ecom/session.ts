@@ -87,7 +87,6 @@ async function getValidAuthTokens(sessionTokens: Tokens | undefined) {
             try {
                 effectiveTokens = await client.auth.renewToken(sessionTokens.refreshToken);
             } catch {
-                // generate new visitor tokens if renewing process failed
                 effectiveTokens = await client.auth.generateVisitorTokens();
             }
         }
