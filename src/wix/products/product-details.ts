@@ -169,3 +169,17 @@ export function formatPrice(price: number, currency: string): string {
 
     return formatter.format(price);
 }
+
+export function getProductImageUrl(
+    product: Product | SerializeFrom<Product>,
+    maxWidth: number,
+    maxHeight: number,
+): string | undefined {
+    const media = product.media?.mainMedia;
+    if (media?.mediaType !== 'image') return undefined;
+
+    // Avoid using the Wix SDK's media.getScaledToFitImageUrl function, as it
+    // generates different URLs on the client and server, causing hydration
+    // mismatches, and inexplicably scales to fill rather than fit.
+    return `https://static.wixstatic.com/media/${media._id}/v1/fit/w_${maxWidth},h_${maxHeight},q_80/${media._id}`;
+}

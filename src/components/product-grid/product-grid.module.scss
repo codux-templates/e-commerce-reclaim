@@ -1,12 +1,12 @@
 .productGrid {
-    --minCardSize: 404px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(var(--minCardSize), 100%), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px 4px;
 }
 
 .productLink {
     display: block;
+    max-width: 500px;
 }
 
 .clearFiltersButton {
@@ -19,6 +19,6 @@
 
 @media (max-width: 1024px) {
     .productGrid {
-        --minCardSize: 250px;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     }
 }
