@@ -90,7 +90,7 @@ export default function CartPage() {
                         </span>
                     </div>
                     <div className={styles.summaryRow}>
-                        <span className={styles.location}>
+                        <span className={styles.shippingInfo}>
                             {cartTotals?.shippingInfo?.region?.name}
                         </span>
                     </div>
