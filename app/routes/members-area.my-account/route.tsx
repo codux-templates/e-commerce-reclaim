@@ -42,13 +42,14 @@ export default function MyAccountPage() {
 
     const navigation = useNavigation();
 
+    const userDetailsFormAction = '/members-area/my-account/update-details';
+    const resetPasswordFormAction = '/members-area/my-account/reset-password';
+
     const isUpdatingUserDetails =
-        navigation.state === 'submitting' &&
-        navigation.formAction === '/members-area/my-account/update-details';
+        navigation.state === 'submitting' && navigation.formAction === userDetailsFormAction;
 
     const isResettingPassword =
-        navigation.state === 'submitting' &&
-        navigation.formAction === '/members-area/my-account/reset-password';
+        navigation.state === 'submitting' && navigation.formAction === resetPasswordFormAction;
 
     return (
         <div>
@@ -89,7 +90,7 @@ export default function MyAccountPage() {
                 <Form
                     id="user-details-form"
                     method="post"
-                    action="/members-area/my-account/update-details"
+                    action={userDetailsFormAction}
                     className={styles.userDetailsForm}
                 >
                     <input type="hidden" name="userId" value={user?._id ?? undefined} />
@@ -170,9 +171,9 @@ export default function MyAccountPage() {
                 </div>
 
                 <Form
-                    id="reset-email-form"
+                    id="reset-password-form"
                     method="post"
-                    action="/members-area/my-account/reset-password"
+                    action={resetPasswordFormAction}
                     className={styles.loginInfoSection}
                 >
                     <div>
