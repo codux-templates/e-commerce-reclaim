@@ -1,4 +1,4 @@
-import { ActionFunctionArgs } from '@remix-run/node';
+import { ActionFunctionArgs, redirect } from '@remix-run/node';
 import { initializeEcomApiForRequest } from '~/src/wix/ecom/session';
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -13,5 +13,5 @@ export async function action({ request }: ActionFunctionArgs) {
 
     await api.sendPasswordResetEmail(userEmail, request.url);
 
-    return;
+    return redirect('/members-area/my-account');
 }
