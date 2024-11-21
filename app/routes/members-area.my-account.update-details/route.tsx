@@ -6,13 +6,14 @@ export async function action({ request }: ActionFunctionArgs) {
     const formData = await request.formData();
 
     const userId = formData.get('userId') as string | undefined;
-    const firstName = formData.get('firstName') as string | undefined;
-    const lastName = formData.get('lastName') as string | undefined;
-    const phoneNumber = formData.get('phoneNumber') as string | undefined;
 
     if (!userId) {
         throw new Error('Missing user id');
     }
+
+    const firstName = formData.get('firstName') as string | undefined;
+    const lastName = formData.get('lastName') as string | undefined;
+    const phoneNumber = formData.get('phoneNumber') as string | undefined;
 
     await api.updateUser(userId, {
         contact: {
