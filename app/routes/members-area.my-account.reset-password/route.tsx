@@ -15,3 +15,8 @@ export async function action({ request }: ActionFunctionArgs) {
 
     return redirect('/members-area/my-account');
 }
+
+// run in Codux define app mode only
+export async function mockAction(): ReturnType<typeof action> {
+    return redirect('/members-area/my-account');
+}

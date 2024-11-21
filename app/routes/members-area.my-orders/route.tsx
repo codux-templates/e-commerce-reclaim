@@ -4,6 +4,7 @@ import { useLoaderData } from '@remix-run/react';
 import { OrderSummary } from '~/src/components/order-summary/order-summary';
 import { Accordion } from '~/src/components/accordion/accordion';
 import { CategoryLink } from '~/src/components/category-link/category-link';
+import { mockLoaderData } from './mock-loader-data';
 
 import styles from './route.module.scss';
 
@@ -15,6 +16,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
     const ordersResponse = await api.getOrders();
     return { orders: ordersResponse.items };
+}
+
+// run in Codux define app mode only
+export async function mockLoader(): ReturnType<typeof loader> {
+    return mockLoaderData;
 }
 
 export default function MyOrdersPage() {

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Dialog, DialogDescription, DialogTitle } from '~/src/components/dialog/dialog';
 import { Spinner } from '~/src/components/spinner/spinner';
 import { initializeEcomApiForRequest } from '~/src/wix/ecom/session';
+import { mockLoaderData } from './mock-loader-data';
 
 import styles from './route.module.scss';
 
@@ -17,6 +18,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
     const user = await api.getUser();
     return { user };
+}
+
+// run in Codux define app mode only
+export async function mockLoader(): ReturnType<typeof loader> {
+    return mockLoaderData;
 }
 
 export default function MyAccountPage() {

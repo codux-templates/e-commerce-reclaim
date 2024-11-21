@@ -21,3 +21,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
         },
     });
 }
+
+// run in Codux define app mode only
+export async function mockLoader(): ReturnType<typeof loader> {
+    return redirect('/');
+}
