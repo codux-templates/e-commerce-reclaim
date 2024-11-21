@@ -20,7 +20,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
     return { user };
 }
 
-// run in Codux define app mode only
+// will be called if app is run in Codux because fetching user details requires
+// user to be logged in but it's currently can't be done through Codux
 export async function mockLoader(): ReturnType<typeof loader> {
     return mockLoaderData;
 }

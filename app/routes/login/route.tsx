@@ -22,7 +22,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     });
 }
 
-// run in Codux define app mode only
+// will be called if app is run in Codux because logging in can be done through Codux yet
 export async function mockLoader(): ReturnType<typeof loader> {
     return redirect('/');
 }

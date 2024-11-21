@@ -18,7 +18,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
     return { orders: ordersResponse.items };
 }
 
-// run in Codux define app mode only
+// will be called if app is run in Codux because fetching orders requires
+// user to be logged in but it's currently can't be done through Codux
 export async function mockLoader(): ReturnType<typeof loader> {
     return mockLoaderData;
 }

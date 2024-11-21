@@ -16,7 +16,8 @@ export async function action({ request }: ActionFunctionArgs) {
     return redirect('/members-area/my-account');
 }
 
-// run in Codux define app mode only
+// will be called if app is run in Codux because sending reset password email
+// requires user to be logged in but it's currently can't be done through Codux
 export async function mockAction(): ReturnType<typeof action> {
     return redirect('/members-area/my-account');
 }
