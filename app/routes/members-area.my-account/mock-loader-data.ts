@@ -1,14 +1,14 @@
-import { Member } from '~/src/wix/ecom';
 import { members } from '@wix/members';
+import { LoaderResponseData } from './route';
 
-export const mockLoaderData: { user: Member } = {
+export const mockLoaderData: LoaderResponseData = {
     user: {
-        loginEmail: 'john.doe@codux.com',
+        loginEmail: 'john.doe@mail.com',
         loginEmailVerified: true,
         status: members.Status.APPROVED,
-        contactId: 'aaa-bbb',
+        contactId: 'contact_id',
         contact: {
-            contactId: 'aaa-bbb',
+            contactId: 'contact_id',
             firstName: 'John',
             lastName: 'Doe',
             phones: ['+1234567890'],
@@ -19,7 +19,7 @@ export const mockLoaderData: { user: Member } = {
                     city: 'New York',
                     country: 'US',
                     postalCode: '100000',
-                    _id: 'aaa-bbb',
+                    _id: 'address_id',
                 },
             ],
             customFields: {},
@@ -37,7 +37,7 @@ export const mockLoaderData: { user: Member } = {
         privacyStatus: members.PrivacyStatusStatus.PRIVATE,
         activityStatus: members.ActivityStatusStatus.ACTIVE,
         lastLoginDate: new Date('2024-11-18T12:35:47Z'),
-        _id: '35dff1e1-a3a5-4ff6-945e-a2a5d1529ec7',
+        _id: 'user)id',
         _createdDate: new Date('2024-10-28T15:11:04Z'),
         _updatedDate: new Date('2024-10-28T15:11:04.210Z'),
     },

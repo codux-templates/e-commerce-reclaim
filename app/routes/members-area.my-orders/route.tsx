@@ -1,6 +1,12 @@
-import { redirect, type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node';
-import { initializeEcomApiForRequest } from '~/src/wix/ecom/session';
+import {
+    redirect,
+    type TypedResponse,
+    type LoaderFunctionArgs,
+    type MetaFunction,
+} from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
+import { type OrderDetails } from '~/src/wix/ecom';
+import { initializeEcomApiForRequest } from '~/src/wix/ecom/session';
 import { OrderSummary } from '~/src/components/order-summary/order-summary';
 import { Accordion } from '~/src/components/accordion/accordion';
 import { CategoryLink } from '~/src/components/category-link/category-link';
@@ -8,7 +14,10 @@ import { mockLoaderData } from './mock-loader-data';
 
 import styles from './route.module.scss';
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export type LoaderResponseData = { orders: OrderDetails[] };
+export type LoaderResponse = Promise<TypedResponse<never> | LoaderResponseData>;
+
+export async function loader({ request }: LoaderFunctionArgs): LoaderResponse {
     const api = await initializeEcomApiForRequest(request);
     if (!api.isLoggedIn()) {
         return redirect('/login');

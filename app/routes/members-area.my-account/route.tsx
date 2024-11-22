@@ -1,6 +1,7 @@
-import { LoaderFunctionArgs, redirect } from '@remix-run/node';
+import { LoaderFunctionArgs, redirect, TypedResponse } from '@remix-run/node';
 import type { MetaFunction } from '@remix-run/react';
 import { Form, useLoaderData, useNavigation } from '@remix-run/react';
+import { Member } from '~/src/wix/ecom';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { Dialog, DialogDescription, DialogTitle } from '~/src/components/dialog/dialog';
@@ -10,7 +11,10 @@ import { mockLoaderData } from './mock-loader-data';
 
 import styles from './route.module.scss';
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export type LoaderResponseData = { user: Member | undefined };
+export type LoaderResponse = Promise<TypedResponse<never> | LoaderResponseData>;
+
+export async function loader({ request }: LoaderFunctionArgs): LoaderResponse {
     const api = await initializeEcomApiForRequest(request);
     if (!api.isLoggedIn()) {
         return redirect('/login');
