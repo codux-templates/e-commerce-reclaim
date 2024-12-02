@@ -1,5 +1,6 @@
 export { ArrowRightIcon } from './arrow-right-icon';
 export { CartIcon } from './cart-icon/cart-icon';
+export { ClearIcon } from './clear-icon';
 export { ChevronRightIcon } from './chevron-right-icon';
 export { CloseIcon } from './close-icon';
 export { UserIcon } from './user-icon';
@@ -12,5 +13,6 @@ export { MenuIcon } from './menu-icon';
 export { MinusIcon } from './minus-icon';
 export { PinterestIcon } from './pinterest-icon';
 export { PlusIcon } from './plus-icon';
+export { SearchIcon } from './search-icon';
 export { TrashIcon } from './trash-icon';
 export { WhatsAppIcon } from './whatsapp-icon';

@@ -1,0 +1,46 @@
+.form {
+    position: relative;
+    left: 1em;
+    width: 16em;
+
+    @media (max-width: 768px) {
+        width: 10em;
+    }
+}
+
+.input {
+    width: 100%;
+    padding: 0 1.5em;
+    border: none;
+    background: none;
+    font-size: 0.9em;
+
+    &::placeholder {
+        font-size: inherit;
+    }
+
+    &:focus-visible {
+        box-shadow: none;
+    }
+}
+
+.searchIcon {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    display: inline-block;
+}
+
+.clearIcon {
+    display: inline-block;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+.input:placeholder-shown + .clearIcon {
+    display: none;
+}
