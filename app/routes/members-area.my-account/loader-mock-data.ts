@@ -1,7 +1,7 @@
 import { members } from '@wix/members';
 import { LoaderResponseData } from './route';
 
-export const coduxLoaderData: LoaderResponseData = {
+export const loaderMockData: LoaderResponseData = {
     user: {
         loginEmail: 'john.doe@mail.com',
         loginEmailVerified: true,
@@ -27,12 +27,6 @@ export const coduxLoaderData: LoaderResponseData = {
         profile: {
             nickname: 'John Doe',
             slug: 'jogn_d',
-            photo: {
-                url: '',
-                height: 0,
-                width: 0,
-                _id: '',
-            },
         },
         privacyStatus: members.PrivacyStatusStatus.PRIVATE,
         activityStatus: members.ActivityStatusStatus.ACTIVE,
