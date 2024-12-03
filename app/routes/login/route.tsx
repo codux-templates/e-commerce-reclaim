@@ -22,7 +22,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     });
 }
 
-// will be called if app is run in Codux because logging in can be done through Codux yet
+// will be called if app is run in Codux because logging in currently can't be done through Codux
 export async function coduxLoader(): ReturnType<typeof loader> {
     // using redirect helper here causes warning during build process
     return new Response(null, {
