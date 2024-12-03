@@ -7,7 +7,10 @@ export const loaderMockData: LoaderResponseData = {
             number: '10003',
             lineItems: [
                 {
-                    productName: { original: 'Flowers', translated: 'Flowers' },
+                    productName: {
+                        original: 'Stainless Steel Lunch Box',
+                        translated: 'Stainless Steel Lunch Box',
+                    },
                     catalogReference: {
                         catalogItemId: 'catalog_item_id_1',
                         appId: 'app_id',
@@ -16,7 +19,7 @@ export const loaderMockData: LoaderResponseData = {
                     quantity: 1,
                     totalDiscount: { amount: '0.00', formattedAmount: '€0.00' },
                     descriptionLines: [],
-                    image: 'wix:image://v1/22e53e_2fee033b2eca46cab4eec7fa74e99c31~mv2.jpg#originWidth=3000&originHeight=3000',
+                    image: 'https://static.wixstatic.com/media/c837a6_4d79cefa20dd4ab0aa5dba663a6a071c~mv2.jpg/v1/fill/w_264,h_360,al_c,q_85,usm_0.66_1.00_0.01/c837a6_4d79cefa20dd4ab0aa5dba663a6a071c~mv2.webp',
                     physicalProperties: { sku: '111111111111', shippable: true },
                     itemType: { preset: orders.ItemTypeItemType.PHYSICAL, custom: '' },
                     price: { amount: '166.50', formattedAmount: '€166.50' },
@@ -44,7 +47,7 @@ export const loaderMockData: LoaderResponseData = {
                     _id: '00000000-0000-0000-0000-000000000001',
                 },
                 {
-                    productName: { original: "I'm a product", translated: "I'm a product" },
+                    productName: { original: 'Eco Glass Jar', translated: 'Eco Glass Jar' },
                     catalogReference: {
                         catalogItemId: 'catalog_item_id_1',
                         appId: 'app_id',
@@ -61,7 +64,7 @@ export const loaderMockData: LoaderResponseData = {
                             color: '',
                         },
                     ],
-                    image: 'wix:image://v1/22e53e_4f99aa57e6a04e6dbcdbfe474fc1654f~mv2.jpg#originWidth=4000&originHeight=4000',
+                    image: 'https://static.wixstatic.com/media/c837a6_a52e4d4c344a4634bb2e601e79193a84~mv2.jpg/v1/fill/w_528,h_718,al_c,q_85,usm_0.66_1.00_0.01/c837a6_a52e4d4c344a4634bb2e601e79193a84~mv2.webp',
                     physicalProperties: { sku: '364215376135199', shippable: true },
                     itemType: { preset: orders.ItemTypeItemType.PHYSICAL, custom: '' },
                     price: { amount: '85.00', formattedAmount: '€85.00' },
@@ -215,7 +218,10 @@ export const loaderMockData: LoaderResponseData = {
             number: '10002',
             lineItems: [
                 {
-                    productName: { original: "I'm a product", translated: "I'm a product" },
+                    productName: {
+                        original: 'Stainless Steel Lunch Box',
+                        translated: 'Stainless Steel Lunch Box',
+                    },
                     catalogReference: {
                         catalogItemId: 'catalog_item_id_2',
                         appId: 'app_id',
@@ -224,7 +230,7 @@ export const loaderMockData: LoaderResponseData = {
                     quantity: 2,
                     totalDiscount: { amount: '0.00', formattedAmount: '€0.00' },
                     descriptionLines: [],
-                    image: 'wix:image://v1/22e53e_4a271c0887d34ec6be04a8f3c870b869~mv2.jpg#originWidth=3000&originHeight=3000',
+                    image: 'https://static.wixstatic.com/media/c837a6_4d79cefa20dd4ab0aa5dba663a6a071c~mv2.jpg/v1/fill/w_264,h_360,al_c,q_85,usm_0.66_1.00_0.01/c837a6_4d79cefa20dd4ab0aa5dba663a6a071c~mv2.webp',
                     physicalProperties: { sku: '671253175371', shippable: true },
                     itemType: { preset: orders.ItemTypeItemType.PHYSICAL, custom: '' },
                     price: { amount: '95.00', formattedAmount: '€95.00' },
@@ -252,7 +258,7 @@ export const loaderMockData: LoaderResponseData = {
                     _id: '00000000-0000-0000-0000-000000000001',
                 },
                 {
-                    productName: { original: "I'm a product", translated: "I'm a product" },
+                    productName: { original: 'Wood Brush', translated: 'Wood Brush' },
                     catalogReference: {
                         catalogItemId: 'catalog_item_id_3',
                         appId: 'app_id',
@@ -269,7 +275,7 @@ export const loaderMockData: LoaderResponseData = {
                             color: '',
                         },
                     ],
-                    image: 'wix:image://v1/22e53e_8adb0d7018b047e0a998acf987fd3fd6~mv2.jpg#originWidth=3716&originHeight=3716',
+                    image: 'https://static.wixstatic.com/media/c837a6_15f76c50660f4eb2880397307fc9d114~mv2.jpg/v1/fill/w_528,h_718,al_c,q_85,usm_0.66_1.00_0.01/c837a6_15f76c50660f4eb2880397307fc9d114~mv2.webp',
                     physicalProperties: { sku: '21554345656', shippable: true },
                     itemType: { preset: orders.ItemTypeItemType.PHYSICAL, custom: '' },
                     price: { amount: '120.00', formattedAmount: '€120.00' },
@@ -297,7 +303,10 @@ export const loaderMockData: LoaderResponseData = {
                     _id: '00000000-0000-0000-0000-000000000002',
                 },
                 {
-                    productName: { original: "I'm a product", translated: "I'm a product" },
+                    productName: {
+                        original: 'Stainless Steel Bottle',
+                        translated: 'Stainless Steel Bottle',
+                    },
                     catalogReference: {
                         catalogItemId: 'catalog_item_id_3',
                         appId: 'app_id',
@@ -314,7 +323,7 @@ export const loaderMockData: LoaderResponseData = {
                             color: '',
                         },
                     ],
-                    image: 'wix:image://v1/22e53e_8adb0d7018b047e0a998acf987fd3fd6~mv2.jpg#originWidth=3716&originHeight=3716',
+                    image: 'https://static.wixstatic.com/media/c837a6_b985edee7e274f068e0e3783a789889a~mv2.jpg/v1/fill/w_528,h_718,al_c,q_85,usm_0.66_1.00_0.01/c837a6_b985edee7e274f068e0e3783a789889a~mv2.webp',
                     physicalProperties: { sku: '21554345656', shippable: true },
                     itemType: { preset: orders.ItemTypeItemType.PHYSICAL, custom: '' },
                     price: { amount: '120.00', formattedAmount: '€120.00' },
@@ -342,7 +351,10 @@ export const loaderMockData: LoaderResponseData = {
                     _id: '00000000-0000-0000-0000-000000000003',
                 },
                 {
-                    productName: { original: "I'm a product", translated: "I'm a product" },
+                    productName: {
+                        original: 'Stainless Steel Bottle',
+                        translated: 'Stainless Steel Bottle',
+                    },
                     catalogReference: {
                         catalogItemId: 'catalog_item_id_4',
                         appId: 'app_id',
@@ -359,7 +371,7 @@ export const loaderMockData: LoaderResponseData = {
                             color: '',
                         },
                     ],
-                    image: 'wix:image://v1/22e53e_e1b7b337b97b4dd3bb9ed68e2598dc61~mv2.jpg#originWidth=3708&originHeight=3709',
+                    image: 'https://static.wixstatic.com/media/c837a6_b985edee7e274f068e0e3783a789889a~mv2.jpg/v1/fill/w_528,h_718,al_c,q_85,usm_0.66_1.00_0.01/c837a6_b985edee7e274f068e0e3783a789889a~mv2.webp',
                     physicalProperties: { sku: '366615376135191', shippable: true },
                     itemType: { preset: orders.ItemTypeItemType.PHYSICAL, custom: '' },
                     price: { amount: '7.50', formattedAmount: '€7.50' },
@@ -513,7 +525,10 @@ export const loaderMockData: LoaderResponseData = {
             number: '10001',
             lineItems: [
                 {
-                    productName: { original: "I'm a product", translated: "I'm a product" },
+                    productName: {
+                        original: 'Organic Shopping Bag',
+                        translated: 'Organic Shopping Bag',
+                    },
                     catalogReference: {
                         catalogItemId: 'catalog_item_id_5',
                         appId: 'app_id',
@@ -533,7 +548,7 @@ export const loaderMockData: LoaderResponseData = {
                             color: 'White',
                         },
                     ],
-                    image: 'wix:image://v1/22e53e_6818890490334e429d78876ba5f757ce~mv2.jpg#originWidth=3941&originHeight=3941',
+                    image: 'https://static.wixstatic.com/media/c837a6_935cf1de86ee4db0a33721aee2f7a69b~mv2.jpg/v1/fill/w_528,h_718,al_c,q_85,usm_0.66_1.00_0.01/c837a6_935cf1de86ee4db0a33721aee2f7a69b~mv2.webp',
                     physicalProperties: { sku: '364115376135191', shippable: true },
                     itemType: { preset: orders.ItemTypeItemType.PHYSICAL, custom: '' },
                     price: { amount: '10.00', formattedAmount: '€10.00' },

@@ -31,7 +31,7 @@ export const loaderMockData: LoaderResponseData = {
         privacyStatus: members.PrivacyStatusStatus.PRIVATE,
         activityStatus: members.ActivityStatusStatus.ACTIVE,
         lastLoginDate: new Date('2024-11-18T12:35:47Z'),
-        _id: 'user)id',
+        _id: 'user_id',
         _createdDate: new Date('2024-10-28T15:11:04Z'),
         _updatedDate: new Date('2024-10-28T15:11:04.210Z'),
     },
