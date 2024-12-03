@@ -1,7 +1,7 @@
 import { members } from '@wix/members';
 import { LoaderResponseData } from './route';
 
-export const mockLoaderData: LoaderResponseData = {
+export const coduxLoaderData: LoaderResponseData = {
     user: {
         loginEmail: 'john.doe@mail.com',
         loginEmailVerified: true,

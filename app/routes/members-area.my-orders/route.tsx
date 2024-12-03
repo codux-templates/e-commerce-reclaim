@@ -10,7 +10,7 @@ import { initializeEcomApiForRequest } from '~/src/wix/ecom/session';
 import { OrderSummary } from '~/src/components/order-summary/order-summary';
 import { Accordion } from '~/src/components/accordion/accordion';
 import { CategoryLink } from '~/src/components/category-link/category-link';
-import { mockLoaderData } from './mock-loader-data';
+import { coduxLoaderData } from './codux-loader-data';
 
 import styles from './route.module.scss';
 
@@ -29,8 +29,8 @@ export async function loader({ request }: LoaderFunctionArgs): LoaderResponse {
 
 // will be called if app is run in Codux because fetching orders requires
 // user to be logged in but it's currently can't be done through Codux
-export async function mockLoader(): ReturnType<typeof loader> {
-    return mockLoaderData;
+export async function coduxLoader(): ReturnType<typeof loader> {
+    return coduxLoaderData;
 }
 
 export default function MyOrdersPage() {

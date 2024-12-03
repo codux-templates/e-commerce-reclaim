@@ -1,7 +1,7 @@
 import { orders } from '@wix/ecom';
 import { LoaderResponseData } from './route';
 
-export const mockLoaderData: LoaderResponseData = {
+export const coduxLoaderData: LoaderResponseData = {
     orders: [
         {
             number: '10003',

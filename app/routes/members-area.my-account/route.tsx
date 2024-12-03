@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Dialog, DialogDescription, DialogTitle } from '~/src/components/dialog/dialog';
 import { Spinner } from '~/src/components/spinner/spinner';
 import { initializeEcomApiForRequest } from '~/src/wix/ecom/session';
-import { mockLoaderData } from './mock-loader-data';
+import { coduxLoaderData } from './codux-loader-data';
 
 import styles from './route.module.scss';
 
@@ -26,8 +26,8 @@ export async function loader({ request }: LoaderFunctionArgs): LoaderResponse {
 
 // will be called if app is run in Codux because fetching user details requires
 // user to be logged in but it's currently can't be done through Codux
-export async function mockLoader(): ReturnType<typeof loader> {
-    return mockLoaderData;
+export async function coduxLoader(): ReturnType<typeof loader> {
+    return coduxLoaderData;
 }
 
 export default function MyAccountPage() {

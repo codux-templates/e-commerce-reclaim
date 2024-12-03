@@ -23,7 +23,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 // will be called if app is run in Codux because logging in can be done through Codux yet
-export async function mockLoader(): ReturnType<typeof loader> {
+export async function coduxLoader(): ReturnType<typeof loader> {
     // using redirect helper here causes warning during build process
     return new Response(null, {
         status: 302,
