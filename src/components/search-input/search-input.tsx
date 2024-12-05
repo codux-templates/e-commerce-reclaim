@@ -26,14 +26,14 @@ export const SearchInput = React.memo<SearchInputProps>(function SearchInput({
             onSearchSubmit?.(search);
         }
     };
-    const formId = useId();
+    const inputId = useId();
 
     return (
-        <label className={className} htmlFor={formId}>
+        <label className={className} htmlFor={inputId}>
             <Form className={styles.form} role="search" onSubmit={onSubmit}>
                 <SearchIcon className={styles.searchIcon} width={14} />
                 <input
-                    id={formId}
+                    id={inputId}
                     ref={inputRef}
                     className={styles.input}
                     type="text"
