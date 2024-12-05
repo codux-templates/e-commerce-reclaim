@@ -43,7 +43,7 @@ export const Header = ({ className }: HeaderProps) => {
                 </div>
             </section>
             <section className={styles.navigation}>
-                <SearchInput onSearchSubmit={onSearchSubmit} />
+                <SearchInput className={styles.searchInput} onSearchSubmit={onSearchSubmit} />
                 <NavigationMenu className={styles.menu} />
                 <div className={styles.actions}>
                     <UserMenu />

@@ -1,11 +1,5 @@
 .form {
     position: relative;
-    left: 1em;
-    width: 16em;
-
-    @media (max-width: 768px) {
-        width: 10em;
-    }
 }
 
 .input {

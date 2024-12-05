@@ -2,13 +2,16 @@ import { Form } from '@remix-run/react';
 import React, { useCallback } from 'react';
 import { CrossSmallIcon, SearchIcon } from '../icons';
 import styles from './search-input.module.scss';
+import classNames from 'classnames';
 
 export interface SearchInputProps {
+    className?: string;
     defaultValue?: string;
     onSearchSubmit?: (value: string) => void;
 }
 
 export const SearchInput = React.memo<SearchInputProps>(function SearchInput({
+    className,
     defaultValue,
     onSearchSubmit,
 }) {
@@ -26,7 +29,7 @@ export const SearchInput = React.memo<SearchInputProps>(function SearchInput({
     };
 
     return (
-        <Form className={styles.form} role="search" onSubmit={onSubmit}>
+        <Form className={classNames(styles.form, className)} role="search" onSubmit={onSubmit}>
             <SearchIcon className={styles.searchIcon} width={14} />
             <input
                 ref={inputRef}
