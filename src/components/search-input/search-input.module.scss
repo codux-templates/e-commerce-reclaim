@@ -9,10 +9,6 @@
     background: none;
     font-size: 0.9em;
 
-    &::placeholder {
-        font-size: inherit;
-    }
-
     &:focus-visible {
         box-shadow: none;
     }
