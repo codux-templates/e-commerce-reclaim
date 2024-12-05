@@ -5,18 +5,25 @@ import styles from './search-input.module.scss';
 
 export interface SearchInputProps {
     defaultValue?: string;
-    onSubmit?: React.FormEventHandler<HTMLFormElement>;
-    onChange?: React.FormEventHandler<HTMLInputElement>;
+    onSearchSubmit?: (value: string) => void;
 }
 
 export const SearchInput = React.memo<SearchInputProps>(function SearchInput({
     defaultValue,
-    onSubmit,
-    onChange,
+    onSearchSubmit,
 }) {
     const inputRef = React.useRef<HTMLInputElement>(null);
     // input is uncontrolled, so we clear it manually
     const onClickClear = useCallback(() => (inputRef.current!.value = ''), []);
+
+    const onSubmit: React.EventHandler<React.FormEvent<HTMLFormElement>> = (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const search = formData.get('search');
+        if (typeof search === 'string' && search.trim() !== '') {
+            onSearchSubmit?.(search);
+        }
+    };
 
     return (
         <Form className={styles.form} role="search" onSubmit={onSubmit}>
@@ -29,7 +36,6 @@ export const SearchInput = React.memo<SearchInputProps>(function SearchInput({
                 spellCheck="false"
                 defaultValue={defaultValue}
                 placeholder="Search"
-                onChange={onChange}
                 minLength={2}
             />
             <CrossSmallIcon className={styles.clearIcon} onClick={onClickClear} />

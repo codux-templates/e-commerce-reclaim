@@ -19,13 +19,8 @@ export const Header = ({ className }: HeaderProps) => {
     const cartOpener = useCartOpen();
     const navigate = useNavigate();
 
-    const onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const search = formData.get('search');
-        if (typeof search === 'string' && search.trim() !== '') {
-            navigate(`/products/all-products?search=${encodeURIComponent(search)}`);
-        }
+    const onSearchSubmit = (search: string) => {
+        navigate(`/products/all-products?search=${encodeURIComponent(search)}`);
     };
 
     const cartItemCount = cart.data ? getCartItemCount(cart.data) : 0;
@@ -48,7 +43,7 @@ export const Header = ({ className }: HeaderProps) => {
                 </div>
             </section>
             <section className={styles.navigation}>
-                <SearchInput onSubmit={onSubmit} />
+                <SearchInput onSearchSubmit={onSearchSubmit} />
                 <NavigationMenu className={styles.menu} />
                 <div className={styles.actions}>
                     <UserMenu />
