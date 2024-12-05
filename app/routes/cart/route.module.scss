@@ -15,10 +15,15 @@
 
 .cartHeader,
 .summaryHeader {
-    font: var(--heading5);
-    line-height: 18px;
     padding: 20px 0;
     border-bottom: 1px solid rgba(23, 17, 13, 0.2);
+    font-weight: 400;
+    font-size: 20px;
+    font-family: 'Marcellus', serif;
+    font-style: normal;
+    font-variant: normal;
+    font-stretch: normal;
+    font: var(--heading5);
 }
 
 .summaryContent {
@@ -46,7 +51,7 @@
 }
 
 .summaryTotal {
-    font-size: 20px;
+    font: var(--heading6);
     padding: 16px 0 2px;
     margin-top: 14px;
     border-top: 1px solid rgba(23, 17, 13, 0.2);
@@ -75,6 +80,7 @@
 
 .cartFallbackTitle {
     font-size: 22px;
+    font: var(--heading6);
 }
 
 .continueBrowsingLink {
@@ -94,4 +100,7 @@
     .summaryContent {
         margin-top: 30px;
     }
+}
+.link {
+    font: var(--paragraph2);
 }
