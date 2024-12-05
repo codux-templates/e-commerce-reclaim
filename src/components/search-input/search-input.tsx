@@ -1,6 +1,6 @@
 import { Form } from '@remix-run/react';
 import React, { useCallback } from 'react';
-import { ClearIcon, SearchIcon } from '../icons';
+import { CrossSmallIcon, SearchIcon } from '../icons';
 import styles from './search-input.module.scss';
 
 export interface SearchInputProps {
@@ -32,7 +32,7 @@ export const SearchInput = React.memo<SearchInputProps>(function SearchInput({
                 onChange={onChange}
                 minLength={2}
             />
-            <ClearIcon className={styles.clearIcon} onClick={onClickClear} />
+            <CrossSmallIcon className={styles.clearIcon} onClick={onClickClear} />
         </Form>
     );
 });
