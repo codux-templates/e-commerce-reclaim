@@ -33,7 +33,7 @@ export const FeaturedProductsSection = (props: FeaturedProductsSectionProps) => 
                           <ProductLink key={product._id} productSlug={product.slug!}>
                               <ProductCard
                                   name={product.name!}
-                                  imageUrl={getProductImageUrl(product, 700, 700)}
+                                  imageUrl={getProductImageUrl(product, { minHeight: 700 })}
                                   price={product.priceData?.formatted?.price}
                                   discountedPrice={product.priceData?.formatted?.discountedPrice}
                                   ribbon={product.ribbon ?? undefined}

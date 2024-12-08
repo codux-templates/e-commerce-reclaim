@@ -2,6 +2,7 @@ import { SerializeFrom } from '@remix-run/node';
 import { products as wixStoresProducts } from '@wix/stores';
 import deepEqual from 'fast-deep-equal';
 import { Product } from '../ecom';
+import { getWixImageUrl, WixImageTransformOptions } from '../utils/media';
 
 export function isOutOfStock(
     product: Product | SerializeFrom<Product>,
@@ -171,15 +172,16 @@ export function formatPrice(price: number, currency: string): string {
 }
 
 export function getProductImageUrl(
-    product: Product | SerializeFrom<Product>,
-    maxWidth: number,
-    maxHeight: number,
+    item: wixStoresProducts.MediaItem | Product | SerializeFrom<Product>,
+    options: WixImageTransformOptions,
 ): string | undefined {
-    const media = product.media?.mainMedia;
-    if (media?.mediaType !== 'image') return undefined;
+    if ('media' in item && item.media?.mainMedia) {
+        item = item.media.mainMedia;
+    }
 
-    // Avoid using the Wix SDK's media.getScaledToFitImageUrl function, as it
-    // generates different URLs on the client and server, causing hydration
-    // mismatches, and inexplicably scales to fill rather than fit.
-    return `https://static.wixstatic.com/media/${media._id}/v1/fit/w_${maxWidth},h_${maxHeight},q_80/${media._id}`;
+    if ('image' in item) {
+        const id = item._id!;
+        const image = item.image!;
+        return getWixImageUrl({ id, width: image.width!, height: image.height! }, options);
+    }
 }
