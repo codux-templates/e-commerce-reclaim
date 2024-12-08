@@ -1,16 +1,20 @@
-import { LoaderFunctionArgs, redirect } from '@remix-run/node';
+import { LoaderFunctionArgs, redirect, TypedResponse } from '@remix-run/node';
 import type { MetaFunction } from '@remix-run/react';
-import { useLoaderData } from '@remix-run/react';
+import { Form, useLoaderData, useNavigation } from '@remix-run/react';
+import { Member } from '~/src/wix/ecom';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { Dialog, DialogDescription, DialogTitle } from '~/src/components/dialog/dialog';
 import { Spinner } from '~/src/components/spinner/spinner';
 import { initializeEcomApiForRequest } from '~/src/wix/ecom/session';
-import { useAccountDetailsForm } from '~/src/wix/users';
+import { loaderMockData } from './loader-mock-data';
 
 import styles from './route.module.scss';
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export type LoaderResponseData = { user: Member | undefined };
+export type LoaderResponse = Promise<TypedResponse<never> | LoaderResponseData>;
+
+export async function loader({ request }: LoaderFunctionArgs): LoaderResponse {
     const api = await initializeEcomApiForRequest(request);
     if (!api.isLoggedIn()) {
         return redirect('/login');
@@ -20,38 +24,43 @@ export async function loader({ request }: LoaderFunctionArgs) {
     return { user };
 }
 
+// will be called if app is run in Codux because fetching user details requires
+// user to be logged in but it's currently can't be done through Codux
+export async function coduxLoader(): ReturnType<typeof loader> {
+    return loaderMockData;
+}
+
 export default function MyAccountPage() {
     const { user } = useLoaderData<typeof loader>();
 
-    const [discardConfirmationOpen, setDiscardConfirmationOpen] = useState(false);
-
-    const {
-        firstName,
-        setFirstName,
-        lastName,
-        setLastName,
-        phone,
-        setPhone,
-        isUpdating,
-        isResettingPassword,
-        updateAccountDetails,
-        discardChanges,
-        sendPasswordResetEmail,
-    } = useAccountDetailsForm(user?._id, {
+    const initialUserDetailsFormData = {
         firstName: user?.contact?.firstName ?? '',
         lastName: user?.contact?.lastName ?? '',
         phoneNumber: user?.contact?.phones?.[0] ?? '',
-        loginEmail: user?.loginEmail,
-    });
+    };
+
+    const [userDetailsFormData, setUserDetailsFormData] = useState(initialUserDetailsFormData);
+    const [discardConfirmationOpen, setDiscardConfirmationOpen] = useState(false);
 
     const onDiscardChangesClick = () => {
         setDiscardConfirmationOpen(true);
     };
 
     const handleDiscardChanges = () => {
-        discardChanges();
+        setUserDetailsFormData(initialUserDetailsFormData);
         setDiscardConfirmationOpen(false);
     };
+
+    const navigation = useNavigation();
+
+    const userDetailsFormAction = '/members-area/my-account/update-details';
+    const resetPasswordFormAction = '/members-area/my-account/reset-password';
+
+    const isUpdatingUserDetails =
+        navigation.state === 'submitting' && navigation.formAction === userDetailsFormAction;
+
+    const isResettingPassword =
+        navigation.state === 'submitting' && navigation.formAction === resetPasswordFormAction;
 
     return (
         <div>
@@ -74,10 +83,11 @@ export default function MyAccountPage() {
                             'smallButton',
                             styles.updateInfoButton,
                         )}
-                        disabled={isUpdating}
-                        onClick={updateAccountDetails}
+                        disabled={isUpdatingUserDetails}
+                        form="user-details-form"
+                        type="submit"
                     >
-                        {isUpdating ? <Spinner size={24} /> : 'Update Info'}
+                        {isUpdatingUserDetails ? <Spinner size={24} /> : 'Update Info'}
                     </button>
                 </div>
             </div>
@@ -88,13 +98,26 @@ export default function MyAccountPage() {
                     <span className="paragraph1">Update you personal information.</span>
                 </div>
 
-                <form className={styles.form}>
+                <Form
+                    id="user-details-form"
+                    method="post"
+                    action={userDetailsFormAction}
+                    className={styles.userDetailsForm}
+                >
+                    <input type="hidden" name="userId" value={user?._id ?? undefined} />
+
                     <label>
                         First Name
                         <input
                             className="textInput"
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
+                            name="firstName"
+                            value={userDetailsFormData.firstName}
+                            onChange={(e) =>
+                                setUserDetailsFormData((current) => ({
+                                    ...current,
+                                    firstName: e.target.value,
+                                }))
+                            }
                         />
                     </label>
 
@@ -102,8 +125,14 @@ export default function MyAccountPage() {
                         Last Name
                         <input
                             className="textInput"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
+                            name="lastName"
+                            value={userDetailsFormData.lastName}
+                            onChange={(e) =>
+                                setUserDetailsFormData((current) => ({
+                                    ...current,
+                                    lastName: e.target.value,
+                                }))
+                            }
                         />
                     </label>
 
@@ -111,11 +140,17 @@ export default function MyAccountPage() {
                         Phone
                         <input
                             className="textInput"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
+                            name="phoneNumber"
+                            value={userDetailsFormData.phoneNumber}
+                            onChange={(e) =>
+                                setUserDetailsFormData((current) => ({
+                                    ...current,
+                                    phoneNumber: e.target.value,
+                                }))
+                            }
                         />
                     </label>
-                </form>
+                </Form>
 
                 <div className={styles.actions}>
                     <button
@@ -131,10 +166,11 @@ export default function MyAccountPage() {
                             'smallButton',
                             styles.updateInfoButton,
                         )}
-                        disabled={isUpdating}
-                        onClick={updateAccountDetails}
+                        disabled={isUpdatingUserDetails}
+                        form="user-details-form"
+                        type="submit"
                     >
-                        {isUpdating ? <Spinner size={24} /> : 'Update Info'}
+                        {isUpdatingUserDetails ? <Spinner size={24} /> : 'Update Info'}
                     </button>
                 </div>
             </div>
@@ -145,14 +181,21 @@ export default function MyAccountPage() {
                     <span className="paragraph1">View your login email and reset password.</span>
                 </div>
 
-                <div className={styles.loginInfoSection}>
+                <Form
+                    id="reset-password-form"
+                    method="post"
+                    action={resetPasswordFormAction}
+                    className={styles.loginInfoSection}
+                >
                     <div>
                         <div>Login email:</div>
                         <div>{user?.loginEmail}</div>
+                        <input type="hidden" name="email" value={user?.loginEmail ?? undefined} />
                     </div>
 
                     <div className={styles.actions}>
                         <button
+                            type="submit"
                             className={classNames(
                                 'button',
                                 'primaryButton',
@@ -160,12 +203,11 @@ export default function MyAccountPage() {
                                 styles.resetPasswordButton,
                             )}
                             disabled={isResettingPassword}
-                            onClick={sendPasswordResetEmail}
                         >
                             {isResettingPassword ? <Spinner size={22} /> : 'Reset password'}
                         </button>
                     </div>
-                </div>
+                </Form>
             </div>
 
             <Dialog
