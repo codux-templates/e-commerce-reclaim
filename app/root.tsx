@@ -4,6 +4,8 @@ import '~/src/styles/typography.scss';
 import '~/src/styles/global.scss';
 import '~/src/styles/utils.scss';
 
+import { WixBiProvider } from './bi';
+
 import { json, LoaderFunctionArgs } from '@remix-run/node';
 import {
     Links,
@@ -21,7 +23,12 @@ import { Header } from '~/src/components/header/header';
 import { NavigationProgressBar } from '~/src/components/navigation-progress-bar/navigation-progress-bar';
 import { Toaster } from '~/src/components/toaster/toaster';
 import { CartOpenContextProvider } from '~/src/wix/cart';
-import { EcomApiContextProvider, getWixClientId, setWixClientId } from '~/src/wix/ecom';
+import {
+    EcomApiContextProvider,
+    getMetaSiteId,
+    getWixClientId,
+    setWixClientId,
+} from '~/src/wix/ecom';
 import { commitSession, initializeEcomSession } from '~/src/wix/ecom/session';
 
 import styles from './root.module.scss';
@@ -72,20 +79,22 @@ export default function App() {
     setWixClientId(wixClientId);
 
     return (
-        <EcomApiContextProvider tokens={wixSessionTokens}>
-            <CartOpenContextProvider>
-                <div className={styles.root}>
-                    <Header />
-                    <main className={styles.main}>
-                        <Outlet />
-                    </main>
-                    <Footer />
-                </div>
-                <Cart />
-                <NavigationProgressBar className={styles.navigationProgressBar} />
-                <Toaster />
-            </CartOpenContextProvider>
-        </EcomApiContextProvider>
+        <WixBiProvider metaSiteId={getMetaSiteId()}>
+            <EcomApiContextProvider tokens={wixSessionTokens}>
+                <CartOpenContextProvider>
+                    <div className={styles.root}>
+                        <Header />
+                        <main className={styles.main}>
+                            <Outlet />
+                        </main>
+                        <Footer />
+                    </div>
+                    <Cart />
+                    <NavigationProgressBar className={styles.navigationProgressBar} />
+                    <Toaster />
+                </CartOpenContextProvider>
+            </EcomApiContextProvider>
+        </WixBiProvider>
     );
 }
 
