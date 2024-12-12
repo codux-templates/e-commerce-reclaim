@@ -1,6 +1,6 @@
-# Home Goods Store Template
+# Electronics Store Template
 
-Welcome to our Home Goods Store project! This is an online shopping platform that uses [Wix Headless](https://www.wix.com/studio/developers/headless) as the back office for managing the store. This project is designed to be your stepping stone to creating your own online store. It's simple, straightforward, and combines various technologies.
+This is an online shopping platform that uses [Wix Headless](https://www.wix.com/studio/developers/headless) as the back office for managing the store. This project is designed to be your stepping stone to creating your own online store. It's simple, straightforward, and combines various technologies.
 
 ## Project Overview
 
@@ -15,8 +15,6 @@ This project is more than just an example - it's a starter. The main goal here i
 - **Classnames**: Assists in assigning multiple classes to elements.
 - **SWR**: Handles caching content in the client app, fetching new content periodically, and providing a simple API between the content cache and React components.
 - **Sass**: Facilitates writing scoped CSS.
-- **Faker**: Generates mock content for boards and tests.
-- **JS Cookie**: A simple, lightweight JS API for handling cookies.
 
 ## Getting Started
 
@@ -38,7 +36,7 @@ You can then update the links in the site’s header, footer, and homepage to po
 
 ## Using Test Data
 
-Most of our boards are wrapped in a context provider that returns mock data (using Faker) instead of fetching it from Wix Headless. We do this for a few reasons:
+Most of our boards are wrapped in a context provider that returns mock data instead of fetching it from Wix Headless. We do this for a few reasons:
 
 - It allows us to test and design components without adding data in Wix Headless (or anywhere else).
 - It allows us to create boards for different scenarios: very long text, very short text, different numbers of items, etc.

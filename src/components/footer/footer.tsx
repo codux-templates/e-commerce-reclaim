@@ -117,7 +117,7 @@ export const Footer = ({ className }: FooterProps) => {
                     ReClaim
                 </Link>
                 <div className={styles.copyright}>
-                    <span>© 2035 by ReClaim. Made with </span>
+                    <span>© 2024 by ReClaim. Made with </span>
                     <Link to="https://www.codux.com/" className={styles.coduxLink}>
                         Codux™
                     </Link>
