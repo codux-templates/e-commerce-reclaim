@@ -3,23 +3,19 @@ import { CategoryLink } from '~/src/components/category-link/category-link';
 import { FeaturedProductsSection } from '~/src/components/featured-products-section/featured-products-section';
 import { LabelWithArrow } from '~/src/components/label-with-arrow/label-with-arrow';
 import { BackgroundParallax, FadeIn, FloatIn } from '~/src/components/visual-effects';
+import styles from './route.module.scss';
+import classNames from 'classnames';
 
 export default function HomePage() {
     return (
         <div>
-            <div className="heroBanner">
-                <img
-                    src="https://static.wixstatic.com/media/32aab9_2c3c65e142434906992aedb17db53566~mv2.jpg"
-                    className="heroBannerImage"
-                    alt=""
-                />
-                <div className="heroBannerOverlay">
+            <div className={classNames('heroBanner', styles.div1)}>
+                <div>
                     <div className="heroBannerSubtitle">ReClaim</div>
-                    <h1 className="heroBannerTitle">Reuse. Repurpose. Relove.</h1>
-                    <CategoryLink categorySlug="all-products">
-                        <LabelWithArrow>Shop Collections</LabelWithArrow>
-                    </CategoryLink>
+                    <h1 className={styles.header1}>Shop The Top Brand Electronic.</h1>
+                    <CategoryLink categorySlug="all-products"></CategoryLink>
                 </div>
+                <LabelWithArrow className={styles.labelWithArrow}>Shop Collections</LabelWithArrow>
             </div>
 
             <div className="textBannerSection">
