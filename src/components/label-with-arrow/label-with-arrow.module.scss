@@ -2,7 +2,7 @@
     --hover-letter-spacing: 0.15em;
     display: grid;
     width: min-content;
-    grid-template-columns: 1fr min-content;
+    grid-template-columns: 1fr;
     align-items: center;
     gap: 20px;
     font: var(--heading5);
@@ -14,6 +14,9 @@
     &:hover {
         letter-spacing: var(--hover-letter-spacing);
     }
+    height: 48px;
+    justify-items: center;
+    border-radius: 36px;
 }
 
 .label {
