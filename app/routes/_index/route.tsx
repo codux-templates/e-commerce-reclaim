@@ -12,12 +12,11 @@ export default function HomePage() {
             <div className={classNames('heroBanner', styles.div1)}>
                 <div>
                     <div className="heroBannerSubtitle">ReClaim</div>
-                    <h1 className={styles.header1}>Shop The Top Brand Electronic.</h1>
+                    <h1 className={styles.header1}>BUY The Top Brand Electronic.</h1>
                     <CategoryLink categorySlug="all-products"></CategoryLink>
                 </div>
                 <LabelWithArrow className={styles.labelWithArrow}>Shop Collections</LabelWithArrow>
             </div>
-
             <div className="textBannerSection">
                 <FadeIn className="textBanner" duration={1.8}>
                     <div className="textBannerSubtitle">Products of the highest standards</div>
@@ -29,7 +28,6 @@ export default function HomePage() {
                     </CategoryLink>
                 </FadeIn>
             </div>
-
             <div className="cardsSection">
                 <CategoryLink categorySlug="kitchen-essentials" className="linkCard">
                     <img
