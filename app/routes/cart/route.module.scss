@@ -15,15 +15,9 @@
 
 .cartHeader,
 .summaryHeader {
+    font: var(--heading5);
     padding: 20px 0;
     border-bottom: 1px solid rgba(23, 17, 13, 0.2);
-    font-weight: 400;
-    font-size: 20px;
-    font-family: 'Marcellus', serif;
-    font-style: normal;
-    font-variant: normal;
-    font-stretch: normal;
-    font: var(--heading5);
 }
 
 .summaryContent {
@@ -63,11 +57,11 @@
 }
 
 .secureCheckout {
+    font: var(--paragraph3);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    font: var(--paragraph3);
 }
 
 /* Fallback for loading, error, and empty cart states */
@@ -79,11 +73,11 @@
 }
 
 .cartFallbackTitle {
-    font-size: 22px;
     font: var(--heading6);
 }
 
 .continueBrowsingLink {
+    font: var(--paragraph2);
     margin-top: 10px;
     text-decoration: underline;
 }

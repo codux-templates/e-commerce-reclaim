@@ -20,10 +20,6 @@
 .subtitle {
     max-width: 600px;
     margin-bottom: 6%;
-    font-family: 'Marcellus', serif;
-    font-style: normal;
-    font-variant: normal;
-    font-stretch: normal;
     font: var(--heading2);
 }
 
@@ -46,10 +42,7 @@
 
     .subtitle {
         max-width: unset;
-        font-family: 'Marcellus', serif;
-        font-style: normal;
-        font-variant: normal;
-        font-stretch: normal;
+        margin-bottom: 5%;
         font: var(--heading3);
     }
 
