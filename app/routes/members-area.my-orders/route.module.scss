@@ -65,12 +65,12 @@
     }
 
     .orderHeader {
+        font: var(--paragraph3);
         height: auto;
         padding: 8px 0;
         flex-direction: column;
         align-items: flex-start;
         gap: 4px;
-        font: var(--paragraph3);
     }
 
     .orderHeader > div {
