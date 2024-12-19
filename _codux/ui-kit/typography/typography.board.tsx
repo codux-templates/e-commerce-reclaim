@@ -51,7 +51,7 @@ export default createBoard({
                         <h6 className="heading6">Heading 6</h6>
                     </Variant>
                     <Kit.Description>
-                        <b>--heading6:</b>Figtree (400) / 20px / 1.4
+                        <b>--heading6:</b>Figtree (300) / 20px / 1.4
                     </Kit.Description>
                 </Kit.Item>
             </Kit.Section>
