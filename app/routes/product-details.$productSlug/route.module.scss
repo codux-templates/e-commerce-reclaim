@@ -14,19 +14,19 @@
 }
 
 .sku {
-    margin-top: 8px;
     font: var(--paragraph3);
+    margin-top: 8px;
     color: var(--primary4);
 }
 
 .price {
-    margin-top: 16px;
     font: var(--heading5);
+    margin-top: 16px;
 }
 
 .description {
-    margin-top: 14px;
     font: var(--paragraph2);
+    margin-top: 14px;
 }
 
 .productOptions {
@@ -41,9 +41,9 @@
 }
 
 .quantityLabel {
+    font: var(--paragraph2);
     display: inline-block;
     margin-bottom: 8px;
-    font: var(--paragraph2);
 }
 
 .addToCartButton {
