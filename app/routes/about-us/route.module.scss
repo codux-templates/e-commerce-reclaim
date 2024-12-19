@@ -13,8 +13,6 @@
 }
 
 .title {
-    font-size: 22px;
-    font-weight: 400;
     margin-bottom: 8px;
     font: var(--heading6);
 }
@@ -22,8 +20,6 @@
 .subtitle {
     max-width: 600px;
     margin-bottom: 6%;
-    font-weight: 400;
-    line-height: 1.1;
     font-family: 'Marcellus', serif;
     font-style: normal;
     font-variant: normal;
@@ -50,8 +46,6 @@
 
     .subtitle {
         max-width: unset;
-        font-weight: 400;
-        line-height: 1.2;
         font-family: 'Marcellus', serif;
         font-style: normal;
         font-variant: normal;
@@ -60,7 +54,6 @@
     }
 
     .description {
-        font-size: 18px;
         font: var(--paragraph1);
     }
 }
