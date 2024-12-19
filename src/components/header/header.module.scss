@@ -89,9 +89,9 @@
 
 @media (max-width: 768px) {
     .topBar {
+        font: var(--paragraph3);
         flex-direction: column-reverse;
         align-items: start;
         justify-content: center;
-        font: var(--paragraph3);
     }
 }
