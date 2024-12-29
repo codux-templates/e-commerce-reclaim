@@ -1,0 +1,79 @@
+.root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.trigger {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font: inherit;
+  text-transform: inherit;
+  user-select: none;
+  cursor: pointer;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+  padding: 7px 10px;
+}
+
+.trigger:hover {
+  color: slategrey;
+}
+
+.trigger:focus-visible {
+  box-shadow: 0 0 0 2px tomato;
+}
+
+.trigger[data-state='open'] {
+  color: slategrey;
+}
+
+.chevron {
+  position: relative;
+  top: 1px;
+  transition: transform 250ms ease;
+}
+
+[data-state='open'] .chevron {
+  transform: rotate(-180deg);
+}
+
+.contentContainer {
+  position: static;
+  width: 100%;
+  padding-top: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 24px;
+}
+
+@media (min-width: 900px) {
+  .contentContainer {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: max-content;
+    max-width: 60vw;
+    transform: translateX(-50%);
+    padding-top: 24px;
+  }
+
+  .content {
+    background-color: white;
+    row-gap: 12px;
+  }
+}
+
+@media (max-width: 900px) {
+  .contentContainer[data-state='open'] {
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 24px;
+  }
+}

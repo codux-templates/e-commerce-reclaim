@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+:root {
+  font-family: 'Outfit', sans-serif;
+  line-height: 1.5;
+  font-weight: 300;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.megaMenuContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .megaMenuContent {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+  }
+}
+
+.megaMenuContentList {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+.customButton {
+  border: none;
+  outline: none;
+  font: inherit;
+  cursor: pointer;
+  padding: 7px 30px;
+  border-radius: 999px;
+  background-color: black;
+  color: white;
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .customButton {
+    margin-top: 8px;
+  }
+}
+
+.customButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px tomato;
+}

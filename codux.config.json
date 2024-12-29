@@ -52,5 +52,6 @@
   "previewConfiguration": {
     "environmentVariables": {},
     "envFile": ".env"
-  }
+  },
+  "addPanel": { "assets": ["@codux-pond/component-templates"] }
 }

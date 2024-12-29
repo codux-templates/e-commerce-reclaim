@@ -1,0 +1,16 @@
+.root {
+  padding: 7px 10px;
+}
+
+.root:hover {
+  color: slategrey;
+}
+
+.root:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px tomato;
+}
+
+.active {
+  color: slategrey;
+}

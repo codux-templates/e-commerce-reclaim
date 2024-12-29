@@ -3,12 +3,12 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { CartIcon, MenuIcon } from '~/src/components/icons';
 import { getCartItemCount, useCartData, useCartOpen } from '~/src/wix/cart';
-import { NavigationMenu } from '../navigation-menu/navigation-menu';
 import { SearchInput } from '../search-input/search-input';
 import { SidebarNavigationMenu } from '../sidebar-navigation-menu/sidebar-navigation-menu';
 import { UserMenu } from '../user-menu/user-menu';
 
 import styles from './header.module.scss';
+import { Menu } from '../new-component-4/new-component-4';
 
 export interface HeaderProps {
     className?: string;
@@ -44,7 +44,7 @@ export const Header = ({ className }: HeaderProps) => {
             </section>
             <section className={styles.navigation}>
                 <SearchInput className={styles.searchInput} onSearchSubmit={onSearchSubmit} />
-                <NavigationMenu className={styles.menu} />
+                <Menu />
                 <div className={styles.actions}>
                     <UserMenu />
 

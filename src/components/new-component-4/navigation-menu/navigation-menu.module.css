@@ -1,0 +1,81 @@
+.root {
+  color: #000624;
+  padding: 15px;
+  z-index: 1;
+  position: relative;
+
+  @media (max-width: 900px) {
+    display: flex;
+    justify-content: end;
+  }
+}
+
+.desktopMenu {
+  display: block;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+}
+
+.menuList {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: 901px) {
+    column-gap: 16px;
+    padding: 0 45px;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 24px;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    padding: 40px;
+    row-gap: 8px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+.dialogContent {
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  overflow-y: scroll;
+  background-color: white;
+}
+
+.mobileMenu {
+  display: none;
+  @media (max-width: 900px) {
+    display: inline-block;
+  }
+}
+
+.iconButton {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.iconButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px tomato;
+}
+
+.closeButton {
+  justify-self: end;
+  margin-top: 15px;
+}
