@@ -1,9 +1,5 @@
 import { NavigationMenu } from './navigation-menu/navigation-menu';
 import { MenuLink } from './menu-link/menu-link';
-import { MenuSection } from './menu-section/menu-section';
-import { MenuItem } from './menu-item/menu-item';
-import styles from './menu.module.css';
-import classNames from 'classnames';
 
 interface MenuProps {
     className?: string;
