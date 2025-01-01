@@ -96,7 +96,7 @@
 }
 
 /* Styles for screens from 1024px upward */
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
   .dialogContent {
     display: none;
   }
