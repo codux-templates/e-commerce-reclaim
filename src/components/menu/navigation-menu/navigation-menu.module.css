@@ -27,7 +27,7 @@
   top: 0;
   right: 0;
   height: 100%;
-  max-width: 400px;
+  max-width: 500px;
   width: 100%;
   background-color: white;
   box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
@@ -35,6 +35,7 @@
   display: flex;
   flex-direction: column;
   padding: 15px;
+  background: var(--primary1);
 }
 
 .dialogContent[data-state='closed'] {
@@ -48,12 +49,24 @@
 .dialogOverlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(27, 17, 13, 0.8);
   animation: fadeIn 0.4s ease-in-out;
 }
 
 .dialogOverlay[data-state='closed'] {
   animation: fadeOut 0.4s ease-in-out;
+}
+
+.closeIcon {
+  position: absolute;
+  z-index: 1;
+  top: 40px;
+  right: 40px;
+  cursor: pointer;
+}
+
+.menuIcon {
+  padding-top: 6px;
 }
 
 /* Mobile-first: Styles for screens up to 1024px */
@@ -64,11 +77,13 @@
   }
 
   .menuList {
+    margin: 50px;
+    align-items: center;
     flex-direction: column;
     padding: 40px;
-    row-gap: 12px;
-    font-weight: 500;
+    row-gap: 30px;
     font-size: 18px;
+    font-weight: 400;
   }
 
   .desktopMenu {

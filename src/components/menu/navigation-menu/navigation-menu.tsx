@@ -8,11 +8,10 @@ import {
     Portal,
     Overlay,
 } from '@radix-ui/react-dialog';
-import { MenuIcon } from '../menu-icon/menu-icon';
-import { MenuCloseIcon } from '../menu-close-icon/menu-close-icon';
 import styles from './navigation-menu.module.css';
 import classNames from 'classnames';
 import { List, Root } from '@radix-ui/react-navigation-menu';
+import { CrossIcon, MenuIcon } from '../../icons';
 
 type RadixNavigationMenuProps = RadixNavigationMenu.NavigationMenuProps;
 
@@ -34,7 +33,7 @@ export const NavigationMenu = React.forwardRef<
             <DialogRoot>
                 <Trigger asChild>
                     <button className={styles.iconButton} aria-label="Open Menu">
-                        <MenuIcon />
+                        <MenuIcon width={24} className={styles.menuIcon} />
                     </button>
                 </Trigger>
                 <Portal>
@@ -45,7 +44,7 @@ export const NavigationMenu = React.forwardRef<
                                 className={classNames(styles.iconButton, styles.closeButton)}
                                 aria-label="Close"
                             >
-                                <MenuCloseIcon />
+                                <CrossIcon width={30} className={styles.closeIcon} />
                             </button>
                         </Close>
                         <Root>
