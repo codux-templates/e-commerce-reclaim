@@ -1,0 +1,9 @@
+.root {
+  cursor: pointer;
+  padding: 7px 30px;
+  border-radius: 100px;
+  background-color: black;
+  color: white;
+  width: fit-content;
+  list-style-type: none;
+}

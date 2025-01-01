@@ -1,0 +1,129 @@
+.root {
+  padding: 15px;
+}
+
+.mobileMenu {
+  display: none;
+}
+
+.menuList {
+  display: flex;
+  justify-content: center;
+  column-gap: 36px;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 24px;
+  padding: 0px;
+}
+
+.iconButton {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.dialogContent {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  max-width: 400px;
+  width: 100%;
+  background-color: white;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.4s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.dialogContent[data-state='closed'] {
+  animation: slideOut 0.4s ease-in-out;
+}
+
+.closeButton {
+  text-align: end;
+}
+
+.dialogOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.dialogOverlay[data-state='closed'] {
+  animation: fadeOut 0.4s ease-in-out;
+}
+
+/* Mobile-first: Styles for screens up to 1024px */
+@media (max-width: 1024px) {
+  .root {
+    display: flex;
+    justify-content: end;
+  }
+
+  .menuList {
+    flex-direction: column;
+    padding: 40px;
+    row-gap: 12px;
+    font-weight: 500;
+    font-size: 18px;
+  }
+
+  .desktopMenu {
+    display: none;
+  }
+
+  .mobileMenu {
+    display: block;
+  }
+}
+
+/* Styles for screens from 1024px upward */
+@media (min-width: 1024px) {
+  .dialogContent {
+    display: none;
+  }
+
+  .dialogOverlay {
+    display: none;
+  }
+}
+
+/* Keyframes */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
