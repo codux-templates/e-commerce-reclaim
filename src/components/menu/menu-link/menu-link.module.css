@@ -1,0 +1,20 @@
+.root {
+  list-style-type: none;
+  width: fit-content;
+  align-content: center;
+}
+
+.root:hover {
+  text-decoration: underline;
+}
+
+.root:focus-visible,
+.selected {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .root {
+    display: block;
+  }
+}
