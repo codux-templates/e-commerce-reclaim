@@ -40,15 +40,15 @@ export const Header = ({ className }: HeaderProps) => {
             </section>
             <section className={styles.navigation}>
                 <SearchInput className={styles.searchInput} onSearchSubmit={onSearchSubmit} />
-                    <Menu className={styles.menu} />
-                    <div className={styles.actions}>
-                        <UserMenu />
-                        <button
-                            className={classNames(styles.cartButton, 'iconButton')}
-                            onClick={() => cartOpener.setIsOpen(true)}
-                        >
-                            <CartIcon className={styles.cart} count={cartItemCount} />
-                        </button>
+                <Menu className={styles.menu} />
+                <div className={styles.actions}>
+                    <UserMenu />
+                    <button
+                        className={classNames(styles.cartButton, 'iconButton')}
+                        onClick={() => cartOpener.setIsOpen(true)}
+                    >
+                        <CartIcon className={styles.cart} count={cartItemCount} />
+                    </button>
                 </div>
             </section>
         </header>
