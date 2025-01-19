@@ -13,21 +13,19 @@
 }
 
 .title {
-    font-size: 22px;
-    font-weight: 400;
     margin-bottom: 8px;
+    font: var(--heading6);
 }
 
 .subtitle {
-    font: var(--heading2);
-    font-size: 60px;
     max-width: 600px;
     margin-bottom: 6%;
+    font: var(--heading2);
 }
 
 .description {
-    font-size: 22px;
     max-width: 80%;
+    font: var(--paragraph1);
 }
 
 .image {
@@ -48,7 +46,7 @@
     }
 
     .description {
-        font-size: 18px;
+        font: var(--paragraph1);
     }
 }
 
@@ -61,12 +59,12 @@
     }
 
     .subtitle {
-        font-size: 40px;
         margin-bottom: 5%;
+        font: var(--heading3);
     }
 
     .description {
         max-width: unset;
-        font-size: 14px;
+        font: var(--paragraph1);
     }
 }
